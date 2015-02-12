@@ -4,9 +4,7 @@ jdk:
     - oraclejdk7
     - openjdk6
 install:
-  - export DEBIAN_FRONTEND=noninteractive 
   - sudo apt-get update
-  - sudo apt-get upgrade -y
   - sudo apt-get install -y texlive-latex-base
 before_script:
   - bash build_docs.sh
