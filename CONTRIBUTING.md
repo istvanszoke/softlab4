@@ -37,8 +37,10 @@ submit your own.
 
 We are using [waffle.io][ar:waffle], built on top of
 [GitHub issues][ar:issue-tracker] to track issues, feature requests
-and patches.
+and patches. We are also using [Travis CI][ar:travis] for automatic
+testing.
 
  [ar:issue-tracker]: https://github.com/gregory094/softlab4/issues
  [ar:issues:help]: https://github.com/gregory094/softlab4/labels/help
  [ar:waffle]: https://waffle.io/gregory094/softlab4
+ [ar:travis]: https://travis-ci.org/algernon/syslog-ng/
