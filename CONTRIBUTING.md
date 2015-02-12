@@ -43,4 +43,4 @@ testing.
  [ar:issue-tracker]: https://github.com/gregory094/softlab4/issues
  [ar:issues:help]: https://github.com/gregory094/softlab4/labels/help
  [ar:waffle]: https://waffle.io/gregory094/softlab4
- [ar:travis]: https://travis-ci.org/algernon/syslog-ng/
+ [ar:travis]: https://travis-ci.org/gregory094/softlab4
