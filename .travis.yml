@@ -2,3 +2,9 @@ language: java
 jdk:
     - openjdk7
     - oraclejdk7
+    - openjdk6
+install:
+  - sudo apt-get update
+  - sudo apt-get upgrade
+before_script:
+  - bash build_docs.sh
