@@ -12,7 +12,6 @@
 
 When you report a bug, it is important to share as much relevant
 information as you can, including:
- * version number of syslog-ng used;
  * the platform (operating system and its version, architecture, etc);
  * a backtrace from the core file if the issue is a crash (this can be
 invaluable);
