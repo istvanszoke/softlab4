@@ -1,0 +1,24 @@
+apply plugin: 'java'
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main'
+        }
+
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+
+    test {
+        java {
+            srcDir 'src/test'
+        }
+
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+}
+
