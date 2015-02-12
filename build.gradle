@@ -1,5 +1,7 @@
 apply plugin: 'java'
 
+sourceCompatibility = 1.6
+
 sourceSets {
     main {
         java {
@@ -20,5 +22,14 @@ sourceSets {
             srcDir 'src/resources'
         }
     }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //Unit testing
+    testCompile group: 'junit', name: 'junit', version: '+'    
 }
 
