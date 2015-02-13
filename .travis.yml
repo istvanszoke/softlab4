@@ -5,6 +5,6 @@ jdk:
     - openjdk6
 install:
   - sudo apt-get update
-  - sudo apt-get install -y texlive-latex-base
+  - sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-fonts-recommended
 before_script:
   - bash build_docs.sh
