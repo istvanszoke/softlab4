@@ -2,3 +2,19 @@ language: java
 jdk:
     - openjdk7
     - oraclejdk7
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "UdWU7CL5Di+pt+KnfwUZAB/FEeGCuSx0acnNC1y4qQZqcinFB55BnZmMQ94yCMR/W2QoUMRXcwHHZcUXNlftxQgLA9aBCmIWq291jBCneaaGOgPZQL6BBj6b4OVnfgAVRJGYDfOLjdcjZ/2JMrC312a8xvxFe3ArKDdFbOmMdac="
+
+addons:
+  coverity_scan:
+    project:
+      name: "gregory094/softlab4"
+      description: "Szoftverlabor IV."
+    notification_email: gustorn@gmail.com
+    build_command_prepend: "gradle clean"
+    build_command:   "gradle build"
+    branch_pattern: coverity_scan
