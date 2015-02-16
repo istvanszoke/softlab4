@@ -2,6 +2,7 @@
 % ===========================================================================
 
 \input{includes/header}
+\input{javadoc/javadoc_pre.tex}
 
 \csapat{\team}{finalize}
   \konzulens{}
@@ -11,6 +12,7 @@
   \tagd{Nagy}{ISVSOU}{gergo.nagy094@gmail.com}
 
 \datum{\today}
+
 
 \begin{document}
 
@@ -31,6 +33,10 @@
 % Table of Contents and Figures
 \clearpage \tableofcontents \pagestyle{fancy}
 \clearpage \listoffigures \pagestyle{fancy}
+
+% For testing TeXDoclet should be moved later
+\newpage \clearpage
+\input{javadoc/javadoc.tex}
 
 %\setcounter{chapter}{1}
 %\input{chapters/chapter02/sablon02}

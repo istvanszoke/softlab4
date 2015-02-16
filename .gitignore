@@ -20,3 +20,17 @@ gradle-app.setting
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
+
+# TeXDoclet and JavaDoc documentation ignores
+!texdoclet/TeXDoclet.jar
+docs/javadoc
+
+# Compiled Documentation ignore
+szoftlab4.aux
+szoftlab4.lof
+szoftlab4.log
+szoftlab4.out
+szoftlab4.pdf
+szoftlab4.synctex.gz
+szoftlab4.toc
+
