@@ -24,3 +24,13 @@ gradle-app.setting
 # TeXDoclet and JavaDoc documentation ignores
 !texdoclet/texdoclet.jar
 docs/javadoc
+
+# Compiled Documentation ignore
+szoftlab4.aux
+szoftlab4.lof
+szoftlab4.log
+szoftlab4.out
+szoftlab4.pdf
+szoftlab4.synctex.gz
+szoftlab4.toc
+
