@@ -17,6 +17,8 @@ javadoc -docletpath ../texdoclet/TeXDoclet.jar \
 	-serial \
 	-private \
 
+cp ../texdoclet/javadoc_pre.tex ../docs/javadoc
+
 cd ..
 
 exit $?	 
