@@ -1,6 +1,7 @@
 #!/bin/bash
 
-rm ../docs/javadoc/*.tex
+mkdir docs/javadoc
+rm docs/javadoc/*.tex
 
 cd src
 
@@ -21,4 +22,4 @@ cp ../texdoclet/javadoc_pre.tex ../docs/javadoc
 
 cd ..
 
-exit $?	 
+exit $?
