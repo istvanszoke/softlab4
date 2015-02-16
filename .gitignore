@@ -22,7 +22,7 @@ gradle-app.setting
 !gradle-wrapper.jar
 
 # TeXDoclet and JavaDoc documentation ignores
-!texdoclet/texdoclet.jar
+!texdoclet.jar
 docs/javadoc
 
 # Compiled Documentation ignore
