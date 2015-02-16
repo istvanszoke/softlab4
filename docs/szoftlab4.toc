@@ -1,8 +1,0 @@
-\select@language {magyar} \contentsline {section}{Class Hierarchy}{3}{section*.3}
-\select@language {magyar} \contentsline {section}{\numberline {0.1}Package main}{3}{section.0.1}
-\select@language {magyar} \contentsline {subsection}{\numberline {0.1.1}Class Main}{3}{subsection.0.1.1}
-\select@language {magyar} \contentsline {subsubsection}{\nonumberline Declaration}{3}{section*.5}
-\select@language {magyar} \contentsline {subsubsection}{\nonumberline Constructor summary}{3}{section*.6}
-\select@language {magyar} \contentsline {subsubsection}{\nonumberline Method summary}{3}{section*.7}
-\select@language {magyar} \contentsline {subsubsection}{\nonumberline Constructors}{3}{section*.8}
-\select@language {magyar} \contentsline {subsubsection}{\nonumberline Methods}{3}{section*.9}
