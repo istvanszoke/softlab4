@@ -2,8 +2,7 @@
 
 rm ../docs/javadoc/*.tex
 
-OLDDIR=$(pwd)
-cd ../src
+cd src
 
 javadoc -docletpath ../texdoclet/TeXDoclet.jar \
 	-doclet org.stfm.texdoclet.TeXDoclet \
@@ -18,6 +17,6 @@ javadoc -docletpath ../texdoclet/TeXDoclet.jar \
 	-serial \
 	-private \
 
-cd $OLDDIR
+cd ..
 
 exit $?	 
