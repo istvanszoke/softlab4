@@ -25,7 +25,18 @@
 \section{Áttekintés}
 
 \subsection{Általános áttekintés}
-\comment{A kialakítandó szoftver legmagasabb szintű architekturális képe. A fontosabb alrendszerek felsorolása, a közöttük kialakítandó interfészek lényege, a felhasználói kapcsolatok alapja. Esetleges hálózati és adattárolási elvárások.}
+%\comment{A kialakítandó szoftver legmagasabb szintű architekturális képe. A fontosabb alrendszerek felsorolása, a közöttük kialakítandó interfészek lényege, a felhasználói kapcsolatok alapja. Esetleges hálózati és adattárolási elvárások.}
+
+\indent A kialakítandó szoftver alapvetően egy játékprogram \emph{(továbbiakban: játék)}. Több rendszerre és alrendszerre is szükségünk van ahhoz, hogy a felhasználóval \emph{(továbbiakban: játékos)} a kapcsolatot tartsuk és számára a megfelelő játékélményt prezentáljuk.\\
+\indent Három alapvető működési egységgel rendelkezik majd a program. Ezek pedig a következő funkciókat ellátó alrendszerek:
+\begin{enumerate}
+	\setlength\itemsep{0pt}
+	\item A játékostól a játék irányába vett interakció
+	\item A játéktól a játékos felé történő visszajelzés 
+	\item A játék logikájának és állapotának kezelése
+\end{enumerate}
+Ezen rendszerek között kialakítandó interfészeket úgy kell megvalósítani, hogy azok biztosítsák a játékos számára az alkalmazásnak a gördülékeny működését. Ebből a felhasználónak prezentált kezelőfelületekkel az első két alrendszer rendelkezik.\\
+\indent A programnak feltétlen szüksége lesz adattárolási lehetőségre, hogy a a játékos kérésére a játék állását el lehessen tárolni, és azt későbbi továbbjátszás céljából vissza állítható legyen.
 
 \subsection{Funkciók}
 \comment{A feladat kb. 4000 karakteres (kb 1,5 oldal) részletezettségű magyar nyelvű leírása. Nem szerepelhetnek informatikai kifejezések.}
