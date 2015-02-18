@@ -1,0 +1,93 @@
+\documentclass{article}
+
+
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[magyar]{babel}
+\usepackage{geometry}
+
+\geometry{
+	a4paper,
+	left=25mm,
+	right=25mm,
+	top=25mm,
+	bottom=25mm,
+}
+
+
+\begin{document}
+
+\section{Jegyzőkönyvek}
+\subsection{\#1 2015.02.18.-i konzultáció}
+
+\begin{itemize}
+	\item Konzulens
+		\begin{itemize}
+		\item Hartung István
+		\item Email: \href{mailto:hartung@tresorit.com}{hartung@tresorit.com}
+		\end{itemize}
+	\item Elhangzottak
+		\begin{itemize}
+			\item Leadásról
+			\begin{itemize}
+				\item \textbf{Hétfő délután 14-től van leadás}
+				\item Eredményeket az előző hétről mindíg a következő konzin kapjuk meg.
+				\item \textbf{E-mailben is le kell majd adni, hogy szerdára ki tudja javítani a konzulens}
+				\begin{itemize}
+					\item PDF-ben
+					\item "szoftlab4" legyen a tárgyban
+				\end{itemize}
+				\item A milestone-os doksikat ahol pontokat osztunk szét ott mindenkinek alá kell írni
+				\item Konzulens kérése: \textbf{Kétoldalasra legyen nyomtatva}
+			\end{itemize}
+			\item Három Milsestone konzultáció
+			\begin{itemize}
+				\item Itt több embernek is bent kell lenni konzultáción a csapatból.
+				\item És itt mindíg helyben egy másik csapatnak a programját kell bemutatni dokumentáció és forráskód alapján
+			\end{itemize}
+			\item Beadandó szoftver és feladatkiírás
+			\begin{itemize}
+				\item Helyben kell tudni fordulnia (Oracle JDK 6 \textit{Nem mondta pontosan milyen van a gépeken, csak saccoltam. Következő héten bent ülő ember indítsa el a gépet és nézze meg kérem.})
+				\item \textbf{Nem lehet semmilyen külsős library-t használni}
+				\item \textit{Többjátékos megkötést még nem kell tenni az első résznél. Amúgy később lehet egymás után körös rendszer, több gépen játékosok stb.}
+			\end{itemize}
+			\item Első leadással kapcsolatos dolgok
+			\begin{itemize}
+				\item \textbf{Hivatkozások}\\
+				Azt kell leírni ha használtunk külsős tartalmat, szakirodalomra, stb való hivatkozások
+				\item \textbf{Általános áttekintés}\\
+				Csak kliens van, vagy van szerver, stb. Nagyon alapszintű felvázolás 
+				\item \textbf{Definíciók és rövidítések}\\ 
+				Dokumentáció szintjén értendő fogalmak. Eltér a szótártól. Lássad lejjebb
+				\item \textbf{Funkciók}\\
+				A feladatkiírás általunk kitömött részeire itt hangsúlyt kell fektetni. Törekedni kell arra, hogy ne nagyon vállaljuk túl magunkat. "Társas játék" szintű leírás. A játékot kell definiálni és nem az interfészt amin használjuk. Ami a feladatkiírásban benne van annak itt is szerepelnie kell. 
+				\item \textbf{Korlátozások}\\
+				A labor gépen működnie kell, nem szabad akadnia a képnek, hasonló jellegű dolgokra kell gondolni
+				\item \textbf{Funkcionális követelmények}\\
+				Mit kell tudnia a játéknak, irányítás, elindítás, kilépés, stb.
+				\item \textbf{Erőforrások}\\
+				Hardver és szoftverkövetelmények, hálózat ha kell...
+				\item \textbf{Átadással kapcsolatos követelmények}\\
+				Szoftvert és doksikat hogyan kell leadni. Gyakorlatilag azt kell leírni, hogy a szoftvert a beadón kell beadni. Hetente le kell adni a doksikat, stb.
+				\item \textbf{Nem funkcionális követelmények}\\
+				Játékszoftvernél nyílván érdekes probléma. Rizsa. Amúgy orvosi példával élve, nem adhatunk 1000-szeres sugárdózist a betegnek.
+				\item \textbf{Lényeges use-casek}\\ 
+				\emph{Kell ábrát csinálni.} Csak a specifikációban meghatározott fogalmakkal és szinten kell megvalósítani. \emph{Funkcionális követelmények Use-Case megvalósítása}. Táblázat is fontos.
+				\item \textbf{Szótár}\\
+				A termék szintjén, nem úgy mint a definíciók és rövidítések. Fontos megkötések: ábécé rendben van, ne maradjon definiálatlan kifejezés
+				\item \textbf{Projektterv}\\
+				 Le kell írni, hogy a továbbiakban, hogyan fogjuk megvalósítani, milyen eszközökkel, eljárásokkal. Különböző embereknek a feladatköre. Leadások hogyan történnnek. Gyakorlati cél, hogy előre eltervezni a lehető legtöbb megvalósítással kapcsolat eljárást. Le kell írni, hogy hogyan kommunikálunk, milyen repo, CI, stb.
+				\item \textbf{Napló}\\
+				Lehetőleg viszonylag reális adatokkal töltsük ki. Már itt igyekezzünk a pontszámainkra figyelni
+				\item \textbf{Átlagos terjedelme az első leadandónak 7-12 oldal}
+			\end{itemize}
+			\item Általában dokumentálásról
+			\begin{itemize}
+				\item Következő doksi mindíg az előző doksiban talált hibák javításával kezdődik.
+				\item Utolsó dokumentációs leadás mergelt javításokkal kell leadni, tehát a régi szekciók elején leadott javításokat be kell ileszteni az előző leadás részébe.
+			\end{itemize}
+		\end{itemize}
+\end{itemize}
+
+
+\end{document}

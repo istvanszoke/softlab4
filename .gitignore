@@ -26,11 +26,11 @@ gradle-app.setting
 docs/javadoc
 
 # Compiled Documentation ignore
-szoftlab4.aux
-szoftlab4.lof
-szoftlab4.log
-szoftlab4.out
-szoftlab4.pdf
-szoftlab4.synctex.gz
-szoftlab4.toc
+*.aux
+*.lof
+*.log
+*.out
+*.pdf
+*.synctex.gz
+*.toc
 
