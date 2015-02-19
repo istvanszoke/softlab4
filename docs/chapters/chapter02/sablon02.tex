@@ -136,8 +136,8 @@ A csapat tagjai három fő módon kommunikálnak egymással:
 \end{enumerate}
 
 \subsection{Verziókezelés, fejlesztés}
-Mivel többen dolgozunk egyszerre a projekten, ezért fontos, hogy mindenki hozzá tudjon férni a legfrissebb forráskódhoz és dokumentációhoz. Ezen felül elsődleges szempont, hogy a párhuzamosan dolgozó csapataggok munkája könnyen integrálható legyen a közponi (leadandó) kózbázisba. Ehhez mi a \textbf{Git} verziókezelő rendszert, központi tárhelynek pedig a \textbf{GitHubot}  használjuk, különböző kiegészítésekkel. Ez lehetőséget biztosít a kód könnyű nyomonkövetésére, illetve
-esetleges hibák esetén egy korábbi változatra való visszaállásra (bár ezt mindenáron el akarjuk kerülni, ld. a következő pontokat). Mivel a dokumentáció elkészítéséhez LaTeX-et választottunk, ezért a dokumentáció is egyszerűen kezelhető a verziókezelőben. \\
+Mivel többen dolgozunk egyszerre a projekten, ezért fontos, hogy mindenki hozzá tudjon férni a legfrissebb forráskódhoz és dokumentációhoz. Ezen felül elsődleges szempont, hogy a párhuzamosan dolgozó csapataggok munkája könnyen integrálható legyen a közponi (beadandó) kózbázisba. Ehhez mi a \textbf{Git} verziókezelő rendszert, központi tárhelynek pedig a \textbf{GitHubot}  használjuk, különböző kiegészítésekkel. Ez lehetőséget biztosít a kód könnyű nyomonkövetésére, illetve
+esetleges hibák esetén egy korábbi változatra való visszaállásra (bár ezt mindenáron el akarjuk kerülni, ld. a következő pontokat). Mivel a dokumentáció elkészítéséhez a LaTeX rendszert választottuk, ezért a dokumentáció is egyszerűen kezelhető a verziókezelőben. \\
 Kiegészítések a Git és GitHub beépített eszközeihez:
 
 \begin{enumerate}
@@ -146,6 +146,16 @@ Kiegészítések a Git és GitHub beépített eszközeihez:
         el, amely nem megy át az összes definiált teszten.
     \item \textbf{Coverity:} egy statikus ellenőrzést végző alkalmazás. Fontosabb mérföldkövek után kerül futtatásra. Feladata, hogy segítsen rejtett hibák feltárásában és kijavításában.
 \end{enumerate}
+
+
+\subsection{Egyéb programok}
+A fent kifejtett módszer mellett a csapat tagjai az alábbi programokat használják a fejlesztéshez: \\ 
+
+\noindent \textbf{Dokumentáció:} TeXStudio vagy egyszerű szövegszerkesztő program (Vim, GEdit). \\
+
+\noindent \textbf{UML:} a könnyű együttműködés érdekében a csapat összes tagja ugyanazt az UML IDE-t használja, ez pedig a Visual Paradigm Community Edition \\
+
+\noindent \textbf{Java:} nincs meghatározott fejlesztőkörnyezet, a használt programok listája: IntelliJ IDEA, Eclipse, Vim
 
 \subsection{Határidők}
 
@@ -179,7 +189,7 @@ A feladatot három fő lépcsöben kell megvalósítani:
 \end{enumerate}
 
 \noindent A \textbf{szkeleton} változat célja annak bizonyítása, hogy az objektum és dinamikus modellek a definiált feladat egy modelljét alkotják. A szkeleton egy program, amelyben már valamennyi, a végső rendszerben is szereplő business objektum szerepel. Az objektumoknak csak az interfésze definiált. Valamennyi metódus az indulás pillanatában az ernyőre szöveges változatban kiírja a saját nevét, majd meghívja azon metódusokat, amelyeket a szolgáltatás végrehajtása érdekében meg kell hívnia. Amennyiben
-a metódusból valamely feltétel fennállása esetén hívunk meg más metódusokat, akkor a feltételre vonatkozó kérdést interaktívan az ernyőn fel kell tenni és a kapott válasz alapján kell a továbbiakban eljárni. A szkeletonnak alkalmasnak kell lenni arra, hogy a különböző forgatókönyvek és szekvencia diagramok ellenőrizhetők legyenek. Csak karakteres ernyőkezelés fogadható el, mert ez biztosítja a rendszer egyszerűségét. \\
+a metódusból valamely feltétel fennállása esetén hívunk meg más metódusokat, akkor a feltételre vonatkozó kérdést interaktívan az ernyőn fel kell tenni és a kapott válasz alapján kell a továbbiakban eljárni. A szkeletonnak alkalmasnak kell lenni arra, hogy a különböző forgatókönyvek és szekvencia diagramok ellenőrizhetők legyenek. Csak karakteres ernyőkezelés fogadható el, mert ez biztosítja a rendszer egyszerűségét. \\ 
 
 \noindent A \textbf{prototípus} program célja annak demonstrálása, hogy a program elkészült, helyesen működik, valamennyi feladatát teljesíti. A prototípus változat egy elkészült program kivéve a kifejlett grafikus interfészt. A változat tervezési szempontból elkészült, az ütemezés, az aktív objektumok kezelése megoldott. A business objektumok - a megjelenítésre vonatkozó részeket kivéve - valamennyi metódusa a végleges algoritmusokat tartalmazza. A megjelenítés és működtetés egy alfanumerikus ernyőn
 követhető, ugyanakkor a megjelenítés fájlban is logolható, ezzel megteremtve a rendszer tesztelésének lehetőségét. Különös figyelmet kell fordítani az interfész logikájára, felépítésére, valamint arra, hogy az mennyiben tükrözi és teszi láthatóvá a program működését, a beavatkozások hatásait. \\
