@@ -142,7 +142,7 @@ Kiegészítések a Git és GitHub beépített eszközeihez:
 
 \begin{enumerate}
     \item \textbf{Waffle.io:} központi felületet biztosít a projekthez tartozó \textit{Issuek} kezeléséhez, az értük felelős csapattagok nyílvántartásához
-    \item \textbf{TravisCI:} a projekt folyamatos integrációt használ. Ez minden \textit{Pull Requestre} automatikusan lefut, és csak akkor fogadható el a közbonti kódbázisba, ha a futás sikeres volt. Ezzel több problémát is el tudunk kerülni. Mivel a TravisCI először lefordítja a kódot, ezért szintaktikailag hibás, vagy rossz Java szabványt használó kód nem kerülhet a fő ágba. Ezután azonban futtatásra kerülnek a projekthez tartozó unit testek is, így olyan kód sem fogadható
+    \item \textbf{TravisCI:} a projekt folyamatos integrációt használ. Ez minden \textit{Pull Requestre} automatikusan lefut, és ez csak akkor fogadható el a közbonti kódbázisba, ha a futás sikeres volt. Ezzel több problémát is el tudunk kerülni. Mivel a TravisCI először lefordítja a kódot, ezért szintaktikailag hibás, vagy rossz Java szabványt használó kód nem kerülhet a fő ágba. Ezután azonban futtatásra kerülnek a projekthez tartozó unit testek is, így olyan kód sem fogadható
         el, amely nem megy át az összes definiált teszten.
     \item \textbf{Coverity:} egy statikus ellenőrzést végző alkalmazás. Fontosabb mérföldkövek után kerül futtatásra. Feladata, hogy segítsen rejtett hibák feltárásában és kijavításában.
 \end{enumerate}
@@ -151,7 +151,9 @@ Kiegészítések a Git és GitHub beépített eszközeihez:
 
 \begin{longtable}{| l | l | l |}
 \hline
-\textbf{Dátum} & \textbf{Leírás} & \textbf{Ellenőrzés} \tabularnewline \hline
+\textbf{Dátum} & \textbf{Leírás} & \textbf{Ellenőrzés} \tabularnewline 
+\hline \hline
+\endhead
 2015. 02. 23. & Követelmény, projekt, funkcionalitás & beadás \tabularnewline \hline
 2015. 03. 02. & Analízis modell kidolgozása 1. & beadás \tabularnewline \hline
 2015. 03. 09. & Analízis modell kidolgozása 2. & beadás \tabularnewline \hline
@@ -167,3 +169,19 @@ Kiegészítések a Git és GitHub beépített eszközeihez:
 2015. 05. 13. & Grafikus változat & bemutatás \tabularnewline \hline
 2015. 05. 15. & Összefoglalás & beadás \tabularnewline \hline
 \end{longtable}
+
+\subsection{Mérföldkövek}
+A feladatot három fő lépcsöben kell megvalósítani:
+\begin{enumerate}
+    \item szkeleton
+    \item prototípus
+    \item grafikus
+\end{enumerate}
+
+\noindent A \textbf{szkeleton} változat célja annak bizonyítása, hogy az objektum és dinamikus modellek a definiált feladat egy modelljét alkotják. A szkeleton egy program, amelyben már valamennyi, a végső rendszerben is szereplő business objektum szerepel. Az objektumoknak csak az interfésze definiált. Valamennyi metódus az indulás pillanatában az ernyőre szöveges változatban kiírja a saját nevét, majd meghívja azon metódusokat, amelyeket a szolgáltatás végrehajtása érdekében meg kell hívnia. Amennyiben
+a metódusból valamely feltétel fennállása esetén hívunk meg más metódusokat, akkor a feltételre vonatkozó kérdést interaktívan az ernyőn fel kell tenni és a kapott válasz alapján kell a továbbiakban eljárni. A szkeletonnak alkalmasnak kell lenni arra, hogy a különböző forgatókönyvek és szekvencia diagramok ellenőrizhetők legyenek. Csak karakteres ernyőkezelés fogadható el, mert ez biztosítja a rendszer egyszerűségét. \\
+
+\noindent A \textbf{prototípus} program célja annak demonstrálása, hogy a program elkészült, helyesen működik, valamennyi feladatát teljesíti. A prototípus változat egy elkészült program kivéve a kifejlett grafikus interfészt. A változat tervezési szempontból elkészült, az ütemezés, az aktív objektumok kezelése megoldott. A business objektumok - a megjelenítésre vonatkozó részeket kivéve - valamennyi metódusa a végleges algoritmusokat tartalmazza. A megjelenítés és működtetés egy alfanumerikus ernyőn
+követhető, ugyanakkor a megjelenítés fájlban is logolható, ezzel megteremtve a rendszer tesztelésének lehetőségét. Különös figyelmet kell fordítani az interfész logikájára, felépítésére, valamint arra, hogy az mennyiben tükrözi és teszi láthatóvá a program működését, a beavatkozások hatásait. \\
+
+\noindent A teljes (\textbf{grafikus}) változat a prototípustól elvileg csak a kezelői felület minőségében különbözhet. Ennek változatnak az értékelésekor a hangsúlyt sokkal inkább a megvalósítás belső szerkezetére, semmint a külalakra kell helyezni.
