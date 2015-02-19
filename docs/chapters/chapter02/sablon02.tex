@@ -114,4 +114,42 @@ Ezen rendszerek között kialakítandó interfészeket úgy kell megvalósítani
 \comment{A szótár a követelmények alapján készítendő fejezet. Egy szótári bejegyzés definiálásához csak más szótári bejegyzések és köznapi – a feladattól független – fogalmak használhatók fel. A szótár mérete kb. 1-2 oldal legyen.}
 
 \section{Projekt terv}
-\comment{Tartalmaznia kell a projekt végrehajtásának lépéseit, a lépések, eredmények határidejét, az egyes feladatok elvégzéséért felelős személyek nevét és beosztását, a szükséges erőforrásokat, stb. Meg kell adni a csoportmunkát támogató eszközöket, a választott technikákat! Definiálni kell, hogy hogyan történik a dokumentumok és a forráskód megosztása!}
+\subsection{Csapat felépítés}
+A csapat négy főből áll. A szerepköröket a projekt elején kiosztottuk, figyelembe véve az egyes csapattagok preferenciáit. A cél az volt, hogy mindenki olyan feledatot kapjon, amely egybeesik a szakterületével.
+
+\begin{longtable}{| l | l |}
+\hline
+\textbf{Név} & \textbf{Szerepkör} \tabularnewline \hline
+Nagy Gergő & csapatvezető, ... \tabularnewline \hline
+Nyári Dávid Tamás & ... \tabularnewline \hline
+Paral Zsolt & ... \tabularnewline \hline
+Szőke-N István & ... \tabularnewline \hline
+\end{longtable}
+
+\subsection{Kommunikáció}
+A csapat tagjai három fő módon kommunikálnak egymással:
+\begin{enumerate}
+    \item \textbf{Facebook:} egy privát Facebook csoport, amelyben elsősorban menedzsment jellegű megbeszélések folynak, mint például konferenciák időpontjainak egyesztetése, pull request review megsürgetése. Napi rendszerességű a kommunikáció.
+    \item \textbf{Google Hangouts:} a konferenciák lebonyolításának elsődleges formája. A legfontosabb közös döntések, feladatkiosztások itt történnek. Rendszeressége függ a megvitatandó problémák számától: a projekt elején akár heti 2-3 alkalom is előfordulhat, de a későbbiekben jellemzően heti rendszerességű lesz.
+    \item \textbf{GitHub:} minden egyéb kommunikáció a GitHubon zajlik. Fontosabb általános tudnivalók a \textit{Wikin} találhatók, a konkrét problémákról való megbeszélések az \textit{Issues} menü alatt, míg mások kódjának ellenőrzése a \textit{Pull Request} menü alatt található. A kommunikáció gyakorisága függ a kontribúciók rendszerességétől és a felmerülő problémák számától, de ennek a módnak a legfőbb feladata, hogy a projekthez kapcsolódó problémák egy centralizált helyen legyenek
+        megbeszélve és dokumentálva.
+\end{enumerate}
+
+\subsection{Verziókezelés, fejlesztés}
+Mivel többen dolgozunk egyszerre a projekten, ezért fontos, hogy mindenki hozzá tudjon férni a legfrissebb forráskódhoz és dokumentációhoz. Ezen felül elsődleges szempont, hogy a párhuzamosan dolgozó csapataggok munkája könnyen integrálható legyen a közponi (leadandó) kózbázisba. Ehhez mi a \textbf{Git} verziókezelő rendszert, központi tárhelynek pedig a \textbf{GitHubot}  használjuk, különböző kiegészítésekkel. Ez lehetőséget biztosít a kód könnyű nyomonkövetésére, illetve
+esetleges hibák esetén egy korábbi változatra való visszaállásra (bár ezt mindenáron el akarjuk kerülni, ld. a következő pontokat). Mivel a dokumentáció elkészítéséhez LaTeX-et választottunk, ezért a dokumentáció is egyszerűen kezelhető a verziókezelőben. \\
+Kiegészítések a Git és GitHub beépített eszközeihez:
+
+\begin{enumerate}
+    \item \textbf{Waffle.io:} központi felületet biztosít a projekthez tartozó \textit{Issuek} kezeléséhez, az értük felelős csapattagok nyílvántartásához
+    \item \textbf{TravisCI:} a projekt folyamatos integrációt használ. Ez minden \textit{Pull Requestre} automatikusan lefut, és csak akkor fogadható el a közbonti kódbázisba, ha a futás sikeres volt. Ezzel több problémát is el tudunk kerülni. Mivel a TravisCI először lefordítja a kódot, ezért szintaktikailag hibás, vagy rossz Java szabványt használó kód nem kerülhet a fő ágba. Ezután azonban futtatásra kerülnek a projekthez tartozó unit testek is, így olyan kód sem fogadható
+        el, amely nem megy át az összes definiált teszten.
+    \item \textbf{Coverity:} egy statikus ellenőrzést végző alkalmazás. Fontosabb mérföldkövek után kerül futtatásra. Feladata, hogy segítsen rejtett hibák feltárásában és kijavításában.
+\end{enumerate}
+
+\subsection{Határidők}
+
+\begin{longtable}{| l | l | l |}
+\hline
+\textbf{Dátum} & \textbf{Leírás} & \textbf{Ellenőrzés} \tabularnewline \hline
+\end{longtable}
