@@ -18,9 +18,10 @@ if [ $? -ne 0 ]; then
 fi
 cd ..
 echo "Generating of the documentation ended. [SUCCESS]"
-exit 0
 
 for file in docs/*.{aux,lof,log,out,toc};
 do
     rm -f "$file"
 done
+
+exit 0
