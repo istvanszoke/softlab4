@@ -138,4 +138,90 @@ A010 & JRE 1.6 vagy újabb meglétének ellenőrzése & kiértékelés & alapvet
 \comment{A szótár a követelmények alapján készítendő fejezet. Egy szótári bejegyzés definiálásához csak más szótári bejegyzések és köznapi – a feladattól független – fogalmak használhatók fel. A szótár mérete kb. 1-2 oldal legyen.}
 
 \section{Projekt terv}
-\comment{Tartalmaznia kell a projekt végrehajtásának lépéseit, a lépések, eredmények határidejét, az egyes feladatok elvégzéséért felelős személyek nevét és beosztását, a szükséges erőforrásokat, stb. Meg kell adni a csoportmunkát támogató eszközöket, a választott technikákat! Definiálni kell, hogy hogyan történik a dokumentumok és a forráskód megosztása!}
+\subsection{Csapatfelépítés}
+A csapat négy főből áll. A szerepköröket a projekt elején kiosztottuk, figyelembe véve az egyes csapattagok preferenciáit. A cél az volt, hogy mindenki olyan feledatot kapjon, amely egybeesik a szakterületével.
+
+\begin{longtable}{| l | l |}
+\hline
+\textbf{Név} & \textbf{Szerepkör} \tabularnewline \hline
+Nagy Gergő & csapatvezető, ... \tabularnewline \hline
+Nyári Dávid Tamás & ... \tabularnewline \hline
+Paral Zsolt & ... \tabularnewline \hline
+Szőke-N István & ... \tabularnewline \hline
+\end{longtable}
+
+\subsection{Kommunikáció}
+A csapat tagjai három fő módon kommunikálnak egymással:
+\begin{enumerate}
+    \item \textbf{Facebook:} egy privát Facebook csoport, amelyben elsősorban menedzsment jellegű megbeszélések folynak, mint például konferenciák időpontjainak egyesztetése, pull request review megsürgetése. Napi rendszerességű a kommunikáció.
+    \item \textbf{Google Hangouts:} a konferenciák lebonyolításának elsődleges formája. A legfontosabb közös döntések, feladatkiosztások itt történnek. Rendszeressége függ a megvitatandó problémák számától: a projekt elején akár heti 2-3 alkalom is előfordulhat, de a későbbiekben jellemzően heti rendszerességű lesz.
+    \item \textbf{GitHub:} minden egyéb kommunikáció a GitHubon zajlik. Fontosabb általános tudnivalók a \textit{Wikin} találhatók, a konkrét problémákról való megbeszélések az \textit{Issues} menü alatt, míg mások kódjának ellenőrzése a \textit{Pull Request} menü alatt található. A kommunikáció gyakorisága függ a kontribúciók rendszerességétől és a felmerülő problémák számától, de ennek a módnak a legfőbb feladata, hogy a projekthez kapcsolódó problémák egy centralizált helyen legyenek
+        megbeszélve és dokumentálva.
+\end{enumerate}
+
+\subsection{Verziókezelés, fejlesztés}
+Mivel többen dolgozunk egyszerre a projekten, ezért fontos, hogy mindenki hozzá tudjon férni a legfrissebb forráskódhoz és dokumentációhoz. Ezen felül elsődleges szempont, hogy a párhuzamosan dolgozó csapataggok munkája könnyen integrálható legyen a közponi (beadandó) kózbázisba. \\ 
+Ehhez mi a \textbf{Git} verziókezelő rendszert, központi tárhelynek pedig a \textbf{GitHubot}  használjuk, különböző kiegészítésekkel. Ez lehetőséget biztosít a kód könnyű nyomonkövetésére, illetve
+esetleges hibák esetén egy korábbi változatra való visszaállásra (bár ezt mindenáron el akarjuk kerülni, ld. a következő pontokat). Mivel a dokumentáció elkészítéséhez a LaTeX rendszert választottuk, ezért a dokumentáció is egyszerűen kezelhető a verziókezelőben. \\
+Kiegészítések a Git és GitHub beépített eszközeihez:
+
+\begin{enumerate}
+    \item \textbf{Waffle.io:} központi felületet biztosít a projekthez tartozó \textit{Issuek} kezeléséhez, az értük felelős csapattagok nyílvántartásához
+    \item \textbf{TravisCI:} a projekt folyamatos integrációt használ, amellyel több probléma is elkerülhető:
+        \begin{itemize}
+            \item Mivel a TravisCI-n a laborban található gépekkel egyező verziójú Java fut, ezért a kódban biztos nem találhatók nem megfelelő szabványból származó elemek. 
+            \item Biztosított, hogy a kód szintaktikai hibákat nem tartalmaz, hiszen a kódnak le kell fordulnia a build serveren. 
+            \item Garantált hogy átment az összes, a projektben definiált unit testen. 
+        \end{itemize} 
+        Ez a folyamatos integrációs folyamat minden egyes elküldött \textit{Pull Requestre} lefut, így biztosan nem kerül a fő ágba olyan kód, amely a fent említett három probléma bármelyikét tartalmazza.
+    \item \textbf{Coverity:} egy statikus ellenőrzést végző alkalmazás. Fontosabb mérföldkövek után kerül futtatásra. Feladata, hogy segítsen rejtett hibák feltárásában és kijavításában.
+\end{enumerate}
+
+
+\subsection{Egyéb programok}
+A fent kifejtett módszer mellett a csapat tagjai az alábbi programokat használják a fejlesztéshez: \\ 
+
+\noindent \textbf{Dokumentáció:} TeXStudio vagy egyszerű szövegszerkesztő program (Vim, GEdit). \\
+
+\noindent \textbf{UML:} a könnyű együttműködés érdekében a csapat összes tagja ugyanazt az UML IDE-t használja, ez pedig a Visual Paradigm Community Edition \\
+
+\noindent \textbf{Java:} nincs meghatározott fejlesztőkörnyezet, a használt programok listája: IntelliJ IDEA, Eclipse, Vim
+
+\subsection{Határidők}
+
+\begin{longtable}{| l | l | l |}
+\hline
+\textbf{Dátum} & \textbf{Leírás} & \textbf{Ellenőrzés} \tabularnewline 
+\hline \hline
+\endhead
+2015. 02. 23. & Követelmény, projekt, funkcionalitás & beadás \tabularnewline \hline
+2015. 03. 02. & Analízis modell kidolgozása 1. & beadás \tabularnewline \hline
+2015. 03. 09. & Analízis modell kidolgozása 2. & beadás \tabularnewline \hline
+2015. 03. 16. & Szkeleton tervezése & beadás \tabularnewline \hline
+2015. 03. 23. & Szkeleton beadás & beadás \tabularnewline \hline
+2015. 03. 25. & \textbf{Szkeleton} & bemutatás \tabularnewline \hline
+2015. 03. 30. & Prototípus koncepciója & beadás \tabularnewline \hline
+2015. 04. 07. & Részletes tervek & beadás \tabularnewline \hline
+2015. 04. 20. & Prototípus & beadás \tabularnewline \hline
+2015. 04. 22. & \textbf{Prototípus} & bemutatás \tabularnewline \hline
+2015. 04. 27. & Grafikus felület specifikációja & beadás \tabularnewline \hline
+2015. 05. 11. & Grafikus változat & beadás \tabularnewline \hline
+2015. 05. 13. & Grafikus változat & bemutatás \tabularnewline \hline
+2015. 05. 15. & Összefoglalás & beadás \tabularnewline \hline
+\end{longtable}
+
+\subsection{Mérföldkövek}
+A feladatot három fő lépcsöben kell megvalósítani:
+\begin{enumerate}
+    \item szkeleton
+    \item prototípus
+    \item grafikus
+\end{enumerate}
+
+\noindent A \textbf{szkeleton} változat célja annak bizonyítása, hogy az objektum és dinamikus modellek a definiált feladat egy modelljét alkotják. A szkeleton egy program, amelyben már valamennyi, a végső rendszerben is szereplő business objektum szerepel. Az objektumoknak csak az interfésze definiált. Valamennyi metódus az indulás pillanatában az ernyőre szöveges változatban kiírja a saját nevét, majd meghívja azon metódusokat, amelyeket a szolgáltatás végrehajtása érdekében meg kell hívnia. Amennyiben
+a metódusból valamely feltétel fennállása esetén hívunk meg más metódusokat, akkor a feltételre vonatkozó kérdést interaktívan az ernyőn fel kell tenni és a kapott válasz alapján kell a továbbiakban eljárni. A szkeletonnak alkalmasnak kell lenni arra, hogy a különböző forgatókönyvek és szekvencia diagramok ellenőrizhetők legyenek. Csak karakteres ernyőkezelés fogadható el, mert ez biztosítja a rendszer egyszerűségét. \\ 
+
+\noindent A \textbf{prototípus} program célja annak demonstrálása, hogy a program elkészült, helyesen működik, valamennyi feladatát teljesíti. A prototípus változat egy elkészült program kivéve a kifejlett grafikus interfészt. A változat tervezési szempontból elkészült, az ütemezés, az aktív objektumok kezelése megoldott. A business objektumok - a megjelenítésre vonatkozó részeket kivéve - valamennyi metódusa a végleges algoritmusokat tartalmazza. A megjelenítés és működtetés egy alfanumerikus ernyőn
+követhető, ugyanakkor a megjelenítés fájlban is logolható, ezzel megteremtve a rendszer tesztelésének lehetőségét. Különös figyelmet kell fordítani az interfész logikájára, felépítésére, valamint arra, hogy az mennyiben tükrözi és teszi láthatóvá a program működését, a beavatkozások hatásait. \\
+
+\noindent A teljes (\textbf{grafikus}) változat a prototípustól elvileg csak a kezelői felület minőségében különbözhet. Ennek változatnak az értékelésekor a hangsúlyt sokkal inkább a megvalósítás belső szerkezetére, semmint a külalakra kell helyezni.
