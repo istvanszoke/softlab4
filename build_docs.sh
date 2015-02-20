@@ -12,6 +12,7 @@ fi
 cd docs
 pdflatex -halt-on-error szoftlab4.tex
 pdflatex -halt-on-error szoftlab4.tex
+pdflatex -halt-on-error szoftlab4.tex
 if [ $? -ne 0 ]; then
   echo "Generating of the documentation ended. [FAILED]"
   exit -1
