@@ -67,7 +67,7 @@ Ezen rendszerek között kialakítandó interfészeket úgy kell megvalósítani
 \subsection{Erőforrásokkal kapcsolatos követelmények}
 
 % Azonosító, Leírás, Ellenőrzés, Prioritás, Forrás, Komment
-\begin{longtable}{| p{1.75cm} | p{3cm} | p{1.75cm} | p{1.5cm} | p{1.8cm} | p{2cm} |}
+\begin{tabularx}{\linewidth}{| l | X | l | l | l | X |}
 \hline
 \textbf{Azonosító}   & \textbf{Leírás} & \textbf{Ellenőrzés} & \textbf{Prioritás} & \textbf{Forrás} & \textbf{Komment} \tabularnewline
 \hline\hline
@@ -82,20 +82,20 @@ E007 & Coverity & nincs & alapvető & csapat & statikus ellenörző \tabularnewl
 E008 & Waffle.io & nincs & opcionális & csapat & projekt management \tabularnewline \hline
 E009 & JDK 6 vagy újabb & nincs & alapvető & csapat & \tabularnewline \hline
 E010 & Gradle & nincs & alapvető & csapat & build rendszer  \tabularnewline \hline
-E011 & Vim & nincs & opcionális & csapat & szövegszer-kesztő \tabularnewline \hline 
-E012 & GEdit & nincs & opcionális & csapat & szövegszer-kesztő \tabularnewline \hline
+E011 & Vim & nincs & opcionális & csapat & szövegszerkesztő \tabularnewline \hline 
+E012 & GEdit & nincs & opcionális & csapat & szövegszerkesztő \tabularnewline \hline
 E013 & Eclipse & nincs & opcionális & csapat & IDE \tabularnewline \hline
 E014 & IntelliJ IDEA & nincs & opcionális & csapat & IDE \tabularnewline \hline
 E015 & LaTeX & nincs & alapvető & csapat & dokumentáció készítéséhez \tabularnewline \hline
 E016 & TeXStudio & nincs & opcionális & csapat & LaTeX IDE \tabularnewline \hline
 E017 & Visual Paradigm & nincs & alapvető & csapat & UML IDE \tabularnewline
 \hline
-\end{longtable}
+\end{tabularx}
 
 \subsection{Átadással kapcsolatos követelmények}
 
 % Azonosító, Leírás, Ellenőrzés, Prioritás, Forrás, Komment
-\begin{longtable}{| p{1.75cm} | p{3cm} | p{1.75cm} | p{1.5cm} | p{1.8cm} | p{2cm} |}
+\begin{tabularx}{\linewidth}{| l | X | l | l | l | X |}
 \hline
 \textbf{Azonosító}   & \textbf{Leírás} & \textbf{Ellenőrzés} & \textbf{Prioritás} & \textbf{Forrás} & \textbf{Komment} \tabularnewline
 \hline\hline
@@ -110,19 +110,19 @@ A007 & Grafikus változat bemutatás & bemutatás & alapvető & megrendelő & m�
 A008 & A program fut a laboratóriumban kijelölt számítógépeken & bemutatás & alapvető & megrendelő & \tabularnewline \hline
 A009 & A program telepíthető külső segítség nélkül & bemutatás & fontos & megrendelő & \tabularnewline \hline
 A010 & JRE 1.6 vagy újabb meglétének ellenőrzése & kiértékelés & alapvető & csapat & telepítés, ha nem található \tabularnewline \hline
-\end{longtable}
+\end{tabularx}
 
 \subsection{Egyéb nem funkcionális követelmények}
 \comment{A biztonsággal, hordozhatósággal, megbízhatósággal, tesztelhetőséggel, a felhasználóval kapcsolatos követelmények}
 
 % Azonosító, Leírás, Ellenőrzés, Prioritás, Forrás, Komment
-\begin{longtable}{| l | l | l | l | l | l |}
+\begin{tabularx}{\linewidth}{| l | l | l | l | l | l |}
 \hline
 \textbf{Azonosító}   & \textbf{Leírás} & \textbf{Ellenőrzés} & \textbf{Prioritás} & \textbf{Forrás} & \textbf{Komment} \tabularnewline
 \hline\hline
 ... & ... & ... & ... & ... & ... \tabularnewline
 \hline
-\end{longtable}
+\end{tabularx}
 
 
 \section{Lényeges use-case-ek}
@@ -141,7 +141,7 @@ A010 & JRE 1.6 vagy újabb meglétének ellenőrzése & kiértékelés & alapvet
 \subsection{Csapatfelépítés}
 A csapat négy főből áll. A szerepköröket a projekt elején kiosztottuk, figyelembe véve az egyes csapattagok preferenciáit. A cél az volt, hogy mindenki olyan feledatot kapjon, amely egybeesik a szakterületével.
 
-\begin{longtable}{| l | l |}
+\begin{tabularx}{\textwidth}{| l | l |}
 \hline
 \textbf{Név} & \textbf{Szerepkör} \tabularnewline 
 \hline\hline
@@ -149,7 +149,7 @@ Nagy Gergő & csapatvezető, ... \tabularnewline \hline
 Nyári Dávid Tamás & ... \tabularnewline \hline
 Paral Zsolt & ... \tabularnewline \hline
 Szőke-N István & ... \tabularnewline \hline
-\end{longtable}
+\end{tabularx}
 
 \subsection{Kommunikáció}
 A csapat tagjai három fő módon kommunikálnak egymással:
@@ -190,7 +190,7 @@ A fent kifejtett módszer mellett a csapat tagjai az alábbi programokat haszná
 
 \subsection{Határidők}
 
-\begin{longtable}{| p{2.5cm} | p{6cm} | p{1.75cm} |}
+\begin{tabularx}{\linewidth}{| l | l | l |}
 \hline
 \textbf{Dátum} & \textbf{Leírás} & \textbf{Ellenőrzés} \tabularnewline 
 \hline \hline
@@ -207,9 +207,9 @@ A fent kifejtett módszer mellett a csapat tagjai az alábbi programokat haszná
 2015. 04. 22. & \textbf{Prototípus} & bemutatás \tabularnewline \hline
 2015. 04. 27. & Grafikus felület specifikációja & beadás \tabularnewline \hline
 2015. 05. 11. & Grafikus változat & beadás \tabularnewline \hline
-2015. 05. 13. & Grafikus változat & bemutatás \tabularnewline \hline
+2015. 05. 13. & \textbf{Grafikus változat} & bemutatás \tabularnewline \hline
 2015. 05. 15. & Összefoglalás & beadás \tabularnewline \hline
-\end{longtable}
+\end{tabularx}
 
 \subsection{Mérföldkövek}
 A feladatot három fő lépcsöben kell megvalósítani:
