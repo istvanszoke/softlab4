@@ -116,89 +116,35 @@ A010 & JRE 1.6 vagy újabb meglétének ellenőrzése & kiértékelés & alapvet
 \comment{A biztonsággal, hordozhatósággal, megbízhatósággal, tesztelhetőséggel, a felhasználóval kapcsolatos követelmények}
 
 % Azonosító, Leírás, Ellenőrzés, Prioritás, Forrás, Komment
-\begin{tabularx}{\linewidth}{| l | l | l | l | l | l |}
+\begin{tabularx}{\linewidth}{| l | X | l | l | l | l |}
 \hline
 \textbf{Azonosító}   & \textbf{Leírás} & \textbf{Ellenőrzés} & \textbf{Prioritás} & \textbf{Forrás} & \textbf{Komment} \tabularnewline
 \hline\hline
+\endhead
 NF001 & 
-\begin{tabular}[t]{@{}l@{}}
-	Bármilyen JRE8-al rendelkező \\
-	rendszeren legyen futtatható \\
-	az elkészített szoftver.
-\end{tabular} 
+Bármilyen JRE6-al rendelkező rendszeren legyen futtatható az elkészített szoftver.
 & futtatás több OS-en & alapvető & megrendelő & ... \tabularnewline \hline
 NF002 & 
-\begin{tabular}[t]{@{}l@{}}
-	A programnak csak magyar \\
-	nyelvű kezelőfelülete legyen.
-\end{tabular}  
+A programnak csak magyar nyelvű kezelőfelülete legyen.
 & egyértelmű & alapvető & megrendelő & ... \tabularnewline \hline
 NF003 & 
-\begin{tabular}[t]{@{}l@{}}
-	A program az esetek 95 \\
-	százalékában legyen működő-\\
-	képes, ha minden erőforrások-\\
-	kal	kapcsolatos követelmény \\
-	teljesül.
-\end{tabular}  
-& futtatási tesztek & fontos & megrendelő & ... \tabularnewline \hline
-NF004 & 
-\begin{tabular}[t]{@{}l@{}}
-	A program az esetek 90 \\
-	százalékában hiba nélkül \\
-	működjön
-\end{tabular}  
-& futtatási tesztek & fontos & megrendelő & ... \tabularnewline \hline
-NF005 & 
-\begin{tabular}[t]{@{}l@{}}
-	Legyen mód a megfogalmazott  \\
-	követelmények tesztelésére.
-\end{tabular}  
+Legyen mód a megfogalmazott követelmények tesztelésére.
 & tesztesetek & fontos & megrendelő & ... \tabularnewline \hline
-
-NF006 & 
-\begin{tabular}[t]{@{}l@{}}
-	A tesztelés során legyenek  \\
-	kódtesztek és futtatási tesztek.
-\end{tabular}  
+NF004 & 
+A tesztelés során legyenek kódtesztek és futtatási tesztek.
 & tesztesetek & alapvető & fejlesztő & ... \tabularnewline \hline
-
+NF005 & 
+Egy felhasználó által kiadott parancs után a program vagy az operációs rendszer 1 másodpercen belül biztosítson valamilyen választ a felhasználó számára.  
+& nincs & alapvető & megrendelő & ... \tabularnewline \hline
+NF006 & 
+A felhasználóknak legyen ismeretük PC-k (personal computer) alapvető kezelésében Windows operációs rendszeren. 
+& nincs & alapvető & megrendelő & ... \tabularnewline \hline
 NF007 & 
-\begin{tabular}[t]{@{}l@{}}
-	Egy felhasználó által kiadott \\
-	parancs után a program vagy \\
-	az operációs rendszer \\
-	1 másodpercen belül biztosítson \\
-	valamilyen választ a felhasználó \\
-	számára.
-\end{tabular}  
+A felhasználók fizikailag és mentálisan legyenek képesek billentyűzet és egér használatára.
 & nincs & alapvető & megrendelő & ... \tabularnewline \hline
-
-
-NF008 & 
-\begin{tabular}[t]{@{}l@{}}
-	A felhasználóknak legyen \\
-	ismeretük PC-k (personal \\
-	computer) alapvető kezelésében \\ 
-	Windows operációs rendszeren.
-\end{tabular}  
-& nincs & alapvető & megrendelő & ... \tabularnewline \hline
-
-NF009 & 
-\begin{tabular}[t]{@{}l@{}}
-	A felhasználók fizikailag és \\
-	mentálisan legyenek képesek \\
-	billentyűzet és egér használatára.
-\end{tabular}  
-& nincs & alapvető & megrendelő & ... \tabularnewline \hline
-
-NF010 & 
-\begin{tabular}[t]{@{}l@{}}
-	A megrendelt program \\
-	dokumentálva legkésőbb május \\
-	15-ig kerüljön átadásra.
-\end{tabular}  
+NF008 & A megrendelt program dokumentálva legkésőbb május 15-ig kerüljön átadásra. 
 & beadás & fontos & megrendelő & ... \tabularnewline \hline
+	
 \end{tabularx}
 
 
