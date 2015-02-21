@@ -27,6 +27,13 @@ The project uses the [Gradle](https://gradle.org/) build system to build the mai
 ### Building on Windows
 `./gradlew.bat [common build command]`: in the main project directory to use the common build commands described above.
 
+`./build_docs.sh`: to build the documentation. The resulting file will be located in `./docs/szoftlab4.pdf`.
+
+####Required software to build the documentation:
+* a working 'LaTeX' distribution with `pdflatex` in `PATH`
+* a shell that's capable of running `.sh` scripts
+* [rsvg-convert](http://sourceforge.net/projects/tumagcc/files/rsvg-convert.exe/download)
+
 ### Building on Linux
 `./gradlew [common build command]`: in the main project directory to use the common build commands described above.
 
@@ -38,11 +45,13 @@ The project uses the [Gradle](https://gradle.org/) build system to build the mai
 * `texlive-latex-recommended`
 * `texlive-fonts-recommended` 
 * `texlive-latex-extra`
+* `librsvg2-bin`
 
 **Arch Linux:**
 * `texlive-bin`
 * `texlive-core`
 * `texlive-latexextra`
+* `librsvg`
  
 ## Folder structure
 * `consults`: real-world consultation summaries for internal use
