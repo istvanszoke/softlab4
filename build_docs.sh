@@ -10,6 +10,7 @@ if [ $? -ne 0 ]; then
 fi
 
 cd docs
+./svg_preprocess.sh
 pdflatex -halt-on-error szoftlab4.tex
 pdflatex -halt-on-error szoftlab4.tex
 pdflatex -halt-on-error szoftlab4.tex
