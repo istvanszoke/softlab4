@@ -24,6 +24,7 @@ Az elkészült szoftver egy játékprogram, így nem egy hagyományos értelembe
 \hline
 \textbf{Név} & \textbf{Definíció} \tabularnewline 
 \hline\hline
+\endhead
 BME & Budapesti Műszaki Egyetem \tabularnewline \hline
 Build system & olyan szoftverek együttese, amely automatizálja a szoftver \\
              & fordításának, tesztelésének, terjesztésének folyamatát \tabularnewline \hline
@@ -58,17 +59,18 @@ VCS & Version Control, verziókezelés \tabularnewline \hline
 \hline
 \textbf{Megnevezés} & \textbf{Link} \tabularnewline 
 \hline\hline
-Szoftver Laboratórium 4. & https://www.iit.bme.hu/~szoftlab4 \tabularnewline \hline
-Travis CI Docs & https://docs,travis-ci.com \tabularnewline \hline
-GitHub & https://github.com \tabularnewline \hline
-Waffle.IO & https://waffle.io  \tabularnewline \hline
-LaTeX & http://www.latex-project.org \tabularnewline \hline
-Coverity & https://coverity.com \tabularnewline \hline
-Drone.IO & https://drone.io \tabularnewline \hline
-Javadoc & https://www.oracle.com \tabularnewline \hline
-Java & http://www.oracle.com \tabularnewline \hline
-Visual Paradigm & https://www.visual-paradigm.com \tabularnewline \hline
-Wikipedia & https://www.wikipedia.org \tabularnewline \hline
+\endhead
+Szoftver Laboratórium 4. & iit.bme.hu/\textasciitilde szoftlab4 \tabularnewline \hline
+Travis CI Docs & docs.travis-ci.com \tabularnewline \hline
+GitHub & github.com \tabularnewline \hline
+Waffle.IO & waffle.io  \tabularnewline \hline
+LaTeX & latex-project.org \tabularnewline \hline
+Coverity & coverity.com \tabularnewline \hline
+Drone.IO & drone.io \tabularnewline \hline
+Javadoc & oracle.com \tabularnewline \hline
+Java & oracle.com \tabularnewline \hline
+Visual Paradigm & visual-paradigm.com \tabularnewline \hline
+Wikipedia & wikipedia.org \tabularnewline \hline
 \end{tabularx}
 
 
@@ -104,7 +106,16 @@ A felhasználóknak legyen ismeretük PC-k (personal computer) alapvető kezelé
 A szoftverre vonatkozó egyetlen előírás, hogy a HSZK gépein telepített Java könyvtárkészletet használja, ezzel biztosítva az ezen gépeken való megfelelő futást.
 
 \subsection{Feltételezések, kapcsolatok}
-\comment{A dokumentumban használt anyagok, web-oldalak felsorolása}
+
+\begin{tabularx}{\textwidth}{| l | l |}
+\hline
+\textbf{Megnevezés} & \textbf{Link} \tabularnewline 
+\hline\hline
+\endhead
+Szoftver Laboratórium 4. & iit.bme.hu/\textasciitilde szoftlab4 \tabularnewline \hline
+Java & oracle.com \tabularnewline \hline
+Wikipedia & wikipedia.org \tabularnewline \hline
+\end{tabularx}
 
 \section{Követelmények}
 \subsection{Funkcionális követelmények}
@@ -250,6 +261,7 @@ Egy felhasználó által kiadott parancs után a program vagy az operációs ren
 \hline
 \textbf{Bejegyzés} & \textbf{Definíció} \tabularnewline 
 \hline\hline
+\endhead
     ágens & a robot maga \tabularnewline \hline
     ágensleíró &  az állapotot meghatározó változó, melyből több is lehet, ezeket a telepes változtathatja \tabularnewline \hline
     áll &  robot kezdeti állapota, jelenlegi helyzetben a sebességvektor 0 mértékű \tabularnewline \hline
