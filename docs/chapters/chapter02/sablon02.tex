@@ -178,7 +178,54 @@ A010 & JRE 1.6 vagy újabb meglétének ellenőrzése & kiértékelés & alapvet
 {Egy olyan Robot meg megsértette a játék szabályait valamely módon például lemegy a pálya határairól, azt a Pálya menedzser elakaszhatja ezáltal kizárva a játékból}
 
 \section{Szótár}
-\comment{A szótár a követelmények alapján készítendő fejezet. Egy szótári bejegyzés definiálásához csak más szótári bejegyzések és köznapi – a feladattól független – fogalmak használhatók fel. A szótár mérete kb. 1-2 oldal legyen.}
+
+\begin{tabularx}{\textwidth}{| l | l |}
+\hline
+\textbf{Bejegyzés} & \textbf{Definíció} \tabularnewline 
+\hline\hline
+    ágens & a robot maga \tabularnewline \hline
+    ágensleíró &  az állapotot meghatározó változó, melyből több is lehet, ezeket a telepes változtathatja \tabularnewline \hline
+    áll &  robot kezdeti állapota, jelenlegi helyzetben a sebességvektor 0 mértékű \tabularnewline \hline
+    állapot &  a robot leírója, mely meghatározza az érvényes cselekvéseinek halmazát \tabularnewline \hline
+    buff &  olyan hatás, mely pozitív vagy negatív módon járulhat hozzá a robot játékához \tabularnewline \hline
+    birtokol & a robot tárolójában készlet van belőle \tabularnewline \hline
+    célfüggvény & a győzelemhez ennek maximalizálása szükséges, a pontszám növelése  \tabularnewline \hline
+    curse (átok) & olyan buff melynek a robotra negatív hatása van, csökkenti a nyerési esélyeit \tabularnewline \hline
+    entitás &  egy szereplő a játékban \tabularnewline \hline 
+    esemény & valamely történés, melyet egy játékos cselekvése váltott ki \tabularnewline \hline
+    folt &  a mezőn helyezkedik el, buffot válthat ki \tabularnewline \hline
+    grid (négyzetrács) & a pálya felosztása, jelenleg négyzetesen \tabularnewline \hline
+    győztes &  jelenleg a leghosszabb utat megtett robot \tabularnewline \hline
+    használ &  a készlet egy elemét aktiválja, mely kiváltja az általa definiált buffot \tabularnewline \hline
+    határ &  a pálya tulajdonsága, melyen túl nincsenek mezők \tabularnewline \hline
+    idő &  a verseny időtartama \tabularnewline \hline
+    irányít &  a folyamat melynek során a telepes a robot ágensleíróit módosíthatja \tabularnewline \hline
+    játékos &  a telepest irányító entitás \tabularnewline \hline
+    készlet &  egy adott tárgy leírására alkalmas, mennyiséggel rendelkezik, a robot használhatja \tabularnewline \hline
+    kiesik &  a robot elhagyja a pályát \tabularnewline \hline
+    kivált &  esemény, melynek során valamely entitásra hat a kiváltó objektum \tabularnewline \hline
+    mező &  objektum vagy objektumok tárolására alkalmas egység, lehet szabad és foglalt \tabularnewline \hline
+    mozog &  a robot pozícióját megváltoztató vezérlés \tabularnewline \hline
+    nyerési feltételek &  azon feltételek, melyeket egy robot teljesítve győztesnek tekinthető \tabularnewline \hline
+    objektum &  jelenleg robot, folt \tabularnewline \hline
+    olajfolt &  egy folt, mely kivált egy buffot, ami nem engedi a sebességvektor megváltoztatását \tabularnewline \hline
+    olajkészlet &  egy készlet, mely az olajfolttal egyező buffot vált ki \tabularnewline \hline
+    pálya &  a játéktér, mely mezőkből áll \tabularnewline \hline
+    perk (áldás) & olyan buff melynek a robotra pozitív hatása van, növeli a nyerési esélyeket  \tabularnewline \hline
+    pontszám &  a győztes meghatározásához szükséges mérték, a megtett útban \tabularnewline \hline
+    pozíció &  a robot helyzete a pályán \tabularnewline \hline
+    ragacsfolt &  egy folt, mely kivált egy buffot, ami megfelezi a sebességvektort \tabularnewline \hline
+    ragacskészlet &  egy készlet, mely a ragacsfolttal egyező buffot vált ki \tabularnewline \hline
+    robot &  a pályán elhelyezkedő, mezőn álló entitás, melyet a telepes irányít \tabularnewline \hline
+    sebesség &  a robot mozgását meghatározó mérték, megmondja a robot hány mezőt léphet \tabularnewline \hline
+    sebességvektor &  egy ágensleíró, mely meghatározza a sebességet \tabularnewline \hline
+    tárgy & jelenleg olaj vagy ragacs   \tabularnewline \hline
+    tároló &  benne találhatóak a készletek \tabularnewline \hline
+    telepes &  a robotot irányító entitás \tabularnewline \hline
+    ugrik &  jelenleg a mozgás egyetlen módja, mezőről-mezőre mozgatás \tabularnewline \hline
+    verseny &  a játék menete, melyben nyerési feltételek vannak definiálva \tabularnewline \hline
+    vezérel & lsd. irányít \tabularnewline \hline
+\end{tabularx}
 
 \section{Projekt terv}
 \subsection{Csapatfelépítés}
