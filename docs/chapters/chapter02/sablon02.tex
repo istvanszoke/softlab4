@@ -49,6 +49,7 @@ Ezen rendszerek között kialakítandó interfészeket úgy kell megvalósítani
 \subsection{Felhasználók}
 \comment{A felhasználók jellemzői, tulajdonságai}
 
+
 \subsection{Korlátozások}
 \comment{Az elkészítendő szoftverre vonatkozó – általában nem funkcionális - előírások, korlátozások.}
 
@@ -117,15 +118,28 @@ A010 & JRE 1.6 vagy újabb meglétének ellenőrzése & kiértékelés & alapvet
 \end{tabularx}
 
 \subsection{Egyéb nem funkcionális követelmények}
-\comment{A biztonsággal, hordozhatósággal, megbízhatósággal, tesztelhetőséggel, a felhasználóval kapcsolatos követelmények}
+%\comment{A biztonsággal, hordozhatósággal, megbízhatósággal, tesztelhetőséggel, a felhasználóval kapcsolatos követelmények}
 
 % Azonosító, Leírás, Ellenőrzés, Prioritás, Forrás, Komment
-\begin{tabularx}{\linewidth}{| l | l | l | l | l | l |}
+\begin{tabularx}{\linewidth}{| l | X | l | l | l | X |}
 \hline
 \textbf{Azonosító}   & \textbf{Leírás} & \textbf{Ellenőrzés} & \textbf{Prioritás} & \textbf{Forrás} & \textbf{Komment} \tabularnewline
 \hline\hline
-... & ... & ... & ... & ... & ... \tabularnewline
-\hline
+\endhead
+NF001 & 
+A programnak legyen magyar nyelvű kezelőfelülete.
+& egyértelmű & alapvető & megrendelő & ... \tabularnewline \hline
+NF002 & 
+Legyen mód a megfogalmazott követelmények tesztelésére.
+& tesztesetek & fontos & megrendelő & ... \tabularnewline \hline
+NF003 & 
+Legyenek unit-tesztek.
+& tesztesetek & alapvető & fejlesztő & ... \tabularnewline \hline
+NF004 & 
+Egy felhasználó által kiadott parancs után a program vagy az operációs rendszer 1 másodpercen belül biztosítson valamilyen választ a felhasználó számára.  
+& mérés, tesztelés & alapvető & megrendelő & Legalább a következő teljesítménnyel rendelkező PC-k esetében: Core i7 3610QM, 8GB RAM \tabularnewline \hline
+
+	
 \end{tabularx}
 
 
