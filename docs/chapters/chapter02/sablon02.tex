@@ -126,14 +126,56 @@ A010 & JRE 1.6 vagy újabb meglétének ellenőrzése & kiértékelés & alapvet
 
 
 \section{Lényeges use-case-ek}
-\includegraphics[width=\textwidth]{./chapters/chapter02/importantUseCases.eps}
 %\comment{A 2.3.1-ben felsorolt követelmények közül az alapvető és fontos követelményekhez tartozó használati esetek megadása az alábbi táblázatos formában.}
+\includegraphics[width=\textwidth]{./chapters/chapter02/importantUseCases.eps}
+
 \subsection{Use-case leírások}
 %\comment{Minden use-case-hez külön}
 
-\usecase{...}{...}{...}{...}
+\usecase{Vezérel}%
+{Játékos ezen a módon tudja irányítani a Robotot a pályán}%
+{Játékos; Robot}%
+{Játékos a helyzet alapján dönt arról, hogy a Robotnak mit kéne lépnie és utasítani fogja arra, hogy ezt tegye is meg}
 
-\usecase{...}{...}{...}{...}
+\usecase{Játékot elment}%
+{Így elmenthetjük a játék állapotát későbbi továbbjátszás céljából}%
+{Játékos}%
+{A Játékosnak játék közben más dolga akad azonban később szeretné folytatni a már elkezdettt játékát ezért elmentheti annak az állását}
+
+\usecase{Mozog}%
+{A Robot mozoghat a pályán. A mozgásnak magának több módja is van}
+{Robot}
+{A Játékos irányítja a Robotot annak érdekében, hogy közelebb kerülhessen a célhoz. Ehhez természetesen mozognia kell}
+
+\usecase{Ugrik}%
+{Mozgás egy fajtája, amely a sebességgel arányos lépést tesz}%
+{-}%
+{A Játékos a Robotot a cél felé irányítása folyamán ugrásra utasítja}
+
+\usecase{Sebességvektort változtat}%
+{A Robot megváltoztathatja a sebességvektorát}%
+{Robot}%
+{A Játékos a Robot cél fele való vezérélésének folytán megváltoztathatja a sebesség irányát és nagyságát is, például a pályán lévő kanyar bevételének céjából}
+
+\usecase{Támad}%
+{A Robot valamiképpen támadást végezhet a pályán}%
+{Robot}%
+{Ilyen támadásokkal más Robotokat hátráltathat valamilyen módon a továbbhaladásban}
+
+\usecase{Olajfoltot hagy}%
+{Egy Támadás fajta}%
+{Pálya menedzser}%
+{Robotok egymás hátráltatására olajfoltot hagyhatnak a pályán, mely ezután akadályozza a további Robotokat a sebesség megváltoztatásában}
+
+\usecase{Ragacsot hagy}%
+{Egy Támadás fajta}%
+{Pálya menedzser}%
+{Robotok egymás hátráltatására ragacsfoltot hagyhatnak a pályán, mely ezután megfelezi a többi Robotnak a sebességvektorát}
+
+\usecase{Elakaszt}%
+{Robotok szabálybetartásának végrehajtása}%
+{Pálya menedzser}%
+{Egy olyan Robot meg megsértette a játék szabályait valamely módon például lemegy a pálya határairól, azt a Pálya menedzser elakaszhatja ezáltal kizárva a játékból}
 
 \section{Szótár}
 \comment{A szótár a követelmények alapján készítendő fejezet. Egy szótári bejegyzés definiálásához csak más szótári bejegyzések és köznapi – a feladattól független – fogalmak használhatók fel. A szótár mérete kb. 1-2 oldal legyen.}
