@@ -32,11 +32,14 @@ task wrapper(type: Wrapper) {
 }
 
 repositories {
-    mavenCentral()
+   flatDir {
+       dirs 'lib'
+   }
 }
 
 dependencies {
     //Unit testing
-    testCompile group: 'junit', name: 'junit', version: '+'    
+    testCompile group: 'junit', name: 'junit', version: '+'
+    testCompile group: 'junit', name: 'hamcrest-core', version: '+'
 }
 
