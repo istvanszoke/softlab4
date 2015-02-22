@@ -26,7 +26,6 @@ gradle-app.setting
 # TeXDoclet and JavaDoc documentation ignores
 docs/javadoc/*
 !docs/javadoc/*.sh
-!docs/javadoc/*.jar
 
 # Compiled Documentation ignore
 *.aux

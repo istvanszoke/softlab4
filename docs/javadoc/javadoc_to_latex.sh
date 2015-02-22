@@ -2,7 +2,7 @@
 
 rm -f "$DOCS_DIR/javadoc/*.{tex,map}"
 
-javadoc -docletpath "$DOCS_DIR/javadoc/TeXDoclet.jar" \
+javadoc -docletpath "$LIB_DIR/TeXDoclet.jar" \
 	-doclet org.stfm.texdoclet.TeXDoclet \
 	-tree \
 	-noindex \
