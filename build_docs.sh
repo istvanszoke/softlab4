@@ -10,7 +10,13 @@ if [ $? -ne 0 ]; then
 fi
 
 cd docs
+
 ./svg_preprocess.sh
+if [ $? -ne 0 ]; then
+    echo "SVG to PDF conversion failed. [FAILED]"
+    exit -1
+fi
+
 pdflatex -halt-on-error szoftlab4.tex
 pdflatex -halt-on-error szoftlab4.tex
 pdflatex -halt-on-error szoftlab4.tex
