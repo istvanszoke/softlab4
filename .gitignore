@@ -8,6 +8,8 @@
 *.war
 *.ear
 
+!lib/*.jar
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
@@ -22,8 +24,8 @@ gradle-app.setting
 !gradle-wrapper.jar
 
 # TeXDoclet and JavaDoc documentation ignores
-!texdoclet/TeXDoclet.jar
-docs/javadoc
+docs/javadoc/*
+!docs/javadoc/*.sh
 
 # Compiled Documentation ignore
 *.aux
