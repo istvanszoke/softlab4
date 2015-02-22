@@ -124,16 +124,32 @@ Wikipedia & wikipedia.org \tabularnewline \hline
 
 \section{Követelmények}
 \subsection{Funkcionális követelmények}
-\comment{Az alábbi táblázat kitöltésével készítendő. Dolgozzon ki követelmény azonosító rendszert! Az ellenőrzés módja szokásosan bemutatás és/vagy kiértékelés. Prioritás lehet alapvető, fontos, opcionális. Az alapvető követelmények nem teljesítése végzetes. Forrás alatt a követelményt előíró anyagot, szervezetet kell érteni. Esetünkben forrás lehet maga a csapat is, mikor ő talál ki követelményt. Use-case-ek alatt az adott követelményt megvalósító használati esete(ke)t kell megadni.}
+%\comment{Az alábbi táblázat kitöltésével készítendő. Dolgozzon ki követelmény azonosító rendszert! Az ellenőrzés módja szokásosan bemutatás és/vagy kiértékelés. Prioritás lehet alapvető, fontos, opcionális. Az alapvető követelmények nem teljesítése végzetes. Forrás alatt a követelményt előíró anyagot, szervezetet kell érteni. Esetünkben forrás lehet maga a csapat is, mikor ő talál ki követelményt. Use-case-ek alatt az adott követelményt megvalósító használati esete(ke)t kell megadni.}
 
 % Azonosító, Leírás, Ellenőrzés, Prioritás, Forrás, Use-case, Komment
-\begin{longtable}{| l | l | l | l | l | l | l |}
+\begin{tabularx}{\linewidth}{| l | X | l | l | l | m{1.9cm} | l |}
 \hline
-\textbf{Azonosító}   & \textbf{Leírás} & \textbf{Ellenőrzés} & \textbf{Prioritás} & \textbf{Forrás} & \textbf{Use-case} & \textbf{Komment} \tabularnewline
+\textbf{Azonosító} & \textbf{Leírás} & \textbf{Ellenőrzés} & \textbf{Prioritás} & \textbf{Forrás} & \textbf{Use-case} & \textbf{Komment} \tabularnewline
 \hline\hline
-... & ... & ... & ... & ... & ... & ... \tabularnewline
-\hline
-\end{longtable}
+\endhead
+F001 & Robotok egy előre elkészített versenypályán ugrálnak & bemuatás & alapvető & megrendelő & Ugrás &  \tabularnewline \hline
+F002 & A Játékosok egymás után kerülnek körönként sorra & bemutatás & alapvető & csapat & & \tabularnewline \hline
+F003 & Az időt Játékosonként tarjuk nyilván. Akkor ér véget ha az utolsó Játékosnak is elfogy az ideje. Ha valakinek elfogyott akkor többet nem ugorhat. & bemutatás & alapvető & csapat & & \tabularnewline \hline
+F004 & Előre megadott időkorlátokból lehet választani & bemutatás & alapvető & csapat & & \tabularnewline \hline
+F005 & A játékot egyszerre minumum 2 maximum 4 Játékos játszhatja & bemutatás & alapvető & csapat & & \tabularnewline \hline
+F006 & A pálya versenypálya szerű azaz hurkot alkot, játékmenet indulásakor generálódik véletlenszerű kanyarokkal & bemutatás & fontos & csapat & & \tabularnewline \hline
+F007 & A pályáról leugró robotok elakadnak, kiesnek a játékból & bemutatás & alapvető & megrendelő & Elakaszt &  \tabularnewline \hline
+F008 & Robotok álló helyzetből és kezdőpzíciójukról indulnak & bemutatás & alapvető & megrendelő &  &  \tabularnewline \hline
+F009 & Robotok körönként egy egységhosszú sebességvektorral változtathatják a sebességüket egy megadott maximális nagyságig & bemutatás & alapvető & megrendelő & Sebesség\-vektort változtat &  \tabularnewline \hline
+F010 & Robotok körönként ugorhatnak a megadott sebességvektorukkal arányos távolságra & bemutatás & alapvető & megrendelő & Ugrás &  \tabularnewline \hline
+F011 & A pályán lehetnek különböző foltok melyek hatással vannak a rajtuk áthaladó Robotokra & bemutatás & alapvető & megrendelő & Támad &  \tabularnewline \hline
+F012 & Vannak olajfoltok melyekre érkezve sebesség módosítására nincsen mód & bemutatás & alapvető & megrendelő & Olajfoltot hagy & \tabularnewline \hline
+F013 & Vannak ragacsfoltok melyekre érkezve a sebesség megfeleződik & bemutatás & alapvető & megrendelő & Ragacsfoltot hagy & \tabularnewline \hline
+F014 & Ha egy Robot megérkezik a foltra akkor miután kifejtette hatását eltűnik & bemutatás & opcionális & csapat & & \tabularnewline \hline
+F015 & A Robotok fel vannak szerelve foltkészlettel, amelyeket a játékos parancsára maguk mögött tudnak hagyni. & bemutatás & alapvető & megrendelő & Támad & \tabularnewline \hline
+F016 & A pályán véletlenszerűen elhelyezett elemek vannak, melyeket a Robotok felvéve további foltokhoz juthatnak & bemutatás & opcionális & csapat & & \tabularnewline \hline
+F017 & Győztes az a játékos aki a megadott idő alatt a leghosszabb utat tudja megtenni & kiértékelés & alapvető & megrendelő & & \tabularnewline \hline
+\end{tabularx}
 
 \subsection{Erőforrásokkal kapcsolatos követelmények}
 
