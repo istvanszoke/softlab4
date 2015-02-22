@@ -30,13 +30,13 @@ Build system & olyan szoftverek együttese, amely automatizálja a szoftver \\
              & fordításának, tesztelésének, terjesztésének folyamatát \tabularnewline \hline
 CI & Continuous Integration \\ 
    & folyamatos integráció; olyan fejlesztési folyamat, amely során \\
-   & a fejlesztök a projekt kezdetétöl fogva gyakori rendszerességel \\
+   & a fejlesztők a projekt kezdetétől fogva gyakori rendszerességel \\
    & összeillesztik és tesztelik kódjukat\tabularnewline \hline
 Coverity & a projekthez használt statikus elemző \tabularnewline \hline
 Git & Verziókezelő rendszer (VCS) \tabularnewline \hline
 GitHub & A git verziókezelőt hostoló oldal (framework) \tabularnewline \hline
 Gradle & a projekthez használt build system \tabularnewline \hline
-Javadoc & egy olyan eszköz, amely a java forráskódban \\ 
+Javadoc & egy olyan eszköz, amely a Java forráskódban \\ 
         & található kommentekből dokumentációt tud előállítani \tabularnewline \hline
 JDK & Java Development Kit \tabularnewline \hline
 JRE & Java Runtime Environment \tabularnewline \hline
@@ -47,10 +47,10 @@ RUP & Ration Unified Process, egy szoftverfejlesztési módszer \tabularnewline 
 Statikus elemzés & egy forráskódbázis elemzése lehetséges szoftverhibák \\
                   & megtalálása érdekében \tabularnewline \hline
 Szoftlab 4 & Szoftver laboratórium 4. \tabularnewline \hline
-TDD & Test-Driver-Development, tesztelésen alapuló szoftverfejlesztés \tabularnewline \hline
+TDD & Test-Driven-Development, tesztelésen alapuló szoftverfejlesztés \tabularnewline \hline
 Travis CI & a projektben használt CI rendszer \tabularnewline \hline
-UML & Unified Modelling Language \tabularnewline \hline
-VCS & Version Control, verziókezelés \tabularnewline \hline
+UML & Unified Modeling Language \tabularnewline \hline
+VCS & Version Control System, verziókezelő rendszer \tabularnewline \hline
 \end{tabularx}
 
 
@@ -146,7 +146,7 @@ F001 & Robotok egy előre elkészített versenypályán ugrálnak & bemuatás & 
 F002 & A Játékosok egymás után kerülnek körönként sorra & bemutatás & alapvető & csapat & & \tabularnewline \hline
 F003 & Az időt Játékosonként tarjuk nyilván. Akkor ér véget ha az utolsó Játékosnak is elfogy az ideje. Ha valakinek elfogyott akkor többet nem ugorhat. & bemutatás & alapvető & csapat & & \tabularnewline \hline
 F004 & Előre megadott időkorlátokból lehet választani & bemutatás & alapvető & csapat & & \tabularnewline \hline
-F005 & A játékot egyszerre minumum 2 maximum 4 Játékos játszhatja & bemutatás & alapvető & csapat & & \tabularnewline \hline
+F005 & A játékot egyszerre minumum 2, maximum 4 Játékos játszhatja & bemutatás & alapvető & csapat & & \tabularnewline \hline
 F006 & A pálya versenypálya szerű azaz hurkot alkot, játékmenet indulásakor generálódik véletlenszerű kanyarokkal & bemutatás & fontos & csapat & & \tabularnewline \hline
 F007 & A pályáról leugró robotok elakadnak, kiesnek a játékból & bemutatás & alapvető & megrendelő & Elakaszt &  \tabularnewline \hline
 F008 & Robotok álló helyzetből és kezdőpozíciójukról indulnak & bemutatás & alapvető & megrendelő &  &  \tabularnewline \hline
@@ -217,18 +217,10 @@ A010 & JRE 1.6 vagy újabb meglétének ellenőrzése & kiértékelés & alapvet
 \textbf{Azonosító}   & \textbf{Leírás} & \textbf{Ellenőrzés} & \textbf{Prioritás} & \textbf{Forrás} & \textbf{Komment} \tabularnewline
 \hline\hline
 \endhead
-NF001 & 
-A programnak legyen magyar nyelvű kezelőfelülete.
-& egyértelmű & alapvető & megrendelő & ... \tabularnewline \hline
-NF002 & 
-Legyen mód a megfogalmazott követelmények tesztelésére.
-& tesztesetek & fontos & megrendelő & ... \tabularnewline \hline
-NF003 & 
-Legyenek unit-tesztek.
-& tesztesetek & alapvető & fejlesztő & ... \tabularnewline \hline
-NF004 & 
-Egy felhasználó által kiadott parancs után a program vagy az operációs rendszer 1 másodpercen belül biztosítson valamilyen választ a felhasználó számára.  
-& mérés, tesztelés & alapvető & megrendelő & Legalább a következő teljesítménnyel rendelkező PC-k esetében: Core i7 3610QM, 8GB RAM \tabularnewline \hline
+NF001 & A programnak legyen magyar nyelvű kezelőfelülete. & egyértelmű & alapvető & megrendelő & \tabularnewline \hline
+NF002 & Legyen mód a megfogalmazott követelmények tesztelésére. & tesztesetek & fontos & megrendelő & \tabularnewline \hline
+NF003 & Legyenek unit-tesztek. & tesztesetek & alapvető & fejlesztő &  \tabularnewline \hline
+NF004 & Egy felhasználó által kiadott parancs után a program vagy az operációs rendszer 1 másodpercen belül biztosítson valamilyen választ a felhasználó számára.  & mérés, tesztelés & alapvető & megrendelő & Legalább a következő teljesítménnyel rendelkező PC-k esetében: Core i7 3610QM, 8GB RAM \tabularnewline \hline
 
 	
 \end{tabularx}
@@ -344,6 +336,7 @@ A csapat négy főből áll. A szerepköröket a projekt elején kiosztottuk, fi
 \hline
 \textbf{Név} & \textbf{Szerepkör} \tabularnewline 
 \hline\hline
+\endhead
 Nagy Gergő (csapatvezető) & kód, management, dokumentáció \tabularnewline \hline
 Nyári Dávid Tamás & kód, UML, dokumentáció \tabularnewline \hline
 Paral Zsolt & kód, grafika, dokumentáció \tabularnewline \hline
