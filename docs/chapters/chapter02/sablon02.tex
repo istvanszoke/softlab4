@@ -98,16 +98,27 @@ Wikipedia & wikipedia.org \tabularnewline \hline
 Ezen rendszerek között kialakítandó interfészeket úgy kell megvalósítani, hogy azok biztosítsák a játékos számára az alkalmazásnak a gördülékeny működését. Ebből a felhasználónak prezentált kezelőfelületekkel az első két alrendszer rendelkezik.\\
 \indent A programnak feltétlen szüksége lesz adattárolási lehetőségre, hogy a a játékos kérésére a játék állását el lehessen tárolni, és azt későbbi továbbjátszás céljából vissza állítható legyen.
 
+\newpage
 \subsection{Funkciók}
-\comment{A feladat kb. 4000 karakteres (kb 1,5 oldal) részletezettségű magyar nyelvű leírása. Nem szerepelhetnek informatikai kifejezések.}
+\paragraph{
+Ezen pont a megrendelő által adott játékprogram funkcionális szempontból történő leírását tartalmazza, melyben részletesen kitér és tisztázza az elkészítendő termék funkcióit. Kiemelt célja a szekciónak, hogy szabatosan, tényszerűen fogalmazva biztosítsa, hogy megismerése után a dokumentum olvasójának ne legyen kétsége mit fog kapni a projekt leszállításakor. Felépítését tekintve törekedtünk, hogy a leírás során minden egyes megrendelő által adott követelményt a csapattól származó kiegészítő, egyértelműsítő funkciók kövessenek, ezzel növelve az egyértelműséget.
+\\
+A feladat leírásában elsősoron a játék legmagasabb váza jelenik meg, mely nevezhető a játék "alaphelyzetének" leírásaként. A játékos egy robotot irányít egy előre elkészített versenypályán, mely ugrálással tud mezőről mezőre pozíciót változtatni. Ebből a követelményből fakad, hogy a csapat körökre osztott játékmenetet képzel el, melynek során játékosról játékosra lehetőség nyílik a robotunkkal történő interakcióra. Minden játékos saját robottal rendelkezik, így szintén csapatunk közös döntése, hogy a játékban résztvevő személyek száma legalább kettő, de a játékmenet tempósságának és ezzel élvezhetőségének, izgalmának megtartása érdekében nem haladhatja meg a négyet. A megrendelő specifikiációjában szerepel, hogy a játék során a versenyben idő-komponens is létezik, ugyanakkor nem definiálja ezt milyen módon képzeli el. Csapatunk úgy gondolta, hogy a játékosok számára biztosít előre meghatározott időkereteket. A konzisztencia és izgalom érdekében nem enged tetszőleges időlimitet beállítani, hanem egy bő halmazból enged időkorlátokat választani, melyek szintén növelhetik a játék nehézségét, ugyanakkor kezdő játékosok számára lehetőség nyílik könnyedségre is. A másik talán legfontosabb játékdimenzió maga a tér, pálya, ahol a verseny játszódik. Ezen játékteret, hogy az időkorlát értelmet nyerjen a verseny során, a csapatunk huroknak képzelte el, mely lehetőséget ad változatos, ugyanakkor "végtelen" ideig játsztható versenyre. A pálya a játék indulásakor generálódik, véletlenszerű kanyarokkal, egyenesekkel, de garantáltan mindig hurkot alkot. A megrendelő által adott leírásban definiálja igényét, mely szerint a pályáról leeső robotok kiesnek a játékból, ez a hurok formájú pálya és a kanyarok miatt reális veszéllyé teszi ezt az eshetőséget. Az eddigiekben a játék általános képéről beszéltünk, most szeretnénk kitérni részeltesebben a játék menetére. A leírásból adott, hogy a robotok álló helyzetből indulnak kezdőpozíciójukból.
+\\
+Innentől kezdetét veszi az általunk elképzelt körökre osztott játék, melynek során a játékosonak lehetősége adódik minden körben a leírásban meghatározott sebességvektor egységnyivel történő módosításására, egy előre meghatázotott intervallumban. Ettől a sebességvektortól függően a játékosok minden körben lehetőséget kapnak ezen vektor által meghatározott arányos távolságra ugrani. A sebességvektor definíciója a fizikából adott, ugyanakkor esetünkben ennek módosítása diszkrét módon lehetséges. Triviálisan adott, hogy a nulla mértékű sebességvektor nem okoz elmozdulást a pályán, innentől pedig az egységnyivel növel értékek arányosan növelik az átugrott mezők számát. Irányát tekintve a négy égtáj felé mutathat, mellyel a játék nehézségét szeretnék növelni, hiszen így a kanyarok miatt jobban kell előre terveznie a játékosnak. Ezt a döntést nehezíti a pályán található, a megrendelő által kért, foltok, melyek hatással vannak a robotokra. A foltok jelenleg kétfélék lehetnek, mely szintén a megrendelő kérése, olajfoltok és ragacsfoltok. Előbbi a robotot, ezáltal a játékost képtelenné teszik a sebességvektor módosítására az adott körben. Utóbbira érzekve pedig a játékos sebessége megfeleződik. 
+\\
+Csapatunk fontosnak tartotta, hogy a körkörös pályából fakadóan a foltok eltűnnek, miután kiváltották hatásukat valamely robotra. Az előbb említett foltokból a robotoknak készletük van, melyet használhatnak nyerési esélyeik növelése érdekében, úgy hogy maguk mögött hagyják a játékos parancsára. Ezen készleteknek mennyiségük van, melyből a játék kezdetekor kapnak a robotok. Pótolni a felhasznált foltokat a pályán megjelenő dobozokból van lehetősége a játékosnak, melyekben véletlenszerűen találhatóak készletek, véletlenszerű mennyiségben. Ezzel a funckióval a játék izgalmát, a dobozokért történő versenyt, illetve a játékosok interakciójának növelését szeretnénk elérni. A foltok és dobozok a pályán az idő múlásával újratermelődnek, ezzel biztosítva a kiegyensúlyozott játékot. A dobozok felvételéhez a játékosoknak rá kell ugrani arra a mezőre, melyen egy doboz tartózkodik. A foltokhoz hasonlóan a doboz eltűnik a mezőről, ha ráugrottak és a benne található készlet bekerül a robot tárolójába. Fontosnak tartjuk kiemelni, hogy a készlet, melyet a játékos a dobozból nyer nem opcionális, azt kötelező elfogadnia. Ebből következik, hogy a készletek mennyiségére nem tettünk megkötés, egy robot bármennyit összegyűjthet, ezáltal növelve nyerési esélyeit a többivel szemben.
+\\
+A győzelem definiálása a leírásból adott, mely szerint a fentebb meghatározott időkomponens és az út függvényéből generált pontszám alapján dől el, hogy ki nyeri a versenyt. A megadott idő alatt a leghosszabb utat megtevő játékos nyer. Adott a kérdés, hogy hogyan definiáljuk az utat, hogy elkerüljük azt az eshetőséget, hogy a robot oda-vissza ugrál két mező között. A csapat erre megoldásnak azt találta ki, hogy a hurok alakú pályán egy vonalból induló robotoknak előre meghatározott haladási iránya van, mely nem kötelező, ugyanakkor csak ebben a (tangenciális) irányban történő elmozdulásból fakadó út számít a pontokba. A pályán a játékosok így haladnak körbe a hurkon, és idejük lejártával nincs lehetőségük újabb lépésekre. A játék akkor ér véget, amikor mindegyik játékos ideje lejár. Ekkor a legtöbbet "helyes" irányba ugrott robot tulajdonosa lesz a győztes. Ebből a funckióból fakad, hogy amennyiben valakinek lejárt az ideje még mindig lehet győztes, amennyiben a többiek a maradék idejükben nem tudnak felzárkózni hozzá útjukat tekintve. 
+\\
+A szekcióban fentebb említett funkciók szedete megtalálható lentebb táblázatos formában, mely már nem ennyire részletesen, inkább cím szinten sorolja fel a megvalósítandó és bevállalt jellemvonásokat. Továbbá a funckió előíróján, ötletgazdáján túl annak prioritását is taglalja. 
+}
 
 \subsection{Felhasználók}
-%\comment{A felhasználók jellemzői, tulajdonságai}
 A felhasználóknak legyen ismeretük PC-k (personal computer) alapvető kezelésében Windows operációs rendszeren és mind fizikailag mind mentálisan képesek legyenek billentyűzet és egér használatára.
 
 
 \subsection{Korlátozások}
-%\comment{Az elkészítendő szoftverre vonatkozó – általában nem funkcionális - előírások, korlátozások.}
 A szoftverre vonatkozó egyetlen előírás, hogy a HSZK gépein telepített Java könyvtárkészletet használja, ezzel biztosítva az ezen gépeken való megfelelő futást.
 
 \subsection{Feltételezések, kapcsolatok}
@@ -124,7 +135,6 @@ Wikipedia & wikipedia.org \tabularnewline \hline
 
 \section{Követelmények}
 \subsection{Funkcionális követelmények}
-%\comment{Az alábbi táblázat kitöltésével készítendő. Dolgozzon ki követelmény azonosító rendszert! Az ellenőrzés módja szokásosan bemutatás és/vagy kiértékelés. Prioritás lehet alapvető, fontos, opcionális. Az alapvető követelmények nem teljesítése végzetes. Forrás alatt a követelményt előíró anyagot, szervezetet kell érteni. Esetünkben forrás lehet maga a csapat is, mikor ő talál ki követelményt. Use-case-ek alatt az adott követelményt megvalósító használati esete(ke)t kell megadni.}
 
 % Azonosító, Leírás, Ellenőrzés, Prioritás, Forrás, Use-case, Komment
 \begin{tabularx}{\linewidth}{| l | X | l | l | l | m{1.9cm} | l |}
@@ -139,7 +149,7 @@ F004 & Előre megadott időkorlátokból lehet választani & bemutatás & alapve
 F005 & A játékot egyszerre minumum 2 maximum 4 Játékos játszhatja & bemutatás & alapvető & csapat & & \tabularnewline \hline
 F006 & A pálya versenypálya szerű azaz hurkot alkot, játékmenet indulásakor generálódik véletlenszerű kanyarokkal & bemutatás & fontos & csapat & & \tabularnewline \hline
 F007 & A pályáról leugró robotok elakadnak, kiesnek a játékból & bemutatás & alapvető & megrendelő & Elakaszt &  \tabularnewline \hline
-F008 & Robotok álló helyzetből és kezdőpzíciójukról indulnak & bemutatás & alapvető & megrendelő &  &  \tabularnewline \hline
+F008 & Robotok álló helyzetből és kezdőpozíciójukról indulnak & bemutatás & alapvető & megrendelő &  &  \tabularnewline \hline
 F009 & Robotok körönként egy egységhosszú sebességvektorral változtathatják a sebességüket egy megadott maximális nagyságig & bemutatás & alapvető & megrendelő & Sebesség\-vektort változtat &  \tabularnewline \hline
 F010 & Robotok körönként ugorhatnak a megadott sebességvektorukkal arányos távolságra & bemutatás & alapvető & megrendelő & Ugrás &  \tabularnewline \hline
 F011 & A pályán lehetnek különböző foltok melyek hatással vannak a rajtuk áthaladó Robotokra & bemutatás & alapvető & megrendelő & Támad &  \tabularnewline \hline
@@ -200,7 +210,6 @@ A010 & JRE 1.6 vagy újabb meglétének ellenőrzése & kiértékelés & alapvet
 \end{tabularx}
 
 \subsection{Egyéb nem funkcionális követelmények}
-%\comment{A biztonsággal, hordozhatósággal, megbízhatósággal, tesztelhetőséggel, a felhasználóval kapcsolatos követelmények}
 
 % Azonosító, Leírás, Ellenőrzés, Prioritás, Forrás, Komment
 \begin{tabularx}{\linewidth}{| l | X | l | l | l | X |}
@@ -229,7 +238,6 @@ Egy felhasználó által kiadott parancs után a program vagy az operációs ren
 \includegraphics[width=\textwidth]{./chapters/chapter02/importantUseCases.pdf}
 
 \subsection{Use-case leírások}
-%\comment{Minden use-case-hez külön}
 
 \usecase{Vezérel}%
 {Játékos ezen a módon tudja irányítani a Robotot a pályán}%
@@ -291,6 +299,7 @@ Egy felhasználó által kiadott parancs után a program vagy az operációs ren
     birtokol & a robot tárolójában készlet van belőle \tabularnewline \hline
     célfüggvény & a győzelemhez ennek maximalizálása szükséges, a pontszám növelése  \tabularnewline \hline
     curse (átok) & olyan buff melynek a robotra negatív hatása van, csökkenti a nyerési esélyeit \tabularnewline \hline
+    doboz & olyan objektum a pályán, melyre lépre a robot véletlenszerűen kap valamilyen készletet\tabularnewline \hline
     entitás &  egy szereplő a játékban \tabularnewline \hline 
     esemény & valamely történés, melyet egy játékos cselekvése váltott ki \tabularnewline \hline
     folt &  a mezőn helyezkedik el, buffot válthat ki \tabularnewline \hline
