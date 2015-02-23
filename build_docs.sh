@@ -11,11 +11,18 @@ export DOCS_DIR="$TOP_DIR/docs"
 
 source $LIB_DIR/debug_print.sh
 
+normalize="$1"
+
 # We will have to generate the docs multiple times, but on a fail it's easier to debug only
 # one of the LaTeX outputs. Also note that this function doesn't clean up the temporaries,
 # which can be useful in the debugging process
 function generate_docs {
-    pdflatex -halt-on-error "$DOCS_DIR/szoftlab4.tex" | pdflatex_normalize | pdflatex_colorize
+    if [ "$normalize" == "--no-normalize" ]; then
+        pdflatex -halt-on-error "$DOCS_DIR/szoftlab4.tex" | pdflatex_colorize
+    else
+        pdflatex -halt-on-error "$DOCS_DIR/szoftlab4.tex" | pdflatex_normalize | pdflatex_colorize
+    fi
+
     if [ $? -ne 0 ]; then
         debug_error "Generating of the documentation ended. [FAILED]"
         exit -1
