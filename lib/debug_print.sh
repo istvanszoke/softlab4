@@ -2,17 +2,32 @@
 
 ncolors=$(tput colors)
 
-function pdflatex_colorize() {
+function pdflatex_normalize() {
     if test -n "$ncolors" && test $ncolors -ge 8; then
-        cat | awk '{ gsub("^.*[Ww]arning:", "\033[1;33m&\033[0m");
+        cat | 
+        grep -v "^.*\\T1/" | 
+        grep -v ".*\[\] \[\].*" | 
+        awk '{ gsub("^(Underfull|Overfull).*$", "");
+               gsub("^[[].*[]].*$", "");
+               gsub("^[[].*$", "");
+               gsub("^.*[(][/.].*$", "");
+               gsub("[)][)].*$", "");
 
-                     gsub("^.*[Ee]rror.*",  "\033[1;31m&\033[0m");
-                     gsub("^!.*$",          "\033[1;31m&\033[0m"); 
-                     gsub("^l.[0-9]{1,}.*$",   "\033[1m&\033[0m");
+               gsub(".*[<{][./>].*$", "");    
 
-                     gsub("[Oo]utput written.*[.]pdf.*", "\033[1;32m&\033[0m"); 
+               gsub("<use.*", "");
+               gsub("^[ ]*[>})]$", "");
 
-                     gsub("^This is pdfTeX.*$", "\033[1m&\033[0m"); print}'
+               gsub("^.*[Ww]arning:", "\033[1;33m&\033[0m");
+
+               gsub("^.*[Ee]rror.*",  "\033[1;31m&\033[0m");
+               gsub("^!.*$",          "\033[1;31m&\033[0m"); 
+               gsub("^l.[0-9]{1,}.*$",   "\033[1m&\033[0m");
+
+               gsub("[Oo]utput written.*[.]pdf.*", "\033[1;32m&\033[0m"); 
+
+               gsub("^This is pdfTeX.*$", "\033[1m&\033[0m"); print}' | 
+        uniq
     else 
         cat
     fi
