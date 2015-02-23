@@ -16,9 +16,9 @@ ncolors=$(tput colors)
 # uniq: collapses multiple empty lines into one
 function pdflatex_normalize() {
     cat | 
-    grep -v "^.*\\T1/.*" | 
+    grep -v "^.*\\T1\/.*" | 
     awk '{ gsub("^(Underfull|Overfull).*$", "");
-           gsub("^( *[<>{}()\\[\\]]* *[[][0-9]*[]]* *)*", "");
+           gsub("^( *[<>{}()\\[\\]]* *[[][0-9]*[\\]]* *)*", "");
            gsub(".*[<({][/.>].*$", "");
            gsub("^<use.*$", "");
            gsub("^ *[<>{}()\\[\\]] *$", "");
