@@ -7,18 +7,21 @@ ncolors=$(tput colors)
 # grep.1: removes lines under the Underfull|Overfull diagnosic (the regex gets stuck on unknown characters for some reason) 
 # -------
 # awk.1:  removes Underfull/Overfull diagnostics, these will be ignored anyway
-# awk.2:  removes lines that contain fields with the format: ... [optional number] ...
+# awk.2:  removes lines that contain only numbers of nothing inside square brackets (with any amount of leading/trailing spaces or brackets)
 # awk.3:  removes lines that contain a "comment" (line contains: '<', '(', '{') that is probably not useful. 
 #         Useful comments are usually immediately followed up by an alphanumeric character. (This could produce false positives)
-# awk.4:  Removes lines that only have a single bracket in them
+# awk.4:  This is somewhat project specific and an ugly trick, but this gets rid of an \includegrapic diagnostic
+# awk.5:  Removes lines that only have a single bracket in them
+# -------
+# uniq: collapses multiple empty lines into one
 function pdflatex_normalize() {
     cat | 
     grep -v "^.*\\T1/.*" | 
     awk '{ gsub("^(Underfull|Overfull).*$", "");
-           gsub("^.*[[][0-9]*[]]*.*$", "");
+           gsub("^( *[<>{}()\\[\\]]* *[[][0-9]*[]]* *)*", "");
            gsub(".*[<({][/.>].*$", "");
-           gsub("^[)]{2,}.*$", "");
-           gsub("^[ ]*[<>{}()\\[\\]][ ]*$", "");
+           gsub("^<use.*$", "");
+           gsub("^ *[<>{}()\\[\\]] *$", "");
            print}' |  
     uniq
 }
