@@ -13,9 +13,9 @@ ncolors=$(tput colors)
 # awk.4:  Removes lines that only have a single bracket in them
 function pdflatex_normalize() {
     cat | 
-    grep -v "^.*\\T1/" | 
+    grep -v "^.*\\T1/.*" | 
     awk '{ gsub("^(Underfull|Overfull).*$", "");
-           gsub("^.*[[][0-9]{0,}[]]{0,}.*$", "");
+           gsub("^.*[[][0-9]*[]]*.*$", "");
            gsub(".*[<({][/.>].*$", "");
            gsub("^[)]{2,}.*$", "");
            gsub("^[ ]*[<>{}()\\[\\]][ ]*$", "");
