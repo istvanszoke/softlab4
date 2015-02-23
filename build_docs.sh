@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set the pipe's return value to the last non-zero value in the pipe (or 0 if everything succeeded)
+set -o pipefail
+
 # Enviromental variables so we can reuse them in our other scripts
 export TOP_DIR="$PWD"
 export SRC_DIR="$TOP_DIR/src"
@@ -12,7 +15,7 @@ source $LIB_DIR/debug_print.sh
 # one of the LaTeX outputs. Also note that this function doesn't clean up the temporaries,
 # which can be useful in the debugging process
 function generate_docs {
-    pdflatex -halt-on-error "$DOCS_DIR/szoftlab4.tex" | pdflatex_normalize
+    pdflatex -halt-on-error "$DOCS_DIR/szoftlab4.tex" | pdflatex_normalize | pdflatex_colorize
     if [ $? -ne 0 ]; then
         debug_error "Generating of the documentation ended. [FAILED]"
         exit -1
