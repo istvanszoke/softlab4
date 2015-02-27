@@ -36,3 +36,5 @@ docs/javadoc/*
 *.synctex.gz
 *.toc
 
+# Visual Paradigm
+*.vpp*
