@@ -1,20 +1,34 @@
 #!/bin/bash
 
+# Set the pipe's return value to the last non-zero value in the pipe (or 0 if everything succeeded)
+set -o pipefail
+
 # Enviromental variables so we can reuse them in our other scripts
 export TOP_DIR="$PWD"
 export SRC_DIR="$TOP_DIR/src"
 export LIB_DIR="$TOP_DIR/lib"
 export DOCS_DIR="$TOP_DIR/docs"
 
+source $LIB_DIR/debug_print.sh
+
+normalize="$1"
+
 # We will have to generate the docs multiple times, but on a fail it's easier to debug only
 # one of the LaTeX outputs. Also note that this function doesn't clean up the temporaries,
 # which can be useful in the debugging process
 function generate_docs {
-    pdflatex -halt-on-error "$DOCS_DIR/szoftlab4.tex"
+    if [ "$normalize" == "--no-normalize" ]; then
+        pdflatex -halt-on-error "$DOCS_DIR/szoftlab4.tex" | pdflatex_colorize
+    else
+        pdflatex -halt-on-error "$DOCS_DIR/szoftlab4.tex" | pdflatex_normalize | pdflatex_colorize
+    fi
+
     if [ $? -ne 0 ]; then
-        echo "Generating of the documentation ended. [FAILED]"
+        debug_error "Generating of the documentation ended. [FAILED]"
         exit -1
     fi
+    
+    echo
 }
 
 echo "Generating of the documentation started."
@@ -24,14 +38,14 @@ cd "$DOCS_DIR"
 # This script will generate the necessary LaTeX sources from the comments in the source code
 javadoc/javadoc_to_latex.sh
 if [ $? -ne 0 ]; then
-  echo 'Generation of LaTeX JavaDoc failed. [FAILED]'
+  debug_error 'Generation of LaTeX JavaDoc failed. [FAILED]'
   exit -1
 fi
 
 # We have to convert all our exported SVG files into PDFs, because LaTeX's SVG support is dreadful.
 ./svg_preprocess.sh
 if [ $? -ne 0 ]; then
-    echo "SVG to PDF conversion failed. [FAILED]"
+    debug_error "SVG to PDF conversion failed. [FAILED]"
     exit -1
 fi
 
@@ -49,4 +63,4 @@ rm -f *.{aux,lof,log,out,toc}
 
 cd "$TOP_DIR"
 
-echo "Generating of the documentation ended. [SUCCESS]"
+debug_success "Generating of the documentation ended. [SUCCESS]"

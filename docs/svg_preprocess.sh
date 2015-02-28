@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source $LIB_DIR/debug_print.sh
+
 # We default to rsvg-convert, since this is by far the most lightweight alterative for the conversion
 command -v "rsvg-convert" &> /dev/null
 if [ $? -eq 0 ]; then
@@ -27,7 +29,8 @@ fi
 # Since this will result in a loss of quality, it's reasonable to ask for confirmation. 
 command -v "convert" &> /dev/null
 if [ $? -eq 0 ]; then
-    read -p "Only rasterizing SVG to PDF converter found. This will reduce the image quality. Continue? [Y/n] " -n 1 -r
+    debug_warn "Only rasterizing SVG to PDF converter found. This will reduce the image quality."
+    read -p "Continue? [Y/n] " -n 1 -r
     echo # New line
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         for file in $(find "$DOCS_DIR" -name '*.svg');
@@ -39,7 +42,5 @@ if [ $? -eq 0 ]; then
     fi
 fi
 
-# Signal the error if we couldn't convert the SVG files
-echo "No suitable SVG to PDF converter found."
 exit -1
 
