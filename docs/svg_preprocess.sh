@@ -5,6 +5,7 @@ source $LIB_DIR/debug_print.sh
 # We default to rsvg-convert, since this is by far the most lightweight alterative for the conversion
 command -v "rsvg-convert" &> /dev/null
 if [ $? -eq 0 ]; then
+    echo 'SVG prerocess opted for RSVG-Convert';
     for file in $(find "$DOCS_DIR" -name '*.svg');
     do
         rsvg-convert -f pdf -o "${file%.*}.pdf" "$file"
@@ -17,6 +18,7 @@ fi
 # it is a sane second choice
 command -v "inkscape" &> /dev/null
 if [ $? -eq 0 ]; then
+    echo 'SVG prerocess opted for Inkscape-convert';
     for file in $(find "$DOCS_DIR" -name '*.svg');
     do
         inkscape --export-pdf="${file%.*}.pdf" --export-ignore-filters --export-area-drawing "$file"
@@ -29,6 +31,7 @@ fi
 # Since this will result in a loss of quality, it's reasonable to ask for confirmation. 
 command -v "convert" &> /dev/null
 if [ $? -eq 0 ]; then
+    echo 'SVG prerocess opted for ImageMagick-convert';
     debug_warn "Only rasterizing SVG to PDF converter found. This will reduce the image quality."
     read -p "Continue? [Y/n] " -n 1 -r
     echo # New line
