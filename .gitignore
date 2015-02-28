@@ -38,3 +38,10 @@ docs/javadoc/*
 
 # Visual Paradigm
 *.vpp*
+
+# IntelliJ IDEA
+*.iml
+.idea/
+
+# KDE
+.directory
