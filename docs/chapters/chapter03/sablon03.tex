@@ -88,53 +88,442 @@ Egy olyan buff, ami képes a \textbf{JumpExecute} parancs olyan módosítására
 
 
 \section{Osztályok leírása}
-\comment{Az előző alfejezetben tárgyalt objektumok felelősségének formalizálása attribútumokká, metódusokká. Csak publikus metódusok szerepelhetnek. Ebben az alfejezetben megjelennek az interfészek, az öröklés, az absztrakt osztályok. Segédosztályokra még mindig nincs szükség. Az osztályok ABC sorrendben kövessék egymást. Interfészek esetén az Interfészek, Attribútumok pontok kimaradnak.}
 
-\subsection{Osztály1}
+\subsection{AgentElement <<Interface>>}
 \begin{itemize}
+
 \item Felelősség\\
-\comment{Mi az osztály felelőssége. Kb 1 bekezdés.}
+Ez az osztály képes AgentVisitorok és AgentCommandek fogadására. 
+
 \item Ősosztályok\\
-\comment{Mely osztályokból származik (öröklési hierarchia)\newline
-Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
+Nincs
+
 \item Interfészek\\
-\comment{Mely interfészeket valósítja meg.}
+Nincs
+
 \item Attribútumok\\
-\comment{Milyen attribútumai vannak}
-	\begin{itemize}
-		\item attribútum1: attribútum jellemzése: mire való
-		\item attribútum2: attribútum jellemzése: mire való
-	\end{itemize}
+Nincs
+
 \item Metódusok\\
-\comment{Milyen publikus metódusokkal rendelkezik. Metódusonként egy-három mondat arról, hogy a metódus mit csinál.}
-	\begin{itemize}
-		\item int foo(Osztály3 o1, Osztály4 o2): metódus leírása
-		\item int bar(Osztály5 o1): metódus leírása
-	\end{itemize}
+
+\begin{itemize}
+    \item void accept(visitor: AgentVisitor): ez a metódus képes az AgentVisitor fogadására
+    \item void accept(visitor: AgentCommand): ez a metódus képes az AgentCommand fogadására
 \end{itemize}
 
-\subsection{Osztály2}
-\begin{itemize}
-\item Felelősség\\
-\comment{Mi az osztály felelőssége. Kb 1 bekezdés.}
-\item Ősosztályok\\
-\comment{Mely osztályokból származik (öröklési hierarchia)\newline
-Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
-\item Interfészek\\
-\comment{Mely interfészeket valósítja meg.}
-\item Attribútumok\\
-\comment{Milyen attribútumai vannak}
-	\begin{itemize}
-		\item attribútum1: attribútum jellemzése: mire való
-		\item attribútum2: attribútum jellemzése: mire való
-	\end{itemize}
-\item Metódusok\\
-\comment{Milyen publikus metódusokkal rendelkezik. Metódusonként egy-három mondat arról, hogy a metódus mit csinál.}
-	\begin{itemize}
-		\item int foo(Osztály3 o1, Osztály4 o2): metódus leírása
-		\item int bar(Osztály5 o1): metódus leírása
-	\end{itemize}
 \end{itemize}
+
+\subsection{AgentVisitor <<Interface>>}
+\begin{itemize}
+
+\item Felelősség\\
+Az Agent absztrakt osztály leszármazott osztályainak meglátogatására képes.
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+Nincs
+
+\item Attribútumok\\
+Nincs
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item void visit(element: Robot): meglátogat egy robotot
+\end{itemize}
+
+\end{itemize}
+
+
+\subsection{Agent <<Abstract>>}
+\begin{itemize}
+
+\item Felelősség\\
+A pályán lévő összes ágens közös viselkedését valósítja meg. 
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+AgentElement
+
+\item Attribútumok\\
+\begin{itemize}
+    \item field: Field
+    \item speed: Speed
+    \item isDead: bool
+    \item isOutOfTime: bool
+    \item currentLeft: int
+\end{itemize}
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item Speed getSpeed(void): visszaadja az Agent sebességét
+    \item void setSpeed(speed: Speed): beállítja az Agent sebességét
+    \item Field getField(void): visszaadja a mezőt, ahol az Agent áll
+    \item void setField(field: Field): beállítja, hogy melyik mezőn áll az Agent
+    \item bool isDead(void): megmondja, hogy Agent halott-e
+    \item void kill(void): megöli az Agentet
+    \item bool isOutOfTime(void): megmondja, hogy az Agentnek van-e még ideje lépni
+    \item void getLap(void): megmondja, hogy hányadik körben van az Agent
+    \item void incrementLap(void): növeli a kör számlálóját
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Robot}
+\begin{itemize}
+
+\item Felelősség\\
+A pályán elhelyezkedő egyik Agent típus.
+
+\item Ősosztályok\\
+Agent
+
+\item Interfészek\\
+(Agent) - AgentElement
+
+\item Attribútumok\\
+\begin{itemize}
+    \item stickyInventory: Inventory<Sticky>
+    \item oilInventory: Inventory<Oil>
+    \item buffs: Buff[]
+\end{itemize}
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item bool useSticky(void): használja az Inventory<Sticky>-ben tárolt Stickyt (ragacsot)
+    \item bool useOil(void): használja az Inventory<Oil>-ben tárolt Oilt (ragacsot)
+    \item void addSticky(void): hozzáad egy Stickyt az Inventory<Sticky>-hez.
+    \item void addOil(void): hozzáad egy Oilt az Inventory<Oil>-hez.
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Inventory}
+\begin{itemize}
+
+\item Felelősség\\
+Generikus tárolós, mely képes a típusának megfelelő elemeket tenni magába, illetve használni őket.
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+Nincs
+
+\item Attribútumok\\
+\begin{itemize}
+    \item buffs: T[]
+\end{itemize}
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item void addItem(item: T): hozzáad egy T típusú itemet az Inventory<T>-hez.
+    \item bool useItem(void): használja az Inventory<T>-ben tárolt itemet, amennyiben nem üres igazzal tér vissza, különben hamis.
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Buff <<Abstract>>}
+\begin{itemize}
+
+\item Felelősség\\
+Az összes releváns visitor implementálása. Interface collection. Commandokat és Agenteket is tud módosítani.
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+FieldCommandVisitor\\
+AgentCommandVisitor\\
+AgentVisitor\\
+
+\item Attribútumok\\
+Nincs
+
+\item Metódusok\\
+Nincs
+
+\end{itemize}
+
+\subsection{FieldElement <<Interface>>}
+\begin{itemize}
+
+\item Felelősség\\
+
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+Nincs
+
+\item Attribútumok\\
+\begin{itemize}
+    \item buffs: T[]
+\end{itemize}
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item void addItem(item: T): hozzáad egy T típusú itemet az Inventory<T>-hez.
+    \item bool useItem(void): használja az Inventory<T>-ben tárolt itemet, amennyiben nem üres igazzal tér vissza, különben hamis.
+\end{itemize}
+
+\end{itemize}
+
+\subsection{FieldElement <<Interface>>}
+\begin{itemize}
+
+\item Felelősség\\
+Ez az osztály képes FieldVisitorok és FieldCommandek fogadására. 
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+Nincs
+
+\item Attribútumok\\
+Nincs
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item void accept(visitor: FieldVisitor): ez a metódus képes az FieldVisitor fogadására
+    \item void accept(visitor: FieldCommand): ez a metódus képes az FieldCommand fogadására
+\end{itemize}
+
+\end{itemize}
+
+\subsection{FieldVisitor <<Interface>>}
+\begin{itemize}
+
+\item Felelősség\\
+Az Field absztrakt osztály leszármazott osztályainak meglátogatására képes.
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+Nincs
+
+\item Attribútumok\\
+Nincs
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item void visit(element: FieldCell): meglátogat egy FieldCell objektumot
+    \item void visit(element: EmptyFieldCell): meglátogat egy EmptyFieldCell objektumot
+    \item void visit(element: FinishFieldCell): meglátogat egy FinishFieldCell objektumot
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Field <<Abstract>>}
+\begin{itemize}
+
+\item Felelősség\\
+A pályán lévő mezők viselkedését valósítja meg.
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+Nincs
+
+\item Attribútumok\\
+    \begin{itemize}
+            \item agent: Agent
+            \item distanceFromGoal: int 
+            \item buffs: Buff[]
+            \item neighbours: Map<Direction, Field>
+    \end{itemize}
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item void addNeighbour(direction: Direction, field: Field): hozzáadja a mezőhöz a megfelelő szomszédot a megfelelő irányban.
+    \item void onEnter(agent: Agent): beállítja az Agent-nek önmagát, beállítja a saját agent attribútumát a rálépő Agent-re.
+    \item void onExit(void): elfelejti az agentet, aki rajta állt. Kitörli az agentből önmagát.
+    \item int getDistanceFromGoal(void): megmondja, hogy az mező hány mezőre van a céltól.
+    \item void placeBuff(buff: Buff): a paraméterben megadott buffot a mezőre teszi
+    \item Displacement getDisplacement(speed: Speed): kiszámolja, hogy adott sebességgel melyik másik mezőre lehet ugrani.
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Displacement}
+\begin{itemize}
+
+\item Felelősség\\
+Az elmozdulást kezelő osztály, mely a kezdeti és végpont mezőket tudja.
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+Nincs
+
+\item Attribútumok\\
+    \begin{itemize}
+            \item start: Field
+            \item goal: Field
+    \end{itemize}
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item Field getStart(void): visszaadja a kezdeti mezőt
+    \item Field getGoal(void): visszaadja az érkezési mezőt
+\end{itemize}
+
+\end{itemize}
+
+\subsection{EmptyFieldCell}
+\begin{itemize}
+
+\item Felelősség\\
+A pálya szélén lévő mezők.
+
+\item Ősosztályok\\
+Field
+
+\item Interfészek\\
+(Field) - FieldElement
+
+\item Attribútumok\\
+Nincs
+
+\item Metódusok\\
+Nincs
+
+\end{itemize}
+
+
+\subsection{FieldCell}
+\begin{itemize}
+
+\item Felelősség\\
+Minden, ami nem pálya széle illetve nem célmező.
+
+\item Ősosztályok\\
+Field
+
+\item Interfészek\\
+(Field) - FieldElement
+
+\item Attribútumok\\
+Nincs
+
+\item Metódusok\\
+Nincs
+
+\end{itemize}
+
+
+\subsection{FinishLineFieldCell}
+\begin{itemize}
+
+\item Felelősség\\
+A célt jelző mezőtípus.
+
+\item Ősosztályok\\
+Field
+
+\item Interfészek\\
+(Field) - FieldElement
+
+\item Attribútumok\\
+Nincs
+
+\item Metódusok\\
+Nincs
+
+\end{itemize}
+
+\subsection{Command <<Abstract>}
+\begin{itemize}
+
+\item Felelősség\\
+Az összes parancs jellemző közös viselkedés megvalósítója.
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+Nincs
+
+\item Attribútumok\\
+    \begin{itemize}
+            \item canExecute: bool
+    \end{itemize}
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item bool canExecute(void): igazzal tér vissza, ha a parancs végrehajtható
+    \item bool setExecutable(canExecute: bool): beállítja, hogy futtatható-e a parancs
+\end{itemize}
+
+\end{itemize}
+
+\subsection{AgentCommand <<Abstract>}
+\begin{itemize}
+
+\item Felelősség\\
+Az Agentre vonatkozó parancsok, közös viselkedést megvalósító osztály.
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+AgentVisitor
+
+\item Attribútumok\\
+Nincs
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item FieldCommand getFieldCommand(void): amennyiben a parancsláncban szükeséges egy mezőnek átadni a parancsot, ezt állítja elő.
+    \item void accept(element: AgentCommandVisitor): a buffok ezen keresztül tudják módosítani a parancsokat.
+\end{itemize}
+
+\end{itemize}
+
+\subsection{FieldCommand <<Abstract>}
+\begin{itemize}
+
+\item Felelősség\\
+Az Fieldre vonatkozó parancsok, közös viselkedést megvalósító osztály.
+
+\item Ősosztályok\\
+Nincs
+
+\item Interfészek\\
+FieldVisitor
+
+\item Attribútumok\\
+Nincs
+
+\item Metódusok\\
+
+\begin{itemize}
+    \item FieldCommand getFieldCommand(void): amennyiben a parancsláncban szükeséges egy mezőnek átadni a parancsot, ezt állítja elő.
+    \item void accept(element: FieldCommandVisitor): a buffok ezen keresztül tudják módosítani a parancsokat.
+\end{itemize}
+
+\end{itemize}
+
+
 
 \clearpage
 
