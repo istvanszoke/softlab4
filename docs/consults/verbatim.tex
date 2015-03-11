@@ -103,5 +103,23 @@
 	\item Röviden igazából ennyi, részletekkel kapcsolatban majd közzéteszem a PDF-et amit elküld, mert abba tett egy rakat megjegyzést meg jelölést, hogy mi a probléma.
 \end{itemize}
 
+\subsection{\#4 2015.03.11.-i konzultáció, Analízis modell kidolgozása 2.}
 
+\begin{itemize}
+	\item A régi problémák maradtak, főleg INIT részt kéne csinálni.
+	\item BTW mondta, hogy annó ők is ilyen modulárisan csinálták, hogy a követelményekkel ne legyen gond. Viszont utólag belegondolva azt mondta, hogy nem érte meg azt a sok szívást. Én úgy gondolom, hogy csak barátian ajánlotta, hogy ne csináljuk így, mert nem éri meg.
+	\item Kell egy tesztpálya generáló szekvencia, ez lehet minimális (2field, 1robot). Később ezen fogjuk tesztelni a Use-Case-ket. Ezt bele kéne rakni a szekeltonba, visszamenőleg nem kell belerakni az Analízis modellbe.
+	\item Szekelton terv:
+	\item 5.1 Use-case:
+	\item interakciós use-casek. Gyakorlatilag minden, ami interakció azt meg kell rajzolni és később majd konzolos formában tesztelni. Szerintem elég sok van, ami már most is megvan.
+	\item 1 lépéshez kapcsolódó legyen egy diagram. pl. Ugrik, Pályát épít stb.
+	\item Feltételes use-casek esetén, a felhasználótól kérünk be adatokat, nem tárolunk. pl. Robot stickybe lép, akkor változik a sebesség. Ilyenkor a felhasználótól kell lekérdezni a sebességet. (Mintha Unit-tesztelnénk az Execute-t)
+	\item Minden egyes metódushívás, visszatérés kiírása konzolra. Ez lesz a szkeleton.
+	\item 5.2. Kimenet formátuma:
+	\item Hogy néz ki egy válasz, hogy néz ki egy kérdés. Max 1-1 példával.
+	\item 5.3. Szekvencia digramok
+	\item Use-caseknek megfelelő szekvenciák, lehet hivatkozni(ref) régi use-casekre. De csak ref-fel.
+	\item 5.4 Kommunikációs diagramok
+	\item Szekvenciáknak megfelelő.
+\end{itemize}
 \end{document}
