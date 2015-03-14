@@ -52,6 +52,12 @@ public class Game implements ControllerListener {
 
             previous = current;
             current = System.currentTimeMillis();
+
+            try {
+                Thread.sleep(100);
+            } catch (Exception ignore) {
+
+            }
         }
 
         if (!playerChanged) {
