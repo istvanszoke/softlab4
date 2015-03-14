@@ -74,17 +74,22 @@ public final class GameCreator {
             for (int j = 0; j < width; ++j) {
                 Field field = fields.get(i * width + j);
 
-                if (i > 0 && j > 0 && i < height - 1 && j < width - 1) {
+                if (i > 0) {
                     field.addNeighbour(Direction.UP, fields.get((i - 1) * width + j));
+                } else if (i < height - 1) {
                     field.addNeighbour(Direction.DOWN, fields.get((i + 1) * width + j));
-                    field.addNeighbour(Direction.LEFT, fields.get(i * width + j - 1));
-                    field.addNeighbour(Direction.RIGHT, fields.get(i * width + j + 1));
                 }
 
                 if (i == 0) {
                     setEdges(field, Direction.UP);
                 } else if (i == height - 1) {
                     setEdges(field, Direction.DOWN);
+                }
+
+                if (j > 0) {
+                    field.addNeighbour(Direction.LEFT, fields.get(i * width + j - 1));
+                } else if (j < width - 1) {
+                    field.addNeighbour(Direction.RIGHT, fields.get(i * width + j + 1));
                 }
 
                 if (j == 0) {
