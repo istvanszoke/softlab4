@@ -12,7 +12,7 @@
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=\textwidth]{chapters/chapter05/UseCaseDiagram.pdf}
+\includegraphics[width=\textwidth]{chapters/chapter05/SkeletonUseCase.pdf}
 \caption{Szkeleton Use Case Diagram}
 \label{fig:SzkeletonUseCase}
 \end{center}
@@ -52,10 +52,22 @@
 {A Játékosok egy új pályát kívánnak generálni}
 
 \usecase%
+{Pálya beltöltése}%
+{Előre elkészített pályát töltünk be}%
+{Játék, Játékos}%
+{Ha a játékosok nem véletlenszerű pályán akarnak játszani}
+
+\usecase%
 {Jelenlegi játék mentése}%
 {Játék aktuállis állásának mentése}%
 {Játék, Játékos}%
 {A Játékosok valamilyen oknál kifolyólag később akarják folytatni a játékot}
+
+\usecase%
+{Mentett játék betöltáse}%
+{Már elmentett jűték betöltése}%
+{Játék, Játékos}%
+{A Játékosok a régebben félbehagyott játékot folytathatják ahol abbahagyták}
 
 \usecase%
 {Időt mér játékosonkét}%
