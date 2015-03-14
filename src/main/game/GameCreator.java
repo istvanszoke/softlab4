@@ -5,9 +5,7 @@ import field.*;
 import java.util.ArrayList;
 
 public final class GameCreator {
-    private Map map = null;
-    private ArrayList<Field> fields = new ArrayList<Field>();
-    private ArrayList<Field> finishLineCells = new ArrayList<Field>();
+    private Map map = new Map();
     private ArrayList<Player> players = new ArrayList<Player>();
     private int roundTime = -1;
 
@@ -18,7 +16,6 @@ public final class GameCreator {
 
     public GameCreator addPlayer(Player player) {
         players.add(player);
-        placeAgents();
         return this;
     }
 
@@ -30,18 +27,12 @@ public final class GameCreator {
     public GameCreator generateTestMap(int width, int height) {
         generateGrid(width, height);
         setNeighbours(width, height);
-        placeAgents();
         return this;
     }
 
     public Game create() {
-        if ((fields.isEmpty() && map == null) || finishLineCells.isEmpty() ||
-                players.size() < 2 || players.size() > 4 || roundTime == -1) {
+        if (map.isEmpty() || players.size() < 2 || players.size() > 4 || roundTime == -1) {
             return null;
-        }
-
-        if (map == null) {
-            map = new Map(fields);
         }
 
         return new Game(players, map, roundTime);
@@ -51,69 +42,45 @@ public final class GameCreator {
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
                 int distanceFromGoal = i < height / 2 ? height / 2 - i : i - height / 2;
-                Field field;
 
                 if (i == height / 2) {
-                    field = new FinishLineFieldCell();
-                    finishLineCells.add(field);
+                    map.add(new FinishLineFieldCell());
                 } else {
-                    field = new FieldCell(distanceFromGoal);
+                    map.add(new FieldCell(distanceFromGoal));
                 }
-
-                fields.add(field);
             }
         }
-    }
-
-    private void setEdges(Field field, Direction direction) {
-        field.addNeighbour(direction, new EmptyFieldCell(-1));
     }
 
     private void setNeighbours(int width, int height) {
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
-                Field field = fields.get(i * width + j);
+                Field field = map.get(i * width + j);
 
                 if (i > 0) {
-                    field.addNeighbour(Direction.UP, fields.get((i - 1) * width + j));
+                    field.addNeighbour(Direction.UP, map.get((i - 1) * width + j));
                 } else if (i < height - 1) {
-                    field.addNeighbour(Direction.DOWN, fields.get((i + 1) * width + j));
+                    field.addNeighbour(Direction.DOWN, map.get((i + 1) * width + j));
                 }
 
                 if (i == 0) {
-                    setEdges(field, Direction.UP);
+                    field.addNeighbour(Direction.UP, new EmptyFieldCell(-1));
                 } else if (i == height - 1) {
-                    setEdges(field, Direction.DOWN);
+                    field.addNeighbour(Direction.DOWN, new EmptyFieldCell(-1));
                 }
 
                 if (j > 0) {
-                    field.addNeighbour(Direction.LEFT, fields.get(i * width + j - 1));
+                    field.addNeighbour(Direction.LEFT, map.get(i * width + j - 1));
                 } else if (j < width - 1) {
-                    field.addNeighbour(Direction.RIGHT, fields.get(i * width + j + 1));
+                    field.addNeighbour(Direction.RIGHT, map.get(i * width + j + 1));
                 }
 
                 if (j == 0) {
-                    setEdges(field, Direction.LEFT);
+                    field.addNeighbour(Direction.LEFT, new EmptyFieldCell(-1));
                 } else if (j == width - 1) {
-                    setEdges(field, Direction.RIGHT);
+                    field.addNeighbour(Direction.RIGHT, new EmptyFieldCell(-1));
                 }
             }
-        }
-    }
-
-    private void placeAgents() {
-        if (finishLineCells.size() < players.size()) {
-            System.out.println("Not enough finish line cells.");
-            return;
-        }
-
-        for (Field field : finishLineCells) {
-            field.onExit();
-        }
-
-        int cell = 0;
-        for (Player player : players) {
-            finishLineCells.get(cell++).onEnter(player.getAgent());
         }
     }
 }

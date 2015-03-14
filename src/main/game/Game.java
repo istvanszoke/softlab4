@@ -5,6 +5,7 @@ import field.Field;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,15 +13,12 @@ public class Game implements ControllerListener {
     private ArrayList<Player> players = new ArrayList<Player>();
     private ArrayList<Player> disqualified = new ArrayList<Player>();
 
-    private Player currentPlayer = null;
+    private Player currentPlayer;
     private boolean isPaused = true;
     private int roundTime;
 
     private Map map;
-
     private AgentController controller = new HumanController(this);
-
-    ArrayList<Field> fields = new ArrayList<Field>();
 
     Timer timer = new Timer();
 
@@ -29,6 +27,7 @@ public class Game implements ControllerListener {
         this.map = map;
         this.roundTime = roundTime;
         currentPlayer = this.players.get(0);
+        placeAgents();
 
         timer.schedule(new TimerTask() {
             @Override
@@ -61,6 +60,7 @@ public class Game implements ControllerListener {
         for (Player player : players) {
             player.setTimeRemaining(roundTime);
         }
+        placeAgents();
     }
 
     public ArrayList<Player> getPlayers() {
@@ -77,6 +77,10 @@ public class Game implements ControllerListener {
 
     public Agent getCurrentAgent() {
         return getCurrentPlayer().getAgent();
+    }
+
+    public Map getMap() {
+        return map;
     }
 
     @Override
@@ -103,5 +107,22 @@ public class Game implements ControllerListener {
 
     private synchronized Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    private void placeAgents() {
+        Collection<Field> startingFields = map.findStartingPositions(players.size());
+        Field[] fields = startingFields.toArray(new Field[startingFields.size()]);
+
+        for (int i = 0; i < players.size(); ++i) {
+            Agent agent = players.get(i).getAgent();
+            Field startingField = agent.getField();
+
+            if (startingField != null) {
+                startingField.onExit();
+            }
+
+            fields[i].onEnter(agent);
+        }
+
     }
 }

@@ -53,6 +53,10 @@ public abstract class Field implements FieldElement {
         return new Displacement(this, searchGoal(speed));
     }
 
+    public boolean isEmpty() {
+        return agent == null;
+    }
+
     protected Field searchGoal(Speed speed) {
         if (speed.getMagnitude() == 0) {
             return this;
