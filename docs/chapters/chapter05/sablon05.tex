@@ -12,50 +12,20 @@
 
 \begin{figure}[h]
 \begin{center}
-%\includegraphics[width=17cm]{chapters/chapter05/example.pdf}
-\caption{x}
+\includegraphics[width=\textwidth]{chapters/chapter05/UseCaseDiagram.pdf}
+\caption{Szkeleton Use Case Diagram}
 \label{fig:SzkeletonUseCase}
 \end{center}
 \end{figure}
 
 \subsection{Use-case leírások}
-\comment{Minden use-case-hez külön}
-
-\usecase%
-{Játékosok számának megadása}%
-{Megadhatjuk, hogy 2, 3 vagy 4 játékossal kívánunk játszani}%
-{Játékos, Játék}%
-{A program felkínálja a lehetőséget, hogy kíválasszuk, hogy 2, 3 vagy 4 játékossal szerenénk játszani}
+%\comment{Minden use-case-hez külön}
 
 \usecase%
 {Új játék indítása}%
 {Elindíthatunk egy új játékot}%
 {Játékos, Játék}%
 {A játékosok számának megadása után a Játékos kezdeményezheti a játéknak az elindítását}
-
-\usecase%
-{Robot sebességének változtatása}%
-{A Játékos megváltoztathatja a Robotnak a sebességét}%
-{Játékos, Robot}%
-{A játékos körönként megváltoztathatja a Robotnak a sebességét}
-
-\usecase%
-{Robot utasítása olajnak a lehelyezése}%
-{Játékos utasíthatja a Robotot, hogy helyezze le az olajfoltot}%
-{Játékos, Robot}%
-{A Játékos más játékosok hátráltatásának okán lehelyezhet a készletáéből egy olajfoltot}
-
-\usecase%
-{Robot utasítása ragacs a lehelyezése}%
-{Játékos utasíthatja a Robotot, hogy helyezze le az ragacsfoltot}%
-{Játékos, Robot}%
-{A Játékos más játékosok hátráltatásának okán lehelyezhet a készletáéből egy ragacsfoltot}
-
-\usecase%
-{Robot utasítása ugrásra}%
-{Játékos utasíthatja a Robotot, hogy végezze el az ugrást}%
-{Játékos, Robot, Játék}%
-{Játékos utasíthatja a Robotot, hogy végezze el az ugrást, amennyiben ezt nem teszi meg a Játék kikényszerítheti ezt a lépést}
 
 \usecase%
 {Játék megnyerése}%
@@ -70,34 +40,16 @@
 {Ha minden Játékosnak lejár akkor a megtett út alapján eldől, hogy kik a vesztesek}
 
 \usecase%
-{Olajos mező Robot sebességváltást nem enged}%
-{Ha olajos mezőn vagyunk akkor a mező nem engedi a lépést a robotnak}%
-{Robot, Pálya}%
-{Ha egy Robot rálép az olajra akkor a mező nem engedi neki a sebességváltoztatást}
-
-\usecase%
-{Ragacs mező Robot sebességet megfelez}%
-{Ha ragacsos mezőn vagyunk akkor a mező megfelezi a Robot sebességét}%
-{Robot, Pálya}%
-{Ha egy Robot rálép a ragacsra akkor a mező megfelezi aa Robotnak a sebességét}
-
-\usecase%
-{Pálya szélén vagy azon túl Robotot elakaszt}%
-{Pályáról lelépő robotot elakasztjuk}%
-{Robot, Pálya}%
-{Ha egy Robot kilép a pálya határain kívülre akkor elakasztja őt}
+{Játékparaméterek megadása}%
+{Új játék paramétereinek megadása}%
+{Játék}%
+{Játékosok megadhatják, hogy hányan vannak, milyen időkorláttal kívánnak játszani}
 
 \usecase%
 {Pálya generálása}%
 {Új játékpályát generálunk}%
 {Játék, Játékos}%
 {A Játékosok egy új pályát kívánnak generálni}
-
-\usecase%
-{Új játék indítása}%
-{Új játokmenetet indítunk}%
-{Játék, Játékos}%
-{A Játékosok egy új játokot akarnak egymással játszani}
 
 \usecase%
 {Jelenlegi játék mentése}%
@@ -112,16 +64,52 @@
 {Nyilvántartja a Játékosok még hátralévő idejét, és megállítja azokat akik már nem képhetnek}
 
 \usecase%
-{Játékparaméterek megadása}%
-{Új játék paramétereinek megadása}%
-{Játék}%
-{Játékosok megadhatják, hogy hányan vannak, milyen időkorláttal kívánnak játszani}
-
-\usecase%
 {Játékosokat vált}%
 {Játékosokat vált körönként}%
 {Játék}%
 {Játékost cserél körönként ha a játékos ugrott vagy lejárt az ideje}
+
+\usecase%
+{Robot sebességének változtatása}%
+{A Játékos megváltoztathatja a Robotnak a sebességét}%
+{Játékos, Robot}%
+{A játékos körönként megváltoztathatja a Robotnak a sebességét}
+
+\usecase%
+{Robot utasítása olajnak a lehelyezése}%
+{Játékos utasíthatja a Robotot, hogy helyezze le az olajfoltot}%
+{Játékos, Robot}%
+{A Játékos más játékosok hátráltatásának okán lehelyezhet a készletáéből egy olajfoltot}
+
+\usecase%
+{Robot utasítása ragacsnak a lehelyezése}%
+{Játékos utasíthatja a Robotot, hogy helyezze le az ragacsfoltot}%
+{Játékos, Robot}%
+{A Játékos más játékosok hátráltatásának okán lehelyezhet a készletáéből egy ragacsfoltot}
+
+\usecase%
+{Robot utasítása ugrásra}%
+{Játékos utasíthatja a Robotot, hogy végezze el az ugrást}%
+{Játékos, Robot, Játék}%
+{Játékos utasíthatja a Robotot, hogy végezze el az ugrást, amennyiben ezt nem teszi meg a Játék kikényszerítheti ezt a lépést}
+
+\usecase%
+{Olajos mező Robot sebességváltoztatást nem enged}%
+{Ha olajos mezőn vagyunk akkor a mező nem engedi a lépést a robotnak}%
+{Robot, Pálya}%
+{Ha egy Robot rálép az olajra akkor a mező nem engedi neki a sebességváltoztatást}
+
+\usecase%
+{Ragacs mező Robot sebességet megfelez}%
+{Ha ragacsos mezőn vagyunk akkor a mező megfelezi a Robot sebességét}%
+{Robot, Pálya}%
+{Ha egy Robot rálép a ragacsra akkor a mező megfelezi aa Robotnak a sebességét}
+
+\usecase%
+{Pályáról lelépő Robotot elakaszt}%
+{Pályáról lelépő robotot elakasztjuk, nem léphet tovább}%
+{Robot, Pálya}%
+{Ha egy Robot kilép a pálya határain kívülre akkor elakasztja őt}
 
 \section{A szkeleton kezelői felületének terve, dialógusok}
 \comment{A szkeleton által elfogadott bemenetek , valamint a szöveges konzolon megjelenő kimenetek. A kiemenet formátuma olyan kell legyen, ami alapján a működés összevethető a korábbi szekvencia-diagramokkal.}
