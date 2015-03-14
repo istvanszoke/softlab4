@@ -31,6 +31,10 @@ public abstract class Field implements FieldElement {
     }
 
     public void onExit() {
+        if (agent == null) {
+            return;
+        }
+
         buffs.clear();
 
         agent.setField(null);

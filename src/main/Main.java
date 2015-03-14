@@ -1,5 +1,7 @@
 import game.Game;
+import game.GameCreator;
 import game.KeyDispatcher;
+import game.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +21,14 @@ public class Main extends JFrame {
     }
 
     private void gameLoop() {
-        final Game game = new Game(10);
+        int roundTime = 10;
+
+        Game game = new GameCreator()
+                .setRoundTime(roundTime)
+                .addPlayer(Player.createRobot(roundTime))
+                .addPlayer(Player.createRobot(roundTime))
+                .generateTestMap(10, 10)
+                .create();
         game.registerController(this);
         game.start();
     }

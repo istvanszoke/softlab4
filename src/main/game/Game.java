@@ -1,10 +1,7 @@
 package game;
 
 import agents.Agent;
-import field.Direction;
-import field.EmptyFieldCell;
 import field.Field;
-import field.FieldCell;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,31 +16,19 @@ public class Game implements ControllerListener {
     private boolean isPaused = true;
     private int roundTime;
 
+    private Map map;
+
     private AgentController controller = new HumanController(this);
 
     ArrayList<Field> fields = new ArrayList<Field>();
 
     Timer timer = new Timer();
 
-    public Game(int roundTime) {
+    public Game(ArrayList<Player> players, Map map, int roundTime) {
+        this.players = players;
+        this.map = map;
         this.roundTime = roundTime;
-        players.add(Player.createRobot(roundTime));
-        players.add(Player.createRobot(roundTime));
-        currentPlayer = players.get(0);
-
-        fields.add(new FieldCell(-10));
-        fields.add(new FieldCell(0));
-        fields.add(new FieldCell(1));
-        fields.add(new EmptyFieldCell(-10));
-
-        fields.get(1).addNeighbour(Direction.UP, fields.get(2));
-        fields.get(1).addNeighbour(Direction.DOWN, fields.get(3));
-
-        fields.get(2).addNeighbour(Direction.DOWN, fields.get(1));
-        fields.get(2).addNeighbour(Direction.UP, fields.get(3));
-
-        fields.get(0).onEnter(players.get(0).getAgent());
-        fields.get(1).onEnter(players.get(1).getAgent());
+        currentPlayer = this.players.get(0);
 
         timer.schedule(new TimerTask() {
             @Override
@@ -78,8 +63,12 @@ public class Game implements ControllerListener {
         }
     }
 
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public ArrayList<Player> getDisqualified() {
+        return disqualified;
     }
 
     public void registerController(Component component) {
