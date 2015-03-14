@@ -7,12 +7,11 @@ public abstract class Agent implements AgentElement {
     protected Speed speed;
     protected Field field;
     protected boolean isDead;
-    protected boolean isOutOfTime;
     protected int currentLap;
 
     public Agent() {
         speed = new Speed(Direction.UP, 0);
-        isDead = isOutOfTime = false;
+        isDead = false;
         currentLap = 1;
     }
 
@@ -38,14 +37,6 @@ public abstract class Agent implements AgentElement {
 
     public void kill() {
         this.isDead = true;
-    }
-
-    public synchronized boolean isOutOfTime() {
-        return isOutOfTime;
-    }
-
-    public synchronized void timeOut() {
-        this.isOutOfTime = true;
     }
 
     public int getLap() {

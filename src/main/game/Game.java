@@ -60,10 +60,6 @@ public class Game implements ControllerListener {
             }
         }
 
-        if (!playerChanged) {
-            getCurrentAgent().timeOut();
-        }
-
         onAgentChange();
         playerChanged = false;
     }
@@ -84,7 +80,7 @@ public class Game implements ControllerListener {
     public void onAgentChange() {
         int currentIndex = players.indexOf(currentPlayer);
 
-        if (getCurrentAgent().isOutOfTime()) {
+        if (getCurrentPlayer().isOutOfTime()) {
             players.remove(getCurrentPlayer());
             disqualified.add(getCurrentPlayer());
             currentIndex -= 1;

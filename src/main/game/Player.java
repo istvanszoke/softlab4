@@ -20,17 +20,13 @@ public class Player {
 
     public void setTimeRemaining(int milliseconds) {
         timeRemaining = milliseconds;
-
-        if (isFinished()) {
-            agent.timeOut();
-        }
     }
 
     public int getTimeRemaining() {
         return timeRemaining;
     }
 
-    public boolean isFinished() {
+    public boolean isOutOfTime() {
         return timeRemaining <= 0;
     }
 }
