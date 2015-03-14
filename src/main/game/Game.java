@@ -86,6 +86,7 @@ public class Game implements ControllerListener {
 
         if (players.isEmpty()) {
             // Signal that the game is over
+            return;
         }
 
         setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
