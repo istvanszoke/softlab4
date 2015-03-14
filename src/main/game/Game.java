@@ -1,5 +1,6 @@
 package game;
 
+import agents.Agent;
 import agents.Robot;
 import field.Direction;
 import field.EmptyFieldCell;
@@ -8,18 +9,17 @@ import field.FieldCell;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.*;
 
 public class Game {
     private ArrayList<Player> players = new ArrayList<Player>();
-    private int currentPlayerIndex = -1;
+    private Player currentPlayer = null;
 
     ArrayList<Field> fields = new ArrayList<Field>();
 
     public Game() {
-        players.add(Player.createHuman(new Robot(), 5));
-        players.add(Player.createHuman(new Robot(), 1000));
-        currentPlayerIndex = 0;
+        players.add(Player.createHuman(this, 5));
+        players.add(Player.createHuman(this, 1000));
+        currentPlayer = players.get(0);
 
         fields.add(new FieldCell(-10));
         fields.add(new FieldCell(0));
@@ -37,29 +37,21 @@ public class Game {
     }
 
     public void process() {
-        System.out.println("Processing robot with index: " + currentPlayerIndex);
+        System.out.println("Processing player: " + currentPlayer);
 
-        final Player currentPlayer = players.get(currentPlayerIndex);
-        final ExecutorService controlExecutor = Executors.newSingleThreadExecutor();
+        long start = System.currentTimeMillis();
+        long end = start + currentPlayer.getTimeRemaining();
 
-        try {
-            controlExecutor.submit(getAgentJob()).get(currentPlayer.getTimeRemaining(),
-                                                      TimeUnit.MILLISECONDS);
-        } catch (TimeoutException e) {
-            currentPlayer.getAgent().timeOut();
-            currentPlayer.setTimeRemaining(0);
-        } catch (Exception ignored) {
-            // We don't care about other exceptions
-        } finally {
-            currentPlayer.deactivate();
-            currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-            controlExecutor.shutdown();
+        while (System.currentTimeMillis() < end) {
+            // ????
         }
+
+        int currentIndex = players.indexOf(currentPlayer);
+        currentPlayer = players.get((currentIndex + 1) % players.size());
     }
 
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
-        currentPlayerIndex = 0;
     }
 
     public void registerControllers(Component component) {
@@ -68,19 +60,7 @@ public class Game {
         }
     }
 
-
-    private Callable<Void> getAgentJob() {
-        final Player currentPlayer = players.get(currentPlayerIndex);
-
-        return new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                long startTime = System.currentTimeMillis();
-                currentPlayer.activate();
-                long elapsed = System.currentTimeMillis() - startTime;
-                currentPlayer.setTimeRemaining(currentPlayer.getTimeRemaining() - (int) elapsed);
-                return null;
-            }
-        };
+    public Agent getCurrentAgent() {
+        return currentPlayer.getAgent();
     }
 }

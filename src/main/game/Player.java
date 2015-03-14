@@ -3,20 +3,18 @@ package game;
 import agents.Agent;
 
 public class Player {
-    private final AgentController controller;
+    private AgentController controller = null;
     private int timeRemaining;
 
-    private Player(AgentController agentController, int timeInSec) {
-        controller = agentController;
-        timeRemaining = timeInSec * 1000;
-    }
-
-    public static Player createHuman(Agent agent, int timeInSec) {
-        return new Player(new HumanController(agent), timeInSec);
+    public static Player createHuman(Game game, int timeInSec) {
+        Player instance = new Player();
+        instance.controller = new HumanController(game);
+        instance.timeRemaining = timeInSec * 1000;
+        return instance;
     }
 
     public Agent getAgent() {
-        return controller.getAgent();
+        return null;
     }
 
     public AgentController getController() {
@@ -27,16 +25,10 @@ public class Player {
         if (isFinished()) {
             return;
         }
-
-        controller.activate();
-    }
-
-    public void deactivate() {
-        controller.deactivate();
     }
 
     public void setTimeRemaining(int milliseconds) {
-        timeRemaining -= milliseconds;
+        timeRemaining = milliseconds;
     }
 
     public int getTimeRemaining() {

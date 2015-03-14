@@ -1,6 +1,5 @@
 package game;
 
-import agents.Agent;
 import commands.AgentCommand;
 import commands.executes.KillExecute;
 import commands.queries.*;
@@ -9,22 +8,12 @@ import field.Direction;
 import java.awt.event.KeyEvent;
 
 public class HumanController extends AgentController {
-    public HumanController(Agent agent) {
-        super(agent);
+    public HumanController(Game game) {
+        super(game);
     }
 
     @Override
-    public void keyTyped(KeyEvent e) { }
-
-    @Override
-    public void keyReleased(KeyEvent e) { }
-
-    @Override
     public void keyPressed(KeyEvent e) {
-        if (!this.isActive || agent.isOutOfTime() || agent.isDead()) {
-            return;
-        }
-
         switch (e.getKeyCode()) {
             // Change Direction
             case KeyEvent.VK_W:
@@ -43,7 +32,6 @@ public class HumanController extends AgentController {
             // Jump
             case KeyEvent.VK_SPACE:
                 useCommand(new JumpQuery());
-                isActive = false;
                 break;
 
             // Change Speed
@@ -65,13 +53,12 @@ public class HumanController extends AgentController {
             // Suicide
             case KeyEvent.VK_K:
                 useCommand(new KillExecute());
-                isActive = false;
                 break;
         }
     }
 
     private void useCommand(AgentCommand command) {
-        agent.accept(command);
+        game.getCurrentAgent().accept(command);
         System.out.println(command.getResult());
     }
 }
