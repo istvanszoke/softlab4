@@ -40,22 +40,21 @@ public class Game {
         System.out.println("Processing robot with index: " + currentPlayerIndex);
 
         final Player currentPlayer = players.get(currentPlayerIndex);
-//        final Player currentPlayer = players.get(currentPlayerIndex);
-//        final ExecutorService controlExecutor = Executors.newSingleThreadExecutor();
-//
-//        try {
-//            controlExecutor.submit(getAgentJob()).get(currentPlayer.getTimeRemaining(),
-//                                                      TimeUnit.MILLISECONDS);
-//        } catch (TimeoutException e) {
-//            currentPlayer.getAgent().timeOut();
-//            currentPlayer.setTimeRemaining(0);
-//        } catch (Exception ignored) {
-//            // We don't care about other exceptions
-//        } finally {
-//            currentPlayer.deactivate();
-//            currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-//            controlExecutor.shutdown();
-//        }
+        final ExecutorService controlExecutor = Executors.newSingleThreadExecutor();
+
+        try {
+            controlExecutor.submit(getAgentJob()).get(currentPlayer.getTimeRemaining(),
+                                                      TimeUnit.MILLISECONDS);
+        } catch (TimeoutException e) {
+            currentPlayer.getAgent().timeOut();
+            currentPlayer.setTimeRemaining(0);
+        } catch (Exception ignored) {
+            // We don't care about other exceptions
+        } finally {
+            currentPlayer.deactivate();
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+            controlExecutor.shutdown();
+        }
     }
 
     public void setPlayers(ArrayList<Player> players) {
