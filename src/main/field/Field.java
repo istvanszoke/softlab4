@@ -3,7 +3,6 @@ package field;
 import agents.Agent;
 import agents.Speed;
 import buff.Buff;
-import commands.FieldCommand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +31,10 @@ public abstract class Field implements FieldElement {
     }
 
     public void onExit() {
+        if (agent == null) {
+            return;
+        }
+
         buffs.clear();
 
         agent.setField(null);
@@ -42,12 +45,16 @@ public abstract class Field implements FieldElement {
         return distanceFromGoal;
     }
 
-    public <T extends Buff> void placeBuff(T buff) {
+    public void placeBuff(Buff buff) {
         buffs.add(buff);
     }
 
     public Displacement getDisplacement(Speed speed) {
         return new Displacement(this, searchGoal(speed));
+    }
+
+    public boolean isEmpty() {
+        return agent == null;
     }
 
     protected Field searchGoal(Speed speed) {

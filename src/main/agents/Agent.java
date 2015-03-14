@@ -1,13 +1,19 @@
 package agents;
 
+import field.Direction;
 import field.Field;
 
 public abstract class Agent implements AgentElement {
     protected Speed speed;
     protected Field field;
     protected boolean isDead;
-    protected boolean isOutOfTime;
     protected int currentLap;
+
+    public Agent() {
+        speed = new Speed(Direction.UP, 0);
+        isDead = false;
+        currentLap = 1;
+    }
 
     public Speed getSpeed() {
         return speed.clone();
@@ -31,15 +37,6 @@ public abstract class Agent implements AgentElement {
 
     public void kill() {
         this.isDead = true;
-    }
-
-
-    public boolean isOutOfTime() {
-        return isOutOfTime;
-    }
-
-    public void timeOut() {
-        this.isOutOfTime = true;
     }
 
     public int getLap() {

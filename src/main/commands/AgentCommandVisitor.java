@@ -11,7 +11,6 @@ public interface AgentCommandVisitor {
     void visit(JumpQuery command);
     void visit(JumpExecute command);
     void visit(KillExecute command);
-    void visit(TimeoutExecute command);
     void visit(UseStickyQuery command);
     void visit(UseOilQuery command);
 }

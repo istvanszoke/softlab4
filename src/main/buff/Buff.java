@@ -49,11 +49,6 @@ public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCo
     }
 
     @Override
-    public void visit(TimeoutExecute command) {
-
-    }
-
-    @Override
     public void visit(UseStickyQuery command) {
 
     }

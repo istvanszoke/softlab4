@@ -24,7 +24,7 @@ public class Speed implements Cloneable {
     }
 
     public void setMagnitude(int magnitude) {
-        this.magnitude = magnitude;
+        this.magnitude = Math.max(0, magnitude);
     }
 
     @Override
@@ -38,5 +38,10 @@ public class Speed implements Cloneable {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Speed: " + direction.toString() + " " + magnitude;
     }
 }

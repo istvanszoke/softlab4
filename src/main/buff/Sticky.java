@@ -9,5 +9,6 @@ public class Sticky extends Buff {
         Speed newSpeed = element.getSpeed();
         newSpeed.setMagnitude(newSpeed.getMagnitude() / 2);
         element.setSpeed(newSpeed);
+        System.out.println("Sticky changed speed, new speed is: " + newSpeed);
     }
 }
