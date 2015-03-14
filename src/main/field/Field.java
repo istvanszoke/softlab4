@@ -3,7 +3,6 @@ package field;
 import agents.Agent;
 import agents.Speed;
 import buff.Buff;
-import commands.FieldCommand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +41,7 @@ public abstract class Field implements FieldElement {
         return distanceFromGoal;
     }
 
-    public <T extends Buff> void placeBuff(T buff) {
+    public void placeBuff(Buff buff) {
         buffs.add(buff);
     }
 
