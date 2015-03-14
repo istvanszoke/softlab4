@@ -1,7 +1,6 @@
 package game;
 
 import agents.Agent;
-import agents.Robot;
 import field.Direction;
 import field.EmptyFieldCell;
 import field.Field;
@@ -10,15 +9,20 @@ import field.FieldCell;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements ControllerListener {
     private ArrayList<Player> players = new ArrayList<Player>();
+    private ArrayList<Player> disqualified = new ArrayList<Player>();
+
     private Player currentPlayer = null;
+    private boolean playerChanged = false;
+
+    private AgentController controller = new HumanController(this);
 
     ArrayList<Field> fields = new ArrayList<Field>();
 
     public Game() {
-        players.add(Player.createHuman(this, 5));
-        players.add(Player.createHuman(this, 1000));
+        players.add(Player.createRobot(5));
+        players.add(Player.createRobot(1000));
         currentPlayer = players.get(0);
 
         fields.add(new FieldCell(-10));
@@ -37,30 +41,63 @@ public class Game {
     }
 
     public void process() {
-        System.out.println("Processing player: " + currentPlayer);
-
         long start = System.currentTimeMillis();
         long end = start + currentPlayer.getTimeRemaining();
+        long current = start;
+        long previous = start;
 
-        while (System.currentTimeMillis() < end) {
-            // ????
+        while (current < end && !playerChanged) {
+            long delta = current - previous;
+            currentPlayer.setTimeRemaining(currentPlayer.getTimeRemaining() - (int)delta);
+
+            previous = current;
+            current = System.currentTimeMillis();
         }
 
-        int currentIndex = players.indexOf(currentPlayer);
-        currentPlayer = players.get((currentIndex + 1) % players.size());
+        if (!playerChanged) {
+            getCurrentAgent().timeOut();
+        }
+
+        onAgentChange();
+        playerChanged = false;
     }
 
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
 
-    public void registerControllers(Component component) {
-        for (Player player : players) {
-            component.addKeyListener(player.getController());
-        }
+    public void registerController(Component component) {
+        component.addKeyListener(controller);
     }
 
     public Agent getCurrentAgent() {
-        return currentPlayer.getAgent();
+        return getCurrentPlayer().getAgent();
+    }
+
+    @Override
+    public void onAgentChange() {
+        int currentIndex = players.indexOf(currentPlayer);
+
+        if (getCurrentAgent().isOutOfTime()) {
+            players.remove(getCurrentPlayer());
+            disqualified.add(getCurrentPlayer());
+            currentIndex -= 1;
+        }
+
+        if (players.isEmpty()) {
+            // Signal that the game is over
+        }
+
+        setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
+
+        playerChanged = true;
+    }
+
+    private synchronized void setCurrentPlayer(Player player) {
+        currentPlayer = player;
+    }
+
+    private synchronized Player getCurrentPlayer() {
+        return currentPlayer;
     }
 }

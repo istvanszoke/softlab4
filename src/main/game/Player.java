@@ -1,34 +1,29 @@
 package game;
 
 import agents.Agent;
+import agents.Robot;
 
 public class Player {
-    private AgentController controller = null;
+    private Agent agent;
     private int timeRemaining;
 
-    public static Player createHuman(Game game, int timeInSec) {
+    public static Player createRobot(int timeInSec) {
         Player instance = new Player();
-        instance.controller = new HumanController(game);
+        instance.agent = new Robot();
         instance.timeRemaining = timeInSec * 1000;
         return instance;
     }
 
     public Agent getAgent() {
-        return null;
-    }
-
-    public AgentController getController() {
-        return controller;
-    }
-
-    public void activate() {
-        if (isFinished()) {
-            return;
-        }
+        return agent;
     }
 
     public void setTimeRemaining(int milliseconds) {
         timeRemaining = milliseconds;
+
+        if (isFinished()) {
+            agent.timeOut();
+        }
     }
 
     public int getTimeRemaining() {

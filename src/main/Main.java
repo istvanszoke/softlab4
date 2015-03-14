@@ -19,13 +19,19 @@ public class Main extends JFrame {
     }
 
     private void gameLoop() {
-        Game game = new Game();
-        game.registerControllers(this);
+        final Game game = new Game();
+        game.registerController(this);
 
-        while (true) {
-            game.process();
-            game.process();
-        }
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    game.process();
+                }
+            }
+        });
+
+        t.run();
     }
 
     public static void main(String[] args) {

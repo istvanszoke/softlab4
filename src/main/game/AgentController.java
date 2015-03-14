@@ -1,7 +1,5 @@
 package game;
 
-import agents.Agent;
-
 import java.awt.event.KeyAdapter;
 
 public abstract class AgentController extends KeyAdapter {

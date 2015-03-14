@@ -32,6 +32,7 @@ public class HumanController extends AgentController {
             // Jump
             case KeyEvent.VK_SPACE:
                 useCommand(new JumpQuery());
+                game.onAgentChange();
                 break;
 
             // Change Speed
@@ -53,6 +54,7 @@ public class HumanController extends AgentController {
             // Suicide
             case KeyEvent.VK_K:
                 useCommand(new KillExecute());
+                game.onAgentChange();
                 break;
         }
     }
