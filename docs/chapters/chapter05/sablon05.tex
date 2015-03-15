@@ -130,7 +130,40 @@
 {Ha egy Robot kilép a pálya határain kívülre akkor elakasztja őt}
 
 \section{A szkeleton kezelői felületének terve, dialógusok}
-\comment{A szkeleton által elfogadott bemenetek , valamint a szöveges konzolon megjelenő kimenetek. A kiemenet formátuma olyan kell legyen, ami alapján a működés összevethető a korábbi szekvencia-diagramokkal.}
+A szkeleton menüvezérléssel teszi lehetővé a különböző funckiók tesztelését. Egy teszt futtatásához szükséges a felhsználónak
+megadni a tesztesetet, melyet futtatni kíván. 
+
+A menü felépítése: \\
+
+Példa:
+1. [Use-case neve] \\
+1.1 [Teszteset neve][Visszatérése] \\
+1.2 [Teszteset neve][Visszatérése] \\
+1.3 [Teszteset neve][Visszatérése] \\
+   1.3.1 [Teszteset neve][Visszatérése] \\
+... \\
+
+Az egyes tesztesetek nevei az első pontban leírt use-casek. A tesztesetek pedig
+az adott use-case összes szekvenciáját végrehajtják, amennyiben azt a felhasználó igényli. \\
+
+A kimenet felépítése: \\
+
+Példa: \\
+
+Adja meg a végrehajtandó Use-case számát: X \\
+X. [Use-case neve] \\
+>   <osztály::függvénynév(paraméter)> \\
+>         <osztály::függvénynév(paraméter)> \\
+>               <osztály::függvénynév(paraméter)> \\
+.                    [Teszteset neve][Értéke] \\
+<               <osztály::függvénynév(paraméter)> \\
+<         <osztály::függvénynév(paraméter)> \\
+<   <osztály::függvénynév(paraméter)> \\
+
+A fenti példában a > szimbólum jelzi egy függvény meghívását, < pedig egy függvény
+visszatérését. A . szimbólum valamely teszteset lefutását mutatja, mely után annak 
+visszatérési értéke is látszik, jelezvén, hogy sikeresen lefutott-e. \\
+
 
 \section{Szekvencia diagramok a belső működésre}
 \comment{A szkeletonban implementált szekvenciadiagramok. Tipikusan egy use-case egy diagram. Ezek megegyezhetnek a korábban specifikált diagramokkal, de az egyes életvonalakat (lifeline) egyértelműen a szkeletonban példányosított objektumokhoz kell tudni kötni. Azt kell megjeleníteni, hogy a szkeletonban létrehozott objektumok egymással hogyan fognak kommunikálni.}
