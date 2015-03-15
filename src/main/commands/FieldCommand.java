@@ -3,9 +3,9 @@ package commands;
 import field.FieldVisitor;
 
 public abstract class FieldCommand extends Command implements FieldVisitor {
-    public FieldCommand() { }
+    protected FieldCommand() { }
 
-    public FieldCommand(Command parent) {
+    protected FieldCommand(Command parent) {
         super(parent);
     }
 

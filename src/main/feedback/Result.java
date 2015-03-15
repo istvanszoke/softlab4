@@ -3,7 +3,7 @@ package feedback;
 import java.util.ArrayList;
 
 public class Result {
-    private ArrayList<String> messages;
+    private final ArrayList<String> messages;
 
     public Result() {
         messages = new ArrayList<String>();/**/

@@ -3,9 +3,9 @@ package commands;
 import agents.AgentVisitor;
 
 public abstract class AgentCommand extends Command implements AgentVisitor {
-    public AgentCommand() { }
+    protected AgentCommand() { }
 
-    public AgentCommand(Command parent) {
+    protected AgentCommand(Command parent) {
         super(parent);
     }
 

@@ -3,7 +3,7 @@ package buff;
 import java.util.ArrayList;
 
 public class Inventory<T extends Buff> {
-    private ArrayList<T> inventory;
+    private final ArrayList<T> inventory;
 
     public Inventory() {
         inventory = new ArrayList<T>();

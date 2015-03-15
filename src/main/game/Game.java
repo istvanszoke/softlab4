@@ -7,16 +7,16 @@ import agents.Agent;
 import field.Field;
 
 public class Game implements ControllerListener {
-    private Timer timer;
+    private final Timer timer;
     private boolean isPaused;
-    private int roundTime;
+    private final int roundTime;
 
-    private ArrayList<Player> players;
-    private ArrayList<Player> disqualified;
+    private final ArrayList<Player> players;
+    private final ArrayList<Player> disqualified;
     private Player currentPlayer;
 
-    private Map map;
-    private AgentController controller;
+    private final Map map;
+    private final AgentController controller;
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
         timer = new Timer();

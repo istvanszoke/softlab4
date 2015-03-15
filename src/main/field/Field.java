@@ -9,9 +9,9 @@ import buff.Buff;
 
 public abstract class Field implements FieldElement {
     protected Agent agent;
-    protected int distanceFromGoal;
-    protected ArrayList<Buff> buffs;
-    protected HashMap<Direction, Field> neighbours;
+    protected final int distanceFromGoal;
+    protected final ArrayList<Buff> buffs;
+    protected final HashMap<Direction, Field> neighbours;
 
     public Field(int distanceFromGoal) {
         buffs = new ArrayList<Buff>();

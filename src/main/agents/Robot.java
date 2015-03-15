@@ -7,9 +7,9 @@ import commands.AgentCommand;
 import commands.NoFieldCommandException;
 
 public class Robot extends Agent {
-    ArrayList<Buff> buffs;
-    Inventory<Sticky> stickyInventory;
-    Inventory<Oil> oilInventory;
+    private ArrayList<Buff> buffs;
+    private Inventory<Sticky> stickyInventory;
+    private Inventory<Oil> oilInventory;
 
     public Robot() {
         buffs = new ArrayList<Buff>();
