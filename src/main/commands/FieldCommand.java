@@ -11,5 +11,6 @@ public abstract class FieldCommand extends Command implements FieldVisitor {
     }
 
     public abstract AgentCommand getAgentCommand() throws NoAgentCommandException;
+
     public abstract void accept(FieldCommandVisitor modifier);
 }

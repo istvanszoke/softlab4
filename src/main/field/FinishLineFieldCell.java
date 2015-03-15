@@ -24,7 +24,7 @@ public class FinishLineFieldCell extends Field {
 
         try {
             agent.accept(command.getAgentCommand());
-        } catch(NoAgentCommandException ignored) {
+        } catch (NoAgentCommandException ignored) {
 
         }
     }

@@ -7,15 +7,15 @@ import commands.transmits.ChangeSpeedTransmit;
 public class ChangeSpeedQuery extends AgentCommand {
     private int magnitudeDelta;
 
+    public ChangeSpeedQuery(int magnitudeDelta) {
+        this.magnitudeDelta = magnitudeDelta;
+    }
+
     public int getMagnitudeDelta() {
         return magnitudeDelta;
     }
 
     public void setMagnitudeDelta(int magnitudeDelta) {
-        this.magnitudeDelta = magnitudeDelta;
-    }
-
-    public ChangeSpeedQuery(int magnitudeDelta) {
         this.magnitudeDelta = magnitudeDelta;
     }
 

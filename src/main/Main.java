@@ -7,6 +7,16 @@ import game.KeyDispatcher;
 import game.Player;
 
 public class Main extends JFrame {
+    public static void main(String[] args) {
+        final Main main = new Main();
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                main.createAndShowGUI();
+            }
+        });
+        main.gameLoop();
+    }
+
     private void createAndShowGUI() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -31,15 +41,5 @@ public class Main extends JFrame {
                 .create();
         game.registerController(this);
         game.start();
-    }
-
-    public static void main(String[] args) {
-        final Main main = new Main();
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                main.createAndShowGUI();
-            }
-        });
-        main.gameLoop();
     }
 }

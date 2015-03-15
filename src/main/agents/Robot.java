@@ -42,7 +42,7 @@ public class Robot extends Agent {
 
         try {
             field.accept(command.getFieldCommand());
-        } catch(NoFieldCommandException ignored) {
+        } catch (NoFieldCommandException ignored) {
 
         }
     }

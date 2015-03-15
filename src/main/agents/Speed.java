@@ -15,12 +15,12 @@ public class Speed implements Cloneable {
         return direction;
     }
 
-    public int getMagnitude() {
-        return magnitude;
-    }
-
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public int getMagnitude() {
+        return magnitude;
     }
 
     public void setMagnitude(int magnitude) {

@@ -8,17 +8,17 @@ import field.Direction;
 public class ChangeDirectionExecute extends AgentCommand {
     private Direction direction;
 
+    public ChangeDirectionExecute(ChangeDirectionTransmit parent) {
+        super(parent.getResult(), parent.canExecute());
+        this.direction = parent.getDirection();
+    }
+
     public Direction getDirection() {
         return direction;
     }
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-    }
-
-    public ChangeDirectionExecute(ChangeDirectionTransmit parent) {
-        super(parent.getResult(), parent.canExecute());
-        this.direction = parent.getDirection();
     }
 
     @Override

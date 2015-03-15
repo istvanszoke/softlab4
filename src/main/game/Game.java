@@ -7,17 +7,14 @@ import agents.Agent;
 import field.Field;
 
 public class Game implements ControllerListener {
+    Timer timer = new Timer();
     private ArrayList<Player> players = new ArrayList<Player>();
     private ArrayList<Player> disqualified = new ArrayList<Player>();
-
     private Player currentPlayer;
     private boolean isPaused = true;
     private int roundTime;
-
     private Map map;
     private AgentController controller = new HumanController(this);
-
-    Timer timer = new Timer();
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
         this.players = players;
@@ -98,12 +95,12 @@ public class Game implements ControllerListener {
         setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
     }
 
-    private synchronized void setCurrentPlayer(Player player) {
-        currentPlayer = player;
-    }
-
     private synchronized Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    private synchronized void setCurrentPlayer(Player player) {
+        currentPlayer = player;
     }
 
     private void placeAgents() {

@@ -25,7 +25,7 @@ public class UseStickyExecute extends FieldCommand {
         if (canExecute) {
             element.placeBuff(new Sticky());
             result.pushMessage("Placed sticky on " + element);
-        }else {
+        } else {
             result.pushMessage("Could not place sticky on " + element);
         }
     }

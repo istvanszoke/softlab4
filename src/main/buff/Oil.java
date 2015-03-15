@@ -8,8 +8,9 @@ public class Oil extends Buff {
     public void visit(ChangeSpeedTransmit command) {
         command.setExecutable(false);
     }
+
     @Override
     public void visit(ChangeDirectionTransmit command) {
-	command.setExecutable(false);
+        command.setExecutable(false);
     }
 }

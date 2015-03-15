@@ -8,17 +8,17 @@ import field.Displacement;
 public class JumpExecute extends AgentCommand {
     private Displacement displacement;
 
+    public JumpExecute(JumpTransmit parent) {
+        super(parent.getResult(), parent.canExecute());
+        this.displacement = parent.getDisplacement();
+    }
+
     public Displacement getDisplacement() {
         return displacement;
     }
 
     public void setDisplacement(Displacement displacement) {
         this.displacement = displacement;
-    }
-
-    public JumpExecute(JumpTransmit parent) {
-        super(parent.getResult(), parent.canExecute());
-        this.displacement = parent.getDisplacement();
     }
 
     @Override

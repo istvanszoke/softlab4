@@ -10,6 +10,11 @@ public class JumpTransmit extends FieldCommand {
     private Displacement displacement;
     private Speed speed;
 
+    public JumpTransmit(JumpQuery parent) {
+        super(parent.getResult(), parent.canExecute());
+        this.speed = parent.getSpeed();
+    }
+
     public Displacement getDisplacement() {
         return displacement;
     }
@@ -24,11 +29,6 @@ public class JumpTransmit extends FieldCommand {
 
     public void setSpeed(Speed speed) {
         this.speed = speed;
-    }
-
-    public JumpTransmit(JumpQuery parent) {
-        super(parent.getResult(), parent.canExecute());
-        this.speed = parent.getSpeed();
     }
 
     @Override

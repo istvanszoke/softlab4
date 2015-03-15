@@ -7,17 +7,17 @@ import commands.transmits.ChangeSpeedTransmit;
 public class ChangeSpeedExecute extends AgentCommand {
     private int magnitudeDelta;
 
+    public ChangeSpeedExecute(ChangeSpeedTransmit parent) {
+        super(parent.getResult(), parent.canExecute());
+        this.magnitudeDelta = parent.getMagnitudeDelta();
+    }
+
     public int getMagnitudeDelta() {
         return magnitudeDelta;
     }
 
     public void setMagnitudeDelta(int magnitudeDelta) {
         this.magnitudeDelta = magnitudeDelta;
-    }
-
-    public ChangeSpeedExecute(ChangeSpeedTransmit parent) {
-        super(parent.getResult(), parent.canExecute());
-        this.magnitudeDelta = parent.getMagnitudeDelta();
     }
 
     @Override
