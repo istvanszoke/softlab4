@@ -1,7 +1,6 @@
 package commands;
 
 import feedback.Feedback;
-import feedback.NoFeedbackException;
 import feedback.Result;
 
 public abstract class Command implements Feedback {

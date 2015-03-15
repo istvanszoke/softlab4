@@ -1,10 +1,10 @@
+import javax.swing.*;
+import java.awt.*;
+
 import game.Game;
 import game.GameCreator;
 import game.KeyDispatcher;
 import game.Player;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class Main extends JFrame {
     private void createAndShowGUI() {

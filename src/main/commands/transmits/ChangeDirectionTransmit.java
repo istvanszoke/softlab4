@@ -1,15 +1,9 @@
 package commands.transmits;
 
-import commands.AgentCommand;
-import commands.FieldCommand;
-import commands.FieldCommandVisitor;
-import commands.NoAgentCommandException;
+import commands.*;
 import commands.executes.ChangeDirectionExecute;
 import commands.queries.ChangeDirectionQuery;
-import field.Direction;
-import field.EmptyFieldCell;
-import field.FieldCell;
-import field.FinishLineFieldCell;
+import field.*;
 
 public class ChangeDirectionTransmit extends FieldCommand {
     private Direction direction;

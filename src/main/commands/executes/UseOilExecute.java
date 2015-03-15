@@ -1,14 +1,9 @@
 package commands.executes;
 
 import buff.Oil;
-import commands.AgentCommand;
-import commands.FieldCommand;
-import commands.FieldCommandVisitor;
-import commands.NoAgentCommandException;
+import commands.*;
 import feedback.Result;
-import field.EmptyFieldCell;
-import field.FieldCell;
-import field.FinishLineFieldCell;
+import field.*;
 
 public class UseOilExecute extends FieldCommand {
     public UseOilExecute(Result result, boolean canExecute) {

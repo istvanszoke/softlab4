@@ -1,13 +1,10 @@
 package game;
 
+import java.awt.*;
+import java.util.*;
+
 import agents.Agent;
 import field.Field;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Game implements ControllerListener {
     private ArrayList<Player> players = new ArrayList<Player>();

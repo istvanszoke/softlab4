@@ -1,8 +1,8 @@
 package game;
 
-import field.*;
-
 import java.util.ArrayList;
+
+import field.*;
 
 public final class GameCreator {
     private Map map = new Map();

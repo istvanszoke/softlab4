@@ -1,13 +1,10 @@
 package agents;
 
-import buff.Buff;
-import buff.Inventory;
-import buff.Oil;
-import buff.Sticky;
+import java.util.ArrayList;
+
+import buff.*;
 import commands.AgentCommand;
 import commands.NoFieldCommandException;
-
-import java.util.ArrayList;
 
 public class Robot extends Agent {
     ArrayList<Buff> buffs = new ArrayList<Buff>();

@@ -1,8 +1,7 @@
 package buff;
 
-
-import commands.transmits.ChangeSpeedTransmit;
 import commands.transmits.ChangeDirectionTransmit;
+import commands.transmits.ChangeSpeedTransmit;
 
 public class Oil extends Buff {
     @Override

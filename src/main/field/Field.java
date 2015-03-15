@@ -1,11 +1,11 @@
 package field;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import agents.Agent;
 import agents.Speed;
 import buff.Buff;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public abstract class Field implements FieldElement {
     protected Agent agent;

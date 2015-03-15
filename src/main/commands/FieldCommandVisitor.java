@@ -1,10 +1,7 @@
 package commands;
 
-import commands.executes.UseOilExecute;
-import commands.executes.UseStickyExecute;
-import commands.transmits.ChangeDirectionTransmit;
-import commands.transmits.ChangeSpeedTransmit;
-import commands.transmits.JumpTransmit;
+import commands.executes.*;
+import commands.transmits.*;
 
 public interface FieldCommandVisitor {
     void visit(ChangeDirectionTransmit modifier);
