@@ -6,7 +6,7 @@ public class Result {
     private ArrayList<String> messages;
 
     public Result() {
-        messages = new ArrayList<String>();
+        messages = new ArrayList<String>();/**/
     }
 
     public void pushMessage(String message) {

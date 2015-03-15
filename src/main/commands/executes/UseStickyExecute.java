@@ -3,7 +3,6 @@ package commands.executes;
 import buff.Sticky;
 import commands.*;
 import commands.queries.UseStickyQuery;
-import feedback.Result;
 import field.*;
 
 public class UseStickyExecute extends FieldCommand {
