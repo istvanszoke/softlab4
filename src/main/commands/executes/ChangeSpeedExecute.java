@@ -8,7 +8,7 @@ public class ChangeSpeedExecute extends AgentCommand {
     private int magnitudeDelta;
 
     public ChangeSpeedExecute(ChangeSpeedTransmit parent) {
-        super(parent.getResult(), parent.canExecute());
+        super(parent);
         this.magnitudeDelta = parent.getMagnitudeDelta();
     }
 

@@ -11,7 +11,7 @@ public class JumpTransmit extends FieldCommand {
     private Speed speed;
 
     public JumpTransmit(JumpQuery parent) {
-        super(parent.getResult(), parent.canExecute());
+        super(parent);
         this.speed = parent.getSpeed();
     }
 

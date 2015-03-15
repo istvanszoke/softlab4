@@ -7,37 +7,31 @@ import agents.Agent;
 import field.Field;
 
 public class Game implements ControllerListener {
-    Timer timer = new Timer();
-    private ArrayList<Player> players = new ArrayList<Player>();
-    private ArrayList<Player> disqualified = new ArrayList<Player>();
-    private Player currentPlayer;
-    private boolean isPaused = true;
+    private Timer timer;
+    private boolean isPaused;
     private int roundTime;
+
+    private ArrayList<Player> players;
+    private ArrayList<Player> disqualified;
+    private Player currentPlayer;
+
     private Map map;
-    private AgentController controller = new HumanController(this);
+    private AgentController controller;
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
-        this.players = players;
-        this.map = map;
+        timer = new Timer();
+        isPaused = true;
         this.roundTime = roundTime;
+
+        this.players = players;
+        disqualified = new ArrayList<Player>();
         currentPlayer = this.players.get(0);
+
+        this.map = map;
+        controller = new HumanController(this);
+
         placeAgents();
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (isPaused) {
-                    return;
-                }
-
-                currentPlayer.setTimeRemaining(currentPlayer.getTimeRemaining() - 100);
-
-                if (currentPlayer.isOutOfTime()) {
-                    System.out.println("Time out: " + currentPlayer);
-                    onAgentChange();
-                }
-            }
-        }, 0, 100);
+        setupTimer();
     }
 
     public void start() {
@@ -117,6 +111,23 @@ public class Game implements ControllerListener {
 
             fields[i].onEnter(agent);
         }
+    }
 
+    private void setupTimer() {
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (isPaused) {
+                    return;
+                }
+
+                currentPlayer.setTimeRemaining(currentPlayer.getTimeRemaining() - 100);
+
+                if (currentPlayer.isOutOfTime()) {
+                    System.out.println("Time out: " + currentPlayer);
+                    onAgentChange();
+                }
+            }
+        }, 0, 100);
     }
 }

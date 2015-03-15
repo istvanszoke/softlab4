@@ -5,11 +5,9 @@ import commands.*;
 import commands.executes.UseStickyExecute;
 
 public class UseStickyQuery extends AgentCommand {
-    private boolean canUse = false;
-
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
-        return new UseStickyExecute(result, canUse);
+        return new UseStickyExecute(this);
     }
 
     @Override
@@ -19,9 +17,9 @@ public class UseStickyQuery extends AgentCommand {
 
     @Override
     public void visit(Robot element) {
-        canUse = element.useSticky();
+        canExecute = element.useSticky();
 
-        if (canUse) {
+        if (canExecute) {
             result.pushMessage(element + " has sticky in its inventory.");
         } else {
             result.pushMessage(element + " has run out of sticky.");

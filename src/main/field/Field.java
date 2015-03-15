@@ -10,10 +10,12 @@ import buff.Buff;
 public abstract class Field implements FieldElement {
     protected Agent agent;
     protected int distanceFromGoal;
-    protected ArrayList<Buff> buffs = new ArrayList<Buff>();
-    protected HashMap<Direction, Field> neighbours = new HashMap<Direction, Field>();
+    protected ArrayList<Buff> buffs;
+    protected HashMap<Direction, Field> neighbours;
 
     public Field(int distanceFromGoal) {
+        buffs = new ArrayList<Buff>();
+        neighbours = new HashMap<Direction, Field>();
         this.distanceFromGoal = distanceFromGoal;
     }
 

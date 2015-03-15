@@ -9,7 +9,7 @@ public class ChangeSpeedTransmit extends FieldCommand {
     private int magnitudeDelta;
 
     public ChangeSpeedTransmit(ChangeSpeedQuery parent) {
-        super(parent.getResult(), parent.canExecute());
+        super(parent);
         this.magnitudeDelta = parent.getMagnitudeDelta();
     }
 

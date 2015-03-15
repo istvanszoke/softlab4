@@ -3,7 +3,11 @@ package feedback;
 import java.util.ArrayList;
 
 public class Result {
-    private ArrayList<String> messages = new ArrayList<String>();
+    private ArrayList<String> messages;
+
+    public Result() {
+        messages = new ArrayList<String>();
+    }
 
     public void pushMessage(String message) {
         messages.add(message);

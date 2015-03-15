@@ -9,7 +9,7 @@ public class ChangeDirectionExecute extends AgentCommand {
     private Direction direction;
 
     public ChangeDirectionExecute(ChangeDirectionTransmit parent) {
-        super(parent.getResult(), parent.canExecute());
+        super(parent);
         this.direction = parent.getDirection();
     }
 

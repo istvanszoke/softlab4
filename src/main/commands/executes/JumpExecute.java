@@ -9,7 +9,7 @@ public class JumpExecute extends AgentCommand {
     private Displacement displacement;
 
     public JumpExecute(JumpTransmit parent) {
-        super(parent.getResult(), parent.canExecute());
+        super(parent);
         this.displacement = parent.getDisplacement();
     }
 

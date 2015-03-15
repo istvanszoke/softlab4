@@ -12,9 +12,9 @@ public abstract class Command implements Feedback {
         this.canExecute = true;
     }
 
-    public Command(Result result, boolean canExecute) {
-        this.result = result;
-        this.canExecute = canExecute;
+    public Command(Command parent) {
+        result = parent.result;
+        canExecute = parent.canExecute;
     }
 
     @Override

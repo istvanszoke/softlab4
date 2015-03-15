@@ -2,12 +2,13 @@ package commands.executes;
 
 import buff.Sticky;
 import commands.*;
+import commands.queries.UseStickyQuery;
 import feedback.Result;
 import field.*;
 
 public class UseStickyExecute extends FieldCommand {
-    public UseStickyExecute(Result result, boolean canExecute) {
-        super(result, canExecute);
+    public UseStickyExecute(UseStickyQuery parent) {
+        super(parent);
     }
 
     @Override

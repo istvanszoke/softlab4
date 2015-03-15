@@ -9,7 +9,7 @@ public class ChangeDirectionTransmit extends FieldCommand {
     private Direction direction;
 
     public ChangeDirectionTransmit(ChangeDirectionQuery parent) {
-        super(parent.getResult(), parent.canExecute());
+        super(parent);
         this.direction = parent.getDirection();
     }
 

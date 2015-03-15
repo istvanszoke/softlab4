@@ -5,11 +5,9 @@ import commands.*;
 import commands.executes.UseOilExecute;
 
 public class UseOilQuery extends AgentCommand {
-    private boolean canUse = false;
-
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
-        return new UseOilExecute(result, canUse);
+        return new UseOilExecute(this);
     }
 
     @Override
@@ -19,9 +17,9 @@ public class UseOilQuery extends AgentCommand {
 
     @Override
     public void visit(Robot element) {
-        canUse = element.useOil();
+        canExecute = element.useOil();
 
-        if (canUse) {
+        if (canExecute) {
             result.pushMessage(element + " has oil in its inventory.");
         } else {
             result.pushMessage(element + " has run out of oil.");

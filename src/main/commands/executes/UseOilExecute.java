@@ -2,12 +2,13 @@ package commands.executes;
 
 import buff.Oil;
 import commands.*;
+import commands.queries.UseOilQuery;
 import feedback.Result;
 import field.*;
 
 public class UseOilExecute extends FieldCommand {
-    public UseOilExecute(Result result, boolean canExecute) {
-        super(result, canExecute);
+    public UseOilExecute(UseOilQuery parent) {
+        super(parent);
     }
 
     @Override
