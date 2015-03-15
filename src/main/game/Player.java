@@ -18,12 +18,12 @@ public class Player {
         return agent;
     }
 
-    public void setTimeRemaining(int milliseconds) {
-        timeRemaining = milliseconds;
-    }
-
     public int getTimeRemaining() {
         return timeRemaining;
+    }
+
+    public void setTimeRemaining(int milliseconds) {
+        timeRemaining = milliseconds;
     }
 
     public boolean isOutOfTime() {

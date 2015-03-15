@@ -1,19 +1,21 @@
 package field;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import agents.Agent;
 import agents.Speed;
 import buff.Buff;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public abstract class Field implements FieldElement {
     protected Agent agent;
-    protected int distanceFromGoal;
-    protected ArrayList<Buff> buffs = new ArrayList<Buff>();
-    protected HashMap<Direction, Field> neighbours = new HashMap<Direction, Field>();
+    protected final int distanceFromGoal;
+    protected final ArrayList<Buff> buffs;
+    protected final HashMap<Direction, Field> neighbours;
 
     public Field(int distanceFromGoal) {
+        buffs = new ArrayList<Buff>();
+        neighbours = new HashMap<Direction, Field>();
         this.distanceFromGoal = distanceFromGoal;
     }
 

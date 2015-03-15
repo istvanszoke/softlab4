@@ -1,16 +1,17 @@
 package commands.executes;
 
-import agents.Robot;
-import agents.Speed;
-import commands.AgentCommand;
-import commands.AgentCommandVisitor;
-import commands.FieldCommand;
-import commands.NoFieldCommandException;
+import agents.*;
+import commands.*;
 import commands.transmits.ChangeDirectionTransmit;
 import field.Direction;
 
 public class ChangeDirectionExecute extends AgentCommand {
     private Direction direction;
+
+    public ChangeDirectionExecute(ChangeDirectionTransmit parent) {
+        super(parent);
+        this.direction = parent.getDirection();
+    }
 
     public Direction getDirection() {
         return direction;
@@ -18,11 +19,6 @@ public class ChangeDirectionExecute extends AgentCommand {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-    }
-
-    public ChangeDirectionExecute(ChangeDirectionTransmit parent) {
-        super(parent.getResult(), parent.canExecute());
-        this.direction = parent.getDirection();
     }
 
     @Override

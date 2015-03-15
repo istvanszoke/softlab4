@@ -1,21 +1,20 @@
 package commands;
 
 import feedback.Feedback;
-import feedback.NoFeedbackException;
 import feedback.Result;
 
 public abstract class Command implements Feedback {
-    protected Result result;
+    protected final Result result;
     protected boolean canExecute;
 
-    public Command() {
+    protected Command() {
         this.result = new Result();
         this.canExecute = true;
     }
 
-    public Command(Result result, boolean canExecute) {
-        this.result = result;
-        this.canExecute = canExecute;
+    protected Command(Command parent) {
+        result = parent.result;
+        canExecute = parent.canExecute;
     }
 
     @Override

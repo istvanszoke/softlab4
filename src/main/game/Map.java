@@ -1,15 +1,15 @@
 package game;
 
-import field.Field;
-import field.FinishLineFieldCell;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import field.Field;
+import field.FinishLineFieldCell;
+
 public class Map implements Iterable<Field> {
-    private ArrayList<Field> fields;
-    private ArrayList<Field> finishLineFields;
+    private final ArrayList<Field> fields;
+    private final ArrayList<Field> finishLineFields;
 
     public Map() {
         fields = new ArrayList<Field>();

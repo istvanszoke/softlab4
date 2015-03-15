@@ -1,18 +1,21 @@
 package agents;
 
-import buff.Buff;
-import buff.Inventory;
-import buff.Oil;
-import buff.Sticky;
+import java.util.ArrayList;
+
+import buff.*;
 import commands.AgentCommand;
 import commands.NoFieldCommandException;
 
-import java.util.ArrayList;
-
 public class Robot extends Agent {
-    ArrayList<Buff> buffs = new ArrayList<Buff>();
-    Inventory<Sticky> stickyInventory = new Inventory<Sticky>();
-    Inventory<Oil> oilInventory = new Inventory<Oil>();
+    private ArrayList<Buff> buffs;
+    private Inventory<Sticky> stickyInventory;
+    private Inventory<Oil> oilInventory;
+
+    public Robot() {
+        buffs = new ArrayList<Buff>();
+        stickyInventory = new Inventory<Sticky>();
+        oilInventory = new Inventory<Oil>();
+    }
 
     public void addSticky() {
         stickyInventory.addItem(new Sticky());
@@ -45,7 +48,7 @@ public class Robot extends Agent {
 
         try {
             field.accept(command.getFieldCommand());
-        } catch(NoFieldCommandException ignored) {
+        } catch (NoFieldCommandException ignored) {
 
         }
     }

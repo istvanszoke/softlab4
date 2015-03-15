@@ -1,13 +1,19 @@
 package game;
 
-import field.*;
-
 import java.util.ArrayList;
 
+import field.*;
+
 public final class GameCreator {
-    private Map map = new Map();
-    private ArrayList<Player> players = new ArrayList<Player>();
-    private int roundTime = -1;
+    private Map map;
+    private ArrayList<Player> players;
+    private int roundTime;
+
+    public GameCreator() {
+        map = new Map();
+        players = new ArrayList<Player>();
+        roundTime = -1;
+    }
 
     public GameCreator setRoundTime(int roundTime) {
         this.roundTime = roundTime;

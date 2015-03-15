@@ -1,18 +1,17 @@
 package commands.transmits;
 
-import commands.AgentCommand;
-import commands.FieldCommand;
-import commands.FieldCommandVisitor;
-import commands.NoAgentCommandException;
+import commands.*;
 import commands.executes.ChangeDirectionExecute;
 import commands.queries.ChangeDirectionQuery;
-import field.Direction;
-import field.EmptyFieldCell;
-import field.FieldCell;
-import field.FinishLineFieldCell;
+import field.*;
 
 public class ChangeDirectionTransmit extends FieldCommand {
     private Direction direction;
+
+    public ChangeDirectionTransmit(ChangeDirectionQuery parent) {
+        super(parent);
+        this.direction = parent.getDirection();
+    }
 
     public Direction getDirection() {
         return direction;
@@ -20,11 +19,6 @@ public class ChangeDirectionTransmit extends FieldCommand {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-    }
-
-    public ChangeDirectionTransmit(ChangeDirectionQuery parent) {
-        super(parent.getResult(), parent.canExecute());
-        this.direction = parent.getDirection();
     }
 
     @Override

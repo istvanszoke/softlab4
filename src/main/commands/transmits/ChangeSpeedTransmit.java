@@ -1,17 +1,17 @@
 package commands.transmits;
 
-import commands.AgentCommand;
-import commands.FieldCommand;
-import commands.FieldCommandVisitor;
-import commands.NoAgentCommandException;
+import commands.*;
 import commands.executes.ChangeSpeedExecute;
 import commands.queries.ChangeSpeedQuery;
-import field.EmptyFieldCell;
-import field.FieldCell;
-import field.FinishLineFieldCell;
+import field.*;
 
 public class ChangeSpeedTransmit extends FieldCommand {
     private int magnitudeDelta;
+
+    public ChangeSpeedTransmit(ChangeSpeedQuery parent) {
+        super(parent);
+        this.magnitudeDelta = parent.getMagnitudeDelta();
+    }
 
     public int getMagnitudeDelta() {
         return magnitudeDelta;
@@ -19,11 +19,6 @@ public class ChangeSpeedTransmit extends FieldCommand {
 
     public void setMagnitudeDelta(int magnitudeDelta) {
         this.magnitudeDelta = magnitudeDelta;
-    }
-
-    public ChangeSpeedTransmit(ChangeSpeedQuery parent) {
-        super(parent.getResult(), parent.canExecute());
-        this.magnitudeDelta = parent.getMagnitudeDelta();
     }
 
     @Override

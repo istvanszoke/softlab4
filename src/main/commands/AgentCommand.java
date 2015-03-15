@@ -1,15 +1,15 @@
 package commands;
 
 import agents.AgentVisitor;
-import feedback.Result;
 
 public abstract class AgentCommand extends Command implements AgentVisitor {
-    public AgentCommand() {}
+    protected AgentCommand() { }
 
-    public AgentCommand(Result result, boolean canExecute) {
-        super(result, canExecute);
+    protected AgentCommand(Command parent) {
+        super(parent);
     }
 
     public abstract FieldCommand getFieldCommand() throws NoFieldCommandException;
+
     public abstract void accept(AgentCommandVisitor modifier);
 }

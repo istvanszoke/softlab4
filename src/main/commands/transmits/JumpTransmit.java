@@ -1,20 +1,19 @@
 package commands.transmits;
 
 import agents.Speed;
-import commands.AgentCommand;
-import commands.FieldCommand;
-import commands.FieldCommandVisitor;
-import commands.NoAgentCommandException;
+import commands.*;
 import commands.executes.JumpExecute;
 import commands.queries.JumpQuery;
-import field.Displacement;
-import field.EmptyFieldCell;
-import field.FieldCell;
-import field.FinishLineFieldCell;
+import field.*;
 
 public class JumpTransmit extends FieldCommand {
     private Displacement displacement;
     private Speed speed;
+
+    public JumpTransmit(JumpQuery parent) {
+        super(parent);
+        this.speed = parent.getSpeed();
+    }
 
     public Displacement getDisplacement() {
         return displacement;
@@ -30,11 +29,6 @@ public class JumpTransmit extends FieldCommand {
 
     public void setSpeed(Speed speed) {
         this.speed = speed;
-    }
-
-    public JumpTransmit(JumpQuery parent) {
-        super(parent.getResult(), parent.canExecute());
-        this.speed = parent.getSpeed();
     }
 
     @Override

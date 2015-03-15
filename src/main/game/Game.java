@@ -1,49 +1,37 @@
 package game;
 
+import java.awt.*;
+import java.util.*;
+
 import agents.Agent;
 import field.Field;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class Game implements ControllerListener {
-    private ArrayList<Player> players = new ArrayList<Player>();
-    private ArrayList<Player> disqualified = new ArrayList<Player>();
+    private final Timer timer;
+    private boolean isPaused;
+    private final int roundTime;
 
+    private final ArrayList<Player> players;
+    private final ArrayList<Player> disqualified;
     private Player currentPlayer;
-    private boolean isPaused = true;
-    private int roundTime;
 
-    private Map map;
-    private AgentController controller = new HumanController(this);
-
-    Timer timer = new Timer();
+    private final Map map;
+    private final AgentController controller;
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
-        this.players = players;
-        this.map = map;
+        timer = new Timer();
+        isPaused = true;
         this.roundTime = roundTime;
+
+        this.players = players;
+        disqualified = new ArrayList<Player>();
         currentPlayer = this.players.get(0);
+
+        this.map = map;
+        controller = new HumanController(this);
+
         placeAgents();
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (isPaused) {
-                    return;
-                }
-
-                currentPlayer.setTimeRemaining(currentPlayer.getTimeRemaining() - 100);
-
-                if (currentPlayer.isOutOfTime()) {
-                    System.out.println("Time out: " + currentPlayer);
-                    onAgentChange();
-                }
-            }
-        }, 0, 100);
+        setupTimer();
     }
 
     public void start() {
@@ -101,12 +89,12 @@ public class Game implements ControllerListener {
         setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
     }
 
-    private synchronized void setCurrentPlayer(Player player) {
-        currentPlayer = player;
-    }
-
     private synchronized Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    private synchronized void setCurrentPlayer(Player player) {
+        currentPlayer = player;
     }
 
     private void placeAgents() {
@@ -123,6 +111,23 @@ public class Game implements ControllerListener {
 
             fields[i].onEnter(agent);
         }
+    }
 
+    private void setupTimer() {
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (isPaused) {
+                    return;
+                }
+
+                currentPlayer.setTimeRemaining(currentPlayer.getTimeRemaining() - 100);
+
+                if (currentPlayer.isOutOfTime()) {
+                    System.out.println("Time out: " + currentPlayer);
+                    onAgentChange();
+                }
+            }
+        }, 0, 100);
     }
 }

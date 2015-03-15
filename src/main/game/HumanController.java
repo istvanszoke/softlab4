@@ -1,11 +1,11 @@
 package game;
 
+import java.awt.event.KeyEvent;
+
 import commands.AgentCommand;
-import commands.executes.KillExecute;
+import commands.executes.*;
 import commands.queries.*;
 import field.Direction;
-
-import java.awt.event.KeyEvent;
 
 public class HumanController extends AgentController {
     public HumanController(Game game) {

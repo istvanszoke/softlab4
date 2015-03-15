@@ -1,18 +1,13 @@
 package commands.executes;
 
 import buff.Sticky;
-import commands.AgentCommand;
-import commands.FieldCommand;
-import commands.FieldCommandVisitor;
-import commands.NoAgentCommandException;
-import feedback.Result;
-import field.EmptyFieldCell;
-import field.FieldCell;
-import field.FinishLineFieldCell;
+import commands.*;
+import commands.queries.UseStickyQuery;
+import field.*;
 
 public class UseStickyExecute extends FieldCommand {
-    public UseStickyExecute(Result result, boolean canExecute) {
-        super(result, canExecute);
+    public UseStickyExecute(UseStickyQuery parent) {
+        super(parent);
     }
 
     @Override
@@ -30,7 +25,7 @@ public class UseStickyExecute extends FieldCommand {
         if (canExecute) {
             element.placeBuff(new Sticky());
             result.pushMessage("Placed sticky on " + element);
-        }else {
+        } else {
             result.pushMessage("Could not place sticky on " + element);
         }
     }
