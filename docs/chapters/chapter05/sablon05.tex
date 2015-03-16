@@ -6,7 +6,7 @@
 \thispagestyle{fancy}
 
 \section{A szkeleton modell valóságos use-case-ei}
-\comment{A szkeletonnak, mint önálló programnak a működésével kapcsolatos use-case-ek.}
+
 
 \subsection{Use-case diagram}
 
@@ -132,8 +132,152 @@
 \section{A szkeleton kezelői felületének terve, dialógusok}
 \comment{A szkeleton által elfogadott bemenetek , valamint a szöveges konzolon megjelenő kimenetek. A kiemenet formátuma olyan kell legyen, ami alapján a működés összevethető a korábbi szekvencia-diagramokkal.}
 
+\clearpage
 \section{Szekvencia diagramok a belső működésre}
-\comment{A szkeletonban implementált szekvenciadiagramok. Tipikusan egy use-case egy diagram. Ezek megegyezhetnek a korábban specifikált diagramokkal, de az egyes életvonalakat (lifeline) egyértelműen a szkeletonban példányosított objektumokhoz kell tudni kötni. Azt kell megjeleníteni, hogy a szkeletonban létrehozott objektumok egymással hogyan fognak kommunikálni.}
+
+A korábbi fejezetben lévő szekvencia diagramok továbbra is érvényesek.
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5newgame.pdf}
+		\caption{Új játék indítása, paraméterek megadása}
+		\label{fig:5newgame}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5mapgenerate.pdf}
+		\caption{Pálya generálása}
+		\label{fig:5mapgenerate}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5loadexistingmap.pdf}
+		\caption{Pálya betöltése}
+		\label{fig:5loadexistingmap}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5savegame.pdf}
+		\caption{Játék elmentése}
+		\label{fig:5savegame}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5loadgame.pdf}
+		\caption{Mentett játék betöltése}
+		\label{fig:5loadgame}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5time.pdf}
+		\caption{Idő nyilvántartása és a játékosok léptetése}
+		\label{fig:5time}
+	\end{center}
+\end{figure}
+\clearpage
 
 \section{Kommunikációs diagramok}
-\comment{A szkeletonban, az egyes szkeleton-use-case-ek futása során létrehozott objektumok és kapcsolataik bemutatására szolgáló diagramok. Ezek alapján valósítják meg a szkeleton fejlesztői az inicializáló kódrészleteket.}
+
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5newgameCommunications.pdf}
+		\caption{Új játék indítása, paraméterek megadása}
+		\label{fig:5newgameCommunication}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5mapgenerateCommunications.pdf}
+		\caption{Pálya generálása}
+		\label{fig:5mapgenerateCommunication}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5loadexistingmapCommunications.pdf}
+		\caption{Pálya betöltése}
+		\label{fig:5loadexistingmapCommunication}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5savegameCommunications.pdf}
+		\caption{Játék elmentése}
+		\label{fig:5savegameCommunication}
+	\end{center}
+\end{figure}
+
+
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5loadgameCommunications.pdf}
+		\caption{Mentett játék betöltése}
+		\label{fig:5loadgameCommunication}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5timeCommunications.pdf}
+		\caption{Idő nyilvántartása és a játékosok léptetése}
+		\label{fig:5timeCommunication}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5olajlehelyezCommunications.pdf}
+		\caption{Robot utasítása olajnak a lehelyezésére}
+		\label{fig:5robotolajlehelyezCommunication}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5ragacslehelyezCommunications.pdf}
+		\caption{Robot utasítása ragacsnak a lehelyezésére}
+		\label{fig:5robotragacslehelyezCommunication}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5robotutasitasugrasCommunications.pdf}
+		\caption{Robot utasítása ugrásra}
+		\label{fig:5robotutasitugrasCommunication}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5olajakadalyozCommunications.pdf}
+		\caption{Olajos mező Robot sebességváltoztatást nem enged}
+		\label{fig:5olajakadalyozCommunication}
+	\end{center}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\textwidth]{chapters/chapter05/5ragacsakadalyozCommunications.pdf}
+		\caption{Ragacs mező Robot sebességet megfelez}
+		\label{fig:5ragacsakadalyozCommunication}
+	\end{center}
+\end{figure}
+
+\clearpage
+
