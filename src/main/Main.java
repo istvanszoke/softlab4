@@ -6,7 +6,16 @@ import game.GameCreator;
 import game.KeyDispatcher;
 import game.Player;
 
+/** Ez az osztály az alkalmazásnak a főosztálya
+ * Feladaa a kezelőfelület valamint a játéklogika elindítás
+ */
 public class Main extends JFrame {
+    /**
+     * Program belépési függvénye
+     * Ez a fügvény képezi az alkalmazásnak a belépési pontját melyet a JVM
+     * hív meg amikor elindítjuk az alkalmazást
+     * @param args - Paraméterek a program meghívásakor. Figyelmen kívül vannak hagyva
+     */
     public static void main(String[] args) {
         final Main main = new Main();
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -17,6 +26,10 @@ public class Main extends JFrame {
         main.gameLoop();
     }
 
+    /**
+     * Kezelői felületet létrehozó függvény
+     * Feladata, hogy elindítja a kezelőfelületet az alkalmazásban
+     */
     private void createAndShowGUI() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -30,6 +43,10 @@ public class Main extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Játék létrehozása és elindítása
+     * Feladata, hogy létrehozza a játéklogikát képviselő objektumot.
+     */
     private void gameLoop() {
         int roundTime = 10;
 
