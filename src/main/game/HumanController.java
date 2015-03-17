@@ -7,11 +7,27 @@ import commands.executes.*;
 import commands.queries.*;
 import field.Direction;
 
+/**
+ * Emberi játékvezérlő osztály
+ * Feladata, hogy a billentyűzetről jövő utasításokat továbbítson egy ágensnek
+ * Az osztály tartalmaz a játéklogikára egy referenciát, mely majd szolgáltatja az éppen
+ * Aktuális Ágenst melynek az utasításokat átadhatjuk
+ */
 public class HumanController extends AgentController {
+    /**
+     * Az Emberi játék vezérlő osztály konstruktora
+     * @param game - Referencia a játéklogikára mely majd szolgáltatja az ágenst akinek a vezérlést küldjük
+     */
     public HumanController(Game game) {
         super(game);
     }
 
+    /**
+     * Billentyűleütést kezelő függvény
+     * Fogadja a billentyűleütést majd létrehoz belőlük egy ÁgensParancsot,
+     * melyet aztán átad a useCommand függvénynek
+     * @param e - A billentyűleütés esemény argumentumainak referenciája
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -59,6 +75,11 @@ public class HumanController extends AgentController {
         }
     }
 
+    /**
+     * Kapott parancs továbítása
+     * A billentyűleütésből származó utasítást továbbítja az ágensnek
+     * @param command - Az utasításnak a referenciája
+     */
     private void useCommand(AgentCommand command) {
         game.getCurrentAgent().accept(command);
         System.out.println(command.getResult());
