@@ -39,7 +39,12 @@ public class Main extends JFrame {
                 .addPlayer(Player.createRobot(roundTime))
                 .generateTestMap(10, 10)
                 .create();
-        game.registerController(this);
-        game.start();
+
+        if (game == null) {
+            System.out.println("Game creation was unsuccessful");
+        } else {
+            game.registerController(this);
+            game.start();
+        }
     }
 }
