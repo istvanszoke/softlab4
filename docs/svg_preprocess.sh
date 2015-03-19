@@ -8,7 +8,9 @@ if [ $? -eq 0 ]; then
     echo 'SVG prerocess opted for RSVG-Convert';
     for file in $(find "$DOCS_DIR" -name '*.svg');
     do
-        rsvg-convert -f pdf -o "${file%.*}.pdf" "$file"
+        if [ ! -f "${file%.*}.pdf" ]; then
+            rsvg-convert -f pdf -o "${file%.*}.pdf" "$file"
+        fi
     done
     
     exit $?
@@ -21,7 +23,9 @@ if [ $? -eq 0 ]; then
     echo 'SVG prerocess opted for Inkscape-convert';
     for file in $(find "$DOCS_DIR" -name '*.svg');
     do
-        inkscape --export-pdf="${file%.*}.pdf" --export-ignore-filters --export-area-drawing "$file"
+        if [ ! -f "${file%.*}.pdf" ]; then
+            inkscape --export-pdf="${file%.*}.pdf" --export-ignore-filters --export-area-drawing "$file"
+        fi
     done
     
     exit $?
@@ -38,7 +42,9 @@ if [ $? -eq 0 ]; then
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         for file in $(find "$DOCS_DIR" -name '*.svg');
         do
-            convert "$file" "${file%.*}.pdf" 
+            if [ ! -f "${file%.*}.pdf" ]; then
+                convert "$file" "${file%.*}.pdf" 
+            fi
         done
         
         exit $?
