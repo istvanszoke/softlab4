@@ -4,17 +4,34 @@ import agents.*;
 import commands.*;
 import commands.executes.UseOilExecute;
 
+/**
+ * Olaj elhelyezése kérés
+ * Megtestesít egy kérést az ágens számára, hogy helyezzen el a készletéből egy olajfoltot a pályára
+ */
 public class UseOilQuery extends AgentCommand {
+    /**
+     * Előállít egy Olaj lehejezés végrehajtást a kérésből
+     * @return - Előállított olaj lehejezés végrehajtás
+     * @throws NoFieldCommandException - Értelmetlen esetnél
+     */
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
         return new UseOilExecute(this);
     }
 
+    /**
+     * Jelen kéréshez hozzáférési interfész
+     * @param modifier - A hozzáférő osztály osztály referenciája
+     */
     @Override
     public void accept(AgentCommandVisitor modifier) {
         modifier.visit(this);
     }
 
+    /**
+     * Egy robot manipulálásához szükséges interfész
+     * @param element - A manipulálandó robot
+     */
     @Override
     public void visit(Robot element) {
         canExecute = element.useOil();
