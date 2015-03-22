@@ -1,3 +1,5 @@
+set -o pipefail
+
 source $LIB_DIR/debug_print.sh
 
 normalize="$1"
