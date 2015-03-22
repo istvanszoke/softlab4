@@ -39,9 +39,7 @@ get_generic_description() {
 }
 
 get_javadoc_description() {
-    description=
-
-    echo cat $1 | grep "^ \* .*$" | head -n 1 | cut -c4-
+    description=$(cat $1 | grep "^ \* .*$" | head -n 1 | cut -c4-)
 }
 
 files=$(find -type f -name *.java -printf '%f;%p;%s\n' | sed s/\\.\\///g | sort -t';' -k2)
@@ -62,7 +60,10 @@ do
     date=$(git log --diff-filter=A --follow --format=%ai -1 -- "$path" | awk '{gsub(" \\+[0-9]+.*$", ""); gsub(" ", "~"); gsub(":[0-9]+$", "~"); gsub("-", "."); print}')
     
     get_javadoc_description "$path"
-    get_generic_description "$name" "$path"
+
+    if [ -z "$description" ]; then
+        get_generic_description "$name" "$path"
+    fi
 
     echo "\\fajl"
     printf "{%s}\n{%d byte}\n{%s}\n{%s}\n\n" "$path" "$size" "$date" "$description"
