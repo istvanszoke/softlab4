@@ -8,8 +8,8 @@ javadoc -docletpath "$LIB_DIR/TeXDoclet.jar" \
 	-noindex \
 	-hyperref \
 	-output "$DOCS_DIR/javadoc/javadoc.tex" \
-	-sourcepath "$SRC_DIR" \
-	-subpackages org:main \
+	-sourcepath "$SRC_DIR/main" \
+	-subpackages agents buff commands feedback field game \
 	-include \
 	-sectionlevel section \
 	-serial \
