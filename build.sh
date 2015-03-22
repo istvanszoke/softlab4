@@ -15,6 +15,14 @@ elif [ "$1" == "svg" ]; then
     "$LIB_DIR"/build/svg.sh force
 elif [ "$1" == "latex-file-list" ]; then
     "$LIB_DIR"/build/latex_file_list.sh
+elif [ "$1" == "java" ]; then
+    "$TOP_DIR"/gradlew build
+elif [ "$1" == "all" ]; then
+    "$LIB_DIR"/build/svg.sh force
+    "$LIB_DIR"/build/docs.sh
+    "$TOP_DIR"/gradlew build
+else
+    "$LIB_DIR"/build/docs.sh 
 fi
 
 
