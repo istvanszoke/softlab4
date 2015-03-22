@@ -36,7 +36,7 @@ public class Speed implements Cloneable {
             return ret;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw new RuntimeException("Speed has to be cloneable");
         }
     }
 
