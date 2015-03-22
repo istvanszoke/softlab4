@@ -7,25 +7,25 @@ import commands.FieldCommand;
 import commands.NoAgentCommandException;
 import commands.executes.KillExecute;
 
-/* Reprezent·lja a p·lya nem ÈrvÈnyes rÈszÈt.
- * Az EmptyFieldCell oszt·ly pÈld·nyai a p·lya azon rÈszeit t·rolja, amelyre lÈpve a Robotok kiesnek a
- * j·tÈkbÛl. Az ı felelıssÈge a robotnak elk¸ldeni azt a parancsot, ami ezt a hat·st elıidÈzi (KillExecute).
+/* Reprezent√°lja a p√°lya nem √©rv√©nyes r√©sz√©t.
+ * Az EmptyFieldCell oszt√°ly p√©ld√°nyai a p√°lya azon r√©szeit t√°rolja, amelyre l√©pve a Robotok kiesnek a
+ * j√°t√©kb√≥l. Az ≈ë felel≈ëss√©ge a robotnak elk√ºldeni azt a parancsot, ami ezt a hat√°st el≈ëid√©zi (KillExecute).
  */
 public class EmptyFieldCell extends Field {
     /*
      * Konstruktor.
-     * Az ısoszt·ly konstruktor·t hÌvja meg.
-     * @param distanceFromGoal - A cÈltÛl valÛ t·vols·g.
+     * Az ≈ësoszt√°ly konstruktor√°t h√≠vja meg.
+     * @param distanceFromGoal - A c√©lt√≥l val√≥ t√°vols√°g.
      */
     public EmptyFieldCell(int distanceFromGoal) {
         super(distanceFromGoal);
     }
 
     /*
-     * Agent cell·ra lÈp.
-     * Lekezeli azt az estet, amikor egy Agent a cell·ra lÈp: be·llÌtja a megfelelı refernci·kat
-     * (mind az Agentben, mint ˆnmag·ban). Megˆli az Agentet.
-     * @param agent - A cell·ra lÈpı Agent.
+     * Agent cell√°ra l√©p.
+     * Lekezeli azt az estet, amikor egy Agent a cell√°ra l√©p: be√°ll√≠tja a megfelel≈ë refernci√°kat
+     * (mind az Agentben, mint √∂nmag√°ban). Meg√∂li az Agentet.
+     * @param agent - A cell√°ra l√©p≈ë Agent.
      */
     public void onEnter(Agent agent) {
         agent.setField(this);
@@ -34,10 +34,10 @@ public class EmptyFieldCell extends Field {
     }
     
     /*
-     * Ir·ny keresÈs.
-     * Innen senki sem lÈp sehova ezÈrt nincs mit keresni.
-     * @param speed - SebessÈg
-     * @return - ÷nmaga.
+     * Ir√°ny keres√©s.
+     * Innen senki sem l√©p sehova ez√©rt nincs mit keresni.
+     * @param speed - Sebess√©g
+     * @return - √ñnmaga.
      */
     @Override
     protected Field searchGoal(Speed speed) {
@@ -45,7 +45,7 @@ public class EmptyFieldCell extends Field {
     }
     
     /*
-     * FieldVisitor fogad·sa.
+     * FieldVisitor fogad√°sa.
      * @param visitor - Visitor
      */
     @Override
@@ -54,9 +54,9 @@ public class EmptyFieldCell extends Field {
     }
 
     /*
-     * FieldCommand fogad·sa.
-     * A FieldCellen lÈvı minden egyes buff mÛdosÌthatja a commandot, hogy az kÈsıbb ÈrvÈnyes¸ljon az Agenten.
-     * @param command - A sz·rmaztatott FieldVisitor
+     * FieldCommand fogad√°sa.
+     * A FieldCellen l√©v≈ë minden egyes buff m√≥dos√≠thatja a commandot, hogy az k√©s≈ëbb √©rv√©nyes√ºljon az Agenten.
+     * @param command - A sz√°rmaztatott FieldVisitor
      */
     @Override
     public void accept(FieldCommand command) {

@@ -4,24 +4,24 @@ import buff.Buff;
 import commands.FieldCommand;
 import commands.NoAgentCommandException;
 
-/* Ezen osztály példányai alkotják a pálya legnagyobb részét: minden olyan cella, amely nem a célvonal
- * része, illetve nem a pálya szélét alkotja ilyen típusú. A Field osztály által implementált tulajdonságok
- * mellett A cellán átmenõ parancsokat módosíthatja a rajta található Buffokal, majd a módosított parancsokat
- * továbbítja a rajta álló Agent felé.
+/* Ezen osztÃ¡ly pÃ©ldÃ¡nyai alkotjÃ¡k a pÃ¡lya legnagyobb rÃ©szÃ©t: minden olyan cella, amely nem a cÃ©lvonal
+ * rÃ©sze, illetve nem a pÃ¡lya szÃ©lÃ©t alkotja ilyen tÃ­pusÃº. A Field osztÃ¡ly Ã¡ltal implementÃ¡lt tulajdonsÃ¡gok
+ * mellett A cellÃ¡n Ã¡tmenÅ‘ parancsokat mÃ³dosÃ­thatja a rajta talÃ¡lhatÃ³ Buffokal, majd a mÃ³dosÃ­tott parancsokat
+ * tovÃ¡bbÃ­tja a rajta Ã¡llÃ³ Agent felÃ©.
  */
 public class FieldCell extends Field {
     /*
      * Konstruktor.
-     * Az õsosztály konstruktorát hívja meg.
-     * @param distanceFromGoal - A céltól való távolság.
+     * Az Å‘sosztÃ¡ly konstruktorÃ¡t hÃ­vja meg.
+     * @param distanceFromGoal - A cÃ©ltÃ³l valÃ³ tÃ¡volsÃ¡g.
      */
     public FieldCell(int distanceFromGoal) {
         super(distanceFromGoal);
     }
 
     /*
-     * FieldVisitor fogadása.
-     * Nem módosít semmit a visitoron. Feltétel nélkül hagyja, hogy visiteljék.
+     * FieldVisitor fogadÃ¡sa.
+     * Nem mÃ³dosÃ­t semmit a visitoron. FeltÃ©tel nÃ©lkÃ¼l hagyja, hogy visiteljÃ©k.
      * @param visitor - A visitor.
      */
     @Override
@@ -30,9 +30,9 @@ public class FieldCell extends Field {
     }
     
     /*
-     * FieldCommand fogadása.
-     * A FieldCellen lévõ minden egyes buff módosíthatja a commandot, hogy az késõbb érvényesüljon az Agenten.
-     * @param command - A származtatott FieldVisitor
+     * FieldCommand fogadÃ¡sa.
+     * A FieldCellen lÃ©vÅ‘ minden egyes buff mÃ³dosÃ­thatja a commandot, hogy az kÃ©sÅ‘bb Ã©rvÃ©nyesÃ¼ljon az Agenten.
+     * @param command - A szÃ¡rmaztatott FieldVisitor
      */
     @Override
     public void accept(FieldCommand command) {
@@ -43,9 +43,9 @@ public class FieldCell extends Field {
         
         command.visit(this);
         
-        /* Lekéri a commandhoz tartozó AgentCommandot, ami lehet Transmit vagy Execute típusú.
-         * Az is lehet, hogy nem kapunk új Commandot, ezesetben a jelenlegi command Execute típusú volt 
-         * és az elõzõ lépésekben ténylegesen változtatott az a FieldCell állapotán.*/
+        /* LekÃ©ri a commandhoz tartozÃ³ AgentCommandot, ami lehet Transmit vagy Execute tÃ­pusÃº.
+         * Az is lehet, hogy nem kapunk Ãºj Commandot, ezesetben a jelenlegi command Execute tÃ­pusÃº volt 
+         * Ã©s az elÅ‘zÅ‘ lÃ©pÃ©sekben tÃ©nylegesen vÃ¡ltoztatott az a FieldCell Ã¡llapotÃ¡n.*/
         try {
             agent.accept(command.getAgentCommand());
         } catch (NoAgentCommandException ignored) {

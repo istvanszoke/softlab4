@@ -5,23 +5,23 @@ import commands.FieldCommand;
 import commands.NoAgentCommandException;
 
 /*
- * Reprezentál egy Célcellát.
- * A célt jelzõ mezõtípus, a körök nyomonkövetésekor használt mezõ. Viselkedése egyébként megegyezik
- * a FieldCellével.
+ * ReprezentÃ¡l egy CÃ©lcellÃ¡t.
+ * A cÃ©lt jelzÅ‘ mezÅ‘tÃ­pus, a kÃ¶rÃ¶k nyomonkÃ¶vetÃ©sekor hasznÃ¡lt mezÅ‘. ViselkedÃ©se egyÃ©bkÃ©nt megegyezik
+ * a FieldCellÃ©vel.
  */
 public class FinishLineFieldCell extends Field {
     /*
      * Konstruktor.
-     * Az õsosztály konstruktorát hívja meg.
-     * @param distanceFromGoal - A céltól való távolság.
+     * Az Å‘sosztÃ¡ly konstruktorÃ¡t hÃ­vja meg.
+     * @param distanceFromGoal - A cÃ©ltÃ³l valÃ³ tÃ¡volsÃ¡g.
      */
     public FinishLineFieldCell() {
         super(0);
     }
  
    /*
-     * FieldVisitor fogadása.
-     * Nem módosít semmit a visitoron. Feltétel nélkül hagyja, hogy visiteljék.
+     * FieldVisitor fogadÃ¡sa.
+     * Nem mÃ³dosÃ­t semmit a visitoron. FeltÃ©tel nÃ©lkÃ¼l hagyja, hogy visiteljÃ©k.
      * @param visitor - A visitor.
      */
     @Override
@@ -30,9 +30,9 @@ public class FinishLineFieldCell extends Field {
     }
 
     /*
-     * FieldCommand fogadása.
-     * A FieldCellen lévõ minden egyes buff módosíthatja a commandot, hogy az késõbb érvényesüljon az Agenten.
-     * @param command - A származtatott FieldVisitor
+     * FieldCommand fogadÃ¡sa.
+     * A FieldCellen lÃ©vÅ‘ minden egyes buff mÃ³dosÃ­thatja a commandot, hogy az kÃ©sÅ‘bb Ã©rvÃ©nyesÃ¼ljon az Agenten.
+     * @param command - A szÃ¡rmaztatott FieldVisitor
      */
     @Override
     public void accept(FieldCommand command) {

@@ -1,8 +1,8 @@
 package field;
 
 /*
- * Irány típusa
- * A pályán értelmezett lehetséges irányokat jelképezõ enumerált típus.
+ * IrÃ¡ny tÃ­pusa
+ * A pÃ¡lyÃ¡n Ã©rtelmezett lehetsÃ©ges irÃ¡nyokat jelkÃ©pezÅ‘ enumerÃ¡lt tÃ­pus.
  */
 public enum Direction {
     UP,

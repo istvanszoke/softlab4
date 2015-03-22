@@ -7,30 +7,30 @@ import agents.Agent;
 import agents.Speed;
 import buff.Buff;
 /**
- * A p·ly·t alkotÛ mezıtÌpusok kˆzˆs ısosz·lya.
- * Egyik fı feladata annak a cell·nak a megkeresÈse, amelyre egy Robot ugorhat.
+ * A p√°ly√°t alkot√≥ mez≈ët√≠pusok k√∂z√∂s ≈ësosz√°lya.
+ * Egyik f≈ë feladata annak a cell√°nak a megkeres√©se, amelyre egy Robot ugorhat.
  */
 public abstract class Field implements FieldElement {
     /*
-     * A cell·n ·llÛ Agent.
+     * A cell√°n √°ll√≥ Agent.
      */
     protected Agent agent;
     /*
-     * A cella a cÈltÛl valÛ t·vols·ga.
+     * A cella a c√©lt√≥l val√≥ t√°vols√°ga.
      */
     protected final int distanceFromGoal;
     /*
-     * A cell·n lÈvı aktÌv buffok t·rolÛja.
+     * A cell√°n l√©v≈ë akt√≠v buffok t√°rol√≥ja.
      */
     protected final ArrayList<Buff> buffs;
     /* 
-     * A cella szomszÈdos cell·inak a t·rolÛja (max. 4).
+     * A cella szomsz√©dos cell√°inak a t√°rol√≥ja (max. 4).
      */
     protected final HashMap<Direction, Field> neighbours;
 
     /*
      * Konstruktor.
-     * @param distanceFromGoal - A cella cÈltÛl valÛ lÈpÈsenkÈnti t·vols·ga.
+     * @param distanceFromGoal - A cella c√©lt√≥l val√≥ l√©p√©senk√©nti t√°vols√°ga.
      */
     public Field(int distanceFromGoal) {
         buffs = new ArrayList<Buff>();
@@ -39,20 +39,20 @@ public abstract class Field implements FieldElement {
     }
     
     /*
-     * Hozz·adja a mezıhˆz a megfelelı szomszÈdot a megfelelı ir·nyban.
-     * @param direction - Ir·ny.
-     * @param field - SzomszÈd to be.
+     * Hozz√°adja a mez≈ëh√∂z a megfelel≈ë szomsz√©dot a megfelel≈ë ir√°nyban.
+     * @param direction - Ir√°ny.
+     * @param field - Szomsz√©d to be.
      */
     public void addNeighbour(Direction direction, Field field) {
         neighbours.put(direction, field);
     }
     
     /*
-     * Agent cell·ra lÈp.
-     * Lekezeli azt az estet, amikor egy Agent a cell·ra lÈp: be·llÌtja a megfelelı refernci·kat
-     * (mind az Agentben, mint ˆnmag·ban). Ezen fel¸l meghÌvja a r·lÈpı Agent accept(AgentVisitor)
-     * metÛdus·t az ˆsszes, mezın tal·lhatÛ Buffal.
-     * @param agent - A cell·ra lÈpı Agent.
+     * Agent cell√°ra l√©p.
+     * Lekezeli azt az estet, amikor egy Agent a cell√°ra l√©p: be√°ll√≠tja a megfelel≈ë refernci√°kat
+     * (mind az Agentben, mint √∂nmag√°ban). Ezen fel√ºl megh√≠vja a r√°l√©p≈ë Agent accept(AgentVisitor)
+     * met√≥dus√°t az √∂sszes, mez≈ën tal√°lhat√≥ Buffal.
+     * @param agent - A cell√°ra l√©p≈ë Agent.
      */
     public void onEnter(Agent agent) {
         for (Buff b : buffs) {
@@ -64,8 +64,8 @@ public abstract class Field implements FieldElement {
     }
     
     /*
-     * Agent a cell·rÛl ellÈp.
-     * Lekezeli azt az esetet, amikor egy Agent elhagyja a mezıt.
+     * Agent a cell√°r√≥l ell√©p.
+     * Lekezeli azt az esetet, amikor egy Agent elhagyja a mez≈ët.
      */
     public void onExit() {
         if (agent == null) {
@@ -80,15 +80,15 @@ public abstract class Field implements FieldElement {
     
     /*
      * Visszadja a distanceFromGoal-t.
-     * @return - A cÈltÛl valÛ t·vols·g.
+     * @return - A c√©lt√≥l val√≥ t√°vols√°g.
      */
     public int getDistanceFromGoal() {
         return distanceFromGoal;
     }
 
     /*
-     * Buff lehelyezÈs.
-     * Lehelyezi a cell·ra a paramÈterÈben kapott buffot.
+     * Buff lehelyez√©s.
+     * Lehelyezi a cell√°ra a param√©ter√©ben kapott buffot.
      * @param buff - A lehelyezett buff.
      */
     public void placeBuff(Buff buff) {
@@ -96,26 +96,26 @@ public abstract class Field implements FieldElement {
     }
 
     /*
-     * Kisz·molja, hogy adott sebessÈg vektorral melyik m·sik Fieldre lehet ugrani.
+     * Kisz√°molja, hogy adott sebess√©g vektorral melyik m√°sik Fieldre lehet ugrani.
      */
     public Displacement getDisplacement(Speed speed) {
         return new Displacement(this, searchGoal(speed));
     }
 
     /*
-     * ‹ressÈg vizsg·lat
-     * Visszadja, hogy ¸res-e azaz nem ·ll Agent az adott cell·n.
-     * @return - A cella ¸ressÈge.
+     * √úress√©g vizsg√°lat
+     * Visszadja, hogy √ºres-e azaz nem √°ll Agent az adott cell√°n.
+     * @return - A cella √ºress√©ge.
      */
     public boolean isEmpty() {
         return agent == null;
     }
 
     /*
-     * Ir·ny keresÈs.
-     * Adott sebessÈgnÈl rekurzÌv megkeresi, hogy melyik az Agent, melyik ir·nyba kell elmozduljon.
-     * @param speed - SebessÈg
-     * @return - A keresett ir·nyba levı szomszÈd.
+     * Ir√°ny keres√©s.
+     * Adott sebess√©gn√©l rekurz√≠v megkeresi, hogy melyik az Agent, melyik ir√°nyba kell elmozduljon.
+     * @param speed - Sebess√©g
+     * @return - A keresett ir√°nyba lev≈ë szomsz√©d.
      */
     protected Field searchGoal(Speed speed) {
         if (speed.getMagnitude() == 0) {

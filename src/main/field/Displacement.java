@@ -1,8 +1,8 @@
 package field;
 
 /*
- * Elmozdul·st kezelı oszt·ly.
- * Kezdeti Ès vÈgpont mezıket t·rol.
+ * Elmozdul√°st kezel≈ë oszt√°ly.
+ * Kezdeti √©s v√©gpont mez≈ëket t√°rol.
  */
 public class Displacement {
     /*
@@ -11,14 +11,14 @@ public class Displacement {
     private final Field start;
     
     /*
-     * CÈl
+     * C√©l
      */
     private final Field goal;
 
     /*
      * Konstruktor
-     * @param start - KezdıField
-     * @param goal - CÈlField
+     * @param start - Kezd≈ëField
+     * @param goal - C√©lField
      */
     public Displacement(Field start, Field goal) {
         this.start = start;

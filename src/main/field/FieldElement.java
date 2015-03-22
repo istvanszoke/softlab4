@@ -2,18 +2,18 @@ package field;
 
 import commands.FieldCommand;
 
-/* Ez az interfÈsz elıÌrja, hogy az ıt implement·lÛ oszt·lyoknak kÈpesnek kell lennie FieldVisitorok Ès
- * FieldCommandek fogad·s·ra.
+/* Ez az interf√©sz el≈ë√≠rja, hogy az ≈ët implement√°l√≥ oszt√°lyoknak k√©pesnek kell lennie FieldVisitorok √©s
+ * FieldCommandek fogad√°s√°ra.
  */
 public interface FieldElement {
     /*
-     * FieldVisitor fogad·sa.
+     * FieldVisitor fogad√°sa.
      * @param visitor - visitor
      */
     void accept(FieldVisitor visitor);
 
     /*
-     * FieldCommand fogad·sa.
+     * FieldCommand fogad√°sa.
      * @param command - visitor
      */
     void accept(FieldCommand command);

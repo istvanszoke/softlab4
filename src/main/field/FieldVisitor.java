@@ -3,24 +3,24 @@ package field;
 import feedback.Feedback;
 /*
  * FieldVisitor.
- * Ezen interfÈszt implement·lÛ oszt·lyok kÈpessÈ v·lnak a Field absztrakt oszt·ly lesz·rmazott oszt·lyainak
- * mÛdosÌt·s·ra, megv·ltoztat·s·ra, azoknak publikus interfÈszÈn kereszt¸l.
+ * Ezen interf√©szt implement√°l√≥ oszt√°lyok k√©pess√© v√°lnak a Field absztrakt oszt√°ly lesz√°rmazott oszt√°lyainak
+ * m√≥dos√≠t√°s√°ra, megv√°ltoztat√°s√°ra, azoknak publikus interf√©sz√©n kereszt√ºl.
  */
 public interface FieldVisitor extends Feedback {
     /*
-     * FieldCell mÛdosÌt·sa.
+     * FieldCell m√≥dos√≠t√°sa.
      * @param element - Visitelt elem.
      */    
     void visit(FieldCell element);
 
     /*
-     * EmptyFieldCell mÛdosÌt·sa.
+     * EmptyFieldCell m√≥dos√≠t√°sa.
      * @param element - Visitelt elem.
      */    
     void visit(EmptyFieldCell element);
 
     /*
-     * FinishFieldCell mÛdosÌt·sa.
+     * FinishFieldCell m√≥dos√≠t√°sa.
      * @param element - Visitelt elem.
      */    
     void visit(FinishLineFieldCell element);
