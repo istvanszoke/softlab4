@@ -11,6 +11,6 @@ public interface AgentVisitor extends Feedback {
     /**
      * Robot módosítása.
      * @param element - Visitelt elem.
-     */    
+     */
     void visit(Robot element);
 }
