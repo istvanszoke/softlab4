@@ -6,29 +6,30 @@ import java.util.HashMap;
 import agents.Agent;
 import agents.Speed;
 import buff.Buff;
+
 /**
  * A pályát alkotó mezőtípusok közös ősoszálya.
  * Egyik fő feladata annak a cellának a megkeresése, amelyre egy Robot ugorhat.
  */
 public abstract class Field implements FieldElement {
-    /*
+    /**
      * A cellán álló Agent.
      */
     protected Agent agent;
-    /*
+    /**
      * A cella a céltól való távolsága.
      */
     protected final int distanceFromGoal;
-    /*
+    /**
      * A cellán lévő aktív buffok tárolója.
      */
     protected final ArrayList<Buff> buffs;
-    /* 
+    /** 
      * A cella szomszédos celláinak a tárolója (max. 4).
      */
     protected final HashMap<Direction, Field> neighbours;
 
-    /*
+    /**
      * Konstruktor.
      * @param distanceFromGoal - A cella céltól való lépésenkénti távolsága.
      */
@@ -38,7 +39,7 @@ public abstract class Field implements FieldElement {
         this.distanceFromGoal = distanceFromGoal;
     }
     
-    /*
+    /**
      * Hozzáadja a mezőhöz a megfelelő szomszédot a megfelelő irányban.
      * @param direction - Irány.
      * @param field - Szomszéd to be.
@@ -47,7 +48,7 @@ public abstract class Field implements FieldElement {
         neighbours.put(direction, field);
     }
     
-    /*
+    /**
      * Agent cellára lép.
      * Lekezeli azt az estet, amikor egy Agent a cellára lép: beállítja a megfelelő refernciákat
      * (mind az Agentben, mint önmagában). Ezen felül meghívja a rálépő Agent accept(AgentVisitor)
@@ -63,7 +64,7 @@ public abstract class Field implements FieldElement {
         this.agent = agent;
     }
     
-    /*
+    /**
      * Agent a celláról ellép.
      * Lekezeli azt az esetet, amikor egy Agent elhagyja a mezőt.
      */
@@ -78,7 +79,7 @@ public abstract class Field implements FieldElement {
         this.agent = null;
     }
     
-    /*
+    /**
      * Visszadja a distanceFromGoal-t.
      * @return - A céltól való távolság.
      */
@@ -86,7 +87,7 @@ public abstract class Field implements FieldElement {
         return distanceFromGoal;
     }
 
-    /*
+    /**
      * Buff lehelyezés.
      * Lehelyezi a cellára a paraméterében kapott buffot.
      * @param buff - A lehelyezett buff.
@@ -95,14 +96,14 @@ public abstract class Field implements FieldElement {
         buffs.add(buff);
     }
 
-    /*
+    /**
      * Kiszámolja, hogy adott sebesség vektorral melyik másik Fieldre lehet ugrani.
      */
     public Displacement getDisplacement(Speed speed) {
         return new Displacement(this, searchGoal(speed));
     }
 
-    /*
+    /**
      * Üresség vizsgálat
      * Visszadja, hogy üres-e azaz nem áll Agent az adott cellán.
      * @return - A cella üressége.
@@ -111,7 +112,7 @@ public abstract class Field implements FieldElement {
         return agent == null;
     }
 
-    /*
+    /**
      * Irány keresés.
      * Adott sebességnél rekurzív megkeresi, hogy melyik az Agent, melyik irányba kell elmozduljon.
      * @param speed - Sebesség

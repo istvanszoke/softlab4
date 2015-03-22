@@ -1,21 +1,21 @@
 package field;
 
-/*
+/**
  * Elmozdulást kezelő osztály.
  * Kezdeti és végpont mezőket tárol.
  */
 public class Displacement {
-    /*
+    /**
      * Kezdet
      */
     private final Field start;
     
-    /*
+    /**
      * Cél
      */
     private final Field goal;
 
-    /*
+    /**
      * Konstruktor
      * @param start - KezdőField
      * @param goal - CélField
@@ -25,7 +25,7 @@ public class Displacement {
         this.goal = goal;
     }
 
-    /*
+    /**
      * Getter a startra.
      * @return start - start
      */
@@ -33,7 +33,7 @@ public class Displacement {
         return start;
     }
     
-    /*
+    /**
      * Getter a goalra.
      * @return goal - goal
      */

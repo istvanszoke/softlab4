@@ -7,12 +7,13 @@ import commands.FieldCommand;
 import commands.NoAgentCommandException;
 import commands.executes.KillExecute;
 
-/* Reprezentálja a pálya nem érvényes részét.
+/**
+ * A pálya szélét jelképező cellatípus.
  * Az EmptyFieldCell osztály példányai a pálya azon részeit tárolja, amelyre lépve a Robotok kiesnek a
  * játékból. Az ő felelőssége a robotnak elküldeni azt a parancsot, ami ezt a hatást előidézi (KillExecute).
  */
 public class EmptyFieldCell extends Field {
-    /*
+    /**
      * Konstruktor.
      * Az ősosztály konstruktorát hívja meg.
      * @param distanceFromGoal - A céltól való távolság.
@@ -21,7 +22,7 @@ public class EmptyFieldCell extends Field {
         super(distanceFromGoal);
     }
 
-    /*
+    /**
      * Agent cellára lép.
      * Lekezeli azt az estet, amikor egy Agent a cellára lép: beállítja a megfelelő refernciákat
      * (mind az Agentben, mint önmagában). Megöli az Agentet.
@@ -33,7 +34,7 @@ public class EmptyFieldCell extends Field {
         agent.accept(new KillExecute());
     }
     
-    /*
+    /**
      * Irány keresés.
      * Innen senki sem lép sehova ezért nincs mit keresni.
      * @param speed - Sebesség
@@ -44,7 +45,7 @@ public class EmptyFieldCell extends Field {
         return this;
     }
     
-    /*
+    /**
      * FieldVisitor fogadása.
      * @param visitor - Visitor
      */
@@ -53,7 +54,7 @@ public class EmptyFieldCell extends Field {
         visitor.visit(this);
     }
 
-    /*
+    /**
      * FieldCommand fogadása.
      * A FieldCellen lévő minden egyes buff módosíthatja a commandot, hogy az később érvényesüljon az Agenten.
      * @param command - A származtatott FieldVisitor
