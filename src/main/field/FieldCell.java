@@ -4,13 +4,15 @@ import buff.Buff;
 import commands.FieldCommand;
 import commands.NoAgentCommandException;
 
-/* Ezen osztály példányai alkotják a pálya legnagyobb részét: minden olyan cella, amely nem a célvonal
+/**
+ * Egy általános cellát jelképező osztály.
+ * Ezen osztály példányai alkotják a pálya legnagyobb részét: minden olyan cella, amely nem a célvonal
  * része, illetve nem a pálya szélét alkotja ilyen típusú. A Field osztály által implementált tulajdonságok
  * mellett A cellán átmenő parancsokat módosíthatja a rajta található Buffokal, majd a módosított parancsokat
  * továbbítja a rajta álló Agent felé.
  */
 public class FieldCell extends Field {
-    /*
+    /**
      * Konstruktor.
      * Az ősosztály konstruktorát hívja meg.
      * @param distanceFromGoal - A céltól való távolság.
@@ -19,7 +21,7 @@ public class FieldCell extends Field {
         super(distanceFromGoal);
     }
 
-    /*
+    /**
      * FieldVisitor fogadása.
      * Nem módosít semmit a visitoron. Feltétel nélkül hagyja, hogy visiteljék.
      * @param visitor - A visitor.
@@ -29,7 +31,7 @@ public class FieldCell extends Field {
         visitor.visit(this);
     }
     
-    /*
+    /**
      * FieldCommand fogadása.
      * A FieldCellen lévő minden egyes buff módosíthatja a commandot, hogy az később érvényesüljon az Agenten.
      * @param command - A származtatott FieldVisitor
@@ -45,7 +47,8 @@ public class FieldCell extends Field {
         
         /* Lekéri a commandhoz tartozó AgentCommandot, ami lehet Transmit vagy Execute típusú.
          * Az is lehet, hogy nem kapunk új Commandot, ezesetben a jelenlegi command Execute típusú volt 
-         * és az előző lépésekben ténylegesen változtatott az a FieldCell állapotán.*/
+         * és az előző lépésekben ténylegesen változtatott az a FieldCell állapotán.
+         */
         try {
             agent.accept(command.getAgentCommand());
         } catch (NoAgentCommandException ignored) {
