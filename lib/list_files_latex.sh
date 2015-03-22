@@ -27,16 +27,6 @@ files=$(find -type f -name *.java -printf '%f;%p;%s\n' | sed s/\\.\\///g | sort 
 
 split_lines "$files"
 
-longest_path=-1
-for line in "${array[@]}"
-do
-    split_info "$line"
-    
-    if [ "${#path}" -gt "$longest_path" ]; then
-        longest_path="${#path}"
-    fi
-done
-
 echo "\\begin{tabularx}{\linewidth}{| l | l | l | X |}"
 echo "\\hline"
 echo "\\textbf{Fájl neve} & \\textbf{Méret} & \\textbf{Keletkezés ideje} & \\textbf{Tartalom} \\tabularnewline"
@@ -48,8 +38,21 @@ do
     split_info "$line"
     date=$(git log --diff-filter=A --follow --format=%ai -1 -- "$path" | awk '{gsub(" \\+[0-9]+.*$", ""); gsub(" ", "~"); gsub(":[0-9]+$", "~"); gsub("-", "."); print}')
 
+    class="${name%.*}"
+    
+    pre="A"
+    if echo "$class" | grep "^[AaEeIiOoUu].*" > /dev/null; then
+        pre="Az"
+    fi
+
+    description="osztály implementációját tartalmazza."
+    if cat "$path" | grep "^.*public interface.*$" > /dev/null; then
+        description="interfész deklarációját tartalmazza."
+    fi
+
     echo "\\fajl"
-    printf "{%s}\n{%d byte}\n{%s}\n{...}\n\n" "$path" "$size" "$date"
+    printf "{%s}\n{%d byte}\n{%s}\n{%s %s %s}\n\n" "$path" "$size" "$date" "$pre" "$class" "$description"
 done
 
 echo "\\end{tabularx}"
+
