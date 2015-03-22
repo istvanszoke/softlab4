@@ -4,10 +4,26 @@ import java.util.HashMap;
 public class Inspector {
 
     public static HashMap<Long, Integer> depthMap = new HashMap<Long, Integer>();
+    public static HashMap<Long, Boolean> enableMap = new HashMap<Long, Boolean>();
+
+    static public void setEnabled(boolean state)
+    {
+        long currentThread = Thread.currentThread().getId();
+        enableMap.put(currentThread, state);
+        if (state)
+            depthMap.put(currentThread, 0);
+    }
 
     static public void call(String text)
     {
         long currentThread = Thread.currentThread().getId();
+        if (enableMap.containsKey(currentThread)) {
+            if (!enableMap.get(currentThread))
+                return;
+        } else {
+            enableMap.put(currentThread, false);
+            return;
+        }
         int depth = 0;
         if ( Inspector.depthMap.containsKey(currentThread) ) {
             depth = Inspector.depthMap.get( currentThread );
@@ -25,6 +41,13 @@ public class Inspector {
     static public void ret(String text)
     {
         long currentThread = Thread.currentThread().getId();
+        if (enableMap.containsKey(currentThread)) {
+            if (!enableMap.get(currentThread))
+                return;
+        } else {
+            enableMap.put(currentThread, false);
+            return;
+        }
         int depth = 0;
         if ( Inspector.depthMap.containsKey( currentThread ) ) {
             depth = Inspector.depthMap.get( currentThread );
