@@ -7,7 +7,7 @@ import commands.FieldCommand;
 import commands.NoAgentCommandException;
 import commands.executes.KillExecute;
 
-/* A pálya nem érvényes része.
+/* Reprezentálja a pálya nem érvényes részét.
  * Az EmptyFieldCell osztály példányai a pálya azon részeit tárolja, amelyre lépve a Robotok kiesnek a
  * játékból. Az õ felelõssége a robotnak elküldeni azt a parancsot, ami ezt a hatást elõidézi (KillExecute).
  */

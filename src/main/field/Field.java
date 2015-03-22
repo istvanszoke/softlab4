@@ -114,6 +114,7 @@ public abstract class Field implements FieldElement {
     /*
      * Irány keresés.
      * Adott sebességnél rekurzív megkeresi, hogy melyik az Agent, melyik irányba kell elmozduljon.
+     * @param speed - Sebesség
      * @return - A keresett irányba levõ szomszéd.
      */
     protected Field searchGoal(Speed speed) {
