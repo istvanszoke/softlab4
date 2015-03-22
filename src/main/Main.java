@@ -6,7 +6,8 @@ import game.GameCreator;
 import game.KeyDispatcher;
 import game.Player;
 
-/** Ez az osztály az alkalmazásnak a főosztálya
+/** 
+ * Ez az osztály az alkalmazásnak a főosztálya
  * Feladaa a kezelőfelület valamint a játéklogika elindítás
  */
 public class Main extends JFrame {
