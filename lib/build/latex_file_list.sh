@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ..
+cd "$TOP_DIR"
 
 name=
 path=
