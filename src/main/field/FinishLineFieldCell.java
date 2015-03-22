@@ -4,16 +4,36 @@ import buff.Buff;
 import commands.FieldCommand;
 import commands.NoAgentCommandException;
 
+/*
+ * Reprezentál egy Célcellát.
+ * A célt jelzõ mezõtípus, a körök nyomonkövetésekor használt mezõ. Viselkedése egyébként megegyezik
+ * a FieldCellével.
+ */
 public class FinishLineFieldCell extends Field {
+    /*
+     * Konstruktor.
+     * Az õsosztály konstruktorát hívja meg.
+     * @param distanceFromGoal - A céltól való távolság.
+     */
     public FinishLineFieldCell() {
         super(0);
     }
-
+ 
+   /*
+     * FieldVisitor fogadása.
+     * Nem módosít semmit a visitoron. Feltétel nélkül hagyja, hogy visiteljék.
+     * @param visitor - A visitor.
+     */
     @Override
     public void accept(FieldVisitor visitor) {
         visitor.visit(this);
     }
 
+    /*
+     * FieldCommand fogadása.
+     * A FieldCellen lévõ minden egyes buff módosíthatja a commandot, hogy az késõbb érvényesüljon az Agenten.
+     * @param command - A származtatott FieldVisitor
+     */
     @Override
     public void accept(FieldCommand command) {
         for (Buff b : buffs) {
