@@ -6,6 +6,8 @@ import java.util.HashMap;
 import agents.Agent;
 import agents.Speed;
 import buff.Buff;
+import inspector.Inspector;
+import org.omg.PortableInterceptor.INACTIVE;
 
 public abstract class Field implements FieldElement {
     protected Agent agent;
@@ -24,16 +26,20 @@ public abstract class Field implements FieldElement {
     }
 
     public void onEnter(Agent agent) {
+        Inspector.call("Field.onEnter(Agent)");
         for (Buff b : buffs) {
             agent.accept(b);
         }
 
         agent.setField(this);
         this.agent = agent;
+        Inspector.ret("Field.onEnter");
     }
 
     public void onExit() {
+        Inspector.call("Field.onExit()");
         if (agent == null) {
+            Inspector.ret("Field.onExit");
             return;
         }
 
@@ -41,6 +47,7 @@ public abstract class Field implements FieldElement {
 
         agent.setField(null);
         this.agent = null;
+        Inspector.ret("Field.onExit");
     }
 
     public int getDistanceFromGoal() {
@@ -48,24 +55,35 @@ public abstract class Field implements FieldElement {
     }
 
     public void placeBuff(Buff buff) {
+        Inspector.call("Field.placeBuff(Buff)");
         buffs.add(buff);
+        Inspector.ret("Field.placeBuff");
     }
 
     public Displacement getDisplacement(Speed speed) {
-        return new Displacement(this, searchGoal(speed));
+        Inspector.call("Field.getDisplacement(Speed):Displacement");
+        Displacement tmp = new Displacement(this, searchGoal(speed));
+        Inspector.ret("Field.getDisplacement");
+        return tmp;
     }
 
     public boolean isEmpty() {
+        Inspector.call("Field.isEmpty():boolean");
+        Inspector.ret("Field.isEmpty");
         return agent == null;
     }
 
     protected Field searchGoal(Speed speed) {
+        Inspector.call("Field.searchGoal(Speed):Field");
         if (speed.getMagnitude() == 0) {
+            Inspector.ret("Field.searchGoal");
             return this;
         }
 
         Speed newSpeed = speed.clone();
         newSpeed.setMagnitude(newSpeed.getMagnitude() - 1);
-        return neighbours.get(speed.getDirection()).searchGoal(newSpeed);
+        Field tmp = neighbours.get(speed.getDirection()).searchGoal(newSpeed);
+        Inspector.ret("Field.searchGoal");
+        return tmp;
     }
 }

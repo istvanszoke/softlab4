@@ -10,8 +10,6 @@ public class Inspector {
     {
         long currentThread = Thread.currentThread().getId();
         enableMap.put(currentThread, state);
-        if (state)
-            depthMap.put(currentThread, 0);
     }
 
     static public void call(String text)
@@ -26,14 +24,14 @@ public class Inspector {
         }
         int depth = 0;
         if ( Inspector.depthMap.containsKey(currentThread) ) {
-            depth = Inspector.depthMap.get( currentThread );
-            Inspector.depthMap.put(currentThread, Inspector.depthMap.get(currentThread) + 1);
+            depth = Inspector.depthMap.get(currentThread) + 1;
+            Inspector.depthMap.put(currentThread, depth);
         } else {
             Inspector.depthMap.put(currentThread, 0);
         }
         System.out.print( "> " );
-        for (int i = 0; i < depth; ++i) {
-            System.out.print( " " );
+        for (int i = 0; i < depth - 1; ++i) {
+            System.out.print( "... " );
         }
         System.out.println( text );
     }
@@ -50,12 +48,12 @@ public class Inspector {
         }
         int depth = 0;
         if ( Inspector.depthMap.containsKey( currentThread ) ) {
-            depth = Inspector.depthMap.get( currentThread );
-            Inspector.depthMap.put( currentThread, Inspector.depthMap.get( currentThread ) - 1 );
+            depth = Inspector.depthMap.get( currentThread ) - 1;
+            Inspector.depthMap.put( currentThread, depth < 0 ? 0 : depth);
         }
         System.out.print( "< " );
         for(int i = 0; i < depth; ++i) {
-            System.out.print( " " );
+            System.out.print( "... " );
         }
         System.out.println( text );
     }

@@ -1,5 +1,7 @@
 package feedback;
 
+import inspector.Inspector;
+
 import java.util.ArrayList;
 
 public class Result {
@@ -10,7 +12,9 @@ public class Result {
     }
 
     public void pushMessage(String message) {
+        Inspector.call("Result.pushMessage(String)");
         messages.add(message);
+        Inspector.ret("Result.pushMessage");
     }
 
     @Override
