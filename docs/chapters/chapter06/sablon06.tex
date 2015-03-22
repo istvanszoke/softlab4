@@ -6,7 +6,6 @@
 \thispagestyle{fancy}
 
 \section{Fordítási és futtatási útmutató}
-
 \begin{tabularx}{\linewidth}{| l | l | l | X |}
 \hline
 \textbf{Fájl neve} & \textbf{Méret} & \textbf{Keletkezés ideje} & \textbf{Tartalom} \tabularnewline
@@ -68,39 +67,39 @@
 
 \fajl
 {src/main/commands/AgentCommand.java}
-{383 byte}
+{1207 byte}
 {2015.02.27~06:09~}
-{Az AgentCommand osztály implementációját tartalmazza.}
+{A játékban ágenseknek küldött parancsok osztálya}
 
 \fajl
 {src/main/commands/AgentCommandVisitor.java}
-{490 byte}
+{1569 byte}
 {2015.02.27~06:09~}
-{Az AgentCommandVisitor interfész deklarációját tartalmazza.}
+{Ágens parancsot módosítókat kezelő interfész}
 
 \fajl
 {src/main/commands/Command.java}
-{654 byte}
+{1430 byte}
 {2015.02.27~06:09~}
-{A Command osztály implementációját tartalmazza.}
+{Általános parancs osztály}
 
 \fajl
 {src/main/commands/executes/ChangeDirectionExecute.java}
-{1206 byte}
+{2167 byte}
 {2015.02.27~06:09~}
-{A ChangeDirectionExecute osztály implementációját tartalmazza.}
+{Irányváltoztatás kivitelezés egy Ágensen}
 
 \fajl
 {src/main/commands/executes/ChangeSpeedExecute.java}
-{1243 byte}
+{2235 byte}
 {2015.02.27~06:09~}
-{A ChangeSpeedExecute osztály implementációját tartalmazza.}
+{Sebességváltoztatás kivitelezés egy Ágensen}
 
 \fajl
 {src/main/commands/executes/JumpExecute.java}
-{1262 byte}
+{2158 byte}
 {2015.02.27~06:09~}
-{A JumpExecute osztály implementációját tartalmazza.}
+{Ugrás kivitelezés egy Ágensen}
 
 \fajl
 {src/main/commands/executes/KillExecute.java}
@@ -110,87 +109,99 @@
 
 \fajl
 {src/main/commands/executes/UseOilExecute.java}
-{1143 byte}
+{2109 byte}
 {2015.02.27~06:09~}
-{Az UseOilExecute osztály implementációját tartalmazza.}
+{Olaj lehelyezés kivitelezése egy mezőn}
 
 \fajl
 {src/main/commands/executes/UseStickyExecute.java}
-{1176 byte}
+{1986 byte}
 {2015.02.27~06:09~}
-{Az UseStickyExecute osztály implementációját tartalmazza.}
+{Ragacs lehelyezés kivitelezése egy mezőn}
 
 \fajl
 {src/main/commands/FieldCommand.java}
-{382 byte}
+{1096 byte}
 {2015.02.27~06:09~}
-{A FieldCommand osztály implementációját tartalmazza.}
+{A játékban mezőnek küldött parancsok osztálya}
 
 \fajl
 {src/main/commands/FieldCommandVisitor.java}
-{340 byte}
+{1048 byte}
 {2015.02.27~06:09~}
-{A FieldCommandVisitor interfész deklarációját tartalmazza.}
+{A mező parancsokat módosító osztályoknak interfész}
 
 \fajl
 {src/main/commands/NoAgentCommandException.java}
-{77 byte}
+{158 byte}
 {2015.02.27~06:09~}
-{A NoAgentCommandException osztály implementációját tartalmazza.}
+{Kivétel osztály az értelmezhetetlen ágens paracssá alakításhoz}
 
 \fajl
 {src/main/commands/NoFieldCommandException.java}
-{78 byte}
+{158 byte}
 {2015.02.27~06:09~}
-{A NoFieldCommandException osztály implementációját tartalmazza.}
+{Kivétel osztály az értelmezhetetlen mező paracssá alakításhoz}
+
+\fajl
+{src/main/commands/package-info.java}
+{92 byte}
+{2015.03.22~16:01~}
+{Elememek közötti utasításokhoz felhasznált elemek csomagja}
 
 \fajl
 {src/main/commands/queries/ChangeDirectionQuery.java}
-{803 byte}
+{1722 byte}
 {2015.02.27~06:09~}
-{A ChangeDirectionQuery osztály implementációját tartalmazza.}
+{Irányváltoztatás kérés osztály}
 
 \fajl
 {src/main/commands/queries/ChangeSpeedQuery.java}
-{789 byte}
+{1848 byte}
 {2015.02.27~06:09~}
-{A ChangeSpeedQuery osztály implementációját tartalmazza.}
+{Sebességváltoztatás kérés osztály}
 
 \fajl
 {src/main/commands/queries/JumpQuery.java}
-{727 byte}
+{1537 byte}
 {2015.02.27~06:09~}
-{A JumpQuery osztály implementációját tartalmazza.}
+{Ugrás kérés osztály}
 
 \fajl
 {src/main/commands/queries/UseOilQuery.java}
-{686 byte}
+{1305 byte}
 {2015.02.27~06:09~}
-{Az UseOilQuery osztály implementációját tartalmazza.}
+{Olaj elhelyezése kérés}
 
 \fajl
 {src/main/commands/queries/UseStickyQuery.java}
-{704 byte}
+{1329 byte}
 {2015.02.27~06:09~}
-{Az UseStickyQuery osztály implementációját tartalmazza.}
+{Ragacs elhelyezése kérés}
 
 \fajl
 {src/main/commands/transmits/ChangeDirectionTransmit.java}
-{1008 byte}
+{2641 byte}
 {2015.02.27~06:09~}
-{A ChangeDirectionTransmit osztály implementációját tartalmazza.}
+{Irányváltoztatás kérésátviteli osztálya}
 
 \fajl
 {src/main/commands/transmits/ChangeSpeedTransmit.java}
-{1011 byte}
+{2726 byte}
 {2015.02.27~06:09~}
-{A ChangeSpeedTransmit osztály implementációját tartalmazza.}
+{Sebességváltoztatás kérésátviteli osztálya}
 
 \fajl
 {src/main/commands/transmits/JumpTransmit.java}
-{1324 byte}
+{3137 byte}
 {2015.02.27~06:09~}
-{A JumpTransmit osztály implementációját tartalmazza.}
+{Ugrás kérésátviteli osztálya}
+
+\fajl
+{src/main/commands/transmits/package-info.java}
+{254 byte}
+{2015.03.22~16:01~}
+{Parncskérések átviteléhez szükséges osztályok csomagja}
 
 \fajl
 {src/main/feedback/Feedback.java}
@@ -205,6 +216,12 @@
 {A NoFeedbackException osztály implementációját tartalmazza.}
 
 \fajl
+{src/main/feedback/package-info.java}
+{118 byte}
+{2015.03.22~16:01~}
+{Összetett visszajelzésekkel rendelkező eljárásoknak eszközök}
+
+\fajl
 {src/main/feedback/Result.java}
 {554 byte}
 {2015.02.27~06:09~}
@@ -212,57 +229,63 @@
 
 \fajl
 {src/main/field/Direction.java}
-{80 byte}
+{215 byte}
 {2015.02.27~06:09~}
-{A Direction osztály implementációját tartalmazza.}
+{Lehetséges irányokat tartalmazó típus.}
 
 \fajl
 {src/main/field/Displacement.java}
-{335 byte}
+{722 byte}
 {2015.02.27~06:09~}
-{A Displacement osztály implementációját tartalmazza.}
+{Elmozdulást kezelő osztály.}
 
 \fajl
 {src/main/field/EmptyFieldCell.java}
-{952 byte}
+{2108 byte}
 {2015.02.27~06:09~}
-{Az EmptyFieldCell osztály implementációját tartalmazza.}
+{A pálya szélét jelképező cellatípus.}
 
 \fajl
 {src/main/field/FieldCell.java}
-{630 byte}
+{1956 byte}
 {2015.02.27~06:09~}
-{A FieldCell osztály implementációját tartalmazza.}
+{Egy általános cellát jelképező osztály.}
 
 \fajl
 {src/main/field/FieldElement.java}
-{160 byte}
+{530 byte}
 {2015.02.27~06:09~}
-{A FieldElement interfész deklarációját tartalmazza.}
+{Parancsok és visitorok fogadására képes interfész.}
 
 \fajl
 {src/main/field/Field.java}
-{1655 byte}
+{3562 byte}
 {2015.02.27~06:09~}
-{A Field osztály implementációját tartalmazza.}
+{A pályát alkotó mezőtípusok közös ősoszálya.}
 
 \fajl
 {src/main/field/FieldVisitor.java}
-{216 byte}
+{794 byte}
 {2015.02.27~06:09~}
-{A FieldVisitor interfész deklarációját tartalmazza.}
+{Cellatípusonként személyre szabott viselkedéseket biztosító interfész.}
 
 \fajl
 {src/main/field/FinishLineFieldCell.java}
-{614 byte}
+{1321 byte}
 {2015.02.27~06:09~}
-{A FinishLineFieldCell osztály implementációját tartalmazza.}
+{Egy célmezőt reprezentál.}
+
+\fajl
+{src/main/field/package-info.java}
+{83 byte}
+{2015.03.22~16:01~}
+{A játékban lévő mezőket kezelő elemeknek a csomagja}
 
 \fajl
 {src/main/game/AgentController.java}
-{214 byte}
+{695 byte}
 {2015.03.14~10:10~}
-{Az AgentController osztály implementációját tartalmazza.}
+{Absztrakt ágens kontroller}
 
 \fajl
 {src/main/game/ControllerListener.java}
@@ -272,21 +295,21 @@
 
 \fajl
 {src/main/game/GameCreator.java}
-{2732 byte}
+{5146 byte}
 {2015.03.14~10:10~}
-{A GameCreator osztály implementációját tartalmazza.}
+{Játékot generáló osztály}
 
 \fajl
 {src/main/game/Game.java}
-{3291 byte}
+{6351 byte}
 {2015.03.14~10:10~}
-{A Game osztály implementációját tartalmazza.}
+{Játéklogika, ez az osztály felelős a játéklogika megvalósításáért}
 
 \fajl
 {src/main/game/HumanController.java}
-{1887 byte}
+{2831 byte}
 {2015.03.14~10:10~}
-{A HumanController osztály implementációját tartalmazza.}
+{Emberi játékvezérlő osztály}
 
 \fajl
 {src/main/game/KeyDispatcher.java}
@@ -296,21 +319,27 @@
 
 \fajl
 {src/main/game/Map.java}
-{1778 byte}
+{4077 byte}
 {2015.03.14~10:10~}
-{A Map osztály implementációját tartalmazza.}
+{A Pályályát megtestesítő osztály}
+
+\fajl
+{src/main/game/package-info.java}
+{83 byte}
+{2015.03.22~16:01~}
+{A játék működtetését szolgáló elemeknek a csomagja}
 
 \fajl
 {src/main/game/Player.java}
-{660 byte}
+{1865 byte}
 {2015.03.14~10:10~}
-{A Player osztály implementációját tartalmazza.}
+{Egy játékost reprezentáló osztály}
 
 \fajl
 {src/main/Main.java}
-{1367 byte}
+{2048 byte}
 {2015.02.12~23:16~}
-{A Main osztály implementációját tartalmazza.}
+{Ez az osztály az alkalmazásnak a főosztálya}
 
 \fajl
 {src/test/TravisTester.java}
@@ -319,6 +348,7 @@
 {A TravisTester osztály implementációját tartalmazza.}
 
 \end{tabularx}
+
 
 
 
