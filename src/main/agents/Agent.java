@@ -1,4 +1,4 @@
-﻿package agents;
+package agents;
 
 import field.Direction;
 import field.Field;

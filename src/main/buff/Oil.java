@@ -1,4 +1,4 @@
-﻿package buff;
+package buff;
 
 import commands.transmits.ChangeDirectionTransmit;
 import commands.transmits.ChangeSpeedTransmit;

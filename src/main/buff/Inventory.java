@@ -1,4 +1,4 @@
-﻿package buff;
+package buff;
 
 import inspector.Inspector;
 import org.omg.PortableInterceptor.INACTIVE;

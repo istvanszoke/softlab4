@@ -1,4 +1,4 @@
-﻿package buff;
+package buff;
 
 import agents.*;
 import commands.*;
