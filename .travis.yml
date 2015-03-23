@@ -7,7 +7,7 @@ install:
   - sudo apt-get update
   - sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra librsvg2-bin
 before_script:
-  - bash build_docs.sh
+  - bash build.sh docs
 env:
   global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created

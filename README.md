@@ -27,7 +27,12 @@ The project uses the [Gradle](https://gradle.org/) build system to build the mai
 ### Building on Windows
 `./gradlew.bat [common build command]`: in the main project directory to use the common build commands described above.
 
-`./build_docs.sh`: to build the documentation. The resulting file will be located in `./docs/szoftlab4.pdf`.
+**For the documentation:**
+Use the `build.sh` script located in the root folder with one of the following arguments:
+* `docs`: to build the documentation. The resulting file will be located in `./docs/szoftlab4.pdf`.
+* `svg`: to rebuild the UML diagrams (run this if you change a diagram without changing its name).
+* `latex-file-list`: for a LaTeX formatted list of Java source files 
+
 
 ####Required software to build the documentation:
 * a working 'LaTeX' distribution with `pdflatex` in `PATH`
@@ -40,7 +45,11 @@ The project uses the [Gradle](https://gradle.org/) build system to build the mai
 ### Building on Linux
 `./gradlew [common build command]`: in the main project directory to use the common build commands described above.
 
-`./build_docs.sh`: to build the documentation. The resulting file will be located in `./docs/szoftlab4.pdf`.
+**For the documentation:**
+Use the `build.sh` script located in the root folder with one of the following arguments:
+* `docs`: to build the documentation. The resulting file will be located in `./docs/szoftlab4.pdf`.
+* `svg`: to rebuild the UML diagrams (run this if you change a diagram without changing its name).
+* `latex-file-list`: for a LaTeX formatted list of Java source files 
 
 ####Required packages to build the documentation:
 **Ubuntu and descendants:**
