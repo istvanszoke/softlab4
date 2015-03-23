@@ -1,13 +1,4 @@
-#!/bin/bash
-
-# Set the pipe's return value to the last non-zero value in the pipe (or 0 if everything succeeded)
 set -o pipefail
-
-# Enviromental variables so we can reuse them in our other scripts
-export TOP_DIR="$PWD"
-export SRC_DIR="$TOP_DIR/src"
-export LIB_DIR="$TOP_DIR/lib"
-export DOCS_DIR="$TOP_DIR/docs"
 
 source $LIB_DIR/debug_print.sh
 
@@ -43,7 +34,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # We have to convert all our exported SVG files into PDFs, because LaTeX's SVG support is dreadful.
-./svg_preprocess.sh
+"$LIB_DIR/build/svg.sh"
 if [ $? -ne 0 ]; then
     debug_error "SVG to PDF conversion failed. [FAILED]"
     exit -1
@@ -64,3 +55,4 @@ rm -f *.{aux,lof,log,out,toc}
 cd "$TOP_DIR"
 
 debug_success "Generating of the documentation ended. [SUCCESS]"
+ 
