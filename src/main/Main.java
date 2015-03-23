@@ -50,6 +50,7 @@ public class Main extends JFrame {
                 System.out.print(String.format("%nFuttatandó teszteset száma: "));
                 input = br.readLine();
                 ret = Integer.parseUnsignedInt(input);
+                ret = ret == 0 ? -1 : ret;
             } catch (Exception e) {
                 ret = -1;
             }
