@@ -58,7 +58,7 @@ public class Game implements ControllerListener {
      */
     public Game(ArrayList<Player> players, Map map, int roundTime) {
         Inspector.call("Game.Game(ArrayList<Player>, Map, int)");
-        timer = new Timer();
+        timer = new Timer(true);
         isPaused = true;
         this.roundTime = roundTime;
 
