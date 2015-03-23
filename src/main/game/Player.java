@@ -2,6 +2,7 @@ package game;
 
 import agents.Agent;
 import agents.Robot;
+import inspector.Inspector;
 
 /**
  * Egy játékost reprezentáló osztály
@@ -23,9 +24,13 @@ public class Player {
      * @return - A létrehozott játékosnak a Referenciája
      */
     public static Player createRobot(int timeInSec) {
+        Inspector.call("Player.createRobot(int timeInSec):Player");
+
         Player instance = new Player();
         instance.agent = new Robot();
         instance.timeRemaining = timeInSec * 1000;
+
+        Inspector.ret("Player.createRobot");
         return instance;
     }
 
@@ -35,6 +40,8 @@ public class Player {
      * @return - Az irányított ágensnek a referenciája
      */
     public Agent getAgent() {
+        Inspector.call("Player.getAgent():Agent");
+        Inspector.ret("Player.getAgent");
         return agent;
     }
 

@@ -4,6 +4,7 @@ import commands.*;
 import commands.executes.ChangeDirectionExecute;
 import commands.queries.ChangeDirectionQuery;
 import field.*;
+import inspector.Inspector;
 
 /**
  * Irányváltoztatás kérésátviteli osztálya
@@ -25,7 +26,9 @@ public class ChangeDirectionTransmit extends FieldCommand {
      */
     public ChangeDirectionTransmit(ChangeDirectionQuery parent) {
         super(parent);
+        Inspector.call("ChangeDirectionTransmit:ChangeDirectionTransmit(ChangeDirectionQuery)");
         this.direction = parent.getDirection();
+        Inspector.ret("ChangeDirectionTransmit:ChangeDirectionTransmit");
     }
 
     /**
@@ -33,6 +36,8 @@ public class ChangeDirectionTransmit extends FieldCommand {
      * @return - A tervezett irány
      */
     public Direction getDirection() {
+        Inspector.call("ChangeDirectionTransmit.getDirection():Direction");
+        Inspector.ret("ChangeDirectionTransmit.getDirection");
         return direction;
     }
 
@@ -41,7 +46,9 @@ public class ChangeDirectionTransmit extends FieldCommand {
      * @param direction - Az új tervezett irány
      */
     public void setDirection(Direction direction) {
+        Inspector.call("ChangeDirectionTransmit.setDirection(Direction)");
         this.direction = direction;
+        Inspector.ret("ChangeDirectionTransmit.setDirection");
     }
 
     /**
@@ -51,7 +58,10 @@ public class ChangeDirectionTransmit extends FieldCommand {
      */
     @Override
     public AgentCommand getAgentCommand() throws NoAgentCommandException {
-        return new ChangeDirectionExecute(this);
+        Inspector.call("ChangeDirectionTransmit.getAgentCommand():AgentCommand");
+        ChangeDirectionExecute tmp = new ChangeDirectionExecute(this);
+        Inspector.ret("ChangeDirectionTransmit.getAgentCommand");
+        return tmp;
     }
 
     /**
@@ -60,7 +70,9 @@ public class ChangeDirectionTransmit extends FieldCommand {
      */
     @Override
     public void accept(FieldCommandVisitor modifier) {
+        Inspector.call("ChangeDirectionTransmit.accept(FieldCommandVisitor)");
         modifier.visit(this);
+        Inspector.ret("ChangeDirectionTransmit.accept");
     }
 
     /**
@@ -69,7 +81,11 @@ public class ChangeDirectionTransmit extends FieldCommand {
      * @param element - A hozzáférhető pályamező
      */
     @Override
-    public void visit(FieldCell element) {}
+    public void visit(FieldCell element)
+    {
+        Inspector.call("ChangeDirectionTransmit.visit(FieldCell)");
+        Inspector.ret("ChangeDirectionTransmit.visit");
+    }
 
     /**
      * Üres pályamező hozzáférési interfésze.
@@ -77,7 +93,11 @@ public class ChangeDirectionTransmit extends FieldCommand {
      * @param element - A hozzáférhető pályamező
      */
     @Override
-    public void visit(EmptyFieldCell element) {}
+    public void visit(EmptyFieldCell element)
+    {
+        Inspector.call("ChangeDirectionTransmit.visit(EmptyFieldCell)");
+        Inspector.ret("ChangeDirectionTransmit.visit");
+    }
 
     /**
      * Célvonali pályamező hozzáférési interfésze.
@@ -85,5 +105,9 @@ public class ChangeDirectionTransmit extends FieldCommand {
      * @param element - A hozzáférhető pályamező
      */
     @Override
-    public void visit(FinishLineFieldCell element) {}
+    public void visit(FinishLineFieldCell element)
+    {
+        Inspector.call("ChangeDirectionTransmit.visit(FinishLineFieldCell)");
+        Inspector.ret("ChangeDirectionTransmit.visit");
+    }
 }

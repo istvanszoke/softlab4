@@ -6,6 +6,7 @@ import buff.Buff;
 import commands.FieldCommand;
 import commands.NoAgentCommandException;
 import commands.executes.KillExecute;
+import inspector.Inspector;
 
 /**
  * A pálya szélét jelképező cellatípus.
@@ -29,9 +30,11 @@ public class EmptyFieldCell extends Field {
      * @param agent - A cellára lépő Agent.
      */
     public void onEnter(Agent agent) {
+        Inspector.call("EmptyFieldCell.onEnter(Agent)");
         agent.setField(this);
         this.agent = agent;
         agent.accept(new KillExecute());
+        Inspector.ret("EmptyFieldCell.onEnter");
     }
     
     /**
@@ -42,6 +45,8 @@ public class EmptyFieldCell extends Field {
      */
     @Override
     protected Field searchGoal(Speed speed) {
+        Inspector.call("EmptyFieldCell.searchGoal(Speed):Field");
+        Inspector.ret("EmptyFieldCell.searchGoal");
         return this;
     }
     
@@ -51,7 +56,9 @@ public class EmptyFieldCell extends Field {
      */
     @Override
     public void accept(FieldVisitor visitor) {
+        Inspector.call("EmptyFieldCell.accept(FieldVisitor)");
         visitor.visit(this);
+        Inspector.ret("EmptyFieldCell.accept");
     }
 
     /**
@@ -61,6 +68,7 @@ public class EmptyFieldCell extends Field {
      */
     @Override
     public void accept(FieldCommand command) {
+        Inspector.call("EmptyFieldCell.accept(FieldCommand)");
         for (Buff b : buffs) {
             command.accept(b);
         }
@@ -72,5 +80,6 @@ public class EmptyFieldCell extends Field {
         } catch (NoAgentCommandException ignored) {
 
         }
+        Inspector.ret("EmptyFieldCell.accept");
     }
 }

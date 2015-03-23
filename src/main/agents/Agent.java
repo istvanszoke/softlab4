@@ -2,6 +2,7 @@
 
 import field.Direction;
 import field.Field;
+import inspector.Inspector;
 
 /**
  * A pályán lévő ágensek reprezentációja.
@@ -32,9 +33,11 @@ public abstract class Agent implements AgentElement {
      * Az alapértelmezett sebességvektor felfele mutat.
      */
     public Agent() {
+        Inspector.call("Agent.Agent()");
         speed = new Speed(Direction.UP, 0);
         isDead = false;
         currentLap = 1;
+        Inspector.ret("Agent.Agent");
     }
     
     /**
@@ -42,14 +45,19 @@ public abstract class Agent implements AgentElement {
      * @return - A jelenlegi Speed klónját adja vissza.
      */
     public Speed getSpeed() {
-        return speed.clone();
+        Inspector.call("Agent.getSpeed():Speed");
+        Speed tmp = speed.clone();
+        Inspector.ret("Agent.getSpeed");
+        return tmp;
     }
     /**
      * speed setter függvénye.
      * @param speed - A beállításra kerülő sebesség.
      */
     public void setSpeed(Speed speed) {
+        Inspector.call("Agent.setSpeed(Speed)");
         this.speed = speed;
+        Inspector.ret("Agent.setSpeed");
     }
     
     /**
@@ -57,6 +65,8 @@ public abstract class Agent implements AgentElement {
      * @return - field
      */
     public Field getField() {
+        Inspector.call("Agent.getField():Field");
+        Inspector.ret("Agent.getField");
         return field;
     }
 
@@ -65,14 +75,18 @@ public abstract class Agent implements AgentElement {
      * @param field - A beállításra kerülő Field.
      */
     public void setField(Field field) {
+        Inspector.call("Agent.setField(Field)");
+        Inspector.ret("Agent.setField");
         this.field = field;
     }
 
     /**
-     * isDead getter függvénye.
-     * @return - isDead
-     */
-     public boolean isDead() {
+    * isDead getter függvénye.
+    * @return - isDead
+    */
+    public boolean isDead() {
+        Inspector.call("Agent.isDead():boolean");
+        Inspector.ret("Agent.isDead");
         return isDead;
     }
 
@@ -80,14 +94,19 @@ public abstract class Agent implements AgentElement {
      * Megöli az ágenst.
      */
     public void kill() {
+        Inspector.call("Agent.kill()");
         this.isDead = true;
+        Inspector.ret("Agent.kill");
     }
 
     /**
      * currentLap getter függvénye.
      * @return - currentLap
      */
-    public int getLap() {
+    public int getLap()
+    {
+        Inspector.call("Agent.getLap()");
+        Inspector.ret("Agent.getLap");
         return currentLap;
     }
     
@@ -96,6 +115,8 @@ public abstract class Agent implements AgentElement {
      * Növeli az ágens eddig megtett köreinek számát.
      */
     public void incrementLap() {
+        Inspector.call("Agent.incrementLap()");
         this.currentLap++;
+        Inspector.ret("Agent.incrementLap");
     }
 }

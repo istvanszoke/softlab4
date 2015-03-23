@@ -3,6 +3,7 @@ package commands.queries;
 import agents.*;
 import commands.*;
 import commands.executes.UseStickyExecute;
+import inspector.Inspector;
 
 /**
  * Ragacs elhelyezése kérés
@@ -16,7 +17,10 @@ public class UseStickyQuery extends AgentCommand {
      */
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
-        return new UseStickyExecute(this);
+        Inspector.call("UseStickyQuery.getFieldCommand()");
+        UseStickyExecute tmp = new UseStickyExecute(this);
+        Inspector.ret("UseStickyQuery.getFieldCommand");
+        return tmp;
     }
 
     /**
@@ -25,7 +29,9 @@ public class UseStickyQuery extends AgentCommand {
      */
     @Override
     public void accept(AgentCommandVisitor modifier) {
+        Inspector.call("UseStickyQuery.accept(AgentCommandVisitor");
         modifier.visit(this);
+        Inspector.ret("UseStickyQuery.accpet");
     }
 
     /**
@@ -34,6 +40,7 @@ public class UseStickyQuery extends AgentCommand {
      */
     @Override
     public void visit(Robot element) {
+        Inspector.call("UseStickyQuery.visit(Robot)");
         canExecute = element.useSticky();
 
         if (canExecute) {
@@ -41,5 +48,6 @@ public class UseStickyQuery extends AgentCommand {
         } else {
             result.pushMessage(element + " has run out of sticky.");
         }
+        Inspector.ret("UseStickyQuery.visit");
     }
 }

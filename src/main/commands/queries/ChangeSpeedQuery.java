@@ -3,6 +3,7 @@ package commands.queries;
 import agents.*;
 import commands.*;
 import commands.transmits.ChangeSpeedTransmit;
+import inspector.Inspector;
 
 /**
  * Sebességváltoztatás kérés osztály
@@ -20,7 +21,9 @@ public class ChangeSpeedQuery extends AgentCommand {
      * @param magnitudeDelta - Az új kért sebességváltoztatás
      */
     public ChangeSpeedQuery(int magnitudeDelta) {
+        Inspector.call("ChangeSpeedQuery.ChangeSpeedQuery(int)");
         this.magnitudeDelta = magnitudeDelta;
+        Inspector.ret("ChangeSpeedQuery.ChangeSpeedQuery");
     }
 
     /**
@@ -28,6 +31,8 @@ public class ChangeSpeedQuery extends AgentCommand {
      * @return - Sebességváltoás
      */
     public int getMagnitudeDelta() {
+        Inspector.call("ChangeSpeedQuery.getMagnitudeDelta():int");
+        Inspector.ret("ChangeSpeedQuery.getMagnitudeDelta");
         return magnitudeDelta;
     }
 
@@ -36,7 +41,9 @@ public class ChangeSpeedQuery extends AgentCommand {
      * @param magnitudeDelta - Új sebességváltozás
      */
     public void setMagnitudeDelta(int magnitudeDelta) {
+        Inspector.call("ChangeSpeedQuery.setMagnitudeDelta(int)");
         this.magnitudeDelta = magnitudeDelta;
+        Inspector.ret("ChangeSpeedQuery.setMagnitudeDelta");
     }
 
     /**
@@ -46,7 +53,10 @@ public class ChangeSpeedQuery extends AgentCommand {
      */
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
-        return new ChangeSpeedTransmit(this);
+        Inspector.call("ChangeSpeedQuery.getFieldCommand():FieldCommand");
+        ChangeSpeedTransmit tmp = new ChangeSpeedTransmit(this);
+        Inspector.ret("ChangeSpeedQuery.getFieldCommand");
+        return tmp;
     }
 
     /**
@@ -55,7 +65,9 @@ public class ChangeSpeedQuery extends AgentCommand {
      */
     @Override
     public void accept(AgentCommandVisitor modifier) {
+        Inspector.call("ChangeSpeedQuery.accept(AgentCommandVisitor)");
         modifier.visit(this);
+        Inspector.ret("ChangeSpeedQuery.accept");
     }
 
     /**
@@ -63,5 +75,8 @@ public class ChangeSpeedQuery extends AgentCommand {
      * @param element - A mapipulálandó robot
      */
     @Override
-    public void visit(Robot element) { }
+    public void visit(Robot element) {
+        Inspector.call("ChangeSpeedQuery.visit(Robot)");
+        Inspector.ret("ChangeSpeedQuery.visit");
+    }
 }

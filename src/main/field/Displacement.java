@@ -1,5 +1,7 @@
 package field;
 
+import inspector.Inspector;
+
 /**
  * Elmozdulást kezelő osztály.
  * Kezdeti és végpont mezőket tárol.
@@ -21,8 +23,10 @@ public class Displacement {
      * @param goal - CélField
      */
     public Displacement(Field start, Field goal) {
+        Inspector.call("Displacement.Displacement(Field, Field)");
         this.start = start;
         this.goal = goal;
+        Inspector.ret("Displacement.Displacement");
     }
 
     /**
@@ -30,6 +34,8 @@ public class Displacement {
      * @return start - start
      */
     public Field getStart() {
+        Inspector.call("Displacement.getStart():Field");
+        Inspector.ret("Displacement.getStart");
         return start;
     }
     
@@ -37,7 +43,10 @@ public class Displacement {
      * Getter a goalra.
      * @return goal - goal
      */
-    public Field getGoal() {
+    public Field getGoal()
+    {
+        Inspector.call("Displacement.getGoal():Field");
+        Inspector.ret("Displacement.getGoal");
         return goal;
     }
 }

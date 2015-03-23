@@ -1,6 +1,7 @@
 package commands;
 
 import agents.AgentVisitor;
+import inspector.Inspector;
 
 /**
  * A játékban ágenseknek küldött parancsok osztálya
@@ -11,14 +12,21 @@ public abstract class AgentCommand extends Command implements AgentVisitor {
     /**
      * Osztálykonstruktor
      */
-    protected AgentCommand() { }
+    protected AgentCommand()
+    {
+        Inspector.call("AgentCommand.AgentCommand()");
+        Inspector.ret("AgentCommand.AgentCommand");
+    }
 
     /**
      * Másoló konstruktor egy ágens parancsra
      * @param parent - A parancs amelyet másolunk
      */
-    protected AgentCommand(Command parent) {
+    protected AgentCommand(Command parent)
+    {
         super(parent);
+        Inspector.call("AgentCommand.AgentCommand(Command)");
+        Inspector.ret("AgentCommand.AgentCommand");
     }
 
     /**

@@ -2,6 +2,8 @@ package commands;
 
 import feedback.Feedback;
 import feedback.Result;
+import inspector.Inspector;
+import org.omg.PortableInterceptor.INACTIVE;
 
 /**
  * Általános parancs osztály
@@ -22,8 +24,10 @@ public abstract class Command implements Feedback {
      * Osztálykostruktor
      */
     protected Command() {
+        Inspector.call("Command.Command()");
         this.result = new Result();
         this.canExecute = true;
+        Inspector.ret("Command.Command");
     }
 
     /**
@@ -31,8 +35,10 @@ public abstract class Command implements Feedback {
      * @param parent - Az osztály amit másolunk
      */
     protected Command(Command parent) {
+        Inspector.call("Command.Command(Command)");
         result = parent.result;
         canExecute = parent.canExecute;
+        Inspector.ret("Command.Command");
     }
 
     /**
@@ -41,6 +47,8 @@ public abstract class Command implements Feedback {
      */
     @Override
     public Result getResult() {
+        Inspector.call("Command.getResult():Result");
+        Inspector.ret("Command.getResult");
         return result;
     }
 
@@ -49,6 +57,8 @@ public abstract class Command implements Feedback {
      * @return - Futtathatóságra válasz
      */
     public boolean canExecute() {
+        Inspector.call("Command.canExecute():boolean");
+        Inspector.ret("Command.canExecute");
         return canExecute;
     }
 
@@ -57,6 +67,8 @@ public abstract class Command implements Feedback {
      * @param canExecute - A futtathatóság új értéke
      */
     public void setExecutable(boolean canExecute) {
+        Inspector.call("Command.setExecutable(boolean)");
         this.canExecute = canExecute;
+        Inspector.ret("Command.setExecutable");
     }
 }

@@ -1,6 +1,7 @@
 package commands;
 
 import field.FieldVisitor;
+import inspector.Inspector;
 
 /**
  * A játékban mezőnek küldött parancsok osztálya
@@ -11,7 +12,11 @@ public abstract class FieldCommand extends Command implements FieldVisitor {
     /**
      * Osztálykonstruktor
      */
-    protected FieldCommand() { }
+    protected FieldCommand()
+    {
+        Inspector.call("FieldCommand.FieldCommand()");
+        Inspector.ret("FieldCommand.FieldCommand");
+    }
 
     /**
      * Másolókonstruktor a parancshoz
@@ -19,6 +24,8 @@ public abstract class FieldCommand extends Command implements FieldVisitor {
      */
     protected FieldCommand(Command parent) {
         super(parent);
+        Inspector.call("FieldCommand.FieldCommand(Command)");
+        Inspector.ret("FieldCommand.FieldCommand");
     }
 
     /**

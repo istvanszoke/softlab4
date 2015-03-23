@@ -3,6 +3,7 @@ package commands.queries;
 import agents.*;
 import commands.*;
 import commands.transmits.JumpTransmit;
+import inspector.Inspector;
 
 /**
  * Ugrás kérés osztály
@@ -19,7 +20,10 @@ public class JumpQuery extends AgentCommand {
      * @return - Az ugrási sebesség
      */
     public Speed getSpeed() {
-        return speed.clone();
+        Inspector.call("ChangeSpeedQuery.getSpeed():Speed");
+        Speed tmp = speed.clone();
+        Inspector.ret("ChangeSpeedQuery.getSpeed");
+        return tmp;
     }
 
     /**
@@ -27,7 +31,9 @@ public class JumpQuery extends AgentCommand {
      * @param speed - Az új ugrási sebesség
      */
     public void setSpeed(Speed speed) {
+        Inspector.call("ChangeSpeedQuery.setSpeed(Speed)");
         this.speed = speed;
+        Inspector.ret("ChangeSpeedQuery.getSpeed");
     }
 
     /**
@@ -37,7 +43,10 @@ public class JumpQuery extends AgentCommand {
      */
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
-        return new JumpTransmit(this);
+        Inspector.call("JumpQuery.getFieldCommand():FieldCommand");
+        JumpTransmit tmp = new JumpTransmit(this);
+        Inspector.ret("JumpQuery.getFieldCommand");
+        return tmp;
     }
 
     /**
@@ -46,7 +55,9 @@ public class JumpQuery extends AgentCommand {
      */
     @Override
     public void accept(AgentCommandVisitor modifier) {
+        Inspector.call("JumpQuery.accept(AgentCommandVisitor)");
         modifier.visit(this);
+        Inspector.call("JumpQuery.accept");
     }
 
     /**
@@ -55,7 +66,9 @@ public class JumpQuery extends AgentCommand {
      */
     @Override
     public void visit(Robot element) {
+        Inspector.call("JumpQuery.visit(Robot)");
         speed = element.getSpeed();
         result.pushMessage(element + " jumping with speed: " + speed);
+        Inspector.ret("JumpQuery.visit");
     }
 }

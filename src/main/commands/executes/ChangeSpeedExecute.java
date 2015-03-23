@@ -3,6 +3,7 @@ package commands.executes;
 import agents.*;
 import commands.*;
 import commands.transmits.ChangeSpeedTransmit;
+import inspector.Inspector;
 
 /**
  * Sebességváltoztatás kivitelezés egy Ágensen
@@ -19,7 +20,9 @@ public class ChangeSpeedExecute extends AgentCommand {
      */
     public ChangeSpeedExecute(ChangeSpeedTransmit parent) {
         super(parent);
+        Inspector.call("ChangeSpeedExecute.ChangeSpeedExecute(ChangeSpeedTransmit)");
         this.magnitudeDelta = parent.getMagnitudeDelta();
+        Inspector.ret("ChangeSpeedExecute.ChangeSpeedExecute");
     }
 
     /**
@@ -27,6 +30,8 @@ public class ChangeSpeedExecute extends AgentCommand {
      * @return - Sebességváltoztatás nagysága
      */
     public int getMagnitudeDelta() {
+        Inspector.call("ChangeSpeedExecute.getMagnitudeDelta():int");
+        Inspector.ret("ChangeSpeedExecute.getMagnitudeDelta");
         return magnitudeDelta;
     }
 
@@ -35,7 +40,9 @@ public class ChangeSpeedExecute extends AgentCommand {
      * @param magnitudeDelta - Sebességváltoztatás új nagysága
      */
     public void setMagnitudeDelta(int magnitudeDelta) {
+        Inspector.call("ChangeSpeedExecute.setMagnitudeDelta(int)");
         this.magnitudeDelta = magnitudeDelta;
+        Inspector.ret("ChangeSpeedExecute.setMagnitudeDelta");
     }
 
     /**
@@ -46,6 +53,8 @@ public class ChangeSpeedExecute extends AgentCommand {
      */
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
+        Inspector.call("ChangeSpeedExecute.getFieldCommand()");
+        Inspector.ret("ChangeSpeedExecute.getFieldCommand thrown NoFieldCommandException");
         throw new NoFieldCommandException();
     }
 
@@ -55,7 +64,9 @@ public class ChangeSpeedExecute extends AgentCommand {
      */
     @Override
     public void accept(AgentCommandVisitor modifier) {
+        Inspector.call("ChangeSpeedExecute.accept(AgentCommandVisitor");
         modifier.visit(this);
+        Inspector.ret("ChangeSpeedExecute.accept");
     }
 
     /**
@@ -64,6 +75,7 @@ public class ChangeSpeedExecute extends AgentCommand {
      */
     @Override
     public void visit(Robot element) {
+        Inspector.call("ChangeSpeedExecute.visit(Robot)");
         if (canExecute) {
             Speed newSpeed = element.getSpeed();
             newSpeed.setMagnitude(newSpeed.getMagnitude() + magnitudeDelta);
@@ -72,5 +84,6 @@ public class ChangeSpeedExecute extends AgentCommand {
         } else {
             result.pushMessage("Failed to change speed for " + element);
         }
+        Inspector.ret("ChangeSpeedExecute.visit");
     }
 }

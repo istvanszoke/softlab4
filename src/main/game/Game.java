@@ -5,6 +5,7 @@ import java.util.*;
 
 import agents.Agent;
 import field.Field;
+import inspector.Inspector;
 
 /**
  * Játéklogika, ez az osztály felelős a játéklogika megvalósításáért
@@ -56,6 +57,7 @@ public class Game implements ControllerListener {
      * @param roundTime - A köridíő, hogy egy játékosnak mennyi ideje van
      */
     public Game(ArrayList<Player> players, Map map, int roundTime) {
+        Inspector.call("Game.Game(ArrayList<Player>, Map, int)");
         timer = new Timer();
         isPaused = true;
         this.roundTime = roundTime;
@@ -69,6 +71,7 @@ public class Game implements ControllerListener {
 
         placeAgents();
         setupTimer();
+        Inspector.ret("Game.Game");
     }
 
     /**
@@ -127,7 +130,10 @@ public class Game implements ControllerListener {
      * @return
      */
     public Agent getCurrentAgent() {
-        return getCurrentPlayer().getAgent();
+        Inspector.call("Game.getCurrentAgent():Agent");
+        Agent tmp = getCurrentPlayer().getAgent();
+        Inspector.ret("Game.getCurrentAgent()");
+        return tmp;
     }
 
     /**
@@ -144,6 +150,8 @@ public class Game implements ControllerListener {
      */
     @Override
     public void onAgentChange() {
+        Inspector.call("Game.getAgentChange()");
+
         int currentIndex = players.indexOf(currentPlayer);
 
         if (getCurrentPlayer().isOutOfTime()) {
@@ -154,10 +162,12 @@ public class Game implements ControllerListener {
 
         if (players.isEmpty()) {
             pause();
+            Inspector.ret("Game.getAgentChange");
             return;
         }
 
         setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
+        Inspector.ret("Game.getAgentChange");
     }
 
     /**
@@ -166,6 +176,8 @@ public class Game implements ControllerListener {
      * @return - Az aktuális játékosnak a referenciája
      */
     private synchronized Player getCurrentPlayer() {
+        Inspector.call("Game.getCurrentPlayer():Player");
+        Inspector.ret("Game.getCurrentPlayer");
         return currentPlayer;
     }
 
@@ -175,7 +187,9 @@ public class Game implements ControllerListener {
      * @param player - Az új aktuális játékosnak a referenciája
      */
     private synchronized void setCurrentPlayer(Player player) {
+        Inspector.call("Game.setCurrentPlayer(Player)");
         currentPlayer = player;
+        Inspector.ret("Game.setCurrentPlayer");
     }
 
     /**

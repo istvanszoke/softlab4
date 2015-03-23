@@ -4,6 +4,7 @@ import agents.*;
 import commands.*;
 import commands.transmits.ChangeDirectionTransmit;
 import field.Direction;
+import inspector.Inspector;
 
 /**
  * Irányváltoztatás kivitelezés egy Ágensen
@@ -20,7 +21,9 @@ public class ChangeDirectionExecute extends AgentCommand {
      */
     public ChangeDirectionExecute(ChangeDirectionTransmit parent) {
         super(parent);
+        Inspector.call("ChangeDirectionExecute.ChangeDirectionExecute(ChangeDirectionTransmit)");
         this.direction = parent.getDirection();
+        Inspector.ret("ChangeDirectionExecute.ChangeDirectionExecute");
     }
 
     /**
@@ -28,6 +31,8 @@ public class ChangeDirectionExecute extends AgentCommand {
      * @return - Irányváltoztatás
      */
     public Direction getDirection() {
+        Inspector.call("ChangeDirectionExecute.getDirection():Direction");
+        Inspector.ret("ChangeDirectionExecute.getDirection");
         return direction;
     }
 
@@ -36,7 +41,9 @@ public class ChangeDirectionExecute extends AgentCommand {
      * @param direction - Az érték amire változtatunk
      */
     public void setDirection(Direction direction) {
+        Inspector.call("ChangeDirectionExecute.setDirection(Direction)");
         this.direction = direction;
+        Inspector.ret("ChangeDirectionExecute.setDirection");
     }
 
     /**
@@ -47,6 +54,8 @@ public class ChangeDirectionExecute extends AgentCommand {
      */
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
+        Inspector.call("ChangeDirectionExecute.getFieldCommand():FieldCommand");
+        Inspector.ret("ChangeDirectionExecute.getFieldCommand thrown NoFieldCommandException");
         throw new NoFieldCommandException();
     }
 
@@ -56,7 +65,9 @@ public class ChangeDirectionExecute extends AgentCommand {
      */
     @Override
     public void accept(AgentCommandVisitor modifier) {
+        Inspector.call("ChangeDirectionExecute.accept(AgentCommandVisitor)");
         modifier.visit(this);
+        Inspector.ret("ChangeDirectionExecute.accept");
     }
 
     /**
@@ -65,6 +76,7 @@ public class ChangeDirectionExecute extends AgentCommand {
      */
     @Override
     public void visit(Robot element) {
+        Inspector.call("ChangeDirectionExecute.visit(Robot)");
         if (!canExecute) {
             result.pushMessage("No direction changed for " + element);
             return;
@@ -74,5 +86,6 @@ public class ChangeDirectionExecute extends AgentCommand {
         newSpeed.setDirection(direction);
         element.setSpeed(newSpeed);
         result.pushMessage("Changed direction for " + element + ", new direction is: " + direction);
+        Inspector.ret("ChangeDirectionExecute.visit");
     }
 }
