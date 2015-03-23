@@ -1,11 +1,10 @@
 import javax.swing.*;
-import java.awt.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import field.Direction;
 import game.Game;
-import game.GameCreator;
-import game.KeyDispatcher;
-import game.Player;
 import inspector.Inspector;
 import test.skeleton.StaticTests;
 
@@ -15,53 +14,100 @@ public class Main extends JFrame {
         main.gameLoop();
     }
 
+    static final String[] menu = {
+            "Robot ugras tesztelese",
+            "Robot olaj elhelyezes tesztelese",
+            "Robot ragacs elhelyezes tesztelese",
+            "Robot sebessegvaltoztatas tesztelese",
+            "Robot iranyvaltoztatas tesztelese",
+            "Robot palyarol leugras tesztelese",
+            "Robot olajra lep tesztelese",
+            "Robot ragacsra lep tesztelese",
+            "Jatekos valtas",
+            "Kilepes"
+    };
+
+    static void clearConsole() {
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < 150; ++i) {
+            b.append(String.format("%n"));
+        }
+        System.out.print(b);
+    }
+
+    static int showMenu() {
+        clearConsole();
+        for (int i = 0; i < menu.length; ++i) {
+            System.out.println(String.format("%02d. %s", i + 1, menu[i]));
+        }
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String input;
+        int ret = -1;
+
+        while (ret == -1) {
+            try {
+                System.out.print(String.format("%nFuttatandó teszteset száma: "));
+                input = br.readLine();
+                ret = Integer.parseUnsignedInt(input);
+            } catch (Exception e) {
+                ret = -1;
+            }
+        }
+
+        return ret;
+    }
+
+    static void runTest(int index) {
+        Game test = StaticTests.testGenerateNewTestGame();
+        Inspector.setEnabled(true);
+        System.out.println(menu[index - 1]);
+        switch (index) {
+            case 1:
+                System.out.println(assertBoolean(StaticTests.testRobotJump(test)));
+                break;
+            case 2:
+                System.out.println(assertBoolean(StaticTests.testRobotUseOil(test)));
+                break;
+            case 3:
+                System.out.println(assertBoolean(StaticTests.testRobotUseSticky(test)));
+                break;
+            case 4:
+                System.out.println(assertBoolean(StaticTests.testRobotChangeSpeed(test, 1)));
+                break;
+            case 5:
+                System.out.println(assertBoolean(StaticTests.testRobotChangeDirection(test, Direction.LEFT)));
+                break;
+            case 6:
+                System.out.println(assertBoolean(StaticTests.testRobotFallOff(test, Direction.DOWN)));
+                break;
+            case 7:
+                System.out.println(assertBoolean(StaticTests.testRobotOilField(test)));
+                break;
+            case 8:
+                System.out.println(assertBoolean(StaticTests.testRobotStickyField(test)));
+                break;
+            case 9:
+                System.out.println(assertBoolean(StaticTests.testChangePlayer(test)));
+                break;
+        }
+        System.out.println();
+        Inspector.setEnabled(false);
+    }
+
     private void gameLoop() {
-        Game test = null;
-        System.out.println("Robot ugras tesztelese:");
-            test = StaticTests.testGenerateNewTestGame();
-            Inspector.setEnabled(true);
-            System.out.println(assertBoolean(StaticTests.testRobotJump(test)));
-            Inspector.setEnabled(false);
-        System.out.println("Robot olaj elhelyezes tesztelese:");
-            test = StaticTests.testGenerateNewTestGame();
-            Inspector.setEnabled(true);
-            System.out.println(assertBoolean(StaticTests.testRobotUseOil(test)));
-            Inspector.setEnabled(false);
-        System.out.println("Robot ragacs elhelyezes tesztelese:");
-            test = StaticTests.testGenerateNewTestGame();
-            Inspector.setEnabled(true);
-            System.out.println(assertBoolean(StaticTests.testRobotUseSticky(test)));
-            Inspector.setEnabled(false);
-        System.out.println("Robot sebessegvaltoztatas tesztelese:");
-            test = StaticTests.testGenerateNewTestGame();
-            Inspector.setEnabled(true);
-            System.out.println(assertBoolean(StaticTests.testRobotChangeSpeed(test, 1)));
-            Inspector.setEnabled(false);
-        System.out.println("Robot iranyvaltoztatas tesztelese:");
-            test = StaticTests.testGenerateNewTestGame();
-            Inspector.setEnabled(true);
-            System.out.println(assertBoolean(StaticTests.testRobotChangeDirection(test, Direction.LEFT)));
-            Inspector.setEnabled(false);
-        System.out.println("Robot palyarol leugras tesztelese:");
-            test = StaticTests.testGenerateNewTestGame();
-            Inspector.setEnabled(true);
-            System.out.println(assertBoolean(StaticTests.testRobotFallOff(test, Direction.DOWN)));
-            Inspector.setEnabled(false);
-        System.out.println("Robot olajra lep tesztelese:");
-            test = StaticTests.testGenerateNewTestGame();
-            Inspector.setEnabled(true);
-            System.out.println(assertBoolean(StaticTests.testRobotOilField(test)));
-            Inspector.setEnabled(false);
-        System.out.println("Robot ragacsra lep tesztelese:");
-            test = StaticTests.testGenerateNewTestGame();
-            Inspector.setEnabled(true);
-            System.out.println(assertBoolean(StaticTests.testRobotStickyField(test)));
-            Inspector.setEnabled(false);
-        System.out.println("Jatekos valtas:");
-            test = StaticTests.testGenerateNewTestGame();
-            Inspector.setEnabled(true);
-            System.out.println(assertBoolean(StaticTests.testChangePlayer(test)));
-            Inspector.setEnabled(false);
+        int menuCode = showMenu();
+
+        while (menuCode != menu.length) {
+            runTest(menuCode);
+            System.out.println("Nyomj Entert a folytatashoz");
+
+            try {
+                System.in.read();
+            } catch (IOException ignored) {}
+
+            menuCode = showMenu();
+        }
     }
 
     static String assertBoolean(boolean input)
