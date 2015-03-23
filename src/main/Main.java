@@ -45,14 +45,13 @@ public class Main extends JFrame {
         String input;
         int ret = -1;
 
-        while (ret == -1) {
+        while (ret <= 0) {
             try {
-                System.out.print(String.format("%nFuttatandó teszteset száma: "));
+                System.out.print(String.format("%nFuttatando teszteset szama: "));
                 input = br.readLine();
-                ret = Integer.parseUnsignedInt(input);
-                ret = ret == 0 ? -1 : ret;
+                ret = Integer.parseInt(input);
             } catch (Exception e) {
-                ret = -1;
+                ret = 0;
             }
         }
 
