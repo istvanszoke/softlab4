@@ -5,6 +5,7 @@ import java.util.*;
 
 import agents.Agent;
 import field.Field;
+import inspector.Inspector;
 
 public class Game implements ControllerListener {
     private final Timer timer;
@@ -19,6 +20,7 @@ public class Game implements ControllerListener {
     private final AgentController controller;
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
+        Inspector.call("Game.Game(ArrayList<Player>, Map, int)");
         timer = new Timer();
         isPaused = true;
         this.roundTime = roundTime;
@@ -32,6 +34,7 @@ public class Game implements ControllerListener {
 
         placeAgents();
         setupTimer();
+        Inspector.ret("Game.Game");
     }
 
     public void start() {
@@ -64,7 +67,10 @@ public class Game implements ControllerListener {
     }
 
     public Agent getCurrentAgent() {
-        return getCurrentPlayer().getAgent();
+        Inspector.call("Game.getCurrentAgent():Agent");
+        Agent tmp = getCurrentPlayer().getAgent();
+        Inspector.ret("Game.getCurrentAgent()");
+        return tmp;
     }
 
     public Map getMap() {
@@ -73,6 +79,8 @@ public class Game implements ControllerListener {
 
     @Override
     public void onAgentChange() {
+        Inspector.call("Game.getAgentChange()");
+
         int currentIndex = players.indexOf(currentPlayer);
 
         if (getCurrentPlayer().isOutOfTime()) {
@@ -83,18 +91,24 @@ public class Game implements ControllerListener {
 
         if (players.isEmpty()) {
             pause();
+            Inspector.ret("Game.getAgentChange");
             return;
         }
 
         setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
+        Inspector.ret("Game.getAgentChange");
     }
 
     private synchronized Player getCurrentPlayer() {
+        Inspector.call("Game.getCurrentPlayer():Player");
+        Inspector.ret("Game.getCurrentPlayer");
         return currentPlayer;
     }
 
     private synchronized void setCurrentPlayer(Player player) {
+        Inspector.call("Game.setCurrentPlayer(Player)");
         currentPlayer = player;
+        Inspector.ret("Game.setCurrentPlayer");
     }
 
     private void placeAgents() {
