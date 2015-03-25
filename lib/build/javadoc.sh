@@ -4,6 +4,10 @@ source "$LIB_DIR/debug_print.sh"
 
 debug_info "JavaDoc generation started"
 
+# Create the appropriate javadoc directory if it doesn't exist
+[ -d "$DOCS_DIR/javadoc" ] || mkdir -p "$DOCS_DIR/javadoc"
+
+# Clean any old files
 rm -f "$DOCS_DIR/javadoc/*.{tex,map}"
 
 javadoc -docletpath "$LIB_DIR/TeXDoclet.jar" \
