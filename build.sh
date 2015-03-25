@@ -13,23 +13,23 @@ export BUILD_SCRIPTS="$LIB_DIR/build"
 source $LIB_DIR/debug_print.sh
 
 build_file_list() {
-    "$BUILD_SCRIPTS/file_list.sh"
+    "$BUILD_SCRIPTS/file_list.sh" || { exit 1; }
 }
 
 build_docs() {
-    "$BUILD_SCRIPTS/docs.sh"
+    "$BUILD_SCRIPTS/docs.sh" || { exit 1; }
 }
 
 build_java() {
-    "$TOP_DIR/gradlew" build
+    "$TOP_DIR/gradlew" build || { exit 1; }
 }
 
 build_svg() {
-    "$BUILD_SCRIPTS/svg.sh"
+    "$BUILD_SCRIPTS/svg.sh" || { exit 1; }
 }
 
 build_javadoc() {
-    "$BUILD_SCRIPTS/javadoc.sh"
+    "$BUILD_SCRIPTS/javadoc.sh" || { exit 1; }
 }
 
 docs_rebuild_full() {
@@ -52,6 +52,7 @@ elif [ "$1" == "file-list" ]; then
     build_file_list
     debug_separator
     build_docs
+    debug_separator
 elif [ "$1" == "java" ]; then
     build_java
 elif [ "$1" == "javadoc" ]; then
