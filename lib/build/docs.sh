@@ -1,13 +1,13 @@
 set -o pipefail
 
-source $LIB_DIR/debug_print.sh
+source "$LIB_DIR/debug_print.sh"
 
 normalize="$1"
 
 # We will have to generate the docs multiple times, but on a fail it's easier to debug only
 # one of the LaTeX outputs. Also note that this function doesn't clean up the temporaries,
 # which can be useful in the debugging process
-function generate_docs {
+generate_docs() {
     if [ "$normalize" == "--no-normalize" ]; then
         pdflatex -halt-on-error "$DOCS_DIR/szoftlab4.tex" | pdflatex_colorize
     else
@@ -15,30 +15,16 @@ function generate_docs {
     fi
 
     if [ $? -ne 0 ]; then
-        debug_error "Generating of the documentation ended. [FAILED]"
+        debug_error "Documentation generation ended (see pdflatex output for more information)"
         exit -1
     fi
     
     echo
 }
 
-echo "Generating of the documentation started."
+debug_info "Documentation generation started"
 
 cd "$DOCS_DIR"
-
-# This script will generate the necessary LaTeX sources from the comments in the source code
-javadoc/javadoc_to_latex.sh
-if [ $? -ne 0 ]; then
-  debug_error 'Generation of LaTeX JavaDoc failed. [FAILED]'
-  exit -1
-fi
-
-# We have to convert all our exported SVG files into PDFs, because LaTeX's SVG support is dreadful.
-"$LIB_DIR/build/svg.sh"
-if [ $? -ne 0 ]; then
-    debug_error "SVG to PDF conversion failed. [FAILED]"
-    exit -1
-fi
 
 # Calling generate_docs 3 times, because of LaTeX's quirks: the first run generates
 # the base document, the second fixes table headers and generates a Table of Contents (ToC)
@@ -54,5 +40,5 @@ rm -f *.{aux,lof,log,out,toc}
 
 cd "$TOP_DIR"
 
-debug_success "Generating of the documentation ended. [SUCCESS]"
+debug_success "Documentation generation ended"
  

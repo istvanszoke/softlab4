@@ -16,6 +16,8 @@ if "%DIRNAME%" == "" set DIRNAME=.
 set APP_BASE_NAME=%~n0
 set APP_HOME=%DIRNAME%
 
+set GRADLE_USER_HOME="%CD%/.gradle"
+
 @rem Find java.exe
 if defined JAVA_HOME goto findJavaFromJavaHome
 

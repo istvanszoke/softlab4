@@ -14,7 +14,7 @@ ncolors=$(tput colors)
 # awk.5:  Removes lines that only have a single bracket in them
 # -------
 # uniq: collapses multiple empty lines into one
-function pdflatex_normalize() {
+pdflatex_normalize() {
     cat | 
     grep -v "^.*\\T1\/.*" | 
     awk '{ gsub("^(Underfull|Overfull).*$", "");
@@ -33,7 +33,7 @@ function pdflatex_normalize() {
 # awk.4:  Make the line number indicating the error bold
 # awk.5:  Color the successully written output line to green
 # awk.6:  Make the introductory text bold, so it's easier to distinguish between consequent runs
-function pdflatex_colorize() {
+pdflatex_colorize() {
     if test -n "$ncolors" && test $ncolors -ge 8; then
         cat |
         awk '{gsub("^.*[Ww]arning:", "\033[1;33m&\033[0m");
@@ -54,28 +54,43 @@ function pdflatex_colorize() {
 }
 
 # Prints green text
-function debug_success() {
+debug_success() {
     if test -n "$ncolors" && test $ncolors -ge 8; then
-        echo -e "\e[1;32m$1\e[0m"
+        >&2 echo -e "\e[1;32m$1 [SUCCESS]\e[0m"
     else
-        echo $1
+        >&2 echo $1 "[SUCCESS]"
     fi
 }
 
 # Prints yellow text
-function debug_warn() {
+debug_warn() {
     if test -n "$ncolors" && test $ncolors -ge 8; then
-        echo -e "\e[1;33m$1\e[0m"
+        >&2 echo -e "\e[1;33m$1 [WARNING]\e[0m"
     else
-        echo $1
+        >&2 echo $1 "[WARNING]"
     fi
 }
 
 # Prints red text
-function debug_error() {
+debug_error() {
     if test -n "$ncolors" && test $ncolors -ge 8; then
-        echo -e "\e[1;31m$1\e[0m"
+        >&2 echo -e "\e[1;31m$1 [ERROR]\e[0m"
     else
-        echo $1
+        >&2 echo $1 "[ERROR]" 
     fi
+}
+
+# Prints bold text
+debug_info() {
+    if test -n "$ncolors" && test $ncolors -ge 8; then
+        >&2 echo -e "\e[1m$1 [INFO]\e[0m"
+    else
+        >&2 echo $1 "[INFO]"
+    fi
+}
+
+debug_separator() {
+    local cols=$(tput cols)
+    >&2 printf "%0.s=" $(seq 1 $cols)
+    >&2 echo
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Set the pipe's return value to the last non-zero value in the pipe (or 0 if everything succeeded)
+# Set the pipe's return value to the last non_zero value in the pipe (or 0 if everything succeeded)
 set -o pipefail
 
 # Enviromental variables so we can reuse them in our other scripts
@@ -8,33 +8,62 @@ export TOP_DIR="$PWD"
 export SRC_DIR="$TOP_DIR/src"
 export LIB_DIR="$TOP_DIR/lib"
 export DOCS_DIR="$TOP_DIR/docs"
+export BUILD_SCRIPTS="$LIB_DIR/build"
 
 source $LIB_DIR/debug_print.sh
 
-latex_file_list() {
-    "$LIB_DIR"/build/latex_file_list.sh > "$DOCS_DIR"/includes/file_list.tex
-    
-    if [ $? -eq 0 ]; then
-        debug_success "LaTeX file list generation successful. [SUCCESS]"
-    fi
+build_file_list() {
+    "$BUILD_SCRIPTS/file_list.sh"
 }
 
+build_docs() {
+    "$BUILD_SCRIPTS/docs.sh"
+}
+
+build_java() {
+    "$TOP_DIR/gradlew" build
+}
+
+build_svg() {
+    "$BUILD_SCRIPTS/svg.sh"
+}
+
+build_javadoc() {
+    "$BUILD_SCRIPTS/javadoc.sh"
+}
+
+docs_rebuild_full() {
+    debug_separator
+    build_svg
+    debug_separator
+    build_file_list
+    debug_separator
+    build_javadoc
+    debug_separator
+    build_docs
+    debug_separator
+}   
+
 if [ "$1" == "docs" ]; then
-    latex_file_list
-    "$LIB_DIR"/build/docs.sh "$2"    
+    docs_rebuild_full
 elif [ "$1" == "svg" ]; then
-    "$LIB_DIR"/build/svg.sh force
-elif [ "$1" == "latex-file-list" ]; then
-    latex_file_list
+    build_svg force
+elif [ "$1" == "file-list" ]; then
+    build_file_list
+    debug_separator
+    build_docs
 elif [ "$1" == "java" ]; then
-    "$TOP_DIR"/gradlew build
+    build_java
+elif [ "$1" == "javadoc" ]; then
+    build_javadoc
+    debug_separator
+    build_docs
 elif [ "$1" == "all" ]; then
-    latex_file_list
-    "$LIB_DIR"/build/svg.sh force
-    "$LIB_DIR"/build/docs.sh
-    "$TOP_DIR"/gradlew build
+    docs_rebuild_full
+    build_java
+    debug_separator
 else
-    "$LIB_DIR"/build/docs.sh 
+    docs_rebuild_full
 fi
 
 
