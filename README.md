@@ -15,30 +15,44 @@ This is the main page of the Software Laboratory IV. 2014/15 2nd semester projec
   - System requirements for the different Java versions can be found here: [Java Requirements](http://java.com/en/download/help/sysreq.xml)
 
 ## Building the project
+### Building the Java code
 The project uses the [Gradle](https://gradle.org/) build system to build the main software and LaTeX to build the documentation. A binary distribution of Gradle is downloaded on the first build, so a working internet connection is required. It is required for `javac` to be located in the `PATH` enviromental variable or the `JAVA_HOME` enviromental variable to be set.
 
-### Building the Java code
-**Common Gradle build commands:**
-- `build`: builds the project, the generated files are located in `build/libs`
-- `test`: builds the project and runs the available unit tests
-- `run`: builds the project and runs the main application
-- `install`: places a cross platform distribution of the project under `build/install/softlab4`
-- `distZip`: creates a zip archive with platform specific run scripts in `build/distributions/softlab4.zip`
-- `distTar`: creates a tar archive with the same specifics as `distZip`
+The build is done with the platform specific Gradle Wrapper script:
 
+**On Windows:** `.\gradlew.bat <build command>`
 
-**On Windows:** `./gradlew.bat [common build command]`
+**On Linux and OS X:** `./gradlew <build command>`
 
-**On Linux and OS X:** `./gradlew [common build command]`
+Where `<build command>` is one of the following:
+
+|Command  |Description                              |Output                                        |
+|---------|-----------------------------------------|----------------------------------------------|
+|`build`  |builds the whole project, including tests|`jar` files in `build/libs`                   |
+|`test`   |runs the unit tests                      |none, if project already built                |
+|`run`    |runs the main executable                 |none, if project already built                |
+|`install`|generates a cross platform distribution  |uncompressed under `build/install/softlab4    |
+|`distZip`|generates a cross platform distribution  |zipped under `build/distributions/softlab4.zip|
+|`distTar`|generates a cross platform distribution  |tar'd under `build/distributions/softlab4.tar |
 
 ### Building the documentation
-Use the `build_docs.py` script located in the root folder with one of the following arguments:
-- `all`: builds the complete documentation, including the file list, JavaDoc and `svg` to `pdf` conversion. The resulting file will be located in `./docs/szoftlab4.pdf`.
-- `file-list`: for a LaTeX formatted list of Java source files 
-- `javadoc`: rebuilds the JavaDoc generated documentation
-- `svg`: to rebuild the UML diagrams (run this if you change a diagram without changing its name).
+The documentation generation is handled with a platform independent Python build script:
 
-It's also possible to declare custom documentation build commands: this can be done by adding entries to the `build.json` file located in the project root. The key in each entry will correspond to the command name, while the list contains the command components that should be run for that specific command (in order).
+**All platforms:** `build_docs.py <build command>`
+
+Where `<build command>` is one of the following:
+
+|Command    |Description                                                  |Output                        |
+|-----------|-------------------------------------------------------------|------------------------------|
+|`file-list`|generates a LaTeX formatted list of the Java sources         |`docs/includes/file_list.tex` |
+|`javadoc`  |builds the JavaDoc documentation                             |`docs/javadoc/javadoc.tex`    |
+|`pdf`      |generates the readable `pdf` documentation                   |`docs/szoftlab4.pdf`          |
+|`svg`      |converts `svg` to `pdf` if necessary                         |generated pdf files in `docs/`|
+|`all`      |runs all of the above to generate an up-to-date documentation|`docs/szoftlab4.pdf`          |
+
+If called without arguments, the `all` command will be used.
+
+It's also possible to declare custom documentation build commands: this can be done by adding entries to the `build_docs.json` file located in the project root. The key in each entry will correspond to the command name, while the list contains the command components that should be run for that specific command (in order).
 
 #### Dependencies for building the documentation:
 **Windows:**
@@ -49,30 +63,26 @@ It's also possible to declare custom documentation build commands: this can be d
   - [Inkscape](https://inkscape.org/en/download/windows/)
   - [ImageMagick](http://www.imagemagick.org/script/binary-releases.php)
 
-**Ubuntu and descendants:**
-- `python`
-- `texlive-latex-base`
-- `texlive-latex-recommended`
-- `texlive-fonts-recommended` 
-- `texlive-latex-extra`
-- an `svg` to `pdf` converter:
-  * `librsvg2-bin` 
-  * `inkscape` 
-  * `imagemagick`: will produce rasterized output (lower quality)
+**Linux:**
 
-**Arch Linux:**
-- `python` or `python2`
-- `texlive-bin`
-- `texlive-core`
-- `texlive-latexextra`
-- an `svg` to `pdf` converter:
-  - `librsvg`
-  - `inkscape`
-  - `imagemagick`: will produce rasterized output (lower quality)
+|Dependency         |Ubuntu packages            |Arch Linux packages       |
+|-------------------|---------------------------|--------------------------|
+|LaTeX                   |`texlive-latex-base`       |`texlive-bin`             |
+|                        |`texlive-latex-recommended`|`texlive-latex-core`      |
+|                        |`texlive-latex-extra`      |`texlive-latexextra`      |
+|                        |`texlive-font-recommended` |                          |
+|                        |                           |                          |
+|Python                  |`python` or `python3`      |`python` or `python2`     |
+|                        |                           |                          |
+|`svg` to `pdf` converter|`librsvg2-bin` or `inkscape` or `imagemagick`|`librsvg` or `inkscape` or `imagemagick`|
  
 ## Folder structure
-- `docs`: files required for the documentation generation
-- `gradle`: build system specific files that make it possible to build the project offline
-- `lib`: 3rd party libraries and helper scripts
-- `src/main`: the main Java sources
-- `src/test`: the JUnit unit test sources
+|Folder     |Contents                                                              |
+|-----------|----------------------------------------------------------------------|
+|`docs`     |files required for the documentation generation                       |
+|`gradle`   |build system specific files that make it possible to build the project|
+|`lib`      |3rd party libraries and helper scripts                                |
+|`lib/build`|command components used for documentation generation                  |
+|`src/main` |source code for the main project                                      |
+|`src/test` |the JUnit unit tests                                                  |
+
