@@ -65,25 +65,30 @@ public final class GameCreator {
 
                 if (i > 0) {
                     field.addNeighbour(Direction.UP, map.get((i - 1) * width + j));
-                } else if (i < height - 1) {
+                }
+
+                if (i < height - 1) {
                     field.addNeighbour(Direction.DOWN, map.get((i + 1) * width + j));
                 }
 
                 if (i == 0) {
                     field.addNeighbour(Direction.UP, new EmptyFieldCell(-1));
-                } else if (i == height - 1) {
+                }
+                if (i == height - 1) {
                     field.addNeighbour(Direction.DOWN, new EmptyFieldCell(-1));
                 }
 
                 if (j > 0) {
                     field.addNeighbour(Direction.LEFT, map.get(i * width + j - 1));
-                } else if (j < width - 1) {
+                }
+                if (j < width - 1) {
                     field.addNeighbour(Direction.RIGHT, map.get(i * width + j + 1));
                 }
 
                 if (j == 0) {
                     field.addNeighbour(Direction.LEFT, new EmptyFieldCell(-1));
-                } else if (j == width - 1) {
+                }
+                if (j == width - 1) {
                     field.addNeighbour(Direction.RIGHT, new EmptyFieldCell(-1));
                 }
             }
