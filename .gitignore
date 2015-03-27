@@ -43,6 +43,7 @@ docs/javadoc/*
 *.pdf
 *.synctex.gz
 *.toc
+file_list.tex
 
 # Visual Paradigm
 *.vpp*
