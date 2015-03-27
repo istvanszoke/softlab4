@@ -5,6 +5,8 @@ import java.util.*;
 
 import agents.Agent;
 import field.Field;
+import game.control.GameControllerServer;
+import game.control.GameControllerSocket;
 import inspector.Inspector;
 
 public class Game implements ControllerListener {
@@ -17,10 +19,13 @@ public class Game implements ControllerListener {
     private Player currentPlayer;
 
     private final Map map;
-    private final AgentController controller;
+    private final GameControllerServer controllerServer;
+    private final ArrayList<HumanController> humanControllers;
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
         Inspector.call("Game.Game(ArrayList<Player>, Map, int)");
+        controllerServer = new GameControllerServer(this);
+        humanControllers = new ArrayList<HumanController>();
         timer = new Timer(true);
         isPaused = true;
         this.roundTime = roundTime;
@@ -30,10 +35,10 @@ public class Game implements ControllerListener {
         currentPlayer = this.players.get(0);
 
         this.map = map;
-        controller = new HumanController(this);
 
         placeAgents();
         setupTimer();
+        setAgentControllers();
         Inspector.ret("Game.Game");
     }
 
@@ -63,7 +68,10 @@ public class Game implements ControllerListener {
     }
 
     public void registerController(Component component) {
-        component.addKeyListener(controller);
+        Iterator<HumanController> it = humanControllers.iterator();
+        while (it.hasNext()) {
+            component.addKeyListener(it.next());
+        }
     }
 
     public Agent getCurrentAgent() {
@@ -81,6 +89,8 @@ public class Game implements ControllerListener {
     public void onAgentChange() {
         Inspector.call("Game.getAgentChange()");
 
+        controllerServer.notifyControllerSocketClosed(getCurrentAgent());
+
         int currentIndex = players.indexOf(currentPlayer);
 
         if (getCurrentPlayer().isOutOfTime()) {
@@ -96,6 +106,8 @@ public class Game implements ControllerListener {
         }
 
         setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
+        controllerServer.notifyControllerSocketOpened(getCurrentAgent());
+
         Inspector.ret("Game.getAgentChange");
     }
 
@@ -124,6 +136,19 @@ public class Game implements ControllerListener {
             }
 
             fields[i].onEnter(agent);
+        }
+    }
+
+    private void setAgentControllers()
+    {
+        Iterator<Player> it = players.iterator();
+        while (it.hasNext()) {
+            Agent agent = it.next().getAgent();
+            GameControllerSocket socket;
+            socket = controllerServer.createSocketForAgent(agent);
+            HumanController newhomosapiensinterface = new HumanController(socket);
+            humanControllers.add(newhomosapiensinterface);
+
         }
     }
 
