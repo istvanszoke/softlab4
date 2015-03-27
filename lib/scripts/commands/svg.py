@@ -4,12 +4,11 @@ from __future__ import print_function
 
 import os
 import os.path
-import shlex
 import sys
 from distutils.spawn import find_executable
-from subprocess import Popen, PIPE
 
-from lib import debug, util
+from lib.scripts import debug, dir, process, util
+
 
 converters = [("rsvg-convert",
                "rsvg-convert -f pdf -o '{0}.pdf' '{0}.svg'"),
@@ -39,21 +38,17 @@ def convert(converter, file, base_path):
     except os.error:
         pass
 
-    process = Popen(shlex.split(converter.format(without_extension)), cwd=base_path, stdout=PIPE)
-    (output, error) = process.communicate()
-    exit_code = process.wait()
-    if exit_code != 0:
-        output = output.decode("windows-1252")
-        print(output)
-        debug.error("SVG to PDF conversion failed (external converter returned with an error)")
+    result = process.run(converter.format(without_extension), cwd=base_path)
+    process.terminate_on_failure(result,
+                                 error_message="SVG to PDF conversion failed (converter returned with an error)")
 
 
 def convert_all():
     converter = choose_converter()
-    files = util.file_list(util.DOCS_DIR, "*.svg")
+    files = util.file_list(dir.DOCS, ".svg")
 
     for f in files:
-        convert(converter, f, util.DOCS_DIR)
+        convert(converter, f, dir.DOCS)
 
 
 def build():

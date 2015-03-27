@@ -65,8 +65,8 @@ It's also possible to declare custom documentation build commands: this can be d
 
 **Linux:**
 
-|Dependency         |Ubuntu packages            |Arch Linux packages       |
-|-------------------|---------------------------|--------------------------|
+|Dependency              |Ubuntu packages            |Arch Linux packages       |
+|------------------------|---------------------------|--------------------------|
 |LaTeX                   |`texlive-latex-base`       |`texlive-bin`             |
 |                        |`texlive-latex-recommended`|`texlive-latex-core`      |
 |                        |`texlive-latex-extra`      |`texlive-latexextra`      |
@@ -77,12 +77,12 @@ It's also possible to declare custom documentation build commands: this can be d
 |`svg` to `pdf` converter|`librsvg2-bin` or `inkscape` or `imagemagick`|`librsvg` or `inkscape` or `imagemagick`|
  
 ## Folder structure
-|Folder     |Contents                                                              |
-|-----------|----------------------------------------------------------------------|
-|`docs`     |files required for the documentation generation                       |
-|`gradle`   |build system specific files that make it possible to build the project|
-|`lib`      |3rd party libraries and helper scripts                                |
-|`lib/build`|command components used for documentation generation                  |
-|`src/main` |source code for the main project                                      |
-|`src/test` |the JUnit unit tests                                                  |
+|Folder                |Contents                                                              |
+|----------------------|----------------------------------------------------------------------|
+|`docs`                |files required for the documentation generation                       |
+|`gradle`              |build system specific files that make it possible to build the project|
+|`lib`                 |3rd party libraries and helper scripts                                |
+|`lib/scripts/commands`|command components used for documentation generation                  |
+|`src/main`            |source code for the main project                                      |
+|`src/test`            |the JUnit unit tests                                                  |
 

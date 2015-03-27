@@ -6,11 +6,11 @@ import json
 import os
 import sys
 
-from lib import util, debug
+from lib.scripts import debug, dir, util
 
 
 def import_command(name):
-    name = "lib.build." + name
+    name = "lib.scripts.commands." + name
     mod = __import__(name)
     components = name.split('.')
     for comp in components[1:]:
@@ -19,7 +19,7 @@ def import_command(name):
 
 
 def parse_commands():
-    with open(os.path.join(util.TOP_DIR, "build_docs.json"), "rt") as commands_file:
+    with open(os.path.join(dir.TOP, "build_docs.json"), "rt") as commands_file:
         dependencies = json.load(commands_file)
 
     command_dict = dict()

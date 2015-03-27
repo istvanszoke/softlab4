@@ -2,7 +2,10 @@
 
 from __future__ import print_function
 
-from lib.util import *
+import os
+
+from . import format
+from lib.scripts.format import *
 
 
 def get_terminal_size():
@@ -22,21 +25,21 @@ def get_terminal_size():
 
 
 def info(message):
-    print(ascii_format(message + " [INFO]", Colors.BOLD))
+    print(format.ascii_format(message + " [INFO]", Colors.BOLD))
 
 
 def success(message):
-    print(ascii_format(message + " [SUCCESS]", Colors.SUCCESS))
+    print(format.ascii_format(message + " [SUCCESS]", Colors.SUCCESS))
 
 
 def warning(message):
-    print(ascii_format(message + " [WARNING]", Colors.WARNING))
+    print(format.ascii_format(message + " [WARNING]", Colors.WARNING))
 
 
 def error(message):
-    print(ascii_format(message + " [ERROR]", Colors.ERROR))
+    print(format.ascii_format(message + " [ERROR]", Colors.ERROR))
 
 
 def separator(message=""):
     (rows, columns) = get_terminal_size()
-    print(ascii_format(message.center(columns, '='), Colors.BOLD))
+    print(format.ascii_format(message.center(columns, '='), Colors.BOLD))

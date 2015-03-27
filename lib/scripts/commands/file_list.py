@@ -5,11 +5,8 @@ from __future__ import print_function
 
 import os
 import re
-import shlex
-import sys
-from subprocess import Popen, PIPE
 
-from lib import util, debug
+from lib.scripts import debug, dir, process, util
 
 
 class Entry(object):
@@ -30,8 +27,7 @@ def generate_description(class_name, path):
     if jdoc is not None:
         return jdoc.group()[3:]
 
-    vowels = "aeiou"
-    if class_name[0].lower() in vowels:
+    if class_name[0].lower() in "aeiou":
         pre = "Az"
     else:
         pre = "A"
@@ -44,34 +40,29 @@ def generate_description(class_name, path):
 
 
 def get_date(path):
-    process = Popen(shlex.split("git log --diff-filter=A --follow --format=%ai -1 -- " + path), cwd=util.DOCS_DIR,
-                    stdout=PIPE)
-    (output, error) = process.communicate()
-    exit_code = process.wait()
-    if exit_code != 0:
-        debug.error("File list generation failed (failed to get creation date from git)")
-        sys.exit(exit_code)
-
-    output = output.decode("utf-8")
+    result = process.run("git log --diff-filter=A --follow --format=%ai -1 -- " + path,
+                         cwd=dir.DOCS)
+    process.terminate_on_failure(result,
+                                 error_message="File list generation failed (failed to get creation date from git)")
 
     timezone = re.compile(r" \+[0-9]+$")
-    output = timezone.sub("", output)
     seconds = re.compile(r":[0-9][0-9]\n", re.M)
-    output = seconds.sub("~", output)
 
+    output = timezone.sub("", result.output)
+    output = seconds.sub("~", output)
     output = output.replace(" ", "~")
     output = output.replace("-", ".")
     return output
 
 
-def generate_entries(path=os.path.join(util.SRC_DIR, "main"), extension="java"):
-    files = util.file_list(path, "*" + os.extsep + extension)
+def generate_entries(path=dir.SRC_MAIN, extension="java"):
+    files = util.file_list(path, os.extsep + extension)
 
     entries = []
     for f in files:
         full_path = str(f)
         class_name = os.path.basename(full_path).split(os.extsep)[0]
-        relative_path = os.path.relpath(full_path, util.TOP_DIR)
+        relative_path = os.path.relpath(full_path, dir.TOP)
         size = os.path.getsize(full_path)
         date = get_date(full_path)
         description = generate_description(class_name, full_path)
@@ -82,7 +73,7 @@ def generate_entries(path=os.path.join(util.SRC_DIR, "main"), extension="java"):
 
 
 def print_latex(files):
-    with open(os.path.join(util.DOCS_DIR, "includes", "file_list.tex"), "w") as file_list:
+    with open(os.path.join(dir.DOCS, "includes", "file_list.tex"), "w") as file_list:
         print(r"\begin{tabularx}{\linewidth}{| l | l | l | X |}", file=file_list)
         print(r"\hline", file=file_list)
         print(r"\textbf{Fájl neve} & \textbf{Méret} & \textbf{Keletkezés ideje} & \textbf{Tartalom} \tabularnewline",
