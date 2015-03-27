@@ -6,9 +6,7 @@ import java.util.*;
 import agents.Agent;
 import field.Field;
 
-public class Game implements ControllerListener {
-    private final Timer timer;
-    private boolean isPaused;
+public class Game implements ControllerListener, HeartbeatListener {
     private final int roundTime;
 
     private final ArrayList<Player> players;
@@ -19,8 +17,6 @@ public class Game implements ControllerListener {
     private final AgentController controller;
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
-        timer = new Timer(true);
-        isPaused = true;
         this.roundTime = roundTime;
 
         this.players = players;
@@ -31,15 +27,15 @@ public class Game implements ControllerListener {
         controller = new HumanController(this);
 
         placeAgents();
-        setupTimer();
+        Heartbeat.subscribe(this);
     }
 
-    public void start() {
-        isPaused = false;
+    public void resume() {
+        Heartbeat.resume();
     }
 
     public void pause() {
-        isPaused = true;
+        Heartbeat.resume();
     }
 
     public void reset() {
@@ -75,7 +71,7 @@ public class Game implements ControllerListener {
     public void onAgentChange() {
         int currentIndex = players.indexOf(currentPlayer);
 
-        if (getCurrentPlayer().isOutOfTime()) {
+        if (getCurrentPlayer().isOutOfTime() || getCurrentAgent().isDead()) {
             players.remove(getCurrentPlayer());
             disqualified.add(getCurrentPlayer());
             currentIndex -= 1;
@@ -87,6 +83,20 @@ public class Game implements ControllerListener {
         }
 
         setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
+    }
+
+    @Override
+    public void onTick(long deltaTime) {
+        if (players.isEmpty()) {
+            return;
+        }
+
+        currentPlayer.setTimeRemaining(currentPlayer.getTimeRemaining() - (int) deltaTime);
+
+        if (currentPlayer.isOutOfTime()) {
+            System.out.println("Time out: " + currentPlayer);
+            onAgentChange();
+        }
     }
 
     private synchronized Player getCurrentPlayer() {
@@ -111,23 +121,5 @@ public class Game implements ControllerListener {
 
             fields[i].onEnter(agent);
         }
-    }
-
-    private void setupTimer() {
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (isPaused) {
-                    return;
-                }
-
-                currentPlayer.setTimeRemaining(currentPlayer.getTimeRemaining() - 100);
-
-                if (currentPlayer.isOutOfTime()) {
-                    System.out.println("Time out: " + currentPlayer);
-                    onAgentChange();
-                }
-            }
-        }, 0, 100);
     }
 }
