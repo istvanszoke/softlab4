@@ -26,14 +26,14 @@ The build is done with the platform specific Gradle Wrapper script:
 
 Where `<build command>` is one of the following:
 
-|Command  |Description                              |Output                                        |
-|---------|-----------------------------------------|----------------------------------------------|
-|`build`  |builds the whole project, including tests|`jar` files in `build/libs`                   |
-|`test`   |runs the unit tests                      |none, if project already built                |
-|`run`    |runs the main executable                 |none, if project already built                |
-|`install`|generates a cross platform distribution  |uncompressed under `build/install/softlab4    |
-|`distZip`|generates a cross platform distribution  |zipped under `build/distributions/softlab4.zip|
-|`distTar`|generates a cross platform distribution  |tar'd under `build/distributions/softlab4.tar |
+|Command  |Description                              |Output                                         |
+|---------|-----------------------------------------|-----------------------------------------------|
+|`build`  |builds the whole project, including tests|`jar` files in `build/libs`                    |
+|`test`   |runs the unit tests                      |none, if project already built                 |
+|`run`    |runs the main executable                 |none, if project already built                 |
+|`install`|generates a cross platform distribution  |uncompressed under `build/install/softlab4`    |
+|`distZip`|generates a cross platform distribution  |zipped under `build/distributions/softlab4.zip`|
+|`distTar`|generates a cross platform distribution  |tar'd under `build/distributions/softlab4.tar` |
 
 ### Building the documentation
 The documentation generation is handled with a platform independent Python build script:
