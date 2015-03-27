@@ -8,71 +8,70 @@
 This is the main page of the Software Laboratory IV. 2014/15 2nd semester project. The original task description can be found on the following website (in Hungarian): [Szoftver labor 4](https://www.iit.bme.hu/~szoftlab4/). It is aimed at systems that are supported by the Java version 6 or higher. It is licensed under the GNU Lesser Lesser Public License, version 3 (LGPLv3) and belongs to the *finalize* team.
 
 ## System Requirements
-* **Operating System**
-  * Any operating system that are supported by the Java Runtime Environment
-  * It has been tested on: Linux, Microsoft Windows and Mac OS X
-* **Hardware**
-  * System requirements for the different Java versions can be found here: [Java Requirements](http://java.com/en/download/help/sysreq.xml)
+- **Operating System**
+  - Any operating system that are supported by the Java Runtime Environment
+  - It has been tested on: Linux, Microsoft Windows and Mac OS X
+- **Hardware**
+  - System requirements for the different Java versions can be found here: [Java Requirements](http://java.com/en/download/help/sysreq.xml)
 
 ## Building the project
-The project uses the [Gradle](https://gradle.org/) build system to build the main software and LaTeX to build the documentation. A binary distribution of Gradle is included in the project, so it it possible to build the project without an active internet connection. It is required for `javac` to be located in the `PATH` enviromental variable or the `JAVA_HOME` enviromental variable to be set.
+The project uses the [Gradle](https://gradle.org/) build system to build the main software and LaTeX to build the documentation. A binary distribution of Gradle is downloaded on the first build, so a working internet connection is required. It is required for `javac` to be located in the `PATH` enviromental variable or the `JAVA_HOME` enviromental variable to be set.
 
-**Common build commands:**
-* `build`: builds the project, the generated files are located in `build/libs/*.jar`
-* `test`: builds the project and runs the available unit tests
-* `run`: builds the project and runs the main application
-* `distZip`: creates a zip archive with platform specific run scripts in `build/distributions/*.zip`
-* `distTar`: creates a tar archive with the same specifics as `distZip`
+**Common Gradle build commands:**
+- `build`: builds the project, the generated files are located in `build/libs`
+- `test`: builds the project and runs the available unit tests
+- `run`: builds the project and runs the main application
+- `install`: places a cross platform distribution of the project under `build/install/softlab4`
+- `distZip`: creates a zip archive with platform specific run scripts in `build/distributions/softlab4.zip`
+- `distTar`: creates a tar archive with the same specifics as `distZip`
 
-### Building on Windows
-`./gradlew.bat [common build command]`: in the main project directory to use the common build commands described above.
+### Building the Java code
+On Windows: `./gradlew.bat [common build command]`
 
-**For the documentation:**
-Use the `build.sh` script located in the root folder with one of the following arguments:
-* `docs`: to build the documentation. The resulting file will be located in `./docs/szoftlab4.pdf`.
-* `svg`: to rebuild the UML diagrams (run this if you change a diagram without changing its name).
-* `latex-file-list`: for a LaTeX formatted list of Java source files 
+On Linux and OS X: `./gradlew [common build command]`
 
+### Building the documentation
+Use the `build_docs.py` script located in the root folder with one of the following arguments:
+- `all`: builds the complete documentation, including the file list, JavaDoc and `svg` to `pdf` conversion. The resulting file will be located in `./docs/szoftlab4.pdf`.
+- `file-list`: for a LaTeX formatted list of Java source files 
+- `javadoc`: rebuilds the JavaDoc generated documentation
+- `svg`: to rebuild the UML diagrams (run this if you change a diagram without changing its name).
 
-####Required software to build the documentation:
-* a working 'LaTeX' distribution with `pdflatex` in `PATH`
-* a POSIX compliant shell that's capable of running `.sh` scripts 
-*  an `svg` to `pdf` converter in `PATH`:
-  * [rsvg-convert](http://sourceforge.net/projects/tumagcc/files/rsvg-convert.exe/download)
-  * [Inkscape](https://inkscape.org/en/download/windows/)
-  * [ImageMagick](http://www.imagemagick.org/script/binary-releases.php)
+It's also possible to declare custom documentation build commands: this can be done by adding entries to the `build.json` file located in the project root. The key in each entry will correspond to the command name, while the list contains the command components that should be run for that specific command (in order).
 
-### Building on Linux
-`./gradlew [common build command]`: in the main project directory to use the common build commands described above.
+#### Dependencies for building the documentation:
+**Windows:**
+- a working 'LaTeX' distribution with `pdflatex` in `PATH`
+- a Python 2 or 3 installation with `python.exe` in `PATH`
+-  an `svg` to `pdf` converter in `PATH`:
+  - [rsvg-convert](http://sourceforge.net/projects/tumagcc/files/rsvg-convert.exe/download)
+  - [Inkscape](https://inkscape.org/en/download/windows/)
+  - [ImageMagick](http://www.imagemagick.org/script/binary-releases.php)
 
-**For the documentation:**
-Use the `build.sh` script located in the root folder with one of the following arguments:
-* `docs`: to build the documentation. The resulting file will be located in `./docs/szoftlab4.pdf`.
-* `svg`: to rebuild the UML diagrams (run this if you change a diagram without changing its name).
-* `latex-file-list`: for a LaTeX formatted list of Java source files 
-
-####Required packages to build the documentation:
 **Ubuntu and descendants:**
-* `texlive-latex-base`
-* `texlive-latex-recommended`
-* `texlive-fonts-recommended` 
-* `texlive-latex-extra`
-* an `svg` to `pdf` converter:
+- `python`
+- `texlive-latex-base`
+- `texlive-latex-recommended`
+- `texlive-fonts-recommended` 
+- `texlive-latex-extra`
+- an `svg` to `pdf` converter:
   * `librsvg2-bin` 
   * `inkscape` 
   * `imagemagick`: will produce rasterized output (lower quality)
 
 **Arch Linux:**
-* `texlive-bin`
-* `texlive-core`
-* `texlive-latexextra`
-* an `svg` to `pdf` converter:
-  * `librsvg`
-  * `inkscape`
-  * `imagemagick`: will produce rasterized output (lower quality)
+- `python` or `python2`
+- `texlive-bin`
+- `texlive-core`
+- `texlive-latexextra`
+- an `svg` to `pdf` converter:
+  - `librsvg`
+  - `inkscape`
+  - `imagemagick`: will produce rasterized output (lower quality)
  
 ## Folder structure
-* `docs`: files required for the documentation generation
-* `gradle`: build system specific files that make it possible to build the project offline
-* `src/main`: the main Java sources
-* `src/test`: the JUnit unit test sources
+- `docs`: files required for the documentation generation
+- `gradle`: build system specific files that make it possible to build the project offline
+- `lib`: 3rd party libraries and helper scripts
+- `src/main`: the main Java sources
+- `src/test`: the JUnit unit test sources
