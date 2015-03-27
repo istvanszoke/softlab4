@@ -6,8 +6,9 @@ import java.util.HashMap;
 import agents.Agent;
 import agents.Speed;
 import buff.Buff;
+import buff.BuffListener;
 
-public abstract class Field implements FieldElement {
+public abstract class Field implements FieldElement, BuffListener {
     protected Agent agent;
     protected final int distanceFromGoal;
     protected final ArrayList<Buff> buffs;
@@ -24,6 +25,14 @@ public abstract class Field implements FieldElement {
     }
 
     public void onEnter(Agent agent) {
+        if (agent != null && agent == this.agent) {
+            agent = this.agent.collide(agent);
+        }
+
+        if (agent == null) {
+            return;
+        }
+
         for (Buff b : buffs) {
             agent.accept(b);
         }
@@ -48,6 +57,7 @@ public abstract class Field implements FieldElement {
     }
 
     public void placeBuff(Buff buff) {
+        buff.subscribe(this);
         buffs.add(buff);
     }
 
@@ -57,6 +67,12 @@ public abstract class Field implements FieldElement {
 
     public boolean isEmpty() {
         return agent == null;
+    }
+
+    @Override
+    public void onRemove(Buff buff) {
+        buff.unsubscribe(this);
+        buffs.remove(buff);
     }
 
     protected Field searchGoal(Speed speed) {

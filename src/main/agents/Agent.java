@@ -46,4 +46,12 @@ public abstract class Agent implements AgentElement {
     public void incrementLap() {
         this.currentLap++;
     }
+
+    // TODO: Proper collision implementation. Might have to change Speed logic to use vectors
+    public Agent collide(Agent agent) {
+        if (getSpeed().getMagnitude() < agent.getSpeed().getMagnitude()) {
+            return agent;
+        }
+        return this;
+    }
 }

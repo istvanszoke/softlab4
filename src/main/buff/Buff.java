@@ -1,5 +1,7 @@
 package buff;
 
+import java.util.ArrayList;
+
 import agents.*;
 import commands.*;
 import commands.executes.*;
@@ -9,6 +11,20 @@ import feedback.NoFeedbackException;
 import feedback.Result;
 
 public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor {
+    protected ArrayList<BuffListener> listeners;
+
+    public Buff() {
+        listeners = new ArrayList<BuffListener>();
+    }
+
+    public void subscribe(BuffListener listener) {
+        listeners.add(listener);
+    }
+
+    public void unsubscribe(BuffListener listener) {
+        listeners.remove(listener);
+    }
+
     @Override
     public void visit(ChangeDirectionQuery command) { }
 

@@ -35,7 +35,7 @@ public class Game implements ControllerListener, HeartbeatListener {
     }
 
     public void pause() {
-        Heartbeat.resume();
+        Heartbeat.pause();
     }
 
     public void reset() {
@@ -88,6 +88,7 @@ public class Game implements ControllerListener, HeartbeatListener {
     @Override
     public void onTick(long deltaTime) {
         if (players.isEmpty()) {
+            Heartbeat.unsubscribe(this);
             return;
         }
 
