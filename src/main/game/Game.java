@@ -30,7 +30,7 @@ public class Game implements ControllerListener, HeartbeatListener {
         Heartbeat.subscribe(this);
     }
 
-    public void resume() {
+    public void start() {
         Heartbeat.resume();
     }
 
