@@ -1,3 +1,3 @@
 package feedback;
 
-public class NoFeedbackException extends Exception { }
+public class NoFeedbackException extends Exception {}

@@ -1,3 +1,3 @@
 package commands;
 
-public class NoFieldCommandException extends Exception { }
+public class NoFieldCommandException extends Exception {}

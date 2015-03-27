@@ -3,7 +3,7 @@ package game;
 import java.awt.event.KeyEvent;
 
 import commands.AgentCommand;
-import commands.executes.*;
+import commands.executes.KillExecute;
 import commands.queries.*;
 import field.Direction;
 

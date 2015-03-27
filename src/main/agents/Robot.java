@@ -2,7 +2,10 @@ package agents;
 
 import java.util.ArrayList;
 
-import buff.*;
+import buff.Buff;
+import buff.Inventory;
+import buff.Oil;
+import buff.Sticky;
 import commands.AgentCommand;
 import commands.NoFieldCommandException;
 

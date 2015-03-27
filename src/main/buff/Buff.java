@@ -2,11 +2,15 @@ package buff;
 
 import java.util.ArrayList;
 
-import agents.*;
-import commands.*;
+import agents.AgentVisitor;
+import agents.Robot;
+import commands.AgentCommandVisitor;
+import commands.FieldCommandVisitor;
 import commands.executes.*;
 import commands.queries.*;
-import commands.transmits.*;
+import commands.transmits.ChangeDirectionTransmit;
+import commands.transmits.ChangeSpeedTransmit;
+import commands.transmits.JumpTransmit;
 import feedback.NoFeedbackException;
 import feedback.Result;
 

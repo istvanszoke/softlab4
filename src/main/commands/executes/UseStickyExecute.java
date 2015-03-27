@@ -1,9 +1,14 @@
 package commands.executes;
 
 import buff.Sticky;
-import commands.*;
+import commands.AgentCommand;
+import commands.FieldCommand;
+import commands.FieldCommandVisitor;
+import commands.NoAgentCommandException;
 import commands.queries.UseStickyQuery;
-import field.*;
+import field.EmptyFieldCell;
+import field.FieldCell;
+import field.FinishLineFieldCell;
 
 public class UseStickyExecute extends FieldCommand {
     public UseStickyExecute(UseStickyQuery parent) {

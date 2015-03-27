@@ -1,9 +1,14 @@
 package commands.transmits;
 
-import commands.*;
+import commands.AgentCommand;
+import commands.FieldCommand;
+import commands.FieldCommandVisitor;
+import commands.NoAgentCommandException;
 import commands.executes.ChangeSpeedExecute;
 import commands.queries.ChangeSpeedQuery;
-import field.*;
+import field.EmptyFieldCell;
+import field.FieldCell;
+import field.FinishLineFieldCell;
 
 public class ChangeSpeedTransmit extends FieldCommand {
     private int magnitudeDelta;

@@ -1,6 +1,9 @@
 package commands;
 
-import commands.executes.*;
+import commands.executes.ChangeDirectionExecute;
+import commands.executes.ChangeSpeedExecute;
+import commands.executes.JumpExecute;
+import commands.executes.KillExecute;
 import commands.queries.*;
 
 public interface AgentCommandVisitor {

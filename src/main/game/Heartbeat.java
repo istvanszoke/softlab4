@@ -1,15 +1,15 @@
 package game;
 
 import java.util.ArrayList;
-import java.util.TimerTask;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class Heartbeat {
     public static final int RESOLUTION = 100;
 
     private static ArrayList<HeartbeatListener> listeners;
     private static long elapsedTime;
-    private static  boolean isPaused;
+    private static boolean isPaused;
 
     static {
         listeners = new ArrayList<HeartbeatListener>();

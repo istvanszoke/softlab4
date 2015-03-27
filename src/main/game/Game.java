@@ -1,7 +1,8 @@
 package game;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import agents.Agent;
 import field.Field;
@@ -11,10 +12,9 @@ public class Game implements ControllerListener, HeartbeatListener {
 
     private final ArrayList<Player> players;
     private final ArrayList<Player> disqualified;
-    private Player currentPlayer;
-
     private final Map map;
     private final AgentController controller;
+    private Player currentPlayer;
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
         this.roundTime = roundTime;

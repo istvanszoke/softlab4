@@ -1,7 +1,10 @@
 package commands.executes;
 
-import agents.*;
-import commands.*;
+import agents.Robot;
+import commands.AgentCommand;
+import commands.AgentCommandVisitor;
+import commands.FieldCommand;
+import commands.NoFieldCommandException;
 
 public class KillExecute extends AgentCommand {
     @Override

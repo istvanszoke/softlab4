@@ -1,7 +1,11 @@
 package commands.queries;
 
-import agents.*;
-import commands.*;
+import agents.Robot;
+import agents.Speed;
+import commands.AgentCommand;
+import commands.AgentCommandVisitor;
+import commands.FieldCommand;
+import commands.NoFieldCommandException;
 import commands.transmits.JumpTransmit;
 
 public class JumpQuery extends AgentCommand {
