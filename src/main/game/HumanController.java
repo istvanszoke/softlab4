@@ -2,6 +2,7 @@ package game;
 
 import java.awt.event.KeyEvent;
 
+import agents.Agent;
 import commands.AgentCommand;
 import commands.executes.KillExecute;
 import commands.queries.*;
@@ -60,7 +61,12 @@ public class HumanController extends AgentController {
     }
 
     private void useCommand(AgentCommand command) {
-        game.getCurrentAgent().accept(command);
+        Agent agent = game.getCurrentAgent();
+        if (agent == null) {
+            return;
+        }
+
+        agent.accept(command);
         System.out.println(command.getResult());
     }
 }

@@ -5,7 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Heartbeat {
-    public static final int RESOLUTION = 100;
+    public static final int RESOLUTION = 500  ;
 
     private static ArrayList<HeartbeatListener> listeners;
     private static long elapsedTime;

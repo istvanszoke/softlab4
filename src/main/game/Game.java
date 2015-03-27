@@ -60,7 +60,13 @@ public class Game implements ControllerListener, HeartbeatListener {
     }
 
     public Agent getCurrentAgent() {
-        return getCurrentPlayer().getAgent();
+        Player player = getCurrentPlayer();
+
+        if (player == null) {
+            return null;
+        }
+
+        return player.getAgent();
     }
 
     public Map getMap() {
@@ -69,16 +75,24 @@ public class Game implements ControllerListener, HeartbeatListener {
 
     @Override
     public void onAgentChange() {
-        int currentIndex = players.indexOf(currentPlayer);
+        Player player = getCurrentPlayer();
 
-        if (getCurrentPlayer().isOutOfTime() || getCurrentAgent().isDead()) {
-            players.remove(getCurrentPlayer());
-            disqualified.add(getCurrentPlayer());
+        if (player == null) {
+            return;
+        }
+
+        int currentIndex = players.indexOf(player);
+
+        if (player.isOutOfTime() || player.getAgent().isDead()) {
+            players.remove(player);
+            disqualified.add(player);
             currentIndex -= 1;
         }
 
         if (players.isEmpty()) {
             pause();
+            setCurrentPlayer(null);
+            System.out.println("Game finished");
             return;
         }
 
@@ -92,10 +106,12 @@ public class Game implements ControllerListener, HeartbeatListener {
             return;
         }
 
-        currentPlayer.setTimeRemaining(currentPlayer.getTimeRemaining() - (int) deltaTime);
+        Player player = getCurrentPlayer();
 
-        if (currentPlayer.isOutOfTime()) {
-            System.out.println("Time out: " + currentPlayer);
+        player.setTimeRemaining(player.getTimeRemaining() - (int) deltaTime);
+
+        if (player.isOutOfTime()) {
+            System.out.println("Time out: " + player);
             onAgentChange();
         }
     }
