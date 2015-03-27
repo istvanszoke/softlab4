@@ -7,7 +7,6 @@ import game.Game;
 import game.GameCreator;
 import game.Map;
 import game.Player;
-import inspector.Inspector;
 
 import java.util.Iterator;
 
@@ -161,13 +160,11 @@ public class StaticTests {
     public static boolean testRobotOilField(Game host)
     {
         Iterator<Field> it = host.getMap().iterator();
-        Inspector.setEnabled(false);
         while (it.hasNext())
         {
             Field current = it.next();
             current.placeBuff(new buff.Oil());
         }
-        Inspector.setEnabled(true);
         ChangeSpeedQuery changeSpeedQuery = new ChangeSpeedQuery(1);
         Agent agent = host.getCurrentAgent();
         agent.accept(changeSpeedQuery);
@@ -177,13 +174,11 @@ public class StaticTests {
     public static boolean testRobotStickyField(Game host)
     {
         Iterator<Field> it = host.getMap().iterator();
-        Inspector.setEnabled(false);
         while (it.hasNext())
         {
             Field current = it.next();
             current.placeBuff(new buff.Sticky());
         }
-        Inspector.setEnabled(true);
         JumpQuery jumpQuery = new JumpQuery();
         Agent agent = host.getCurrentAgent();
         agent.accept(jumpQuery);
@@ -195,7 +190,6 @@ public class StaticTests {
         Agent beforeAgent = host.getCurrentAgent();
         JumpQuery jumpQuery = new JumpQuery();
         beforeAgent.accept(jumpQuery);
-        host.onAgentChange();
         return true;
     }
 
