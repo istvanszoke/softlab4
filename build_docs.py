@@ -19,7 +19,7 @@ def import_command(name):
 
 
 def parse_commands():
-    with open(os.path.join(util.TOP_DIR, "build.json"), "rt") as commands_file:
+    with open(os.path.join(util.TOP_DIR, "build_docs.json"), "rt") as commands_file:
         dependencies = json.load(commands_file)
 
     command_dict = dict()
