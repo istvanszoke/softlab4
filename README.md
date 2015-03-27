@@ -17,6 +17,7 @@ This is the main page of the Software Laboratory IV. 2014/15 2nd semester projec
 ## Building the project
 The project uses the [Gradle](https://gradle.org/) build system to build the main software and LaTeX to build the documentation. A binary distribution of Gradle is downloaded on the first build, so a working internet connection is required. It is required for `javac` to be located in the `PATH` enviromental variable or the `JAVA_HOME` enviromental variable to be set.
 
+### Building the Java code
 **Common Gradle build commands:**
 - `build`: builds the project, the generated files are located in `build/libs`
 - `test`: builds the project and runs the available unit tests
@@ -25,10 +26,10 @@ The project uses the [Gradle](https://gradle.org/) build system to build the mai
 - `distZip`: creates a zip archive with platform specific run scripts in `build/distributions/softlab4.zip`
 - `distTar`: creates a tar archive with the same specifics as `distZip`
 
-### Building the Java code
-On Windows: `./gradlew.bat [common build command]`
 
-On Linux and OS X: `./gradlew [common build command]`
+**On Windows:** `./gradlew.bat [common build command]`
+
+**On Linux and OS X:** `./gradlew [common build command]`
 
 ### Building the documentation
 Use the `build_docs.py` script located in the root folder with one of the following arguments:
