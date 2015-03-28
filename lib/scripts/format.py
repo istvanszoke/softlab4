@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+import os
+import sys
+
 
 class Colors(object):
     HEADER = "\033[95m"
@@ -12,7 +15,20 @@ class Colors(object):
     UNDERLINE = "\033[4m"
 
 
+def supports_color():
+    plat = sys.platform
+    supported_platform = plat != 'Pocket PC' and (plat != 'win32' or
+                                                  'ANSICON' in os.environ)
+    is_a_tty = hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()
+    if not supported_platform or not is_a_tty:
+        return False
+    return True
+
+
 def ascii_format(message, *fmt):
+    if not supports_color():
+        return message
+    
     ret = ""
     for f in fmt:
         ret += f
@@ -26,3 +42,4 @@ def ascii_format_regex(regex, text, *fmt):
     for match in regex.findall(text):
         ret = ret.replace(match, ascii_format(match, *fmt))
     return ret
+

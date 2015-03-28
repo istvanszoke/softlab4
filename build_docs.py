@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 
+import importlib
 import json
 import os
 import sys
@@ -9,13 +10,13 @@ import sys
 from lib.scripts import debug, dir, util
 
 
-def import_command(name):
+def use_command(name):
     name = "lib.scripts.commands." + name
-    mod = __import__(name)
-    components = name.split('.')
-    for comp in components[1:]:
-        mod = getattr(mod, comp)
-    return mod
+    try:
+        build_command = getattr(importlib.import_module(name), "build")
+    except ImportError:
+        debug.error("No command with the name {0} found".format(name))
+    build_command()
 
 
 def parse_commands():
@@ -40,8 +41,6 @@ if __name__ == "__main__":
 
     commands = parse_commands()
     for command in commands[command_name]:
-        try:
-            build_command = import_command(command)
-            build_command.build()
-        except ImportError:
-            debug.error(command + " is not a valid command, please check you commands.json file")
+        use_command(command)
+
+
