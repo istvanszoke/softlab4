@@ -65,7 +65,7 @@ public class Game implements HeartbeatListener {
         placeAgents();
 
         pausedPlayer = null;
-        setCurrentPlayer(players.get(0));
+        setCurrentPlayer(null);
     }
 
     public ArrayList<Player> getPlayers() {
