@@ -7,10 +7,10 @@ import commands.AgentCommand;
 import commands.executes.*;
 import commands.queries.*;
 import field.Direction;
-import game.control.GameControllerClient;
+import game.control.GameControllerSocketListener;
 import game.control.GameControllerSocket;
 
-public class HumanController extends KeyAdapter implements GameControllerClient {
+public class HumanController extends KeyAdapter implements GameControllerSocketListener {
     private GameControllerSocket socket;
     private boolean enabled;
 
@@ -79,12 +79,12 @@ public class HumanController extends KeyAdapter implements GameControllerClient 
     }
 
     @Override
-    public void socketOpened() {
+    public void socketOpened(GameControllerSocket sender) {
         enabled = true;
     }
 
     @Override
-    public void socketClosed() {
+    public void socketClosed(GameControllerSocket sender) {
         enabled = false;
     }
 }

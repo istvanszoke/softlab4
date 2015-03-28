@@ -1,6 +1,5 @@
 package game.control;
 
-import agents.Agent;
 import commands.AgentCommand;
 
 /**
@@ -11,6 +10,6 @@ public interface GameControllerSocket
     boolean isOpen();
     void sendEndTurn();
     void sendAgentCommand(AgentCommand command);
-    void enableStateNotification(GameControllerClient client);
+    void enableStateNotification(GameControllerSocketListener client);
     void disableStateNotification();
 }

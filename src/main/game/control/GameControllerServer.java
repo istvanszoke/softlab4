@@ -2,12 +2,9 @@ package game.control;
 
 import agents.Agent;
 import commands.AgentCommand;
-import game.AgentController;
 import game.Game;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by nyari on 2015.03.27..
@@ -16,7 +13,7 @@ public class GameControllerServer {
 
     private class ControlSocket implements GameControllerSocket {
 
-        GameControllerClient clientToNofify = null;
+        GameControllerSocketListener clientToNofify = null;
         GameControllerServer server;
 
         private ControlSocket(GameControllerServer server)
@@ -43,7 +40,7 @@ public class GameControllerServer {
         }
 
         @Override
-        public void enableStateNotification(GameControllerClient client) {
+        public void enableStateNotification(GameControllerSocketListener client) {
             clientToNofify = client;
         }
 
