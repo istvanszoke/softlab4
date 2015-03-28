@@ -13,25 +13,21 @@ import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Game {
-    private final Timer timer;
-    private boolean isPaused;
+
+public class Game implements ControllerListener, HeartbeatListener {
     private final int roundTime;
 
     private final ArrayList<Player> players;
     private final ArrayList<Player> disqualified;
-    private Player currentPlayer;
-
     private final Map map;
+
     private final GameControllerServer controllerServer;
     private final HumanController humanController;
+    private Player currentPlayer;
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
-        Inspector.call("Game.Game(ArrayList<Player>, Map, int)");
         controllerServer = new GameControllerServer(this);
         humanController = new HumanController();
-        timer = new Timer(true);
-        isPaused = true;
         this.roundTime = roundTime;
 
         this.players = players;
@@ -41,17 +37,16 @@ public class Game {
         this.map = map;
 
         placeAgents();
-        setupTimer();
         setAgentControllers();
-        Inspector.ret("Game.Game");
+        Heartbeat.subscribe(this);
     }
 
     public void start() {
-        isPaused = false;
+        Heartbeat.resume();
     }
 
     public void pause() {
-        isPaused = true;
+        Heartbeat.pause();
     }
 
     public void reset() {
@@ -76,10 +71,13 @@ public class Game {
     }
 
     public Agent getCurrentAgent() {
-        Inspector.call("Game.getCurrentAgent():Agent");
-        Agent tmp = getCurrentPlayer().getAgent();
-        Inspector.ret("Game.getCurrentAgent()");
-        return tmp;
+        Player player = getCurrentPlayer();
+
+        if (player == null) {
+            return null;
+        }
+
+        return player.getAgent();
     }
 
     public Map getMap() {
@@ -87,40 +85,55 @@ public class Game {
     }
 
     public void onAgentChange() {
-        Inspector.call("Game.getAgentChange()");
+        Player player = getCurrentPlayer();
 
-        controllerServer.notifyControllerSocketClosed(getCurrentAgent());
+        if (player == null) {
+            return;
+        }
+	
+	controllerServer.notifyControllerSocketClosed(getCurrentAgent());
+	int currentIndex = players.indexOf(currentPlayer);
 
-        int currentIndex = players.indexOf(currentPlayer);
-
-        if (getCurrentPlayer().isOutOfTime()) {
-            players.remove(getCurrentPlayer());
-            disqualified.add(getCurrentPlayer());
+        if (player.isOutOfTime() || player.getAgent().isDead()) {
+            players.remove(player);
+            disqualified.add(player);
             currentIndex -= 1;
         }
 
         if (players.isEmpty()) {
             pause();
-            Inspector.ret("Game.getAgentChange");
+            setCurrentPlayer(null);
+            System.out.println("Game finished");
             return;
         }
 
         setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
         controllerServer.notifyControllerSocketOpened(getCurrentAgent());
+    }
 
-        Inspector.ret("Game.getAgentChange");
+    @Override
+    public void onTick(long deltaTime) {
+        if (players.isEmpty()) {
+            Heartbeat.unsubscribe(this);
+            return;
+        }
+
+        Player player = getCurrentPlayer();
+
+        player.setTimeRemaining(player.getTimeRemaining() - (int) deltaTime);
+
+        if (player.isOutOfTime()) {
+            System.out.println("Time out: " + player);
+            onAgentChange();
+        }
     }
 
     private synchronized Player getCurrentPlayer() {
-        Inspector.call("Game.getCurrentPlayer():Player");
-        Inspector.ret("Game.getCurrentPlayer");
         return currentPlayer;
     }
 
     private synchronized void setCurrentPlayer(Player player) {
-        Inspector.call("Game.setCurrentPlayer(Player)");
         currentPlayer = player;
-        Inspector.ret("Game.setCurrentPlayer");
     }
 
     private void placeAgents() {
@@ -147,21 +160,4 @@ public class Game {
         }
     }
 
-    private void setupTimer() {
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (isPaused) {
-                    return;
-                }
-
-                currentPlayer.setTimeRemaining(currentPlayer.getTimeRemaining() - 100);
-
-                if (currentPlayer.isOutOfTime()) {
-                    System.out.println("Time out: " + currentPlayer);
-                    onAgentChange();
-                }
-            }
-        }, 0, 100);
-    }
 }

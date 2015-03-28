@@ -6,14 +6,13 @@ import java.util.HashMap;
 import agents.Agent;
 import agents.Speed;
 import buff.Buff;
-import inspector.Inspector;
-import org.omg.PortableInterceptor.INACTIVE;
+import buff.BuffListener;
 
-public abstract class Field implements FieldElement {
-    protected Agent agent;
+public abstract class Field implements FieldElement, BuffListener {
     protected final int distanceFromGoal;
     protected final ArrayList<Buff> buffs;
     protected final HashMap<Direction, Field> neighbours;
+    protected Agent agent;
 
     public Field(int distanceFromGoal) {
         buffs = new ArrayList<Buff>();
@@ -26,20 +25,24 @@ public abstract class Field implements FieldElement {
     }
 
     public void onEnter(Agent agent) {
-        Inspector.call("Field.onEnter(Agent)");
+        if (agent != null && agent == this.agent) {
+            agent = this.agent.collide(agent);
+        }
+
+        if (agent == null) {
+            return;
+        }
+
         for (Buff b : buffs) {
             agent.accept(b);
         }
 
         agent.setField(this);
         this.agent = agent;
-        Inspector.ret("Field.onEnter");
     }
 
     public void onExit() {
-        Inspector.call("Field.onExit()");
         if (agent == null) {
-            Inspector.ret("Field.onExit");
             return;
         }
 
@@ -47,7 +50,6 @@ public abstract class Field implements FieldElement {
 
         agent.setField(null);
         this.agent = null;
-        Inspector.ret("Field.onExit");
     }
 
     public int getDistanceFromGoal() {
@@ -55,35 +57,31 @@ public abstract class Field implements FieldElement {
     }
 
     public void placeBuff(Buff buff) {
-        Inspector.call("Field.placeBuff(Buff)");
+        buff.subscribe(this);
         buffs.add(buff);
-        Inspector.ret("Field.placeBuff");
     }
 
     public Displacement getDisplacement(Speed speed) {
-        Inspector.call("Field.getDisplacement(Speed):Displacement");
-        Displacement tmp = new Displacement(this, searchGoal(speed));
-        Inspector.ret("Field.getDisplacement");
-        return tmp;
+        return new Displacement(this, searchGoal(speed));
     }
 
     public boolean isEmpty() {
-        Inspector.call("Field.isEmpty():boolean");
-        Inspector.ret("Field.isEmpty");
         return agent == null;
     }
 
+    @Override
+    public void onRemove(Buff buff) {
+        buff.unsubscribe(this);
+        buffs.remove(buff);
+    }
+
     protected Field searchGoal(Speed speed) {
-        Inspector.call("Field.searchGoal(Speed):Field");
         if (speed.getMagnitude() == 0) {
-            Inspector.ret("Field.searchGoal");
             return this;
         }
 
         Speed newSpeed = speed.clone();
         newSpeed.setMagnitude(newSpeed.getMagnitude() - 1);
-        Field tmp = neighbours.get(speed.getDirection()).searchGoal(newSpeed);
-        Inspector.ret("Field.searchGoal");
-        return tmp;
+        return neighbours.get(speed.getDirection()).searchGoal(newSpeed);
     }
 }
