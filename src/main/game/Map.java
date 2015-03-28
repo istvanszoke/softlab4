@@ -1,11 +1,11 @@
 package game;
 
+import field.Field;
+import field.FinishLineFieldCell;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-import field.Field;
-import field.FinishLineFieldCell;
 
 public class Map implements Iterable<Field> {
     private final ArrayList<Field> fields;

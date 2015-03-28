@@ -1,13 +1,19 @@
 package game;
 
-import java.awt.*;
-import java.util.*;
-
 import agents.Agent;
 import field.Field;
+import game.control.GameControllerServer;
+import game.control.GameControllerSocket;
+import game.control.HumanController;
 import inspector.Inspector;
 
-public class Game implements ControllerListener {
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class Game {
     private final Timer timer;
     private boolean isPaused;
     private final int roundTime;
@@ -17,10 +23,13 @@ public class Game implements ControllerListener {
     private Player currentPlayer;
 
     private final Map map;
-    private final AgentController controller;
+    private final GameControllerServer controllerServer;
+    private final HumanController humanController;
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
         Inspector.call("Game.Game(ArrayList<Player>, Map, int)");
+        controllerServer = new GameControllerServer(this);
+        humanController = new HumanController();
         timer = new Timer(true);
         isPaused = true;
         this.roundTime = roundTime;
@@ -30,10 +39,10 @@ public class Game implements ControllerListener {
         currentPlayer = this.players.get(0);
 
         this.map = map;
-        controller = new HumanController(this);
 
         placeAgents();
         setupTimer();
+        setAgentControllers();
         Inspector.ret("Game.Game");
     }
 
@@ -63,7 +72,7 @@ public class Game implements ControllerListener {
     }
 
     public void registerController(Component component) {
-        component.addKeyListener(controller);
+        component.addKeyListener(humanController);
     }
 
     public Agent getCurrentAgent() {
@@ -77,9 +86,10 @@ public class Game implements ControllerListener {
         return map;
     }
 
-    @Override
     public void onAgentChange() {
         Inspector.call("Game.getAgentChange()");
+
+        controllerServer.notifyControllerSocketClosed(getCurrentAgent());
 
         int currentIndex = players.indexOf(currentPlayer);
 
@@ -96,6 +106,8 @@ public class Game implements ControllerListener {
         }
 
         setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
+        controllerServer.notifyControllerSocketOpened(getCurrentAgent());
+
         Inspector.ret("Game.getAgentChange");
     }
 
@@ -124,6 +136,14 @@ public class Game implements ControllerListener {
             }
 
             fields[i].onEnter(agent);
+        }
+    }
+
+    private void setAgentControllers() {
+        for (Player player : players) {
+            Agent agent = player.getAgent();
+            GameControllerSocket socket = controllerServer.createSocketForAgent(agent);
+            humanController.addControllerSocket(socket);
         }
     }
 
