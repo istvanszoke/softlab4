@@ -64,7 +64,9 @@ public class GameControllerServer {
             = new HashMap<ControlSocket, Agent>();
     private HashMap<Agent, ControlSocket> agentMapping
             = new HashMap<Agent, ControlSocket>();
-    private Object mappingOperationLock
+    private HashMap<GameControllerSocket, ControlSocket> globalToLocalMapping
+            = new HashMap<GameControllerSocket, ControlSocket>();
+    private final Object mappingOperationLock
             = new Object();
 
     public GameControllerServer(Game game) {
@@ -75,7 +77,10 @@ public class GameControllerServer {
     }
 
     private boolean isSocketOpen(GameControllerSocket socket) {
-        Agent agent = socketMapping.get(socket);
+        ControlSocket controlSocket = globalToLocalMapping.get(socket);
+        if (controlSocket == null)
+            return false;
+        Agent agent = socketMapping.get(controlSocket);
         if (agent == null)
             return false;
         if (agent == servedGamed.getCurrentAgent() /*||
@@ -94,7 +99,10 @@ public class GameControllerServer {
     }
 
     private boolean receiveAgentCommand(GameControllerSocket socket, AgentCommand command) {
-        Agent agent = socketMapping.get(socket);
+        ControlSocket controlSocket = globalToLocalMapping.get(socket);
+        if (controlSocket == null)
+            return false;
+        Agent agent = socketMapping.get(controlSocket);
         if (agent == null) {
             return false;
         } else if (agent == servedGamed.getCurrentAgent()) {
@@ -110,6 +118,7 @@ public class GameControllerServer {
                 ControlSocket newSocket = new ControlSocket(this);
                 agentMapping.put(agent, newSocket);
                 socketMapping.put(newSocket, agent);
+                globalToLocalMapping.put(newSocket, newSocket);
                 return newSocket;
             } else {
                 return null;
@@ -123,6 +132,7 @@ public class GameControllerServer {
                 ControlSocket toRemove = agentMapping.get(agent);
                 agentMapping.remove(agent);
                 socketMapping.remove(toRemove);
+                globalToLocalMapping.remove(toRemove);
             }
         }
     }
