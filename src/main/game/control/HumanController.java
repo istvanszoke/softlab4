@@ -86,8 +86,9 @@ public class HumanController extends KeyAdapter implements GameControllerSocketL
     }
 
     private void useCommandAndChangeAgent(AgentCommand command) {
-        useCommand(command);
-        currentSocket.sendEndTurn();
+        if (useCommand(command)) {
+            currentSocket.sendEndTurn();
+        }
     }
 
     private GameControllerSocket searchForActiveSocket() {
