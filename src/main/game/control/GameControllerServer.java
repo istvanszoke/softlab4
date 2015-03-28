@@ -49,7 +49,7 @@ public class GameControllerServer {
             clientToNofify = null;
         }
 
-        private void notifiySocketOpened() {
+        private void notifySocketOpened() {
             if (clientToNofify != null)
                 clientToNofify.socketOpened(this);
         }
@@ -126,7 +126,7 @@ public class GameControllerServer {
     public void notifyControllerSocketOpened (Agent agent)
     {
         if (agentMapping.containsKey(agent)) {
-            agentMapping.get(agent).notifiySocketOpened();
+            agentMapping.get(agent).notifySocketOpened();
         }
     }
 
