@@ -4,15 +4,13 @@ import commands.AgentCommand;
 import commands.executes.KillExecute;
 import commands.queries.*;
 import field.Direction;
-import game.control.GameControllerSocket;
-import game.control.GameControllerSocketListener;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class HumanController extends KeyAdapter implements GameControllerSocketListener {
-    private ArrayList<GameControllerSocket> sockets;
+    private final ArrayList<GameControllerSocket> sockets;
     private GameControllerSocket currentSocket;
 
     public HumanController() {
@@ -72,8 +70,14 @@ public class HumanController extends KeyAdapter implements GameControllerSocketL
     }
 
     private boolean useCommand(AgentCommand command) {
-        if (currentSocket == null)
+        if (currentSocket == null) {
             currentSocket = searchForActiveSocket();
+        }
+
+        if (currentSocket == null) {
+            return false;
+        }
+
         if (!currentSocket.sendAgentCommand(command)) {
             currentSocket = searchForActiveSocket();
             if (!(currentSocket == null)) {

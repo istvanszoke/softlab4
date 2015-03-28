@@ -15,7 +15,7 @@ public class Heartbeat {
         listeners = new ArrayList<HeartbeatListener>();
         elapsedTime = 0;
         Timer timer = new Timer(true);
-        isPaused = true;
+        isPaused = false;
 
         timer.schedule(new TimerTask() {
             @Override
