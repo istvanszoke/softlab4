@@ -12,6 +12,7 @@ public class GameControllerServer {
 
         GameControllerSocketListener clientToNofify = null;
         GameControllerServer server;
+        boolean isOpened = false;
 
         private ControlSocket(GameControllerServer server) {
             if (server != null)
@@ -21,18 +22,24 @@ public class GameControllerServer {
         }
 
         @Override
-        public boolean isOpen() {
-            return server.isSocketOpen(this);
+        public boolean isOpen() { return isOpened; }
+
+        @Override
+        public boolean sendEndTurn()
+        {
+            if (isOpened)
+                return server.receiveEndTurn(this);
+            else
+                return false;
         }
 
         @Override
-        public boolean sendEndTurn() {
-            return server.receiveEndTurn(this);
-        }
-
-        @Override
-        public boolean sendAgentCommand(AgentCommand command) {
-            return server.receiveAgentCommand(this, command);
+        public boolean sendAgentCommand(AgentCommand command)
+        {
+            if (isOpened)
+                return server.receiveAgentCommand(this, command);
+            else
+                return false;
         }
 
         @Override
@@ -48,11 +55,13 @@ public class GameControllerServer {
         private void notifySocketOpened() {
             if (clientToNofify != null)
                 clientToNofify.socketOpened(this);
+            isOpened = true;
         }
 
         private void notifySocketClosed() {
             if (clientToNofify != null)
                 clientToNofify.socketClosed(this);
+            isOpened = false;
         }
     }
 
@@ -67,41 +76,32 @@ public class GameControllerServer {
             = new Object();
 
     public GameControllerServer(Game game) {
-        if (game != null)
+        if (game != null) {
             servedGamed = game;
-        else
+        } else {
             throw new NullPointerException();
-    }
-
-    private boolean isSocketOpen(GameControllerSocket socket) {
-        ControlSocket controlSocket = globalToLocalMapping.get(socket);
-        if (controlSocket == null)
-            return false;
-        Agent agent = socketMapping.get(controlSocket);
-
-        return agent != null && agent == servedGamed.getCurrentAgent();
+        }
     }
 
     private boolean receiveEndTurn(GameControllerSocket client) {
-        if (isSocketOpen(client)) {
-            servedGamed.onAgentChange();
-            return true;
+        if (!globalToLocalMapping.containsKey(client)) {
+            return false;
         }
-        return false;
+        servedGamed.onAgentChange();
+        return true;
     }
 
     private boolean receiveAgentCommand(GameControllerSocket socket, AgentCommand command) {
         ControlSocket controlSocket = globalToLocalMapping.get(socket);
-        if (controlSocket == null)
+        if (controlSocket == null) {
             return false;
+        }
         Agent agent = socketMapping.get(controlSocket);
         if (agent == null) {
             return false;
-        } else if (agent == servedGamed.getCurrentAgent()) {
-            servedGamed.getCurrentAgent().accept(command);
-            return true;
-        } /* else if proszivo robot then... */
-        return false;
+        }
+        agent.accept(command);
+        return true;
     }
 
     public GameControllerSocket createSocketForAgent(Agent agent) {
