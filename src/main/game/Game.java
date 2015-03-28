@@ -37,6 +37,7 @@ public class Game implements HeartbeatListener {
 
         placeAgents();
         setAgentControllers();
+        Heartbeat.subscribe(this);
     }
 
     public void start() {
@@ -45,17 +46,17 @@ public class Game implements HeartbeatListener {
         } else {
             setCurrentPlayer(pausedPlayer);
         }
-        Heartbeat.subscribe(this);
+        Heartbeat.resume();
     }
 
     public void pause() {
         pausedPlayer = getCurrentPlayer();
         setCurrentPlayer(null);
-        Heartbeat.unsubscribe(this);
+        Heartbeat.pause();
     }
 
     public void reset() {
-        Heartbeat.unsubscribe(this);
+        Heartbeat.pause();
         players.addAll(disqualified);
         disqualified.clear();
         for (Player player : players) {
@@ -170,7 +171,7 @@ public class Game implements HeartbeatListener {
     private void endGame() {
         setCurrentPlayer(null);
         pausedPlayer = null;
-        Heartbeat.unsubscribe(this);
+        Heartbeat.pause();
         System.out.println("Game finished");
     }
 }
