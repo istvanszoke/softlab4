@@ -40,6 +40,7 @@ def generate_description(class_name, path):
 
 
 def get_date(path):
+    path = path.replace("\\", "/")
     result = process.run("git log --diff-filter=A --follow --format=%ai -1 -- " + path,
                          cwd=dir.DOCS)
     process.terminate_on_failure(result,
@@ -62,7 +63,7 @@ def generate_entries(path=dir.SRC_MAIN, extension="java"):
     for f in files:
         full_path = str(f)
         class_name = os.path.basename(full_path).split(os.extsep)[0]
-        relative_path = os.path.relpath(full_path, dir.TOP)
+        relative_path = os.path.relpath(full_path, dir.TOP).replace("\\", "/")
         size = os.path.getsize(full_path)
         date = get_date(full_path)
         description = generate_description(class_name, full_path)
@@ -93,3 +94,4 @@ def build():
     debug.separator("Generating file list")
     print_latex(generate_entries())
     debug.success("File generation")
+
