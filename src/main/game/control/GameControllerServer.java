@@ -64,6 +64,8 @@ public class GameControllerServer {
             = new HashMap<ControlSocket, Agent>();
     private HashMap<Agent, ControlSocket> agentMapping
             = new HashMap<Agent, ControlSocket>();
+    private Object mappingOperationLock
+            = new Object();
 
     public GameControllerServer(Game game) {
         if (game != null)
@@ -99,21 +101,25 @@ public class GameControllerServer {
     }
 
     public GameControllerSocket createSocketForAgent(Agent agent) {
-        if (!agentMapping.containsKey(agent)) {
-            ControlSocket newSocket = new ControlSocket(this);
-            agentMapping.put(agent, newSocket);
-            socketMapping.put(newSocket, agent);
-            return newSocket;
-        } else {
-            return null;
+        synchronized (mappingOperationLock) {
+            if (!agentMapping.containsKey(agent)) {
+                ControlSocket newSocket = new ControlSocket(this);
+                agentMapping.put(agent, newSocket);
+                socketMapping.put(newSocket, agent);
+                return newSocket;
+            } else {
+                return null;
+            }
         }
     }
 
     public void removeAgent(Agent agent) {
-        if (agentMapping.containsKey(agent)) {
-            ControlSocket toRemove = agentMapping.get(agent);
-            agentMapping.remove(agent);
-            socketMapping.remove(toRemove);
+        synchronized (mappingOperationLock) {
+            if (agentMapping.containsKey(agent)) {
+                ControlSocket toRemove = agentMapping.get(agent);
+                agentMapping.remove(agent);
+                socketMapping.remove(toRemove);
+            }
         }
     }
 
