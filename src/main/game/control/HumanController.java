@@ -1,4 +1,4 @@
-package game;
+package game.control;
 
 import commands.AgentCommand;
 import commands.executes.KillExecute;

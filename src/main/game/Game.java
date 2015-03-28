@@ -4,6 +4,7 @@ import agents.Agent;
 import field.Field;
 import game.control.GameControllerServer;
 import game.control.GameControllerSocket;
+import game.control.HumanController;
 import inspector.Inspector;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.util.Collection;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Game implements ControllerListener {
+public class Game {
     private final Timer timer;
     private boolean isPaused;
     private final int roundTime;
@@ -87,7 +88,6 @@ public class Game implements ControllerListener {
         return map;
     }
 
-    @Override
     public void onAgentChange() {
         Inspector.call("Game.getAgentChange()");
 
