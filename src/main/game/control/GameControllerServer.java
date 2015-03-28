@@ -6,9 +6,6 @@ import game.Game;
 
 import java.util.HashMap;
 
-/**
- * Created by nyari on 2015.03.27..
- */
 public class GameControllerServer {
 
     private class ControlSocket implements GameControllerSocket {
@@ -81,13 +78,8 @@ public class GameControllerServer {
         if (controlSocket == null)
             return false;
         Agent agent = socketMapping.get(controlSocket);
-        if (agent == null)
-            return false;
-        if (agent == servedGamed.getCurrentAgent() /*||
-            if among the sucker robots*/)
-            return true;
 
-        return false;
+        return agent != null && agent == servedGamed.getCurrentAgent();
     }
 
     private boolean receiveEndTurn(GameControllerSocket client) {
