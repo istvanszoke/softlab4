@@ -29,13 +29,13 @@ public class GameControllerServer {
         }
 
         @Override
-        public void sendEndTurn() {
-            server.receiveEndTurn(this);
+        public boolean sendEndTurn() {
+            return server.receiveEndTurn(this);
         }
 
         @Override
-        public void sendAgentCommand(AgentCommand command) {
-            server.receiveAgentCommand(this, command);
+        public boolean sendAgentCommand(AgentCommand command) {
+            return server.receiveAgentCommand(this, command);
         }
 
         @Override
@@ -85,19 +85,23 @@ public class GameControllerServer {
         return false;
     }
 
-    private void receiveEndTurn(GameControllerSocket client) {
+    private boolean receiveEndTurn(GameControllerSocket client) {
         if (isSocketOpen(client)) {
             servedGamed.onAgentChange();
+            return true;
         }
+        return false;
     }
 
-    private void receiveAgentCommand(GameControllerSocket socket, AgentCommand command) {
+    private boolean receiveAgentCommand(GameControllerSocket socket, AgentCommand command) {
         Agent agent = socketMapping.get(socket);
         if (agent == null) {
-            return;
+            return false;
         } else if (agent == servedGamed.getCurrentAgent()) {
             servedGamed.getCurrentAgent().accept(command);
+            return true;
         } /* else if proszivo robot then... */
+        return false;
     }
 
     public GameControllerSocket createSocketForAgent(Agent agent) {

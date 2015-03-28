@@ -9,21 +9,24 @@ import game.control.GameControllerSocketListener;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class HumanController extends KeyAdapter implements GameControllerSocketListener {
-    private GameControllerSocket socket;
-    private boolean enabled;
+    private ArrayList<GameControllerSocket> sockets;
+    private GameControllerSocket currentSocket;
 
-    public HumanController(GameControllerSocket socket) {
-        this.socket = socket;
-        socket.enableStateNotification(this);
-        enabled = socket.isOpen();
+    public HumanController() {
+        currentSocket = null;
+    }
+
+    public void addControllerSocket(GameControllerSocket socket) {
+        synchronized (sockets) {
+            sockets.add(socket);
+        }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (!enabled)
-            return;
         switch (e.getKeyCode()) {
             // Change Direction
             case KeyEvent.VK_W:
@@ -67,24 +70,39 @@ public class HumanController extends KeyAdapter implements GameControllerSocketL
         }
     }
 
-    private void useCommand(AgentCommand command) {
-        socket.sendAgentCommand(command);
+    private boolean useCommand(AgentCommand command) {
+        if (currentSocket == null)
+            currentSocket = searchForActiveSocket();
+        if (!currentSocket.sendAgentCommand(command)) {
+            currentSocket = searchForActiveSocket();
+            if (!(currentSocket == null)) {
+                if (!currentSocket.sendAgentCommand(command)) {
+                    return false;
+                }
+            }
+        }
         System.out.println(command.getResult());
+        return true;
     }
 
     private void useCommandAndChangeAgent(AgentCommand command) {
-        socket.sendAgentCommand(command);
-        socket.sendEndTurn();
-        System.out.println(command.getResult());
+        useCommand(command);
+        currentSocket.sendEndTurn();
+    }
+
+    private GameControllerSocket searchForActiveSocket() {
+        for (GameControllerSocket socket : sockets) {
+            if (socket.isOpen())
+                return socket;
+        }
+        return null;
     }
 
     @Override
     public void socketOpened(GameControllerSocket sender) {
-        enabled = true;
+        currentSocket = sender;
     }
 
     @Override
-    public void socketClosed(GameControllerSocket sender) {
-        enabled = false;
-    }
+    public void socketClosed(GameControllerSocket sender) { currentSocket = null; }
 }

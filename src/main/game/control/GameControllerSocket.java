@@ -8,9 +8,9 @@ import commands.AgentCommand;
 public interface GameControllerSocket {
     boolean isOpen();
 
-    void sendEndTurn();
+    boolean sendEndTurn();
 
-    void sendAgentCommand(AgentCommand command);
+    boolean sendAgentCommand(AgentCommand command);
 
     void enableStateNotification(GameControllerSocketListener client);
 

@@ -24,12 +24,12 @@ public class Game {
 
     private final Map map;
     private final GameControllerServer controllerServer;
-    private final ArrayList<HumanController> humanControllers;
+    private final HumanController humanController;
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
         Inspector.call("Game.Game(ArrayList<Player>, Map, int)");
         controllerServer = new GameControllerServer(this);
-        humanControllers = new ArrayList<HumanController>();
+        humanController = new HumanController();
         timer = new Timer(true);
         isPaused = true;
         this.roundTime = roundTime;
@@ -72,9 +72,7 @@ public class Game {
     }
 
     public void registerController(Component component) {
-        for (HumanController controller : humanControllers) {
-            component.addKeyListener(controller);
-        }
+        component.addKeyListener(humanController);
     }
 
     public Agent getCurrentAgent() {
@@ -144,10 +142,8 @@ public class Game {
     private void setAgentControllers() {
         for (Player player : players) {
             Agent agent = player.getAgent();
-            GameControllerSocket socket;
-            socket = controllerServer.createSocketForAgent(agent);
-            HumanController newhomosapiensinterface = new HumanController(socket);
-            humanControllers.add(newhomosapiensinterface);
+            GameControllerSocket socket = controllerServer.createSocketForAgent(agent);
+            humanController.addControllerSocket(socket);
         }
     }
 
