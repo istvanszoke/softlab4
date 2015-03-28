@@ -17,6 +17,7 @@ public class HumanController extends KeyAdapter implements GameControllerSocketL
 
     public HumanController() {
         currentSocket = null;
+        sockets = new ArrayList<GameControllerSocket>();
     }
 
     public void addControllerSocket(GameControllerSocket socket) {
