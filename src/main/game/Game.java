@@ -5,16 +5,13 @@ import field.Field;
 import game.control.GameControllerServer;
 import game.control.GameControllerSocket;
 import game.control.HumanController;
-import inspector.Inspector;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
-public class Game implements ControllerListener, HeartbeatListener {
+public class Game implements HeartbeatListener {
     private final int roundTime;
 
     private final ArrayList<Player> players;
@@ -91,8 +88,8 @@ public class Game implements ControllerListener, HeartbeatListener {
             return;
         }
 	
-	controllerServer.notifyControllerSocketClosed(getCurrentAgent());
-	int currentIndex = players.indexOf(currentPlayer);
+        controllerServer.notifyControllerSocketClosed(getCurrentAgent());
+        int currentIndex = players.indexOf(currentPlayer);
 
         if (player.isOutOfTime() || player.getAgent().isDead()) {
             players.remove(player);
