@@ -1,29 +1,25 @@
 package commands.queries;
 
-import agents.*;
-import commands.*;
+import agents.Robot;
+import commands.AgentCommand;
+import commands.AgentCommandVisitor;
+import commands.FieldCommand;
+import commands.NoFieldCommandException;
 import commands.executes.UseStickyExecute;
-import inspector.Inspector;
 
 public class UseStickyQuery extends AgentCommand {
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
-        Inspector.call("UseStickyQuery.getFieldCommand()");
-        UseStickyExecute tmp = new UseStickyExecute(this);
-        Inspector.ret("UseStickyQuery.getFieldCommand");
-        return tmp;
+        return new UseStickyExecute(this);
     }
 
     @Override
     public void accept(AgentCommandVisitor modifier) {
-        Inspector.call("UseStickyQuery.accept(AgentCommandVisitor");
         modifier.visit(this);
-        Inspector.ret("UseStickyQuery.accpet");
     }
 
     @Override
     public void visit(Robot element) {
-        Inspector.call("UseStickyQuery.visit(Robot)");
         canExecute = element.useSticky();
 
         if (canExecute) {
@@ -31,6 +27,5 @@ public class UseStickyQuery extends AgentCommand {
         } else {
             result.pushMessage(element + " has run out of sticky.");
         }
-        Inspector.ret("UseStickyQuery.visit");
     }
 }

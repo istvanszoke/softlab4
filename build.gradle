@@ -1,5 +1,5 @@
 apply plugin: 'java'
-apply plugin:'application'
+apply plugin: 'application'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -31,14 +31,14 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.0'
 }
 
-run { 
-standardInput = System.in 
+run {
+    standardInput = System.in
 }
 
 repositories {
-   flatDir {
-       dirs 'lib'
-   }
+    flatDir {
+        dirs 'lib'
+    }
 }
 
 dependencies {
