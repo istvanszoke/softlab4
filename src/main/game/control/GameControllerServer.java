@@ -51,12 +51,12 @@ public class GameControllerServer {
 
         private void notifiySocketOpened() {
             if (clientToNofify != null)
-                clientToNofify.socketOpened();
+                clientToNofify.socketOpened(this);
         }
 
         private void notifySocketClosed() {
             if (clientToNofify != null)
-                clientToNofify.socketClosed();
+                clientToNofify.socketClosed(this);
         }
     }
 
