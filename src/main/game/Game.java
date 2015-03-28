@@ -60,7 +60,11 @@ public class Game implements HeartbeatListener {
         players.addAll(disqualified);
         disqualified.clear();
         for (Player player : players) {
-            player.setTimeRemaining(roundTime);
+            player.setTimeRemaining(roundTime * 1000);
+        }
+
+        for (Field f : map) {
+            f.onExit();
         }
         placeAgents();
 
