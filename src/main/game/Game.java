@@ -1,13 +1,16 @@
 package game;
 
-import java.awt.*;
-import java.util.*;
-
 import agents.Agent;
 import field.Field;
 import game.control.GameControllerServer;
 import game.control.GameControllerSocket;
 import inspector.Inspector;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game implements ControllerListener {
     private final Timer timer;
@@ -68,9 +71,8 @@ public class Game implements ControllerListener {
     }
 
     public void registerController(Component component) {
-        Iterator<HumanController> it = humanControllers.iterator();
-        while (it.hasNext()) {
-            component.addKeyListener(it.next());
+        for (HumanController controller : humanControllers) {
+            component.addKeyListener(controller);
         }
     }
 
@@ -139,16 +141,13 @@ public class Game implements ControllerListener {
         }
     }
 
-    private void setAgentControllers()
-    {
-        Iterator<Player> it = players.iterator();
-        while (it.hasNext()) {
-            Agent agent = it.next().getAgent();
+    private void setAgentControllers() {
+        for (Player player : players) {
+            Agent agent = player.getAgent();
             GameControllerSocket socket;
             socket = controllerServer.createSocketForAgent(agent);
             HumanController newhomosapiensinterface = new HumanController(socket);
             humanControllers.add(newhomosapiensinterface);
-
         }
     }
 

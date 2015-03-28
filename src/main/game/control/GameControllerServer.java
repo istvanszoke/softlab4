@@ -16,8 +16,7 @@ public class GameControllerServer {
         GameControllerSocketListener clientToNofify = null;
         GameControllerServer server;
 
-        private ControlSocket(GameControllerServer server)
-        {
+        private ControlSocket(GameControllerServer server) {
             if (server != null)
                 this.server = server;
             else
@@ -66,16 +65,14 @@ public class GameControllerServer {
     private HashMap<Agent, ControlSocket> agentMapping
             = new HashMap<Agent, ControlSocket>();
 
-    public GameControllerServer(Game game)
-    {
+    public GameControllerServer(Game game) {
         if (game != null)
             servedGamed = game;
         else
             throw new NullPointerException();
     }
 
-    private boolean isSocketOpen (GameControllerSocket socket)
-    {
+    private boolean isSocketOpen(GameControllerSocket socket) {
         Agent agent = socketMapping.get(socket);
         if (agent == null)
             return false;
@@ -86,15 +83,13 @@ public class GameControllerServer {
         return false;
     }
 
-    private void receiveEndTurn(GameControllerSocket client)
-    {
+    private void receiveEndTurn(GameControllerSocket client) {
         if (isSocketOpen(client)) {
             servedGamed.onAgentChange();
         }
     }
 
-    private void receiveAgentCommand(GameControllerSocket socket, AgentCommand command)
-    {
+    private void receiveAgentCommand(GameControllerSocket socket, AgentCommand command) {
         Agent agent = socketMapping.get(socket);
         if (agent == null) {
             return;
@@ -104,8 +99,7 @@ public class GameControllerServer {
     }
 
     public GameControllerSocket createSocketForAgent(Agent agent) {
-        if (!agentMapping.containsKey(agent))
-        {
+        if (!agentMapping.containsKey(agent)) {
             ControlSocket newSocket = new ControlSocket(this);
             agentMapping.put(agent, newSocket);
             socketMapping.put(newSocket, agent);
@@ -123,15 +117,13 @@ public class GameControllerServer {
         }
     }
 
-    public void notifyControllerSocketOpened (Agent agent)
-    {
+    public void notifyControllerSocketOpened(Agent agent) {
         if (agentMapping.containsKey(agent)) {
             agentMapping.get(agent).notifySocketOpened();
         }
     }
 
-    public void notifyControllerSocketClosed (Agent agent)
-    {
+    public void notifyControllerSocketClosed(Agent agent) {
         if (agentMapping.containsKey(agent)) {
             agentMapping.get(agent).notifySocketClosed();
         }
