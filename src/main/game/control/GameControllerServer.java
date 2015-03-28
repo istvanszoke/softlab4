@@ -2,7 +2,6 @@ package game.control;
 
 import agents.Agent;
 import commands.AgentCommand;
-import game.Game;
 
 import java.util.HashMap;
 
@@ -25,21 +24,13 @@ public class GameControllerServer {
         public boolean isOpen() { return isOpened; }
 
         @Override
-        public boolean sendEndTurn()
-        {
-            if (isOpened)
-                return server.receiveEndTurn(this);
-            else
-                return false;
+        public boolean sendEndTurn() {
+            return isOpened && server.receiveEndTurn(this);
         }
 
         @Override
-        public boolean sendAgentCommand(AgentCommand command)
-        {
-            if (isOpened)
-                return server.receiveAgentCommand(this, command);
-            else
-                return false;
+        public boolean sendAgentCommand(AgentCommand command) {
+            return isOpened && server.receiveAgentCommand(this, command);
         }
 
         @Override
@@ -65,7 +56,7 @@ public class GameControllerServer {
         }
     }
 
-    private Game servedGamed;
+    private GameControllerServerListener listener;
     private HashMap<ControlSocket, Agent> socketMapping
             = new HashMap<ControlSocket, Agent>();
     private HashMap<Agent, ControlSocket> agentMapping
@@ -75,9 +66,9 @@ public class GameControllerServer {
     private final Object mappingOperationLock
             = new Object();
 
-    public GameControllerServer(Game game) {
-        if (game != null) {
-            servedGamed = game;
+    public GameControllerServer(GameControllerServerListener listener) {
+        if (listener != null) {
+            this.listener = listener;
         } else {
             throw new NullPointerException();
         }
@@ -87,7 +78,7 @@ public class GameControllerServer {
         if (!globalToLocalMapping.containsKey(client)) {
             return false;
         }
-        servedGamed.onAgentChange();
+        listener.onAgentChange();
         return true;
     }
 

@@ -11,10 +11,8 @@ import java.util.ArrayList;
 
 public class HumanController extends KeyAdapter implements GameControllerSocketListener {
     private final ArrayList<GameControllerSocket> sockets;
-    private GameControllerSocket currentSocket;
 
     public HumanController() {
-        currentSocket = null;
         sockets = new ArrayList<GameControllerSocket>();
     }
 
@@ -70,32 +68,35 @@ public class HumanController extends KeyAdapter implements GameControllerSocketL
     }
 
     private boolean useCommand(AgentCommand command) {
-        if (currentSocket == null) {
-            currentSocket = searchForActiveSocket();
-        }
+        GameControllerSocket currentSocket = searchForActiveSocket();
 
         if (currentSocket == null) {
             return false;
         }
 
-        if (!currentSocket.sendAgentCommand(command)) {
-            currentSocket = searchForActiveSocket();
-            if (!(currentSocket == null)) {
-                if (!currentSocket.sendAgentCommand(command)) {
-                    return false;
-                }
-            }
+        if (sendCommandTo(command, currentSocket)) {
+            System.out.println(command.getResult());
+            return true;
         }
-        System.out.println(command.getResult());
-        return true;
+
+        return false;
     }
 
     private void useCommandAndChangeAgent(AgentCommand command) {
-        if (useCommand(command)) {
-            if (currentSocket != null) {
-                currentSocket.sendEndTurn();
-            }
+        GameControllerSocket currentSocket = searchForActiveSocket();
+
+        if (currentSocket == null) {
+            return;
         }
+
+        if (sendCommandTo(command, currentSocket)) {
+            System.out.println(command.getResult());
+            currentSocket.sendEndTurn();
+        }
+    }
+
+    private boolean sendCommandTo(AgentCommand command, GameControllerSocket socket) {
+        return socket.sendAgentCommand(command);
     }
 
     private GameControllerSocket searchForActiveSocket() {
@@ -107,10 +108,8 @@ public class HumanController extends KeyAdapter implements GameControllerSocketL
     }
 
     @Override
-    public void socketOpened(GameControllerSocket sender) {
-        currentSocket = sender;
-    }
+    public void socketOpened(GameControllerSocket sender) { }
 
     @Override
-    public void socketClosed(GameControllerSocket sender) { currentSocket = null; }
+    public void socketClosed(GameControllerSocket sender) { }
 }
