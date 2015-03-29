@@ -5,6 +5,67 @@
 
 \thispagestyle{fancy}
 
+\setcounter{section}{-1}
+\section{Módosítások a specifikációban}
+
+\subsection{Ragacs kopása}
+\textbf{A ragacs eltűnik a pályáról, miután négy robot ráugrott (elkopik).}\newline
+A Sticky osztályban létrehozunk egy változót, ami nyilvántartja, hogy hányan ugrottak rá. Ezt a változót az osztály visit(Robot element) metódusa fogja menedzselni.
+
+\subsection{Olaj felszáradása}
+\textbf{Egy meghatározott idő letelte után az olajfolt eltűnik a pályáról (felszárad).}\newline
+Az Oil osztályban létrehozunk egy változót, ami nyilvántartja a hátralévő idejét. A hátralévő időt úgy menedzseli, hogy az osztály implementálja a HeartBeatListener interfészt és az onTick(long deltaTime) metódusában levonja az eltelt időt.
+
+\subsection{Robotok ütközése}
+\textbf{A robotok képesek ütközni, ha azonos helyre érkeznek ugrásuk végén. Ilyenkor a gyorsabb robot összetöri (megsemmisíti) a lassabbat, és kettejük átlagsebességével halad tovább (vektorátlag!).}\newline
+A Field onEnter(Agent agent) metódusában, ha a Field-en éppen van egy másik Agent is, akkor meghívjuk a Fielden az éppen rajtalévő Agent collide(Agent agent) metódusát. A collide-ban a vesztesre meghívjuk az agent.accept(new KillExecute) metódust.
+
+\clearpage
+
+\subsection{Osztálydiagram módosítások}
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\linewidth]{chapters/chapter07/gamepackage.pdf}
+		\caption{Game package osztálydiagram}
+		\label{Game package osztálydiagram}
+	\end{center}
+\end{figure}
+
+\clearpage
+
+
+\subsection{Szekvenciadiagram módosítások}
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\linewidth]{chapters/chapter07/ragacskopas.pdf}
+		\caption{Ragacs kopása}
+		\label{Ragacs kopása}
+	\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\linewidth]{chapters/chapter07/olajszaradas.pdf}
+		\caption{Olaj felszáradása}
+		\label{Olaj felszáradása}
+	\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[width=\linewidth]{chapters/chapter07/utkozes.pdf}
+		\caption{Robotok ütközése}
+		\label{Robotok ütközése}
+	\end{center}
+\end{figure}
+
+\clearpage
+
+
 \section{Prototípus interface-definíciója}
 
 \subsection{Az interfész általános leírása}
