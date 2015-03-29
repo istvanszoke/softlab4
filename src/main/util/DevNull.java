@@ -5,7 +5,7 @@ import buff.BuffListener;
 import game.handle.AgentHandle;
 import game.handle.HandleListener;
 
-public class DevNull implements HandleListener, BuffListener {
+public final class DevNull implements HandleListener, BuffListener {
     public static final DevNull SINK = new DevNull();
 
     @Override
@@ -18,7 +18,7 @@ public class DevNull implements HandleListener, BuffListener {
     public void onAgentDeath(AgentHandle handle) { }
 
     @Override
-    public void onRemove(Buff buff) {
+    public void onRemove(Buff buff) { }
 
-    }
+    private DevNull() { }
 }
