@@ -3,6 +3,7 @@ package game;
 import agents.Agent;
 import field.Field;
 import game.control.GameControllerServer;
+import game.control.GameControllerServerListener;
 import game.control.GameControllerSocket;
 import game.control.HumanController;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-public class Game implements HeartbeatListener {
+public class Game implements GameControllerServerListener, HeartbeatListener {
     private final int roundTime;
 
     private final ArrayList<Player> players;
@@ -21,7 +22,6 @@ public class Game implements HeartbeatListener {
     private final GameControllerServer controllerServer;
     private final HumanController humanController;
     private Player currentPlayer;
-    private Player pausedPlayer;
 
     public Game(ArrayList<Player> players, Map map, int roundTime) {
         controllerServer = new GameControllerServer(this);
@@ -30,8 +30,7 @@ public class Game implements HeartbeatListener {
 
         this.players = players;
         disqualified = new ArrayList<Player>();
-        currentPlayer = null;
-        pausedPlayer = null;
+        currentPlayer = players.get(0);
 
         this.map = map;
 
@@ -41,22 +40,18 @@ public class Game implements HeartbeatListener {
     }
 
     public void start() {
-        if (pausedPlayer == null) {
-            setCurrentPlayer(players.get(0));
-        } else {
-            setCurrentPlayer(pausedPlayer);
-        }
+        controllerServer.notifyControllerSocketOpened(getCurrentAgent());
         Heartbeat.resume();
     }
 
     public void pause() {
-        pausedPlayer = getCurrentPlayer();
-        setCurrentPlayer(null);
         Heartbeat.pause();
+        controllerServer.notifyControllerSocketClosed(getCurrentAgent());
     }
 
     public void reset() {
-        Heartbeat.pause();
+        pause();
+
         players.addAll(disqualified);
         disqualified.clear();
         for (Player player : players) {
@@ -68,8 +63,7 @@ public class Game implements HeartbeatListener {
         }
         placeAgents();
 
-        pausedPlayer = null;
-        setCurrentPlayer(null);
+        setCurrentPlayer(players.get(0));
     }
 
     public ArrayList<Player> getPlayers() {
@@ -98,7 +92,9 @@ public class Game implements HeartbeatListener {
         return map;
     }
 
+    @Override
     public void onAgentChange() {
+        Heartbeat.pause();
         Player player = getCurrentPlayer();
 
         if (player == null) {
@@ -120,7 +116,8 @@ public class Game implements HeartbeatListener {
         }
 
         setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
-        controllerServer.notifyControllerSocketOpened(player.getAgent());
+        controllerServer.notifyControllerSocketOpened(getCurrentAgent());
+        Heartbeat.resume();
     }
 
     @Override
@@ -173,9 +170,7 @@ public class Game implements HeartbeatListener {
     }
 
     private void endGame() {
-        setCurrentPlayer(null);
-        pausedPlayer = null;
-        Heartbeat.pause();
+        pause();
         System.out.println("Game finished");
     }
 }
