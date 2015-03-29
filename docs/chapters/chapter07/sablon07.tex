@@ -43,15 +43,54 @@ A -log kapcsoló lehetőséget ad a logok szintjének állítására például a
 \comment{A use-case-eknek a részletezettsége feleljen meg a kezelői felületnek, azaz a felület elemeire kell hivatkozniuk.
 Alábbi táblázat minden use-case-hez külön-külön.}
 
-\begin{figure}[h]
-\begin{center}
-%\includegraphics[width=17cm]{chapters/chapter07/example.pdf}
-\caption{x}
-\label{fig:ProtoUseCase}
-\end{center}
-\end{figure}
+\usecase%
+{Új játék indítása}%
+{Elindíthatunk egy új játékot}%
+{Játékos, Játék}%
+{A játékosok számának megadása után a Játékos kezdeményezheti a játéknak az elindítását}
 
-\usecase{...}{...}{...}{...}
+\usecase%
+{Játékparaméterek megadása}%
+{Új játék paramétereinek megadása}%
+{Játék}%
+{Játékosok megadhatják, hogy hányan vannak, milyen időkorláttal kívánnak játszani}
+
+\usecase%
+{Játék megnyerése}%
+{Játék végső helyzete alapján győztes eldöntése}%
+{Játékos, Játék}%
+{Ha minden Játékosnak lejár akkor a megtett út alapján eldől, hogy ki a győztes}
+
+\usecase%
+{Játék elvesztése}%
+{Játék végső helyzete alapján vesztesek eldöntése}%
+{Játékos, Játék}%
+{Ha minden Játékosnak lejár akkor a megtett út alapján eldől, hogy kik a vesztesek}
+
+\usecase%
+{Játék elmentése}
+{A játék jelenlegi állásának fájl(ok)ba mentése}
+{Játékos, Játék}
+{A Játékos megadja az elérési utat és a Játék elmenti a játékot}
+
+\usecase%
+{Játék betöltése}
+{A játék fájlból való betöltése}
+{Játékos, Játék}
+{A Játékos megadja az elérési utat és a Játék betölti a játékot}
+
+\usecase%
+{Logolás}
+{A játékos meghatározza, hogy logoljon a program}
+{Játékos, Játék}
+{A Játékos beállítja a logolás mértékét a -log kapcsolóval}
+
+\usecase%
+{Randomizálás}
+{A játékos meghatározza, hogy véletlenszerű értékekkel működjön a program}
+{Játékos, Játék}
+{A Játékos az -rng kapcsolóval tudja ezt állítani}
+
 
 \section{Tesztelési terv}
 \comment{A tesztelési tervben definiálni kell, hogy a be- és kimeneti fájlok egybevetésével miként végezhető el a program tesztelése. Meg kell adni teszt forgatókönyveket. Az egyes teszteket elég informálisan, szabad szövegként leírni. Teszt-esetenként egy-öt mondatban. Minden teszthez meg kell adni, hogy mi a célja, a proto mely funkcionalitását, osztályait stb. teszteli. Az alábbi táblázat minden teszt-esethez külön-külön elkészítendő.}
