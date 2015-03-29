@@ -1,18 +1,23 @@
 package game;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Heartbeat {
     public static final int RESOLUTION = 500  ;
 
-    private static ArrayList<HeartbeatListener> listeners;
+    private static List<HeartbeatListener> listeners;
+    private static List<HeartbeatListener> toAdd;
+    private static List<HeartbeatListener> toRemove;
+
     private static long elapsedTime;
     private static boolean isPaused;
 
     static {
         listeners = new ArrayList<HeartbeatListener>();
+        toAdd = new ArrayList<HeartbeatListener>();
+        toRemove = new ArrayList<HeartbeatListener>();
+
         elapsedTime = 0;
         Timer timer = new Timer(true);
         isPaused = true;
@@ -20,6 +25,11 @@ public class Heartbeat {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                if (!toAdd.isEmpty()) {
+                    listeners.addAll(toAdd);
+                    toAdd.clear();
+                }
+
                 if (isPaused()) {
                     return;
                 }
@@ -27,6 +37,11 @@ public class Heartbeat {
                 elapsedTime += RESOLUTION;
                 for (HeartbeatListener listener : listeners) {
                     listener.onTick(RESOLUTION);
+                }
+
+                if (!toRemove.isEmpty()) {
+                    listeners.removeAll(toRemove);
+                    toRemove.clear();
                 }
             }
         }, 0, RESOLUTION);
@@ -45,11 +60,11 @@ public class Heartbeat {
     }
 
     public static void subscribe(HeartbeatListener listener) {
-        listeners.add(listener);
+        toAdd.add(listener);
     }
 
     public static void unsubscribe(HeartbeatListener listener) {
-        listeners.remove(listener);
+        toRemove.remove(listener);
     }
 
     public static long getElapsedTime() {
