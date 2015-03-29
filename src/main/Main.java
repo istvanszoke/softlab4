@@ -4,7 +4,7 @@ import java.awt.*;
 import game.Game;
 import game.GameCreator;
 import game.KeyDispatcher;
-import game.Player;
+import game.handle.PlayerHandle;
 
 public class Main extends JFrame {
     public static void main(String[] args) {
@@ -34,9 +34,8 @@ public class Main extends JFrame {
         int roundTime = 10;
 
         Game game = new GameCreator()
-                .setRoundTime(roundTime)
-                .addPlayer(Player.createRobot(roundTime))
-                .addPlayer(Player.createRobot(roundTime))
+                .addAgent(PlayerHandle.createRobot(roundTime))
+                .addAgent(PlayerHandle.createRobot(roundTime))
                 .generateTestMap(10, 10)
                 .create();
 

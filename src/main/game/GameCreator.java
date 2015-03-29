@@ -1,27 +1,21 @@
 package game;
 
 import field.*;
+import game.handle.AgentHandle;
 
 import java.util.ArrayList;
 
 public final class GameCreator {
     private Map map;
-    private ArrayList<Player> players;
-    private int roundTime;
+    private ArrayList<AgentHandle> agents;
 
     public GameCreator() {
         map = new Map();
-        players = new ArrayList<Player>();
-        roundTime = -1;
+        agents = new ArrayList<AgentHandle>();
     }
 
-    public GameCreator setRoundTime(int roundTime) {
-        this.roundTime = roundTime;
-        return this;
-    }
-
-    public GameCreator addPlayer(Player player) {
-        players.add(player);
+    public GameCreator addAgent(AgentHandle player) {
+        agents.add(player);
         return this;
     }
 
@@ -37,11 +31,11 @@ public final class GameCreator {
     }
 
     public Game create() {
-        if (map.isEmpty() || players.size() < 2 || players.size() > 4 || roundTime == -1) {
+        if (map.isEmpty() || agents.size() < 2 || agents.size() > 4) {
             return null;
         }
 
-        return new Game(players, map, roundTime);
+        return new Game(agents, map);
     }
 
     private void generateGrid(int width, int height) {

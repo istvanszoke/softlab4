@@ -6,10 +6,11 @@ import field.FinishLineFieldCell;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class Map implements Iterable<Field> {
-    private final ArrayList<Field> fields;
-    private final ArrayList<Field> finishLineFields;
+    private final List<Field> fields;
+    private final List<Field> finishLineFields;
 
     public Map() {
         fields = new ArrayList<Field>();
@@ -50,12 +51,12 @@ public class Map implements Iterable<Field> {
         finishLineFields.clear();
     }
 
-    public Collection<Field> findStartingPositions(int numberOfPlayers) {
+    public List<Field> findStartingPositions(int numberOfPlayers) {
         if (finishLineFields.size() < numberOfPlayers) {
             throw new IllegalArgumentException();
         }
 
-        ArrayList<Field> suitableFields = new ArrayList<Field>();
+        List<Field> suitableFields = new ArrayList<Field>();
         for (Field field : finishLineFields) {
             if (field.isEmpty()) {
                 suitableFields.add(field);
@@ -65,7 +66,7 @@ public class Map implements Iterable<Field> {
         return suitableFields;
     }
 
-    public Collection<Field> getFinishLineFields() {
+    public List<Field> getFinishLineFields() {
         return finishLineFields;
     }
 

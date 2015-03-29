@@ -1,7 +1,14 @@
 package game.handle;
 
-/**
- * Created by gustorn on 3/29/15.
- */
-public class HandleSink {
+public class HandleSink implements HandleListener {
+    public static final HandleSink GLOBAL = new HandleSink();
+
+    @Override
+    public void onRegularTurn(AgentHandle handle) { }
+
+    @Override
+    public void onOutOfTime(AgentHandle handle) { }
+
+    @Override
+    public void onAgentDeath(AgentHandle handle) { }
 }

@@ -1,7 +1,7 @@
 package game.handle;
 
-/**
- * Created by gustorn on 3/29/15.
- */
-public class HandleListener {
+public interface HandleListener {
+    void onRegularTurn(AgentHandle handle);
+    void onOutOfTime(AgentHandle handle);
+    void onAgentDeath(AgentHandle handle);
 }

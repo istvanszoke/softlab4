@@ -75,10 +75,19 @@ public class GameControllerServer {
     }
 
     private boolean receiveEndTurn(GameControllerSocket client) {
-        if (!globalToLocalMapping.containsKey(client)) {
+        ControlSocket controlSocket = globalToLocalMapping.get(client);
+
+        if (controlSocket == null) {
             return false;
         }
-        listener.onAgentChange();
+
+        Agent agent = socketMapping.get(controlSocket);
+
+        if (agent == null) {
+            return false;
+        }
+
+        listener.onAgentChange(agent);
         return true;
     }
 
