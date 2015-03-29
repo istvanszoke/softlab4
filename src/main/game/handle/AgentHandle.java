@@ -1,6 +1,7 @@
 package game.handle;
 
 import agents.Agent;
+import util.DevNull;
 
 public abstract class AgentHandle {
     protected final Agent agent;
@@ -8,7 +9,7 @@ public abstract class AgentHandle {
 
     protected AgentHandle(Agent agent) {
         this.agent = agent;
-        this.listener = HandleSink.GLOBAL;
+        this.listener = DevNull.SINK;
     }
 
     public Agent getAgent() {
@@ -20,7 +21,7 @@ public abstract class AgentHandle {
     }
 
     public void deregister(HandleListener listener) {
-        this.listener = HandleSink.GLOBAL;
+        this.listener = DevNull.SINK;
     }
 
     public void onTurnEnd() {
