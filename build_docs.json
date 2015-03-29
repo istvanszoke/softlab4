@@ -1,0 +1,7 @@
+{
+    "all": ["javadoc", "svg", "file_list", "docs"],
+    "pdf": ["docs"],
+    "file-list": ["file_list"],
+    "svg": ["svg"],
+    "javadoc": ["javadoc"]
+}
