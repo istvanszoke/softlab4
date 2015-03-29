@@ -64,7 +64,7 @@ public class Heartbeat {
     }
 
     public static void unsubscribe(HeartbeatListener listener) {
-        toRemove.remove(listener);
+        toRemove.add(listener);
     }
 
     public static long getElapsedTime() {
