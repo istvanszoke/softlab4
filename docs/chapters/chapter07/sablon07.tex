@@ -18,12 +18,31 @@ ez a funkció csak a tesztelői input rövidítésére szolgál. Viszont nem has
 A -log kapcsoló lehetőséget ad a logok szintjének állítására például all/test/debug. \\
 
 \subsection{Bemeneti nyelv}
-\comment{Definiálni kell a teszteket leíró nyelvet. Külön figyelmet kell fordítani arra, hogy ha a rendszer véletlen elemeket is tartalmaz, akkor a véletlenszerűség ki-bekapcsolható legyen, és a program determinisztikusan is futtatható legyen. A szálkezelést is tesztelhető, irányítható módon kell megoldani.}
+A bemeneti nyelv az alábbi általános szintaxist használja: 
+
+\lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
+\begin{lstlisting}
+parancs(arg1=ertek1, arg2=ertek2, arg3=ertek3)
+\end{lstlisting}
+
+\noindent A parancs végét a sor vége jelzi. Bármely parancs tetszőleges számú szóközzel tagolható, de a kis- és nagybetűket megkülönböztetik: az előző példával így egyenértékű például:
+
+\lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
+\begin{lstlisting}
+parancs (arg1 = ertek1,arg2 = ertek2,arg3 = ertek3)
+\end{lstlisting}
+
+\noindent De külöböző tőle:
+
+\lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
+\begin{lstlisting}
+PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
+\end{lstlisting}
 
 \begin{itemize}
-\item Parancs1
+    \item jatek(szam=n,ido=m,map=nev.map)
 	\begin{itemize}
-	\item Leírás:
+	\item Leírás: Új játék kezdésére használt parancs.
 	\item Opciók:
 	\end{itemize}
 \item Parancs2
