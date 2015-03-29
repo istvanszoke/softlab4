@@ -1,12 +1,11 @@
-package util;
+package functional;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
-public class Functional {
+public class Collections {
     public static <T> Collection<T> filter(Collection<? extends T> collection,
                                            Predicate<? super T> filter) {
         List<T> ret = new ArrayList<T>();
@@ -25,5 +24,14 @@ public class Functional {
             ret.add(mapper.apply(element));
         }
         return ret;
+    }
+
+    public static <T> void removeIf(Collection<? extends T> collection,
+                                    Predicate<? super T> condition) {
+        for (Iterator<? extends T> i = collection.iterator(); i.hasNext(); ) {
+            if (condition.test(i.next())) {
+                i.remove();
+            }
+        }
     }
 }

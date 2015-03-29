@@ -1,11 +1,11 @@
 package game.handle;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 import agents.Agent;
+import functional.Predicate;
 import game.HeartbeatListener;
-import util.Functional;
+import functional.Collections;
 
 public class HandleStore implements Iterable<AgentHandle>, HeartbeatListener {
     private final List<AgentHandle> inPlay;
@@ -44,11 +44,11 @@ public class HandleStore implements Iterable<AgentHandle>, HeartbeatListener {
     }
 
     public synchronized void update() {
-        inPlay.removeIf(cleanupFilter);
-        combined.removeIf(cleanupFilter);
+        Collections.removeIf(inPlay, cleanupFilter);
+        Collections.removeIf(combined, cleanupFilter);
 
-        disqualified.addAll(Functional.filter(inPlay, disqualifiedFilter));
-        inPlay.removeIf(disqualifiedFilter);
+        disqualified.addAll(Collections.filter(inPlay, disqualifiedFilter));
+        Collections.removeIf(inPlay, disqualifiedFilter);
         System.out.println("In play:" + inPlay.size());
     }
 
