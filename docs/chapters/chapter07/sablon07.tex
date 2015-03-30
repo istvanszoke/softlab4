@@ -173,7 +173,83 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
 \url{http://docs.oracle.com/javase/7/docs/platform/serialization/spec/serialTOC.html}
 
 \subsection{Kimeneti nyelv}
-\comment{Egyértelműen definiálni kell, hogy az egyes bemeneti parancsok végrehajtása után előálló állapot milyen formában jelenik meg a szabványos kimeneten.}
+
+\begin{itemize}
+	\item Irányváltoztatás
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+				\item \{0\} Robot: <robotid> Új irány: <újirány>
+				\item \{1\} Sikertelen irányváltoztatás (Robot: <robotid>)
+		\end{itemize}
+	\end{itemize}
+	
+	\item Sebesség változtatás
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Robot: <robotid> Új sebesség: <újsebesség>
+			\item \{1\} Sikertelen sebesség változtatás (Robot: <robotid>)
+		\end{itemize}
+	\end{itemize}
+	
+	\item Ugrás
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Robotid: <robotid> Előző cella: <fieldid> Új cella: <fieldid>
+			\item \{1\} Sikertelen ugrás (Robot: <robotid>)
+		\end{itemize}
+	\end{itemize}
+	
+	\item Olaj lerakása cellára
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Robot: <robotid>  Érintett cella: <fieldid>
+			\item \{1\} Sikertelen olaj lerakás (Robot: <robotid>)
+		\end{itemize}
+	\end{itemize}
+	
+	\item Ragacs lerakása cellára
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Robot: <robotid>. Érintett cella: <fieldid>
+			\item \{1\} Sikertelen ragacs lerakás (Robot: <robotid>)
+		\end{itemize}
+	\end{itemize}	
+	
+	\item Új játék kezdése
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Generált pálya: <Map> Generált robotok: <Robot>
+			\item \{1\} Sikertelen mentés.
+		\end{itemize}
+	\end{itemize}
+	
+	
+	\item Játék elmentése
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Sikeres mentés megadott elérési útvonalra. 
+			\item \{1\} Sikertelen mentés.
+		\end{itemize}
+	\end{itemize}
+
+	\item Játék betöltése
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Betöltött pálya: <Map> Betöltött robotok <Robot> 
+			\item \{1\} Sikertelen betöltés.
+		\end{itemize}
+	\end{itemize}
+	
+\end{itemize}
+
 
 \section{Összes részletes use-case}
 \comment{A use-case-eknek a részletezettsége feleljen meg a kezelői felületnek, azaz a felület elemeire kell hivatkozniuk.
@@ -250,36 +326,32 @@ Tesztelést egy összetett parancssorozat végrehajtásával fogjuk elvégezni. 
 {Meggyőződés arról, hogy a program képes a játékkörnyezetet kialakítani vagy betölteni a megadott paraméterek alapján}
 
 \teszteset{Robot sebességének változtatása}%
-{Egy robot sebességét mely az ugrásának a vektoriális elmozdulását adja tudjuk így meghatározni}%
+{Egy robot sebességét, mely az ugrásának a vektoriális elmozdulását adja, tudjuk így meghatározni}%
 {A sebesség tényleges megválozásának kimutatása és meghatározása}
 
 \teszteset{Robot utasítása olaj lehelyezésére}%
-{Egy robotot utasíthatunk arra, hogy a pályán hagyjon ott egy olajfoltot mellyel más játékosokat hátráltatni tud}%
-{Az lehelyezés elvégézésének a biztosítása}
+{Egy robotot utasíthatunk arra, hogy a pályán hagyjon ott egy olajfoltot, mellyel más játékosokat hátráltatni tud}%
+{A lehelyezés elvégézésének a biztosítása}
 
 \teszteset{Robot utasítása ragacs lehelyezésére}%
-{Egy robotot utasíthatunk arra, hogy a pályán hagyjon ott egy ragacsfoltot mellyel más játékosokat hátráltatni tud}%
-{Az lehelyezés elvégézésének a biztosítása}
-
-\teszteset{Robot utasítása ugrásra}%
-{Egy robotot utasíthatunk arra, hogy ugorjon ezzel mozgást végezve a pályán mely szügséges ahhoz, hogy elérhesse a játék célját}%
-{Az ugrás végrehajtásának megtörténtének és más robotokkal ez során végzett interakciók biztosítása valamint az irányítás következp játékosnak való átadása}
+{Egy robotot utasíthatunk arra, hogy a pályán hagyjon ott egy ragacsfoltot, mellyel más játékosokat hátráltatni tud}%
+{A lehelyezés elvégézésének a biztosítása}
 
 \teszteset{Robot utasítása másik robotra való ráugrásra}%
-{Egy robot ha egy olyan mezőre ugrik melyen már van Robot akkor a megadott feltételek alapján gyengébb haladhat tovább}%
+{Egy robot ha egy olyan mezőre ugrik melyen már van Robot, akkor a megadott feltételek alapján a gyengébb haladhat tovább}%
 {Vizsgálandó, hogy tényleg a megfelelő Robot esik-e ki ebben az állapotban}
 
 \teszteset{Pályáról lelépő robotot elakaszt}%
-{Amennyiben egy robot lelép a pálya határain kívülre akkor ezzel kiesik a játékból, nem tud többet mozogni}%
+{Amennyiben egy robot lelép a pálya határain kívülre, akkor ezzel kiesik a játékból, nem tud többet mozogni}%
 {Az elakasztás megtörténtének megvizsgálása}
 
 \teszteset{Robot utasítása ugrásra}%
-{Egy robotot utasíthatunk arra, hogy ugorjon ezzel mozgást végezve a pályán mely szügséges ahhoz, hogy elérhesse a játék célját}%
+{Egy robotot utasíthatunk arra, hogy ugorjon, ezzel mozgást végezve a pályán, mely szügséges ahhoz, hogy elérhesse a játék célját}%
 {Az ugrás végrehajtásának megtörténtének és más robotokkal ez során végzett interakciók biztosítása}
 
 \teszteset{Olajos mező sebességváltoztatást nem enged}%
-{Egy robotal olajos mezőre lépve az robot azt az akadáéyoztatást szenvedi el, hogy nem változtathatja meg sebességét}%
-{Ellenőrizni, hogy egy ilyen folttal rendelkező mezőn egy a robotnak adott sebességváltoztatás utasítás nem kerül érvényre}
+{Egy robottal olajos mezőre lépve a robot azt az akadályoztatást szenvedi el, hogy nem változtathatja meg sebességét}%
+{Ellenőrizni, hogy egy ilyen folttal rendelkező mezőn egy, a robotnak adott sebességváltoztatás utasítás nem kerül érvényre}
 
 \teszteset{Ragacsos mező sebességet megfelez}%
 {Egy robotal ragacsos mezőre lépve az robot azt az akadályoztatást szenvedi el, hogy sebessége megfeleződik}%
