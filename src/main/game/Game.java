@@ -1,7 +1,6 @@
 package game;
 
 import java.awt.Component;
-import java.util.ArrayList;
 import java.util.List;
 
 import agents.Agent;
@@ -21,7 +20,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     private final GameControllerServer controllerServer;
     private final HumanController humanController;
 
-    public Game(ArrayList<AgentHandle> agents, Map map) {
+    public Game(List<AgentHandle> agents, Map map) {
         controllerServer = new GameControllerServer(this);
         humanController = new HumanController();
 

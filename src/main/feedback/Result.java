@@ -1,12 +1,13 @@
 package feedback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Result {
-    private final ArrayList<String> messages;
+    private final List<String> messages;
 
     public Result() {
-        messages = new ArrayList<String>();/**/
+        messages = new ArrayList<String>();
     }
 
     public void pushMessage(String message) {

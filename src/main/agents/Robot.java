@@ -1,6 +1,7 @@
 package agents;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import buff.Buff;
 import buff.Inventory;
@@ -10,7 +11,7 @@ import commands.AgentCommand;
 import commands.NoFieldCommandException;
 
 public class Robot extends Agent {
-    private ArrayList<Buff> buffs;
+    private List<Buff> buffs;
     private Inventory<Sticky> stickyInventory;
     private Inventory<Oil> oilInventory;
 

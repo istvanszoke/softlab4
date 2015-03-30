@@ -1,6 +1,7 @@
 package game.control;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import agents.Agent;
 import commands.AgentCommand;
@@ -9,9 +10,9 @@ public class GameControllerServer {
 
     private final Object mappingOperationLock;
     private GameControllerServerListener listener;
-    private HashMap<ControlSocket, Agent> socketMapping;
-    private HashMap<Agent, ControlSocket> agentMapping;
-    private HashMap<GameControllerSocket, ControlSocket> globalToLocalMapping;
+    private Map<ControlSocket, Agent> socketMapping;
+    private Map<Agent, ControlSocket> agentMapping;
+    private Map<GameControllerSocket, ControlSocket> globalToLocalMapping;
 
     public GameControllerServer(GameControllerServerListener listener) {
         if (listener != null) {

@@ -2,6 +2,7 @@ package field;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import agents.Agent;
 import agents.Speed;
@@ -11,7 +12,7 @@ import buff.BuffListener;
 public abstract class Field implements FieldElement, BuffListener {
     protected final int distanceFromGoal;
     protected final ArrayList<Buff> buffs;
-    protected final HashMap<Direction, Field> neighbours;
+    protected final Map<Direction, Field> neighbours;
     protected Agent agent;
 
     public Field(int distanceFromGoal) {

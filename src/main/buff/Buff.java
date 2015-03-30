@@ -1,6 +1,7 @@
 package buff;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import agents.AgentVisitor;
 import agents.Robot;
@@ -15,7 +16,7 @@ import feedback.NoFeedbackException;
 import feedback.Result;
 
 public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor {
-    protected ArrayList<BuffListener> listeners;
+    protected List<BuffListener> listeners;
 
     public Buff() {
         listeners = new ArrayList<BuffListener>();

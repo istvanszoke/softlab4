@@ -1,13 +1,14 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import field.*;
 import game.handle.AgentHandle;
 
 public final class GameCreator {
     private Map map;
-    private ArrayList<AgentHandle> agents;
+    private List<AgentHandle> agents;
 
     public GameCreator() {
         map = new Map();
