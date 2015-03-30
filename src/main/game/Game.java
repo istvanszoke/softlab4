@@ -8,7 +8,6 @@ import game.control.GameControllerSocket;
 import game.control.HumanController;
 import game.handle.AgentHandle;
 import game.handle.HandleListener;
-import game.handle.HandleStore;
 
 
 import java.awt.Component;
@@ -17,7 +16,7 @@ import java.util.List;
 
 
 public class Game implements GameControllerServerListener, HeartbeatListener, HandleListener {
-    private final HandleStore handleStore;
+    private final GameStorage gameStorage;
     private final Map map;
 
     private final GameControllerServer controllerServer;
@@ -27,24 +26,24 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         controllerServer = new GameControllerServer(this);
         humanController = new HumanController();
 
-        handleStore = new HandleStore(agents);
+        gameStorage = new GameStorage(agents);
 
         this.map = map;
 
         placeAgents();
         setAgentControllers();
-        Heartbeat.subscribe(handleStore);
+        Heartbeat.subscribe(gameStorage);
         Heartbeat.subscribe(this);
     }
 
     public void start() {
-        register(handleStore.getCurrent());
+        register(gameStorage.getCurrent());
         Heartbeat.resume();
     }
 
     public void pause() {
         Heartbeat.pause();
-        deregister(handleStore.getCurrent());
+        deregister(gameStorage.getCurrent());
     }
 
     public void registerController(Component component) {
@@ -58,7 +57,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     @Override
     public void onAgentChange(Agent agent) {
         Heartbeat.pause();
-        AgentHandle handle = handleStore.get(agent);
+        AgentHandle handle = gameStorage.get(agent);
 
         if (handle == null) {
             return;
@@ -72,9 +71,8 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.pause();
 
         deregister(handle);
-        handleStore.update();
-        handleStore.advance();
-        register(handleStore.getCurrent());
+        gameStorage.update();
+        register(gameStorage.getCurrent());
 
         Heartbeat.resume();
     }
@@ -84,7 +82,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.pause();
 
         deregister(handle);
-        handleStore.update();
+        gameStorage.update();
 
         System.out.println("Timed out " + handle);
 
@@ -93,9 +91,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
             return;
         }
 
-
-        handleStore.advance();
-        register(handleStore.getCurrent());
+        register(gameStorage.getCurrent());
 
         Heartbeat.resume();
     }
@@ -106,7 +102,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.pause();
 
         deregister(handle);
-        handleStore.update();
+        gameStorage.update();
 
         System.out.println("Killed " + handle);
 
@@ -115,10 +111,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
             return;
         }
 
-
-        handleStore.advance();
-        register(handleStore.getCurrent());
-
+        register(gameStorage.getCurrent());
         Heartbeat.resume();
     }
 
@@ -129,7 +122,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     }
 
     private void placeAgents() {
-        List<AgentHandle> inPlay = handleStore.getInPlay();
+        List<AgentHandle> inPlay = gameStorage.getInPlay();
         List<Field> startingFields = map.findStartingPositions(inPlay.size());
 
         for (int i = 0; i < inPlay.size(); ++i) {
@@ -145,7 +138,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     }
 
     private void setAgentControllers() {
-        for (AgentHandle player : handleStore) {
+        for (AgentHandle player : gameStorage) {
             Agent agent = player.getAgent();
             GameControllerSocket socket = controllerServer.createSocketForAgent(agent);
             humanController.addControllerSocket(socket);
@@ -155,7 +148,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     //TODO: Real game finishing logic
     private void endGame() {
         pause();
-        Heartbeat.unsubscribe(handleStore);
+        Heartbeat.unsubscribe(gameStorage);
         Heartbeat.unsubscribe(this);
         System.out.println("Game finished");
     }
@@ -171,12 +164,12 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     }
 
     private boolean isGameOver() {
-        if (!handleStore.canAdvance()) {
+        if (gameStorage.getPlayers().isEmpty()) {
             return true;
         }
 
-        for (AgentHandle handle : handleStore.getInPlay()) {
-            if (handle.isPlayer()) {
+        for (AgentHandle handle : gameStorage.getPlayers()) {
+            if (!handle.isDisqualified()) {
                 return false;
             }
         }
