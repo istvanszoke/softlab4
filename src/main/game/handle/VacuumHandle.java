@@ -17,16 +17,6 @@ public class VacuumHandle extends AgentHandle {
     }
 
     @Override
-    public boolean isDisqualified() {
-        return turnsRemaining <= 0;
-    }
-
-    @Override
-    public boolean isPlayer() {
-        return false;
-    }
-
-    @Override
     public void onTurnEnd() {
         turnsRemaining -= 1;
 
@@ -42,4 +32,14 @@ public class VacuumHandle extends AgentHandle {
 
     @Override
     public void setTimeRemaining(long seconds) { }
+
+    @Override
+    public boolean isDisqualified() {
+        return turnsRemaining <= 0;
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return false;
+    }
 }

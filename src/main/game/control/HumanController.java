@@ -101,7 +101,9 @@ public class HumanController extends KeyAdapter implements GameControllerSocketL
 
     private GameControllerSocket searchForActiveSocket() {
         for (GameControllerSocket socket : sockets) {
-            if (socket.isOpen()) { return socket; }
+            if (socket.isOpen()) {
+                return socket;
+            }
         }
         return null;
     }

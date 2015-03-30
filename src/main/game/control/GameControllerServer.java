@@ -100,7 +100,11 @@ public class GameControllerServer {
         boolean isOpened = false;
 
         private ControlSocket(GameControllerServer server) {
-            if (server != null) { this.server = server; } else { throw new NullPointerException(); }
+            if (server != null) {
+                this.server = server;
+            } else {
+                throw new NullPointerException();
+            }
         }
 
         @Override
@@ -127,12 +131,16 @@ public class GameControllerServer {
         }
 
         private void notifySocketOpened() {
-            if (clientToNofify != null) { clientToNofify.socketOpened(this); }
+            if (clientToNofify != null) {
+                clientToNofify.socketOpened(this);
+            }
             isOpened = true;
         }
 
         private void notifySocketClosed() {
-            if (clientToNofify != null) { clientToNofify.socketClosed(this); }
+            if (clientToNofify != null) {
+                clientToNofify.socketClosed(this);
+            }
             isOpened = false;
         }
     }

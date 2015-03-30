@@ -15,16 +15,6 @@ public class PlayerHandle extends AgentHandle {
         return new PlayerHandle(new Robot(), roundTime);
     }
 
-    @Override
-    public boolean isDisqualified() {
-        return getTimeRemaining() <= 0 || agent.isDead();
-    }
-
-    @Override
-    public boolean isPlayer() {
-        return true;
-    }
-
     public synchronized long getTimeRemaining() {
         return timeRemaining;
     }
@@ -36,5 +26,15 @@ public class PlayerHandle extends AgentHandle {
         if (timeRemaining <= 0) {
             listener.onOutOfTime(this);
         }
+    }
+
+    @Override
+    public boolean isDisqualified() {
+        return getTimeRemaining() <= 0 || agent.isDead();
+    }
+
+    @Override
+    public boolean isPlayer() {
+        return true;
     }
 }
