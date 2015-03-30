@@ -79,23 +79,98 @@ ez a funkció csak a tesztelői input rövidítésére szolgál. Viszont nem has
 A -log kapcsoló lehetőséget ad a logok szintjének állítására például all/test/debug. \\
 
 \subsection{Bemeneti nyelv}
-\comment{Definiálni kell a teszteket leíró nyelvet. Külön figyelmet kell fordítani arra, hogy ha a rendszer véletlen elemeket is tartalmaz, akkor a véletlenszerűség ki-bekapcsolható legyen, és a program determinisztikusan is futtatható legyen. A szálkezelést is tesztelhető, irányítható módon kell megoldani.}
+A bemeneti nyelv az alábbi általános szintaxist használja: 
+
+\lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
+\begin{lstlisting}
+parancs(arg1=ertek1, arg2=ertek2, arg3=ertek3)
+\end{lstlisting}
+
+\noindent A parancs végét a sor vége jelzi. Bármely parancs tetszőleges számú szóközzel tagolható, de a kis- és nagybetűket megkülönböztetik: az előző példával így egyenértékű például:
+
+\lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
+\begin{lstlisting}
+parancs (arg1 = ertek1,arg2 = ertek2,arg3 = ertek3)
+\end{lstlisting}
+
+\noindent De külöböző tőle:
+
+\lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
+\begin{lstlisting}
+PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
+\end{lstlisting}
 
 \begin{itemize}
-\item Parancs1
+
+    \item jatek(szam=n, ido=m, palya=nev.map)
 	\begin{itemize}
-	\item Leírás:
-	\item Opciók:
+	    \item Leírás: Új játék kezdésére használt parancs.
+	    \item Opciók:
+            \begin{itemize}
+                \item szam: a játékosok száma (2-4)
+                \item ido: az egy játékosra jutó köridő
+                \item palya: a betöltendő pálya neve
+            \end{itemize}
 	\end{itemize}
-\item Parancs2
-	\begin{itemize}
-	\item Leírás:
-	\item Opciók:
-	\end{itemize}
+    
+    \item betolt(nev=allas.sav)
+    \begin{itemize}
+        \item Leírás: Egy mentett játékállás betöltése
+        \item Opciók: 
+            \begin{itemize}
+                \item nev: a mentett játékallás neve
+            \end{itemize}
+    \end{itemize}
+    
+    \item ment(nev=allas.sav)
+    \begin{itemize}
+         \item Leírás: Az aktuális játékállás elmentése
+         \item Opciók: 
+             \begin{itemize}
+                 \item nev: a mentett játékallás neve
+             \end{itemize}
+    \end{itemize}
+
+    \item ugrik()
+    \begin{itemize}
+        \item Leírás: Az aktuálisan soron lévő ágenset utasítja ugrásra
+        \item Opciók: 
+    \end{itemize}
+    
+    \item irvalt(irany=IRANY)
+    \begin{itemize}
+        \item Leírás: Az aktuálisan soron lévő ágens sebességének irányát változtatja meg
+        \item Opciók: 
+            \begin{itemize}
+                \item irany: az új irány (lehetséges értékek: FEL, LE, BAL, JOBB)
+            \end{itemize}
+    \end{itemize}
+    
+    \item sebvalt(delta=n)
+    \begin{itemize}
+        \item Leírás: Az aktuálisan soron lévő ágens sebességének nagyságát változtatja
+        \item Opciók: 
+            \begin{itemize}
+                \item delta: A változtatás nagysága (a program felülírhatja a felhasználó döntését, amennyiben az kívül esik az általa várt tartományon) 
+            \end{itemize}
+    \end{itemize}
+
+    \item olajlerak()
+    \begin{itemize}
+        \item Leírás: Az aktuálisan soron lévő ágenset utasítja egy olajfolt lehelyezésére
+        \item Opciók: 
+    \end{itemize}
+
+    \item ragacslerak()
+    \begin{itemize}
+        \item Leírás: Az aktuálisan soron lévő ágenset utasítja egy ragacsfolt lehelyezésére
+        \item Opciók: 
+    \end{itemize}
 
 \end{itemize}
 
-\comment{Ha szükséges, meg kell adni a konfigurációs (pl. pályaképet megadó) fájlok nyelvtanát is.}
+\noindent A pályaképet a Java beépített szerializációs formátumában tároljuk, erről részletes leírás az alábbi linken olvasható:\\
+\url{http://docs.oracle.com/javase/7/docs/platform/serialization/spec/serialTOC.html}
 
 \subsection{Kimeneti nyelv}
 \comment{Egyértelműen definiálni kell, hogy az egyes bemeneti parancsok végrehajtása után előálló állapot milyen formában jelenik meg a szabványos kimeneten.}
