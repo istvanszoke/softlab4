@@ -1,5 +1,7 @@
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.WindowConstants;
+import java.awt.KeyboardFocusManager;
 
 import game.Game;
 import game.GameCreator;

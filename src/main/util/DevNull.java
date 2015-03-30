@@ -8,6 +8,8 @@ import game.handle.HandleListener;
 public final class DevNull implements HandleListener, BuffListener {
     public static final DevNull SINK = new DevNull();
 
+    private DevNull() { }
+
     @Override
     public void onRegularTurn(AgentHandle handle) { }
 
@@ -19,6 +21,4 @@ public final class DevNull implements HandleListener, BuffListener {
 
     @Override
     public void onRemove(Buff buff) { }
-
-    private DevNull() { }
 }

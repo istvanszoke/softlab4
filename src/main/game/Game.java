@@ -1,5 +1,9 @@
 package game;
 
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
+
 import agents.Agent;
 import field.Field;
 import game.control.GameControllerServer;
@@ -8,11 +12,6 @@ import game.control.GameControllerSocket;
 import game.control.HumanController;
 import game.handle.AgentHandle;
 import game.handle.HandleListener;
-
-
-import java.awt.Component;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Game implements GameControllerServerListener, HeartbeatListener, HandleListener {

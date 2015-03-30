@@ -1,9 +1,9 @@
 package game.control;
 
+import java.util.HashMap;
+
 import agents.Agent;
 import commands.AgentCommand;
-
-import java.util.HashMap;
 
 public class GameControllerServer {
 

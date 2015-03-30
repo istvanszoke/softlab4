@@ -1,13 +1,13 @@
 package game.control;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 import commands.AgentCommand;
 import commands.executes.KillExecute;
 import commands.queries.*;
 import field.Direction;
-
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 public class HumanController extends KeyAdapter implements GameControllerSocketListener {
     private final ArrayList<GameControllerSocket> sockets;

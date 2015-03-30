@@ -1,9 +1,9 @@
 package game;
 
+import java.util.ArrayList;
+
 import field.*;
 import game.handle.AgentHandle;
-
-import java.util.ArrayList;
 
 public final class GameCreator {
     private Map map;
