@@ -229,9 +229,65 @@ Alábbi táblázat minden use-case-hez külön-külön.}
 
 
 \section{Tesztelési terv}
-\comment{A tesztelési tervben definiálni kell, hogy a be- és kimeneti fájlok egybevetésével miként végezhető el a program tesztelése. Meg kell adni teszt forgatókönyveket. Az egyes teszteket elég informálisan, szabad szövegként leírni. Teszt-esetenként egy-öt mondatban. Minden teszthez meg kell adni, hogy mi a célja, a proto mely funkcionalitását, osztályait stb. teszteli. Az alábbi táblázat minden teszt-esethez külön-külön elkészítendő.}
+%\comment{A tesztelési tervben definiálni kell, hogy a be- és kimeneti fájlok egybevetésével miként végezhető el a program tesztelése. Meg kell adni teszt forgatókönyveket. Az egyes teszteket elég informálisan, szabad szövegként leírni. Teszt-esetenként egy-öt mondatban. Minden teszthez meg kell adni, hogy mi a célja, a proto mely funkcionalitását, osztályait stb. teszteli. Az alábbi táblázat minden teszt-esethez külön-külön elkészítendő.}
 
-\teszteset{...}{...}{...}
+Tesztelést egy összetett parancssorozat végrehajtásával fogjuk elvégezni. Egy általunk megtervezett paranccsorozatot készítünk a bemeneti nyelven melyet az "Az interfész általános leírása" részben leírt módon átadunk a programnak. Tartalmazni fogja a felsorolt tesztesetek minden elemét oly módon hogy azokkal vizsgálható legyen a helyes működésnek a menete az esetlegesen játék szabályait nem követő utasítások ellenében is. Valamint előre elkészül egy kimeneti nyelven megírt helyes végrehajtásra utaló kimenet melyet a program össze tud vetni az általa generált kimenettel. A felhasználó számára pedig mutatja az egyező és eltérő sorokat is. 
+
+\teszteset{Új játék indítása}%
+{Elindítunk egy új játékmenetet}%
+{Meggyőződés arról, hogy a program képes a játékkörnyezetet kialakítani vagy betölteni a megadott paraméterek alapján}
+
+\teszteset{Új játék paramétereinek megadása}%
+{Beállíthatjuk milyen pályán kívánnak a felhasználók játszani és hányan.}%
+{Megvizsgálni, hogy tényleg megfelelően tárolódtak-e el a megadott paraméterek mely az új játékmenet kialakításához kell}
+
+\teszteset{Pálya betöltése}%
+{Eltárolt pályának a betöltése a játékhoz}%
+{Meggyőzödhetünk általa, hogy az elmentett pála betöltését a program el tudja-e megfelelően végezni}
+
+\teszteset{Új táték indítása}%
+{Elindítunk egy új játékmenetet}%
+{Meggyőződés arról, hogy a program képes a játékkörnyezetet kialakítani vagy betölteni a megadott paraméterek alapján}
+
+\teszteset{Robot sebességének változtatása}%
+{Egy robot sebességét mely az ugrásának a vektoriális elmozdulását adja tudjuk így meghatározni}%
+{A sebesség tényleges megválozásának kimutatása és meghatározása}
+
+\teszteset{Robot utasítása olaj lehelyezésére}%
+{Egy robotot utasíthatunk arra, hogy a pályán hagyjon ott egy olajfoltot mellyel más játékosokat hátráltatni tud}%
+{Az lehelyezés elvégézésének a biztosítása}
+
+\teszteset{Robot utasítása ragacs lehelyezésére}%
+{Egy robotot utasíthatunk arra, hogy a pályán hagyjon ott egy ragacsfoltot mellyel más játékosokat hátráltatni tud}%
+{Az lehelyezés elvégézésének a biztosítása}
+
+\teszteset{Robot utasítása ugrásra}%
+{Egy robotot utasíthatunk arra, hogy ugorjon ezzel mozgást végezve a pályán mely szügséges ahhoz, hogy elérhesse a játék célját}%
+{Az ugrás végrehajtásának megtörténtének és más robotokkal ez során végzett interakciók biztosítása valamint az irányítás következp játékosnak való átadása}
+
+\teszteset{Robot utasítása másik robotra való ráugrásra}%
+{Egy robot ha egy olyan mezőre ugrik melyen már van Robot akkor a megadott feltételek alapján gyengébb haladhat tovább}%
+{Vizsgálandó, hogy tényleg a megfelelő Robot esik-e ki ebben az állapotban}
+
+\teszteset{Pályáról lelépő robotot elakaszt}%
+{Amennyiben egy robot lelép a pálya határain kívülre akkor ezzel kiesik a játékból, nem tud többet mozogni}%
+{Az elakasztás megtörténtének megvizsgálása}
+
+\teszteset{Robot utasítása ugrásra}%
+{Egy robotot utasíthatunk arra, hogy ugorjon ezzel mozgást végezve a pályán mely szügséges ahhoz, hogy elérhesse a játék célját}%
+{Az ugrás végrehajtásának megtörténtének és más robotokkal ez során végzett interakciók biztosítása}
+
+\teszteset{Olajos mező sebességváltoztatást nem enged}%
+{Egy robotal olajos mezőre lépve az robot azt az akadáéyoztatást szenvedi el, hogy nem változtathatja meg sebességét}%
+{Ellenőrizni, hogy egy ilyen folttal rendelkező mezőn egy a robotnak adott sebességváltoztatás utasítás nem kerül érvényre}
+
+\teszteset{Ragacsos mező sebességet megfelez}%
+{Egy robotal ragacsos mezőre lépve az robot azt az akadályoztatást szenvedi el, hogy sebessége megfeleződik}%
+{Ellenőrizni, hogy egy ilyen folttal rendelkező mezőn egy a robotnak a sebessége valóban megfeleződik}
+
+\teszteset{Takarító robot működésének ellenőrzése}%
+{A pályán időnként megjelenő takarító robotok melyek a foltokat takarítják le a pályáról}%
+{Cél hogy ellenőrizzük, hogy ezek a robotok valóban találnak-e koszos mezőt és azt letakarítják-e}
 
 \section{Tesztelést támogató segéd- és fordítóprogramok specifikálása}
 A csapat a tesztelést támogató progamot egy egyszerű különbségellenőrzőnek képzeli el, mely képes a kimenetet egy referenciafilelal összehasonlítva megmondani,
