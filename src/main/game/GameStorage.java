@@ -88,7 +88,7 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
 
     private void cleanup() {
         Iterator<AgentHandle> i = all.iterator();
-        while(i.hasNext()) {
+        while (i.hasNext()) {
             AgentHandle next = i.next();
             if (next != current && next.isDisqualified() && !next.isPlayer()) {
                 inPlay.remove(next);
@@ -100,7 +100,7 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
 
     private void disqualify() {
         Iterator<AgentHandle> i = inPlay.iterator();
-        while(i.hasNext()) {
+        while (i.hasNext()) {
             AgentHandle next = i.next();
             if (next != current && next.isDisqualified()) {
                 i.remove();

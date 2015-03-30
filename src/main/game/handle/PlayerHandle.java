@@ -6,22 +6,13 @@ import agents.Robot;
 public class PlayerHandle extends AgentHandle {
     private long timeRemaining;
 
-    public static PlayerHandle createRobot(int roundTime) {
-        return new PlayerHandle(new Robot(), roundTime);
-    }
-
     private PlayerHandle(Agent agent, long timeRemaining) {
         super(agent);
         this.timeRemaining = timeRemaining * 1000;
     }
 
-    @Override
-    public synchronized void setTimeRemaining(long milliseconds) {
-        timeRemaining = milliseconds;
-
-        if (timeRemaining <= 0) {
-            listener.onOutOfTime(this);
-        }
+    public static PlayerHandle createRobot(int roundTime) {
+        return new PlayerHandle(new Robot(), roundTime);
     }
 
     @Override
@@ -36,5 +27,14 @@ public class PlayerHandle extends AgentHandle {
 
     public synchronized long getTimeRemaining() {
         return timeRemaining;
+    }
+
+    @Override
+    public synchronized void setTimeRemaining(long milliseconds) {
+        timeRemaining = milliseconds;
+
+        if (timeRemaining <= 0) {
+            listener.onOutOfTime(this);
+        }
     }
 }

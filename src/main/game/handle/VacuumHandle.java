@@ -6,18 +6,15 @@ import agents.Robot;
 public class VacuumHandle extends AgentHandle {
     private int turnsRemaining;
 
-    //TODO: Return the correct Agent type
-    public static VacuumHandle createVacuum() {
-        return new VacuumHandle(new Robot());
-    }
-
     private VacuumHandle(Agent agent) {
         super(agent);
         turnsRemaining = 2;
     }
 
-    @Override
-    public void setTimeRemaining(long seconds) { }
+    //TODO: Return the correct Agent type
+    public static VacuumHandle createVacuum() {
+        return new VacuumHandle(new Robot());
+    }
 
     @Override
     public boolean isDisqualified() {
@@ -42,4 +39,7 @@ public class VacuumHandle extends AgentHandle {
     public long getTimeRemaining() {
         return 1;
     }
+
+    @Override
+    public void setTimeRemaining(long seconds) { }
 }

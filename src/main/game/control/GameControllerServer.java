@@ -7,64 +7,11 @@ import java.util.HashMap;
 
 public class GameControllerServer {
 
-    private class ControlSocket implements GameControllerSocket {
-
-        GameControllerSocketListener clientToNofify = null;
-        GameControllerServer server;
-        boolean isOpened = false;
-
-        private ControlSocket(GameControllerServer server) {
-            if (server != null)
-                this.server = server;
-            else
-                throw new NullPointerException();
-        }
-
-        @Override
-        public boolean isOpen() { return isOpened; }
-
-        @Override
-        public boolean sendEndTurn() {
-            return isOpened && server.receiveEndTurn(this);
-        }
-
-        @Override
-        public boolean sendAgentCommand(AgentCommand command) {
-            return isOpened && server.receiveAgentCommand(this, command);
-        }
-
-        @Override
-        public void enableStateNotification(GameControllerSocketListener client) {
-            clientToNofify = client;
-        }
-
-        @Override
-        public void disableStateNotification() {
-            clientToNofify = null;
-        }
-
-        private void notifySocketOpened() {
-            if (clientToNofify != null)
-                clientToNofify.socketOpened(this);
-            isOpened = true;
-        }
-
-        private void notifySocketClosed() {
-            if (clientToNofify != null)
-                clientToNofify.socketClosed(this);
-            isOpened = false;
-        }
-    }
-
+    private final Object mappingOperationLock;
     private GameControllerServerListener listener;
-    private HashMap<ControlSocket, Agent> socketMapping
-            = new HashMap<ControlSocket, Agent>();
-    private HashMap<Agent, ControlSocket> agentMapping
-            = new HashMap<Agent, ControlSocket>();
-    private HashMap<GameControllerSocket, ControlSocket> globalToLocalMapping
-            = new HashMap<GameControllerSocket, ControlSocket>();
-    private final Object mappingOperationLock
-            = new Object();
+    private HashMap<ControlSocket, Agent> socketMapping;
+    private HashMap<Agent, ControlSocket> agentMapping;
+    private HashMap<GameControllerSocket, ControlSocket> globalToLocalMapping;
 
     public GameControllerServer(GameControllerServerListener listener) {
         if (listener != null) {
@@ -72,6 +19,11 @@ public class GameControllerServer {
         } else {
             throw new NullPointerException();
         }
+
+        mappingOperationLock = new Object();
+        socketMapping = new HashMap<ControlSocket, Agent>();
+        agentMapping = new HashMap<Agent, ControlSocket>();
+        globalToLocalMapping = new HashMap<GameControllerSocket, ControlSocket>();
     }
 
     private boolean receiveEndTurn(GameControllerSocket client) {
@@ -138,6 +90,50 @@ public class GameControllerServer {
     public void notifyControllerSocketClosed(Agent agent) {
         if (agentMapping.containsKey(agent)) {
             agentMapping.get(agent).notifySocketClosed();
+        }
+    }
+
+    private class ControlSocket implements GameControllerSocket {
+
+        GameControllerSocketListener clientToNofify = null;
+        GameControllerServer server;
+        boolean isOpened = false;
+
+        private ControlSocket(GameControllerServer server) {
+            if (server != null) { this.server = server; } else { throw new NullPointerException(); }
+        }
+
+        @Override
+        public boolean isOpen() { return isOpened; }
+
+        @Override
+        public boolean sendEndTurn() {
+            return isOpened && server.receiveEndTurn(this);
+        }
+
+        @Override
+        public boolean sendAgentCommand(AgentCommand command) {
+            return isOpened && server.receiveAgentCommand(this, command);
+        }
+
+        @Override
+        public void enableStateNotification(GameControllerSocketListener client) {
+            clientToNofify = client;
+        }
+
+        @Override
+        public void disableStateNotification() {
+            clientToNofify = null;
+        }
+
+        private void notifySocketOpened() {
+            if (clientToNofify != null) { clientToNofify.socketOpened(this); }
+            isOpened = true;
+        }
+
+        private void notifySocketClosed() {
+            if (clientToNofify != null) { clientToNofify.socketClosed(this); }
+            isOpened = false;
         }
     }
 }

@@ -1,10 +1,9 @@
 package game;
 
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Heartbeat {
-    public static final int RESOLUTION = 500  ;
+    public static final int RESOLUTION = 500;
 
     private static List<HeartbeatListener> listeners;
     private static List<HeartbeatListener> toAdd;

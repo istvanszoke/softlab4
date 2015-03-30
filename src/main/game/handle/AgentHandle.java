@@ -34,7 +34,10 @@ public abstract class AgentHandle {
     }
 
     public abstract long getTimeRemaining();
+
     public abstract void setTimeRemaining(long milliseconds);
+
     public abstract boolean isDisqualified();
+
     public abstract boolean isPlayer();
 }
