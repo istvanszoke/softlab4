@@ -2,10 +2,10 @@
 
 from __future__ import print_function
 
-import os
+import struct
+import sys
 
-from . import format
-from lib.scripts.format import *
+from lib.scripts import format
 
 
 def get_terminal_size():
@@ -13,64 +13,59 @@ def get_terminal_size():
     current_os = platform.system()
 
     if current_os == "Windows":
-        return get_terminal_size_windows()
+        return _get_terminal_size_windows()
     else:
-        return get_terminal_size_linux()
+        return _get_terminal_size_linux()
 
 
-def get_terminal_size_windows():
-    res = None
+def _get_terminal_size_windows():
     try:
         from ctypes import windll, create_string_buffer
         h = windll.kernel32.GetStdHandle(-12)
-        csbi = create_string_buffer(22)
-        res = windll.kernel32.GetConsoleScreenBufferInfo(h, csbi)
-    except:
+        str_buffer = create_string_buffer(22)
+        res = windll.kernel32.GetConsoleScreenBufferInfo(h, str_buffer)
+    except OSError:
         return 80, 25
+
     if res is not None:
-        import struct
-        (bufx, bufy, curx, cury, wattr,
-         left, top, right, bottom, maxx, maxy) = struct.unpack("hhhhHhhhhhh", csbi.raw)
-        sizex = right - left + 1
-        sizey = bottom - top + 1
-        return sizex, sizey
+        (_, _, _, _, _,
+         left, top, right, bottom, _, _) = struct.unpack("hhhhHhhhhhh", str_buffer.raw)
+        size_x = right - left + 1
+        size_y = bottom - top + 1
+        return size_x, size_y
     else:
         return 80, 25
 
 
-def get_terminal_size_linux():
+def _get_terminal_size_linux():
     import fcntl
     import termios
-    import struct
-
     try:
-        hw = struct.unpack('hh', fcntl.ioctl(1, termios.TIOCGWINSZ, '1234'))
-    except struct.error:
-        try:
-            hw = (os.environ['LINES'], os.environ['COLUMNS'])
-        except KeyError:
-            hw = (80, 25)
-
-    return hw
+        h, w, _, _ = struct.unpack('HHHH',
+                                   fcntl.ioctl(sys.stdout.fileno(),
+                                               termios.TIOCGWINSZ,
+                                               struct.pack('HHHH', 0, 0, 0, 0)))
+        return w, h
+    except OSError:
+        return 80, 25
 
 
 def info(message):
-    print(format.ascii_format(message + " [INFO]", Colors.BOLD))
+    print(format.ascii_format(message + " [INFO]", format.Colors.BOLD))
 
 
 def success(message):
-    print(format.ascii_format(message + " [SUCCESS]", Colors.SUCCESS))
+    print(format.ascii_format(message + " [SUCCESS]", format.Colors.SUCCESS))
 
 
 def warning(message):
-    print(format.ascii_format(message + " [WARNING]", Colors.WARNING))
+    print(format.ascii_format(message + " [WARNING]", format.Colors.WARNING))
 
 
 def error(message):
-    print(format.ascii_format(message + " [ERROR]", Colors.ERROR))
+    print(format.ascii_format(message + " [ERROR]", format.Colors.ERROR))
 
 
 def separator(message=""):
-    (columns, rows) = get_terminal_size()
-    print(format.ascii_format(message.center(columns, '='), Colors.BOLD))
-
+    (columns, _) = get_terminal_size()
+    print(format.ascii_format(message.center(columns, '='), format.Colors.BOLD))

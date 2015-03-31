@@ -28,18 +28,8 @@ def supports_color():
 def ascii_format(message, *fmt):
     if not supports_color():
         return message
-    
-    ret = ""
-    for f in fmt:
-        ret += f
+
+    ret = "".join(fmt)
     ret += message
     ret += Colors.END * len(fmt)
     return ret
-
-
-def ascii_format_regex(regex, text, *fmt):
-    ret = text
-    for match in regex.findall(text):
-        ret = ret.replace(match, ascii_format(match, *fmt))
-    return ret
-
