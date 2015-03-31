@@ -1,5 +1,6 @@
 package agents;
 
+import commands.executes.KillExecute;
 import field.Direction;
 import field.Field;
 
@@ -50,8 +51,10 @@ public abstract class Agent implements AgentElement {
     // TODO: Proper collision implementation. Might have to change Speed logic to use vectors
     public Agent collide(Agent agent) {
         if (getSpeed().getMagnitude() < agent.getSpeed().getMagnitude()) {
+            this.accept(new KillExecute());
             return agent;
         }
+        agent.accept(new KillExecute());
         return this;
     }
 }

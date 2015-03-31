@@ -1,10 +1,12 @@
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.WindowConstants;
+import java.awt.KeyboardFocusManager;
 
 import game.Game;
 import game.GameCreator;
 import game.KeyDispatcher;
-import game.Player;
+import game.handle.PlayerHandle;
 
 public class Main extends JFrame {
     public static void main(String[] args) {
@@ -33,11 +35,9 @@ public class Main extends JFrame {
     private void gameLoop() {
         int roundTime = 10;
 
-        Game game = new GameCreator()
-                .setRoundTime(roundTime)
-                .addPlayer(Player.createRobot(roundTime))
-                .addPlayer(Player.createRobot(roundTime))
-                .generateTestMap(10, 10)
+        Game game = new GameCreator().generateTestMap(10, 10)
+                .addAgent(PlayerHandle.createRobot(roundTime))
+                .addAgent(PlayerHandle.createRobot(roundTime))
                 .create();
 
         if (game == null) {
