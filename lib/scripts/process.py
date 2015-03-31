@@ -12,8 +12,9 @@ from lib.scripts import debug
 def run_or_die(command, cwd, encoding="utf-8",
                output_function=lambda out: print(out),
                error_message=None):
+    split_command = shlex.split(command)
     try:
-        result = subprocess.check_output(shlex.split(command), cwd=cwd).decode(encoding)
+        result = subprocess.check_output(split_command, cwd=cwd).decode(encoding)
         output_function(result)
         return result
 
@@ -23,3 +24,7 @@ def run_or_die(command, cwd, encoding="utf-8",
         if error_message is not None:
             debug.error(error_message)
         sys.exit(error.returncode)
+
+    except OSError:
+        debug.error("{0} could not be found on this machine".format(split_command[0]))
+        sys.exit(1)
