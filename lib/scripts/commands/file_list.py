@@ -55,7 +55,7 @@ def get_date(path):
     timezone = re.compile(r" \+[0-9]+$")
     seconds = re.compile(r":[0-9][0-9]\n", re.M)
 
-    output = timezone.sub("", result[0])
+    output = timezone.sub("", result)
     output = seconds.sub("~", output)
     output = output.replace(" ", "~")
     output = output.replace("-", ".")
