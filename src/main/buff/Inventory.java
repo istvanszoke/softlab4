@@ -1,9 +1,10 @@
 package buff;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Inventory<T extends Buff> {
-    private final ArrayList<T> inventory;
+    private final List<T> inventory;
 
     public Inventory() {
         inventory = new ArrayList<T>();

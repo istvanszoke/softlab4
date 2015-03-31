@@ -14,12 +14,12 @@ public class Oil extends Buff implements HeartbeatListener {
     }
 
     @Override
-    public void visit(ChangeSpeedTransmit command) {
+    public void visit(ChangeDirectionTransmit command) {
         command.setExecutable(false);
     }
 
     @Override
-    public void visit(ChangeDirectionTransmit command) {
+    public void visit(ChangeSpeedTransmit command) {
         command.setExecutable(false);
     }
 

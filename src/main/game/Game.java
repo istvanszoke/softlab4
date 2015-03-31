@@ -1,91 +1,51 @@
 package game;
 
+import java.awt.Component;
+import java.util.List;
+
 import agents.Agent;
 import field.Field;
 import game.control.GameControllerServer;
 import game.control.GameControllerServerListener;
 import game.control.GameControllerSocket;
 import game.control.HumanController;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import game.handle.AgentHandle;
+import game.handle.HandleListener;
 
 
-public class Game implements GameControllerServerListener, HeartbeatListener {
-    private final int roundTime;
-
-    private final ArrayList<Player> players;
-    private final ArrayList<Player> disqualified;
+public class Game implements GameControllerServerListener, HeartbeatListener, HandleListener {
+    private final GameStorage gameStorage;
     private final Map map;
 
     private final GameControllerServer controllerServer;
     private final HumanController humanController;
-    private Player currentPlayer;
 
-    public Game(ArrayList<Player> players, Map map, int roundTime) {
+    public Game(List<AgentHandle> agents, Map map) {
         controllerServer = new GameControllerServer(this);
         humanController = new HumanController();
-        this.roundTime = roundTime;
 
-        this.players = players;
-        disqualified = new ArrayList<Player>();
-        currentPlayer = players.get(0);
+        gameStorage = new GameStorage(agents);
 
         this.map = map;
 
         placeAgents();
         setAgentControllers();
+        Heartbeat.subscribe(gameStorage);
         Heartbeat.subscribe(this);
     }
 
     public void start() {
-        controllerServer.notifyControllerSocketOpened(getCurrentAgent());
+        register(gameStorage.getCurrent());
         Heartbeat.resume();
     }
 
     public void pause() {
         Heartbeat.pause();
-        controllerServer.notifyControllerSocketClosed(getCurrentAgent());
-    }
-
-    public void reset() {
-        pause();
-
-        players.addAll(disqualified);
-        disqualified.clear();
-        for (Player player : players) {
-            player.setTimeRemaining(roundTime * 1000);
-        }
-
-        for (Field f : map) {
-            f.onExit();
-        }
-        placeAgents();
-
-        setCurrentPlayer(players.get(0));
-    }
-
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
-    public ArrayList<Player> getDisqualified() {
-        return disqualified;
+        deregister(gameStorage.getCurrent());
     }
 
     public void registerController(Component component) {
         component.addKeyListener(humanController);
-    }
-
-    public Agent getCurrentAgent() {
-        Player player = getCurrentPlayer();
-
-        if (player == null) {
-            return null;
-        }
-
-        return player.getAgent();
     }
 
     public Map getMap() {
@@ -93,84 +53,125 @@ public class Game implements GameControllerServerListener, HeartbeatListener {
     }
 
     @Override
-    public void onAgentChange() {
+    public void onAgentChange(Agent agent) {
         Heartbeat.pause();
-        Player player = getCurrentPlayer();
+        AgentHandle handle = gameStorage.get(agent);
 
-        if (player == null) {
-            return;
-        }
-	
-        controllerServer.notifyControllerSocketClosed(player.getAgent());
-        int currentIndex = players.indexOf(player);
-
-        if (player.isOutOfTime() || player.getAgent().isDead()) {
-            players.remove(player);
-            disqualified.add(player);
-            currentIndex -= 1;
-        }
-
-        if (players.isEmpty()) {
-            endGame();
+        if (handle == null) {
             return;
         }
 
-        setCurrentPlayer(players.get((currentIndex + 1) % players.size()));
-        controllerServer.notifyControllerSocketOpened(getCurrentAgent());
+        handle.onTurnEnd();
+    }
+
+    @Override
+    public void onRegularTurn(AgentHandle handle) {
+        Heartbeat.pause();
+
+        deregister(handle);
+        gameStorage.update();
+        register(gameStorage.getCurrent());
+
         Heartbeat.resume();
     }
 
     @Override
-    public void onTick(long deltaTime) {
-        if (players.isEmpty()) {
+    public void onOutOfTime(AgentHandle handle) {
+        Heartbeat.pause();
+
+        deregister(handle);
+        gameStorage.update();
+
+        System.out.println("Timed out " + handle);
+
+        if (isGameOver()) {
             endGame();
             return;
         }
 
-        Player player = getCurrentPlayer();
+        register(gameStorage.getCurrent());
 
-        player.setTimeRemaining(player.getTimeRemaining() - (int) deltaTime);
+        Heartbeat.resume();
+    }
 
-        if (player.isOutOfTime()) {
-            System.out.println("Time out: " + player);
-            onAgentChange();
+
+    @Override
+    public void onAgentDeath(AgentHandle handle) {
+        Heartbeat.pause();
+
+        deregister(handle);
+        gameStorage.update();
+
+        System.out.println("Killed " + handle);
+
+        if (isGameOver()) {
+            endGame();
+            return;
         }
+
+        register(gameStorage.getCurrent());
+        Heartbeat.resume();
     }
 
-    private synchronized Player getCurrentPlayer() {
-        return currentPlayer;
-    }
 
-    private synchronized void setCurrentPlayer(Player player) {
-        currentPlayer = player;
+    @Override
+    public void onTick(long deltaTime) {
+        //TODO:Spawn vacuum robots or do anything time related
     }
 
     private void placeAgents() {
-        Collection<Field> startingFields = map.findStartingPositions(players.size());
-        Field[] fields = startingFields.toArray(new Field[startingFields.size()]);
+        List<AgentHandle> inPlay = gameStorage.getInPlay();
+        List<Field> startingFields = map.findStartingPositions(inPlay.size());
 
-        for (int i = 0; i < players.size(); ++i) {
-            Agent agent = players.get(i).getAgent();
+        for (int i = 0; i < inPlay.size(); ++i) {
+            Agent agent = inPlay.get(i).getAgent();
             Field startingField = agent.getField();
 
             if (startingField != null) {
                 startingField.onExit();
             }
 
-            fields[i].onEnter(agent);
+            startingFields.get(i).onEnter(agent);
         }
     }
 
     private void setAgentControllers() {
-        for (Player player : players) {
+        for (AgentHandle player : gameStorage) {
             Agent agent = player.getAgent();
             GameControllerSocket socket = controllerServer.createSocketForAgent(agent);
             humanController.addControllerSocket(socket);
         }
     }
 
+    //TODO: Real game finishing logic
     private void endGame() {
         pause();
+        Heartbeat.unsubscribe(gameStorage);
+        Heartbeat.unsubscribe(this);
         System.out.println("Game finished");
+    }
+
+    private void register(AgentHandle handle) {
+        controllerServer.notifyControllerSocketOpened(handle.getAgent());
+        handle.register(this);
+    }
+
+    private void deregister(AgentHandle handle) {
+        controllerServer.notifyControllerSocketClosed(handle.getAgent());
+        handle.deregister(this);
+    }
+
+    private boolean isGameOver() {
+        if (gameStorage.getPlayers().isEmpty()) {
+            return true;
+        }
+
+        for (AgentHandle handle : gameStorage.getPlayers()) {
+            if (!handle.isDisqualified()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
