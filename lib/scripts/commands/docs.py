@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 
+import os
 import re
 
 from lib.scripts import debug, dir, format, process, util
@@ -23,10 +24,10 @@ def normalize(output):
                       r".*[(<{]+[./\()]+.*|"
                       r"\\T1/ptm.*|.*[<>]+.*)$",
                       re.M)
-    newlines = re.compile(r" *\n\n+")
+    newlines = re.compile(r" *" + os.linesep + os.linesep + "+")
 
     ret = full.sub("", output)
-    return newlines.sub("\n\n", ret)
+    return newlines.sub(os.linesep + os.linesep, ret)
 
 
 def colorize(output):
