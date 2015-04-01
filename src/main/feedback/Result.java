@@ -1,6 +1,7 @@
 package feedback;
 
-import java.util.*;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class Result {
     private final SortedMap<Integer, String> normal;

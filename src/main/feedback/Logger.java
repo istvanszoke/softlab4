@@ -7,12 +7,12 @@ import java.util.TreeMap;
 public class Logger {
     private static LogLevel logLevel;
 
-    public static void setLogLevel(LogLevel newLevel) {
-        logLevel = newLevel;
-    }
-
     public static LogLevel getLogLevel() {
         return logLevel;
+    }
+
+    public static void setLogLevel(LogLevel newLevel) {
+        logLevel = newLevel;
     }
 
     public static void log(Result result) {
