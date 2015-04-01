@@ -34,11 +34,17 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.subscribe(this);
     }
 
+    /**
+     * Elindítja a felfüggesztett játékot
+     */
     public void start() {
         register(gameStorage.getCurrent());
         Heartbeat.resume();
     }
 
+    /**
+     * Felfüggeszti a futó játékot
+     */
     public void pause() {
         Heartbeat.pause();
         deregister(gameStorage.getCurrent());
@@ -75,6 +81,10 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.resume();
     }
 
+    /**
+     * Ágensválltó függvény
+     * Feladata, hogy a soron következő ágensre adja át vezértlést
+     */
     @Override
     public void onOutOfTime(AgentHandle handle) {
         Heartbeat.pause();
@@ -119,6 +129,10 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         //TODO:Spawn vacuum robots or do anything time related
     }
 
+    /**
+     * Kezdő elhelyező függvény
+     * Feladata, hogy elhelyezze a játékosok ágenseit a pálya kezdőállásán
+     */
     private void placeAgents() {
         List<AgentHandle> inPlay = gameStorage.getInPlay();
         List<Field> startingFields = map.findStartingPositions(inPlay.size());

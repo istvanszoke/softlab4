@@ -5,6 +5,10 @@ import commands.transmits.ChangeSpeedTransmit;
 import game.Heartbeat;
 import game.HeartbeatListener;
 
+/**
+ * Olajat reprezentáló osztály.
+ * Képes változtatni a ChangeSpeedTransmit és a ChangeDirectionTransmit állapotán
+ */
 public class Oil extends Buff implements HeartbeatListener {
     long timeRemaining;
 
@@ -13,11 +17,19 @@ public class Oil extends Buff implements HeartbeatListener {
         Heartbeat.subscribe(this);
     }
 
+    /**
+     * ChangeSpeedTransmit módosítása.
+     * @param element - Visitelt elem.
+     */
     @Override
     public void visit(ChangeDirectionTransmit command) {
         command.setExecutable(false);
     }
 
+    /**
+     * ChangeDirectionTransmit módosítása.
+     * @param element - Visitelt elem.
+     */    
     @Override
     public void visit(ChangeSpeedTransmit command) {
         command.setExecutable(false);
