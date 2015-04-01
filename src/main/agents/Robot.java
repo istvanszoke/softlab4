@@ -59,7 +59,7 @@ public class Robot extends Agent {
     }
 
     @Override
-    public boolean onCauseCollision() {
+    public boolean onCauseCollision(Agent agent) {
         return true;
     }
 

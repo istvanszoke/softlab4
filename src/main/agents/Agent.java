@@ -47,7 +47,7 @@ public abstract class Agent implements AgentElement {
         this.currentLap++;
     }
 
-    public abstract boolean onCauseCollision();
+    public abstract boolean onCauseCollision(Agent agent);
 
     public abstract Agent collide(Agent agent);
 }
