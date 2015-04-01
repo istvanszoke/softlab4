@@ -20,6 +20,7 @@ public class JumpQuery extends AgentCommand {
 
     /**
      * Ugrási sebességet lekérdező függvény
+     *
      * @return - Az ugrási sebesség
      */
     public Speed getSpeed() {
@@ -28,6 +29,7 @@ public class JumpQuery extends AgentCommand {
 
     /**
      * Új ugrási sebességet beállító függvény
+     *
      * @param speed - Az új ugrási sebesség
      */
     public void setSpeed(Speed speed) {
@@ -36,6 +38,7 @@ public class JumpQuery extends AgentCommand {
 
     /**
      * Előállít egy ugrás kérésátvitelt a kérésből
+     *
      * @return - Előállított ugrás kérésátvitel
      * @throws NoFieldCommandException - Értelmet esetnél
      */
@@ -46,6 +49,7 @@ public class JumpQuery extends AgentCommand {
 
     /**
      * Jelen kéréshez hozzáférési interfész
+     *
      * @param modifier - A módosító osztály referenciája
      */
     @Override
@@ -55,6 +59,7 @@ public class JumpQuery extends AgentCommand {
 
     /**
      * Egy robot maipulálásához szükséges interfész
+     *
      * @param element - A mapipulálandó robot
      */
     @Override

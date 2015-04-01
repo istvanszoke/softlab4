@@ -22,6 +22,7 @@ public class Inventory<T extends Buff> {
 
     /**
      * Buff hozzáadása a gyűjteményhez.
+     *
      * @param buff - A hozzáadásra kerülő buff
      */
     public void addItem(T buff) {
@@ -30,6 +31,7 @@ public class Inventory<T extends Buff> {
 
     /**
      * Használja a gyűjteményben tárolt elemek valamelyikét.
+     *
      * @return - Amennyiben nem üres a gyűjtemény igazzal tér vissza, egyébként hamis.
      */
     public boolean useItem() {

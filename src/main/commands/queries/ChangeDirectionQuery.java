@@ -20,6 +20,7 @@ public class ChangeDirectionQuery extends AgentCommand {
 
     /**
      * Osztálykonstruktor
+     *
      * @param direction - Az új kért irány
      */
     public ChangeDirectionQuery(Direction direction) {
@@ -28,6 +29,7 @@ public class ChangeDirectionQuery extends AgentCommand {
 
     /**
      * Az kért irányt lekérő függvény
+     *
      * @return - A kért irány
      */
     public Direction getDirection() {
@@ -36,6 +38,7 @@ public class ChangeDirectionQuery extends AgentCommand {
 
     /**
      * A kért irányt módosító függvény
+     *
      * @param direction - Az új irány
      */
     public void setDirection(Direction direction) {
@@ -44,6 +47,7 @@ public class ChangeDirectionQuery extends AgentCommand {
 
     /**
      * Előállít egy irányváltoztatás kérésátvitelt a kérésből
+     *
      * @return - Az irányváltoztatási kérésátvitel
      * @throws NoFieldCommandException - Értelmetlen esetnél
      */
@@ -54,6 +58,7 @@ public class ChangeDirectionQuery extends AgentCommand {
 
     /**
      * Jelen kéréshez hozzáférési interfész
+     *
      * @param modifier - A hozzáférő osztály referenciája
      */
     @Override
@@ -63,6 +68,7 @@ public class ChangeDirectionQuery extends AgentCommand {
 
     /**
      * Egy robot maipulálásához szükséges interfész
+     *
      * @param element - A mapipulálandó robot
      */
     @Override

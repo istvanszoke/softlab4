@@ -17,6 +17,7 @@ public class UseOilExecute extends FieldCommand {
     /**
      * Osztálykonstruktor
      * Olaj lehelyezés kérésből generálódik
+     *
      * @param parent - A lehelyezéskérés melyet felhasználunk
      */
     public UseOilExecute(UseOilQuery parent) {
@@ -26,6 +27,7 @@ public class UseOilExecute extends FieldCommand {
     /**
      * Egy Ágens parancsot állít elő a jelen kivitelezésből ha értelmes.
      * Sosem értelmes
+     *
      * @return - Nem tér vissza
      * @throws NoFieldCommandException - Mindíg értelmetlen
      */
@@ -36,6 +38,7 @@ public class UseOilExecute extends FieldCommand {
 
     /**
      * Jelen kivitelezés módosításához interfész
+     *
      * @param modifier - A módosító osztály referenciája
      */
     @Override
@@ -45,6 +48,7 @@ public class UseOilExecute extends FieldCommand {
 
     /**
      * Egy pályamező maipulálásához interfész
+     *
      * @param element - A manipulálandó mező referenciája
      */
     @Override
@@ -59,6 +63,7 @@ public class UseOilExecute extends FieldCommand {
 
     /**
      * Egy üres pályamező maipulálásához interfész
+     *
      * @param element - A manipulálandó mező referenciája
      */
     @Override
@@ -66,6 +71,7 @@ public class UseOilExecute extends FieldCommand {
 
     /**
      * Egy célvonali pályamező maipulálásához interfész
+     *
      * @param element - A manipulálandó mező referenciája
      */
     @Override

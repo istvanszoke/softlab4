@@ -32,6 +32,7 @@ public class JumpTransmit extends FieldCommand {
     /**
      * Osztálykonstruktor
      * Ugrás kérésből kérésátvitel létrehozása
+     *
      * @param parent - Kérés melyet átalakítunk
      */
     public JumpTransmit(JumpQuery parent) {
@@ -41,6 +42,7 @@ public class JumpTransmit extends FieldCommand {
 
     /**
      * Tárolt elmozdulást visszaadó függvény
+     *
      * @return - A tárolt elmozdulás
      */
     public Displacement getDisplacement() {
@@ -49,6 +51,7 @@ public class JumpTransmit extends FieldCommand {
 
     /**
      * Tárolt elmozdulást módosító függvény
+     *
      * @param displacement - Az új elmozdulás
      */
     public void setDisplacement(Displacement displacement) {
@@ -57,6 +60,7 @@ public class JumpTransmit extends FieldCommand {
 
     /**
      * Tárolt sebességet visszadó függvény
+     *
      * @return - A tárolt sebesség
      */
     public Speed getSpeed() {
@@ -65,6 +69,7 @@ public class JumpTransmit extends FieldCommand {
 
     /**
      * Tárolt sebességet módosító függvény
+     *
      * @param speed - Az új sebesség
      */
     public void setSpeed(Speed speed) {
@@ -74,6 +79,7 @@ public class JumpTransmit extends FieldCommand {
     /**
      * Létrehozza a megfelelő ágens parancsot
      * Mely egy ugrás kivitelezés
+     *
      * @return - A létrehozott ágensparancs
      * @throws NoAgentCommandException - Nem értelmezhető eset
      */
@@ -84,6 +90,7 @@ public class JumpTransmit extends FieldCommand {
 
     /**
      * Ugrás kérésátvitel manipulálásának interfésze
+     *
      * @param modifier - A manipuláló osztály referenciája
      */
     @Override
@@ -94,6 +101,7 @@ public class JumpTransmit extends FieldCommand {
     /**
      * Pályamező hozzáférési interfésze
      * Nem végez módosítást a pályamezőn
+     *
      * @param element -A hozzáférő pályamező
      */
     @Override
@@ -104,6 +112,7 @@ public class JumpTransmit extends FieldCommand {
     /**
      * Üres pályamező hozzáférési interfésze
      * Nem végez módosítást a pályamezőn
+     *
      * @param element -A hozzáférő pályamező
      */
     @Override
@@ -114,6 +123,7 @@ public class JumpTransmit extends FieldCommand {
     /**
      * Célvonali pályamező hozzáférési interfésze
      * Nem végez módosítást a pályamezőn
+     *
      * @param element -A hozzáférő pályamező
      */
     @Override

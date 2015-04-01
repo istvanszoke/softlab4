@@ -15,6 +15,7 @@ public class FieldCell extends Field {
     /**
      * Konstruktor.
      * Az ősosztály konstruktorát hívja meg.
+     *
      * @param distanceFromGoal - A céltól való távolság.
      */
     public FieldCell(int distanceFromGoal) {
@@ -24,16 +25,18 @@ public class FieldCell extends Field {
     /**
      * FieldVisitor fogadása.
      * Nem módosít semmit a visitoron. Feltétel nélkül hagyja, hogy visiteljék.
+     *
      * @param visitor - A visitor.
      */
     @Override
     public void accept(FieldVisitor visitor) {
         visitor.visit(this);
     }
-    
+
     /**
      * FieldCommand fogadása.
      * A FieldCellen lévő minden egyes buff módosíthatja a commandot, hogy az később érvényesüljon az Agenten.
+     *
      * @param command - A származtatott FieldVisitor
      */
     @Override
@@ -41,8 +44,8 @@ public class FieldCell extends Field {
         for (Buff b : buffs) {
             command.accept(b);
         }
-        
-        
+
+
         command.visit(this);
         
         /* Lekéri a commandhoz tartozó AgentCommandot, ami lehet Transmit vagy Execute típusú.

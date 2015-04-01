@@ -26,6 +26,7 @@ public class ChangeSpeedTransmit extends FieldCommand {
     /**
      * Osztálykonstruktor
      * Sebességváltoztatás kérésből kérésátvitel létrehozása
+     *
      * @param parent - A kérés melyet átalakítunk
      */
     public ChangeSpeedTransmit(ChangeSpeedQuery parent) {
@@ -35,6 +36,7 @@ public class ChangeSpeedTransmit extends FieldCommand {
 
     /**
      * Tervezett sebességváltoztatás delta lekérdezése
+     *
      * @return - A lekérdezett érték
      */
     public int getMagnitudeDelta() {
@@ -43,6 +45,7 @@ public class ChangeSpeedTransmit extends FieldCommand {
 
     /**
      * Tervezett sebességváltoztatás nagyság delta megváltoztatása
+     *
      * @param magnitudeDelta - Új érték
      */
     public void setMagnitudeDelta(int magnitudeDelta) {
@@ -52,6 +55,7 @@ public class ChangeSpeedTransmit extends FieldCommand {
     /**
      * Létrehozza a megfelelő ágens parancsot
      * Mely egy sebességváltotatás kivitelezés
+     *
      * @return - A létrehozott ágensparancs
      * @throws NoAgentCommandException - Nem értelmezhető eset
      */
@@ -62,6 +66,7 @@ public class ChangeSpeedTransmit extends FieldCommand {
 
     /**
      * Sebességváltoztatás kérésátvitel manipulálásának interfésze
+     *
      * @param modifier - A módosító osztály referenciája
      */
     @Override
@@ -72,6 +77,7 @@ public class ChangeSpeedTransmit extends FieldCommand {
     /**
      * Pályamező hozzáférési interfésze.
      * Nem végez módosítást a pályamezőn
+     *
      * @param element - A hozzáférhető pályamező
      */
     @Override
@@ -80,6 +86,7 @@ public class ChangeSpeedTransmit extends FieldCommand {
     /**
      * Üres pályamező hozzáférési interfésze.
      * Nem végez módosítást a pályamezőn
+     *
      * @param element - A hozzáférhető pályamező
      */
     @Override
@@ -88,6 +95,7 @@ public class ChangeSpeedTransmit extends FieldCommand {
     /**
      * Célvonali pályamező hozzáférési interfésze.
      * Nem végez módosítást a pályamezőn
+     *
      * @param element - A hozzáférhető pályamező
      */
     @Override

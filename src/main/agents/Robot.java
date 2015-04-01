@@ -12,7 +12,7 @@ import commands.NoFieldCommandException;
 
 /**
  * Egy pályán lévő robotot jelképező osztály.
- * Az ősosztályban megvalósított tulajdonságokon kívül rendelkezik Sticky és Oil Inventorykkal, 
+ * Az ősosztályban megvalósított tulajdonságokon kívül rendelkezik Sticky és Oil Inventorykkal,
  * amelyeket a Robot tetszőlegesen használhat, ha azok nem üresek.
  */
 public class Robot extends Agent {
@@ -47,13 +47,14 @@ public class Robot extends Agent {
 
     /**
      * Új Oil Buff felvétele a tárolóba.
-     */    
+     */
     public void addOil() {
         oilInventory.addItem(new Oil());
     }
 
     /**
      * Egy Sticky Buff felhasználása.
+     *
      * @return - felhasználás sikeressége
      */
     public boolean useSticky() {
@@ -62,17 +63,19 @@ public class Robot extends Agent {
 
     /**
      * Egy Oil Buff felhasználása.
+     *
      * @return - felhasználás sikeressége
      */
     public boolean useOil() {
         return oilInventory.useItem();
     }
 
-   /**
-    * AgentVisitor fogadása.
-    * Nem módosít semmit a visitoron. Feltétel nélkül hagyja, hogy visiteljék.
-    * @param visitor - A visitor.
-    */    
+    /**
+     * AgentVisitor fogadása.
+     * Nem módosít semmit a visitoron. Feltétel nélkül hagyja, hogy visiteljék.
+     *
+     * @param visitor - A visitor.
+     */
     @Override
     public void accept(AgentVisitor visitor) {
         visitor.visit(this);
@@ -81,6 +84,7 @@ public class Robot extends Agent {
     /**
      * AgentCommand fogadása.
      * A Robotra érvényes minden egyes buff módosíthatja a commandot, hogy az később érvényesüljon az Agenten.
+     *
      * @param command - A származtatott AgentVisitor
      */
     @Override

@@ -20,6 +20,7 @@ public class ChangeSpeedQuery extends AgentCommand {
     /**
      * Osztálykonstruktor
      * Létrehozza a kérést a megfelelő nagyságra
+     *
      * @param magnitudeDelta - Az új kért sebességváltoztatás
      */
     public ChangeSpeedQuery(int magnitudeDelta) {
@@ -28,6 +29,7 @@ public class ChangeSpeedQuery extends AgentCommand {
 
     /**
      * Kért sebességváltozás lekérése
+     *
      * @return - Sebességváltoás
      */
     public int getMagnitudeDelta() {
@@ -36,6 +38,7 @@ public class ChangeSpeedQuery extends AgentCommand {
 
     /**
      * Kért sebessségváltozás megváltoztatása
+     *
      * @param magnitudeDelta - Új sebességváltozás
      */
     public void setMagnitudeDelta(int magnitudeDelta) {
@@ -44,6 +47,7 @@ public class ChangeSpeedQuery extends AgentCommand {
 
     /**
      * Előállít egy sebességváltoztatás kérésátvitelt a kérésből
+     *
      * @return - Sebességváltotatás kérésátvitel
      * @throws NoFieldCommandException - Értelmetlen esetnél
      */
@@ -54,6 +58,7 @@ public class ChangeSpeedQuery extends AgentCommand {
 
     /**
      * Jelen kéréshez hozzáférési interfész
+     *
      * @param modifier - A módosító osztály referenciája
      */
     @Override
@@ -63,6 +68,7 @@ public class ChangeSpeedQuery extends AgentCommand {
 
     /**
      * Egy robot maipulálásához szükséges interfész
+     *
      * @param element - A mapipulálandó robot
      */
     @Override

@@ -20,6 +20,7 @@ public class JumpExecute extends AgentCommand {
     /**
      * Osztálykonstruktor
      * A kérésátvitelből generálódik
+     *
      * @param parent - A felhasználtt kérésátvitel
      */
     public JumpExecute(JumpTransmit parent) {
@@ -29,6 +30,7 @@ public class JumpExecute extends AgentCommand {
 
     /**
      * Elmozdulást lekérő függvény
+     *
      * @return - Elmozdulás
      */
     public Displacement getDisplacement() {
@@ -37,6 +39,7 @@ public class JumpExecute extends AgentCommand {
 
     /**
      * Új elmozdulást beállító függvény
+     *
      * @param displacement - Az új elmozdulás
      */
     public void setDisplacement(Displacement displacement) {
@@ -46,6 +49,7 @@ public class JumpExecute extends AgentCommand {
     /**
      * Egy mezőparancsot állít elő a jelen kivitelezésből ha értelmes.
      * Sosem értelmes
+     *
      * @return - Nem tér vissza
      * @throws NoFieldCommandException - Mindíg értelmetlen
      */
@@ -56,6 +60,7 @@ public class JumpExecute extends AgentCommand {
 
     /**
      * Jelen kivitelezés módosításához interfész
+     *
      * @param modifier - A módosító osztály referenciája
      */
     @Override
@@ -65,6 +70,7 @@ public class JumpExecute extends AgentCommand {
 
     /**
      * Egy Robot maipulálásához interfész
+     *
      * @param element - A manipulálandó robot referenciája
      */
     @Override

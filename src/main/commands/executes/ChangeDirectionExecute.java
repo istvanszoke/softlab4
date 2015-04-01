@@ -20,6 +20,7 @@ public class ChangeDirectionExecute extends AgentCommand {
 
     /**
      * Osztálykostruktor
+     *
      * @param parent - Irányváltoztatás kérésátvitel melyből képezzük a kivitelezést
      */
     public ChangeDirectionExecute(ChangeDirectionTransmit parent) {
@@ -29,6 +30,7 @@ public class ChangeDirectionExecute extends AgentCommand {
 
     /**
      * Irányváltoztatás új irányának lekérése
+     *
      * @return - Irányváltoztatás
      */
     public Direction getDirection() {
@@ -37,6 +39,7 @@ public class ChangeDirectionExecute extends AgentCommand {
 
     /**
      * Irányváltoztatás új irányának megváltozatása
+     *
      * @param direction - Az érték amire változtatunk
      */
     public void setDirection(Direction direction) {
@@ -46,6 +49,7 @@ public class ChangeDirectionExecute extends AgentCommand {
     /**
      * Egy mezőparancsot állít elő a jelen kivitelezésből ha értelmes.
      * Sosem értelmes
+     *
      * @return - Nem tér vissza
      * @throws NoFieldCommandException - Mindíg értelmetlen
      */
@@ -56,6 +60,7 @@ public class ChangeDirectionExecute extends AgentCommand {
 
     /**
      * Jelen kivitelezés módosításához interfész
+     *
      * @param modifier - A módosító osztály referenciája
      */
     @Override
@@ -65,6 +70,7 @@ public class ChangeDirectionExecute extends AgentCommand {
 
     /**
      * Egy Robot maipulálásához interfész
+     *
      * @param element - A manipulálandó robot referenciája
      */
     @Override

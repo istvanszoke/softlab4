@@ -27,6 +27,7 @@ public class ChangeDirectionTransmit extends FieldCommand {
     /**
      * Osztálykonstruktor
      * Irányváltoztatás kérésből kérésátvitel létrehozása
+     *
      * @param parent - A kérés melyet átalakítunk
      */
     public ChangeDirectionTransmit(ChangeDirectionQuery parent) {
@@ -36,6 +37,7 @@ public class ChangeDirectionTransmit extends FieldCommand {
 
     /**
      * Tervezett irány lekérése
+     *
      * @return - A tervezett irány
      */
     public Direction getDirection() {
@@ -44,6 +46,7 @@ public class ChangeDirectionTransmit extends FieldCommand {
 
     /**
      * Tervezett irány beállítása
+     *
      * @param direction - Az új tervezett irány
      */
     public void setDirection(Direction direction) {
@@ -52,6 +55,7 @@ public class ChangeDirectionTransmit extends FieldCommand {
 
     /**
      * Létrehozza az ágens parancsot mely az irányváltoztatás kivitelezés lesz, ha értelmes
+     *
      * @return - A létrehozott ágens parancs
      * @throws NoAgentCommandException - Nem értelmes átalakítás esetén
      */
@@ -62,6 +66,7 @@ public class ChangeDirectionTransmit extends FieldCommand {
 
     /**
      * Az irányváltoztatás kérésátvitel manipulálásának interfésze
+     *
      * @param modifier - A manipuláló osztály referenciája
      */
     @Override
@@ -72,6 +77,7 @@ public class ChangeDirectionTransmit extends FieldCommand {
     /**
      * Pályamező hozzáférési interfésze.
      * Nem végez módosítást a pályamezőn
+     *
      * @param element - A hozzáférhető pályamező
      */
     @Override
@@ -80,6 +86,7 @@ public class ChangeDirectionTransmit extends FieldCommand {
     /**
      * Üres pályamező hozzáférési interfésze.
      * Nem végez módosítást a pályamezőn
+     *
      * @param element - A hozzáférhető pályamező
      */
     @Override
@@ -88,6 +95,7 @@ public class ChangeDirectionTransmit extends FieldCommand {
     /**
      * Célvonali pályamező hozzáférési interfésze.
      * Nem végez módosítást a pályamezőn
+     *
      * @param element - A hozzáférhető pályamező
      */
     @Override

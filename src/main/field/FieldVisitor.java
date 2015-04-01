@@ -10,19 +10,22 @@ import feedback.Feedback;
 public interface FieldVisitor extends Feedback {
     /**
      * FieldCell módosítása.
+     *
      * @param element - Visitelt elem.
-     */    
+     */
     void visit(FieldCell element);
 
     /**
      * EmptyFieldCell módosítása.
+     *
      * @param element - Visitelt elem.
-     */    
+     */
     void visit(EmptyFieldCell element);
 
     /**
      * FinishFieldCell módosítása.
+     *
      * @param element - Visitelt elem.
-     */    
+     */
     void visit(FinishLineFieldCell element);
 }

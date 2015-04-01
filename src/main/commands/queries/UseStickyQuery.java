@@ -14,6 +14,7 @@ import commands.executes.UseStickyExecute;
 public class UseStickyQuery extends AgentCommand {
     /**
      * Előállít egy Ragacs lehejezés végrehajtást a kérésből
+     *
      * @return - Előállított olaj lehejezés végrehajtás
      * @throws NoFieldCommandException - Értelmetlen esetnél
      */
@@ -24,6 +25,7 @@ public class UseStickyQuery extends AgentCommand {
 
     /**
      * Jelen kéréshez hozzáférési interfész
+     *
      * @param modifier - A hozzáférő osztály osztály referenciája
      */
     @Override
@@ -33,6 +35,7 @@ public class UseStickyQuery extends AgentCommand {
 
     /**
      * Egy robot manipulálásához szükséges interfész
+     *
      * @param element - A manipulálandó robot
      */
     @Override

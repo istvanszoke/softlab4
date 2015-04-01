@@ -25,7 +25,7 @@ public abstract class Field implements FieldElement, BuffListener {
      */
     protected final ArrayList<Buff> buffs;
 
-    /** 
+    /**
      * A cella szomszédos celláinak a tárolója (max. 4).
      */
     protected final Map<Direction, Field> neighbours;
@@ -37,6 +37,7 @@ public abstract class Field implements FieldElement, BuffListener {
 
     /**
      * Konstruktor.
+     *
      * @param distanceFromGoal - A cella céltól való lépésenkénti távolsága.
      */
     public Field(int distanceFromGoal) {
@@ -44,21 +45,23 @@ public abstract class Field implements FieldElement, BuffListener {
         neighbours = new HashMap<Direction, Field>();
         this.distanceFromGoal = distanceFromGoal;
     }
-    
+
     /**
      * Hozzáadja a mezőhöz a megfelelő szomszédot a megfelelő irányban.
+     *
      * @param direction - Irány.
-     * @param field - Szomszéd to be.
+     * @param field     - Szomszéd to be.
      */
     public void addNeighbour(Direction direction, Field field) {
         neighbours.put(direction, field);
     }
-    
+
     /**
      * Agent cellára lép.
      * Lekezeli azt az estet, amikor egy Agent a cellára lép: beállítja a megfelelő refernciákat
      * (mind az Agentben, mint önmagában). Ezen felül meghívja a rálépő Agent accept(AgentVisitor)
      * metódusát az összes, mezőn található Buffal.
+     *
      * @param agent - A cellára lépő Agent.
      */
     public void onEnter(Agent agent) {
@@ -77,7 +80,7 @@ public abstract class Field implements FieldElement, BuffListener {
         agent.setField(this);
         this.agent = agent;
     }
-    
+
     /**
      * Agent a celláról ellép.
      * Lekezeli azt az esetet, amikor egy Agent elhagyja a mezőt.
@@ -92,9 +95,10 @@ public abstract class Field implements FieldElement, BuffListener {
         agent.setField(null);
         this.agent = null;
     }
-    
+
     /**
      * Visszadja a distanceFromGoal-t.
+     *
      * @return - A céltól való távolság.
      */
     public int getDistanceFromGoal() {
@@ -104,6 +108,7 @@ public abstract class Field implements FieldElement, BuffListener {
     /**
      * Buff lehelyezés.
      * Lehelyezi a cellára a paraméterében kapott buffot.
+     *
      * @param buff - A lehelyezett buff.
      */
     public void placeBuff(Buff buff) {
@@ -121,6 +126,7 @@ public abstract class Field implements FieldElement, BuffListener {
     /**
      * Üresség vizsgálat
      * Visszadja, hogy üres-e azaz nem áll Agent az adott cellán.
+     *
      * @return - A cella üressége.
      */
     public boolean isEmpty() {

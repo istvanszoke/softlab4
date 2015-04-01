@@ -30,6 +30,7 @@ public class Map implements Iterable<Field> {
     /**
      * Mező lekérdezés
      * Lekérdezhető az adott mező indexe alapján
+     *
      * @param index - A lekérdezett mező indexe
      * @return - A lekérdezet mező referenciája
      */
@@ -40,6 +41,7 @@ public class Map implements Iterable<Field> {
     /**
      * Mező hozzáadása
      * Hozzáadhatunk egy új mezőt a pályához
+     *
      * @param field - A hozzáadásra szánt mező referenciája
      */
     public void add(Field field) {
@@ -49,6 +51,7 @@ public class Map implements Iterable<Field> {
     /**
      * Célvonali mező hozzáadása
      * Hozzáadhatunk egy új célvonalhoz tartozó mezőt a pályához
+     *
      * @param finishLineField - Az új célvonali mező referenciája
      */
     public void add(FinishLineFieldCell finishLineField) {
@@ -59,6 +62,7 @@ public class Map implements Iterable<Field> {
     /**
      * Meglévő mező törlése referenciája alapján
      * Töröhetünk a pályáról egy kiválasztott mezőt amennyiben az a pályának a része
+     *
      * @param field - A törlendő mezőnek a referenciája
      * @return
      */
@@ -73,6 +77,7 @@ public class Map implements Iterable<Field> {
     /**
      * Mező indexének lekérdezése referenciája alapján
      * Lekérdezhetjük egy referencia alapján egy mezőnek az indexét
+     *
      * @param field - A keresett mezőnek a referenciája
      * @return - A mezőnek a keresett indexe
      */
@@ -82,6 +87,7 @@ public class Map implements Iterable<Field> {
 
     /**
      * Pályán van-e már elhelyezett mező
+     *
      * @return Logikai válasz a "Van-e már lehelyezett mező?" kérdésre
      */
     public boolean isEmpty() {
@@ -119,6 +125,7 @@ public class Map implements Iterable<Field> {
     /**
      * Mező iterátor lekérése
      * Lekérhetünk egy iterátort mely a pályán lévő mezők enumerálására alkalmas
+     *
      * @return - Pályán lévő mezőknek az iterátora
      */
     @Override

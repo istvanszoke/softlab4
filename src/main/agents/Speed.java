@@ -26,15 +26,16 @@ public class Speed implements Cloneable {
 
     /**
      * direction getter függvénye.
+     *
      * @return - Direction
      */
-    public Direction getDirection()
-    {
+    public Direction getDirection() {
         return direction;
     }
 
     /**
      * direction setter függvénye.
+     *
      * @param direction - A beállításra kerülő direction
      */
     public void setDirection(Direction direction) {
@@ -43,21 +44,25 @@ public class Speed implements Cloneable {
 
     /**
      * magnitude getter függvénye.
+     *
      * @return - magnitude
-     */    
+     */
     public int getMagnitude() {
         return magnitude;
     }
 
     /**
      * magnitude setter függvénye.
+     *
      * @param magnitude - A beállításra kerülő magnitude
-     */    
+     */
     public void setMagnitude(int magnitude) {
         this.magnitude = Math.max(0, magnitude);
     }
+
     /**
      * Speed klónozását elvégző függvénye.
+     *
      * @return - A klónozott objektum.
      */
     @Override
@@ -72,9 +77,10 @@ public class Speed implements Cloneable {
             throw new RuntimeException("Speed has to be cloneable");
         }
     }
-    
+
     /**
      * Kiírást segítő toString felülírása.
+     *
      * @return - debuggolásra alkalmas string.
      */
     @Override

@@ -13,17 +13,19 @@ public class FinishLineFieldCell extends Field {
     /**
      * Konstruktor.
      * Az ősosztály konstruktorát hívja meg.
+     *
      * @param distanceFromGoal - A céltól való távolság.
      */
     public FinishLineFieldCell() {
         super(0);
     }
- 
-   /**
-    * FieldVisitor fogadása.
-    * Nem módosít semmit a visitoron. Feltétel nélkül hagyja, hogy visiteljék.
-    * @param visitor - A visitor.
-    */
+
+    /**
+     * FieldVisitor fogadása.
+     * Nem módosít semmit a visitoron. Feltétel nélkül hagyja, hogy visiteljék.
+     *
+     * @param visitor - A visitor.
+     */
     @Override
     public void accept(FieldVisitor visitor) {
         visitor.visit(this);
@@ -32,6 +34,7 @@ public class FinishLineFieldCell extends Field {
     /**
      * FieldCommand fogadása.
      * A FieldCellen lévő minden egyes buff módosíthatja a commandot, hogy az később érvényesüljon az Agenten.
+     *
      * @param command - A származtatott FieldVisitor
      */
     @Override

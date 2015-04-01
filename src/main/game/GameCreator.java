@@ -39,7 +39,8 @@ public final class GameCreator {
     /**
      * Új pálya generálása
      * A játékhoz lehet új pályát generlni ezzel a fügvénnyel a megadott méretben
-     * @param width - A létrehozott pálya szélessége a pálya mezőinek számában
+     *
+     * @param width  - A létrehozott pálya szélessége a pálya mezőinek számában
      * @param height - A létrehozott pálya hosszúsága a pálya mezőinek számában
      * @return
      */
@@ -52,6 +53,7 @@ public final class GameCreator {
     /**
      * Játéklogika generálása
      * Létrehozza a megfelelő játéklogikát, hogy ha nem adtunk meg érvénytelen paramétereket
+     *
      * @return - A kigenerált játék referenciája
      */
     public Game create() {
@@ -65,7 +67,8 @@ public final class GameCreator {
     /**
      * Pálya rács létrehozása
      * Létrehoz egy megfelelő méretű pályarácsot
-     * @param width - A létrehozott rács szélessége a pálya mezőinek számában
+     *
+     * @param width  - A létrehozott rács szélessége a pálya mezőinek számában
      * @param height - A létrehozott rács hosszúsága a pálya mezőinek számában
      */
     private void generateGrid(int width, int height) {
@@ -85,7 +88,8 @@ public final class GameCreator {
     /**
      * Mezők szomszédjainak megadása
      * Beállítja az összes pályán lévő mezőnek, hogy melyek az ő közvetlen szomszédai
-     * @param width - A pálya szélessége a mezők számában
+     *
+     * @param width  - A pálya szélessége a mezők számában
      * @param height - A pálya hosszúsága a mezők számában
      */
     private void setNeighbours(int width, int height) {

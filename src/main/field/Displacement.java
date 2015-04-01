@@ -9,7 +9,7 @@ public class Displacement {
      * Kezdet
      */
     private final Field start;
-    
+
     /**
      * Cél
      */
@@ -17,8 +17,9 @@ public class Displacement {
 
     /**
      * Konstruktor
+     *
      * @param start - KezdőField
-     * @param goal - CélField
+     * @param goal  - CélField
      */
     public Displacement(Field start, Field goal) {
         this.start = start;
@@ -27,14 +28,16 @@ public class Displacement {
 
     /**
      * Getter a startra.
+     *
      * @return start - start
      */
     public Field getStart() {
         return start;
     }
-    
+
     /**
      * Getter a goalra.
+     *
      * @return goal - goal
      */
     public Field getGoal() {

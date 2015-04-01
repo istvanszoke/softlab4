@@ -19,6 +19,7 @@ public class ChangeSpeedExecute extends AgentCommand {
 
     /**
      * Osztálykostruktor
+     *
      * @param parent - Sebességváltoztatás kérésátvitel melyből képezzük a kivitelezést
      */
     public ChangeSpeedExecute(ChangeSpeedTransmit parent) {
@@ -28,6 +29,7 @@ public class ChangeSpeedExecute extends AgentCommand {
 
     /**
      * Sebességváltoztatás nagyságának lekérése
+     *
      * @return - Sebességváltoztatás nagysága
      */
     public int getMagnitudeDelta() {
@@ -36,6 +38,7 @@ public class ChangeSpeedExecute extends AgentCommand {
 
     /**
      * Sebességváltoztatás nagyságának megváltoztatása
+     *
      * @param magnitudeDelta - Sebességváltoztatás új nagysága
      */
     public void setMagnitudeDelta(int magnitudeDelta) {
@@ -45,6 +48,7 @@ public class ChangeSpeedExecute extends AgentCommand {
     /**
      * Egy mezőparancsot állít elő a jelen kivitelezésből ha értelmes.
      * Sosem értelmes
+     *
      * @return - Nem tér vissza
      * @throws NoFieldCommandException - Mindíg értelmetlen
      */
@@ -55,6 +59,7 @@ public class ChangeSpeedExecute extends AgentCommand {
 
     /**
      * Jelen kivitelezés módosításához interfész
+     *
      * @param modifier - A módosító osztály referenciája
      */
     @Override
@@ -64,6 +69,7 @@ public class ChangeSpeedExecute extends AgentCommand {
 
     /**
      * Egy Robot maipulálásához interfész
+     *
      * @param element - A manipulálandó robot referenciája
      */
     @Override

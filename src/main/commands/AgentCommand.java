@@ -15,15 +15,16 @@ public abstract class AgentCommand extends Command implements AgentVisitor {
 
     /**
      * Másoló konstruktor egy ágens parancsra
+     *
      * @param parent - A parancs amelyet másolunk
      */
-    protected AgentCommand(Command parent)
-    {
+    protected AgentCommand(Command parent) {
         super(parent);
     }
 
     /**
      * A kapott paracsból egy mezőnek intézett parancsot generáál ahol ez értelmes
+     *
      * @return - A mezőnek átadandó parancs
      * @throws NoFieldCommandException - Nem értelmes a mezőparanccsá való átalakítás
      */
@@ -31,6 +32,7 @@ public abstract class AgentCommand extends Command implements AgentVisitor {
 
     /**
      * Az ágens parancsra hatással rendelkező osztályoknak hozzáférés biztosítása
+     *
      * @param modifier - A módosító osztály referenciája
      */
     public abstract void accept(AgentCommandVisitor modifier);

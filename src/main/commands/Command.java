@@ -28,6 +28,7 @@ public abstract class Command implements Feedback {
 
     /**
      * Gyakorlatilag egy másolókostruktor a Parancs ősosztályhoz
+     *
      * @param parent - Az osztály amit másolunk
      */
     protected Command(Command parent) {
@@ -37,6 +38,7 @@ public abstract class Command implements Feedback {
 
     /**
      * Lefuttatott paracs eredményének leérdezése
+     *
      * @return - A futtatás eredménye
      */
     @Override
@@ -46,6 +48,7 @@ public abstract class Command implements Feedback {
 
     /**
      * Futtathatóság lekérdezése
+     *
      * @return - Futtathatóságra válasz
      */
     public boolean canExecute() {
@@ -54,6 +57,7 @@ public abstract class Command implements Feedback {
 
     /**
      * Futtathatóság beállítása
+     *
      * @param canExecute - A futtathatóság új értéke
      */
     public void setExecutable(boolean canExecute) {

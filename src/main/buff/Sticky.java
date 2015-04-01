@@ -16,8 +16,9 @@ public class Sticky extends Buff {
 
     /**
      * Robot módosítása.
+     *
      * @param element - Visitelt elem.
-     */    
+     */
     @Override
     public void visit(Robot element) {
         if (usesRemaining == 0) {

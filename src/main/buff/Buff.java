@@ -38,6 +38,7 @@ public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCo
 
     /**
      * ChangeDirectionQuery módosítása.
+     *
      * @param command - Visitelt elem.
      */
     @Override
@@ -45,55 +46,63 @@ public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCo
 
     /**
      * ChangeDirectionExecute módosítása.
+     *
      * @param command - Visitelt elem.
-     */    
+     */
     @Override
     public void visit(ChangeDirectionExecute command) { }
 
     /**
      * ChangeSpeedQuery módosítása.
+     *
      * @param command - Visitelt elem.
-     */    
+     */
     @Override
     public void visit(ChangeSpeedQuery command) { }
 
     /**
      * ChangeSpeedExecute módosítása.
+     *
      * @param command - Visitelt elem.
-     */    
+     */
     @Override
     public void visit(ChangeSpeedExecute command) { }
 
     /**
      * JumpQuery módosítása.
+     *
      * @param command - Visitelt elem.
-     */    
+     */
     @Override
     public void visit(JumpQuery command) { }
 
     /**
      * JumpExecute módosítása.
+     *
      * @param command - Visitelt elem.
-     */    
+     */
     @Override
     public void visit(JumpExecute command) { }
 
     /**
      * KillExecute módosítása.
+     *
      * @param command - Visitelt elem.
-     */    
+     */
     @Override
     public void visit(KillExecute command) { }
 
     /**
      * UseStickyQuery módosítása.
+     *
      * @param command - Visitelt elem.
-     */    
+     */
     @Override
     public void visit(UseStickyQuery command) { }
 
     /**
      * UseOilQuery módosítása.
+     *
      * @param command - Visitelt elem.
      */
     @Override
@@ -101,22 +110,25 @@ public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCo
 
     /**
      * Robot módosítása.
+     *
      * @param command - Visitelt elem.
-     */    
+     */
     @Override
     public void visit(Robot command) { }
 
     /**
      * ChangeDirectionTransmit módosítása.
+     *
      * @param modifier - Visitelt elem.
-     */    
+     */
     @Override
     public void visit(ChangeDirectionTransmit modifier) { }
 
     /**
      * ChangeSpeedTransmit módosítása.
+     *
      * @param modifier - Visitelt elem.
-     */    
+     */
     @Override
     public void visit(ChangeSpeedTransmit modifier) { }
 
@@ -131,6 +143,7 @@ public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCo
 
     /**
      * Resultot adó metódus.
+     *
      * @return - Result
      */
     @Override

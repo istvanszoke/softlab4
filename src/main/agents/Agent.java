@@ -37,24 +37,28 @@ public abstract class Agent implements AgentElement {
         isDead = false;
         currentLap = 1;
     }
-    
+
     /**
      * speed getter függvénye.
+     *
      * @return - A jelenlegi Speed klónját adja vissza.
      */
     public Speed getSpeed() {
         return speed.clone();
     }
+
     /**
      * speed setter függvénye.
+     *
      * @param speed - A beállításra kerülő sebesség.
      */
     public void setSpeed(Speed speed) {
         this.speed = speed;
     }
-    
+
     /**
      * field getter függvénye.
+     *
      * @return - field
      */
     public Field getField() {
@@ -63,6 +67,7 @@ public abstract class Agent implements AgentElement {
 
     /**
      * field setter függvénye.
+     *
      * @param field - A beállításra kerülő Field.
      */
     public void setField(Field field) {
@@ -70,9 +75,10 @@ public abstract class Agent implements AgentElement {
     }
 
     /**
-    * isDead getter függvénye.
-    * @return - isDead
-    */
+     * isDead getter függvénye.
+     *
+     * @return - isDead
+     */
     public boolean isDead() {
         return isDead;
     }
@@ -86,13 +92,13 @@ public abstract class Agent implements AgentElement {
 
     /**
      * currentLap getter függvénye.
+     *
      * @return - currentLap
      */
-    public int getLap()
-    {
+    public int getLap() {
         return currentLap;
     }
-    
+
     /**
      * Kör növelés.
      * Növeli az ágens eddig megtett köreinek számát.

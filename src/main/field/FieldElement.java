@@ -10,12 +10,14 @@ import commands.FieldCommand;
 public interface FieldElement {
     /**
      * FieldVisitor fogadása.
+     *
      * @param visitor - visitor
      */
     void accept(FieldVisitor visitor);
 
     /**
      * FieldCommand fogadása.
+     *
      * @param command - visitor
      */
     void accept(FieldCommand command);
