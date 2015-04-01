@@ -9,6 +9,7 @@ import buff.Oil;
 import buff.Sticky;
 import commands.AgentCommand;
 import commands.NoFieldCommandException;
+import commands.executes.KillExecute;
 
 public class Robot extends Agent {
     private List<Buff> buffs;
@@ -55,5 +56,22 @@ public class Robot extends Agent {
         } catch (NoFieldCommandException ignored) {
 
         }
+    }
+
+    @Override
+    public boolean onCauseCollision() {
+        return true;
+    }
+
+    @Override
+    public Agent collide(Agent agent) {
+        if (getSpeed().getMagnitude() < agent.getSpeed().getMagnitude()) {
+            this.accept(new KillExecute());
+            agent.setSpeed(Speed.add(getSpeed(), agent.getSpeed()));
+            return agent;
+        }
+        agent.accept(new KillExecute());
+        setSpeed(Speed.add(getSpeed(), agent.getSpeed()));
+        return this;
     }
 }

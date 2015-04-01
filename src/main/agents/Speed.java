@@ -30,7 +30,7 @@ public class Speed implements Cloneable {
         } else if (parallelMapping.get(lhs.direction) == rhs.direction) {
             mag = Math.max(lhs.magnitude, rhs.magnitude) - Math.min(lhs.magnitude, rhs.magnitude);
         } else {
-            mag = (int)Math.sqrt((double)(lhs.magnitude * lhs.magnitude + rhs.magnitude * rhs.magnitude));
+            mag = (int) Math.sqrt((double) (lhs.magnitude * lhs.magnitude + rhs.magnitude * rhs.magnitude));
         }
         return new Speed(dir, mag);
     }
