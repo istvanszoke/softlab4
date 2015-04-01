@@ -23,9 +23,9 @@ public class UseOilQuery extends AgentCommand {
         canExecute = element.useOil();
 
         if (canExecute) {
-            result.pushMessage(element + " has oil in its inventory.");
+            result.pushDebug(element + " has oil in its inventory.");
         } else {
-            result.pushMessage(element + " has run out of oil.");
+            result.pushDebug(element + " has run out of oil.");
         }
     }
 }
