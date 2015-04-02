@@ -25,8 +25,8 @@ public class CommandParser {
     private static final Map<String, String> argumentValidators = Collections.unmodifiableMap(new HashMap<String, String>() {{
         put("szam", "[2-4]");
         put("ido", "[0-3]:[0-5][0-9]");
-        put("palya", ".*\\.map");
-        put("allas", ".*\\.sav");
+        put("palya", "[A-Za-z0-9]+\\.map");
+        put("allas", "[A-Za-z0-9]+\\.sav");
         put("irany", "(FEL|LE|BAL|JOBB)");
         put("delta", "[+-]1");
     }});
