@@ -23,7 +23,9 @@ public class Logger {
         SortedMap<Integer, String> merged = new TreeMap<Integer, String>();
         if (logLevel == LogLevel.NORMAL) {
             merged.putAll(result.getNormal());
-        } else if (logLevel == LogLevel.TEST) {
+        }
+
+        if (logLevel == LogLevel.TEST) {
             merged.putAll(result.getDebug());
         }
 
