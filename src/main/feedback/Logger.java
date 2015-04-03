@@ -26,6 +26,7 @@ public class Logger {
         }
 
         if (logLevel == LogLevel.TEST) {
+            merged.putAll(result.getNormal());
             merged.putAll(result.getDebug());
         }
 
