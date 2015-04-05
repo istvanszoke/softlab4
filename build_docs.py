@@ -7,16 +7,19 @@ import json
 import os
 import sys
 
-from lib.scripts import debug, dir, util
+from lib.scripts import debug, dir
 
 
 def use_command(name):
     name = "lib.scripts.commands." + name
     try:
-        build_command = getattr(importlib.import_module(name), "build")
+        build_module = importlib.import_module(name)
+        debug.separator(build_module.MESSAGE + " Started")
+        getattr(build_module, "build")()
+        debug.success(build_module.MESSAGE)
     except ImportError:
         debug.error("No command with the name {0} found".format(name))
-    build_command()
+        return
 
 
 def parse_commands():
@@ -40,7 +43,6 @@ if __name__ == "__main__":
         command_name = sys.argv[1]
 
     commands = parse_commands()
-    for command in commands[command_name]:
-        use_command(command)
+    [use_command(command) for command in commands[command_name]]
 
 

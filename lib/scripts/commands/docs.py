@@ -2,59 +2,57 @@
 
 from __future__ import print_function
 
+import os
 import re
 
 from lib.scripts import debug, dir, format, process, util
 from lib.scripts.format import Colors
 
 
-def strip(text, *regexes):
-    for regex in regexes:
-        text = regex.sub("", text)
-
-    return text
+MESSAGE = "Documentation generation"
 
 
 def normalize(output):
-    full = re.compile(r"^(Under|Over)full.*$", re.M)
-    parens = re.compile(r"^[[)][0-9]*[]]*.*$", re.M)
-    sysincludes = re.compile(r"^.*[(<{][/\(]+.*$", re.M)
-    local_includes = re.compile(r"^[(]+[./)]+.*$", re.M)
-    t1 = re.compile(r"^\\T1/ptm.*$", re.M)
-    angle_brackets = re.compile(r"^.*[<>]+.*$", re.M)
-    newlines = re.compile(r" *\n\n+")
+    # Regexes line-by-line:
+    # Under/Overfull messages
+    # Square brackets
+    # LaTeX includes
+    # T1 lines
+    # Anything with angled brackets
+    full = re.compile(r"^((Under|Over)full.*|"
+                      r"[[)][0-9]*[]]*.*|"
+                      r".*[(<{]+[./\()]+.*|"
+                      r"\\T1/ptm.*|.*[<>]+.*)$",
+                      re.M)
+    newlines = re.compile(r" *" + os.linesep + os.linesep + "+")
 
-    ret = strip(output, full, sysincludes, local_includes, parens, t1, angle_brackets)
-    return newlines.sub("\n\n", ret)
+    ret = full.sub("", output)
+    return newlines.sub(os.linesep + os.linesep, ret)
 
 
 def colorize(output):
-    intro = re.compile(r"^.*this is pdftex.*$", re.M | re.I)
-    warning = re.compile(r"^.*warning:.*$", re.M | re.I)
-    error = re.compile(r"^.*error.*$", re.M | re.I)
-    success = re.compile(r"^.*written.*pdf.*$", re.M | re.I)
+    intro = re.compile(r"(^.*this is pdftex.*$)", re.M | re.I)
+    warning = re.compile(r"(^.*warning:.*$)", re.M | re.I)
+    error = re.compile(r"(^.*error.*$)", re.M | re.I)
+    success = re.compile(r"(^.*written.*pdf.*$)", re.M | re.I)
 
-    ret = intro.sub(format.ascii_format(intro.match(output).group(), Colors.BOLD), output)
-    ret = format.ascii_format_regex(warning, ret, Colors.WARNING)
-    ret = format.ascii_format_regex(error, ret, Colors.ERROR)
-    ret = format.ascii_format_regex(success, ret, Colors.SUCCESS)
-
+    ret = intro.sub(format.ascii_format(r"\1", Colors.BOLD), output)
+    ret = warning.sub(format.ascii_format(r"\1", Colors.WARNING), ret)
+    ret = error.sub(format.ascii_format(r"\1", Colors.ERROR), ret)
+    ret = success.sub(format.ascii_format(r"\1", Colors.SUCCESS), ret)
     return ret
 
 
 def generate():
-    debug.separator("Generating Documentation")
-    result = process.run("pdflatex -halt-on-error szoftlab4.tex",
-                         cwd=dir.DOCS,
-                         encoding="windows-1252",
-                         output_parser=lambda out: normalize(colorize(out)))
-    print(result.output)
-    process.terminate_on_failure(result, error_message="Documentation generation failed (pdflatex error)")
+    process.run_or_die("pdflatex -halt-on-error szoftlab4.tex",
+                       cwd=dir.DOCS,
+                       encoding="windows-1252",
+                       output_function=lambda out: print(normalize(colorize(out))),
+                       error_message="Documentation generation failed (pdflatex error)")
 
 
 def build():
-    generate()
-    generate()
-    generate()
+    for i in range(1, 4):
+        debug.separator("LaTeX Generation, Pass: {0}".format(i))
+        generate()
     util.delete_files(dir.DOCS, ".aux", ".lof", ".log", ".out", ".toc")
-    debug.success("Documentation generation")

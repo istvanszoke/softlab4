@@ -1,35 +1,34 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 import shlex
 import sys
+
 from subprocess import Popen, PIPE
 
 from lib.scripts import debug
 
 
-class Result(object):
-    def __init__(self, exit_code, output, error):
-        self.exit_code = exit_code
-        self.output = output
-        self.error = error
+def run_or_die(command, cwd, encoding="utf-8",
+               output_function=lambda out: print(out),
+               error_message=None):
+    split_command = shlex.split(command)
+    try:
+        process = Popen(split_command, cwd=cwd, stdout=PIPE, stderr=None)
+        (out, _) = process.communicate()
+        exit_code = process.wait()
 
+        result = out.decode(encoding)
+        output_function(result)
 
-def run(command, cwd, encoding="utf-8", output_parser=lambda out: out):
-    process = Popen(shlex.split(command), cwd=cwd, stdout=PIPE)
-    (output, error) = process.communicate()
-    exit_code = process.wait()
-    if output is not None:
-        output = output_parser(output.decode(encoding))
-    if error is not None:
-        error = output_parser(error.decode(encoding))
-    return Result(exit_code, output, error)
+        if exit_code != 0:
+            if error_message is not None:
+                debug.error(error_message)
+            sys.exit(exit_code)
 
+        return result
 
-def terminate_on_failure(process_result, error_message=""):
-    if process_result.exit_code == 0:
-        return
-
-    if error_message != "":
-        debug.error(error_message)
-
-    sys.exit(process_result.exit_code)
+    except OSError:
+        debug.error("{0} could not be found on this machine".format(split_command[0]))
+        sys.exit(1)
