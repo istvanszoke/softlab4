@@ -50,9 +50,9 @@ public class UseStickyExecute extends FieldCommand {
     public void visit(FieldCell element) {
         if (canExecute) {
             element.placeBuff(new Sticky());
-            result.pushMessage("Placed sticky on " + element);
+            result.pushDebug("Placed sticky on " + element);
         } else {
-            result.pushMessage("Could not place sticky on " + element);
+            result.pushDebug("Could not place sticky on " + element);
         }
     }
 
@@ -73,9 +73,9 @@ public class UseStickyExecute extends FieldCommand {
     public void visit(FinishLineFieldCell element) {
         if (canExecute) {
             element.placeBuff(new Sticky());
-            result.pushMessage("Placed sticky on " + element);
+            result.pushDebug("Placed sticky on " + element);
         } else {
-            result.pushMessage("Could not place sticky on " + element);
+            result.pushDebug("Could not place sticky on " + element);
         }
     }
 }

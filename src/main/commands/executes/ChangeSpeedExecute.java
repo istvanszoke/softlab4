@@ -78,9 +78,9 @@ public class ChangeSpeedExecute extends AgentCommand {
             Speed newSpeed = element.getSpeed();
             newSpeed.setMagnitude(newSpeed.getMagnitude() + magnitudeDelta);
             element.setSpeed(newSpeed);
-            result.pushMessage("Changed speed for " + element + ", new speed is: " + newSpeed.getMagnitude());
+            result.pushDebug("Changed speed for " + element + ", new speed is: " + newSpeed.getMagnitude());
         } else {
-            result.pushMessage("Failed to change speed for " + element);
+            result.pushDebug("Failed to change speed for " + element);
         }
     }
 }

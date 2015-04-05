@@ -78,11 +78,11 @@ public class JumpExecute extends AgentCommand {
         if (canExecute) {
             displacement.getStart().onExit();
             displacement.getGoal().onEnter(element);
-            result.pushMessage("Jumping " + element + " " +
-                               "from " + displacement.getStart() +
-                               " to " + displacement.getGoal());
+            result.pushDebug("Jumping " + element + " " +
+                             "from " + displacement.getStart() +
+                             " to " + displacement.getGoal());
         } else {
-            result.pushMessage("Cannot execute jump for " + element);
+            result.pushDebug("Cannot execute jump for " + element);
         }
     }
 }

@@ -66,7 +66,9 @@ public abstract class Field implements FieldElement, BuffListener {
      */
     public void onEnter(Agent agent) {
         if (agent != null && this.agent != null && agent != this.agent) {
-            agent = this.agent.collide(agent);
+            if (agent.onCauseCollision(this.agent)) {
+                agent = this.agent.collide(agent);
+            }
         }
 
         if (agent == null) {

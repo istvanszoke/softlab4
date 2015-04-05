@@ -3,10 +3,16 @@
 
 from __future__ import print_function
 
+import multiprocessing
 import os
 import re
 
-from lib.scripts import debug, dir, process, util
+from multiprocessing import Pool
+
+from lib.scripts import dir, process, util
+
+
+MESSAGE = "File list generation"
 
 
 class Entry(object):
@@ -19,8 +25,8 @@ class Entry(object):
 
 
 def generate_description(class_name, path):
-    f = open(path, 'rt')
-    contents = f.read()
+    with open(path, 'rt') as source_file:
+        contents = source_file.read()
 
     desc = re.compile(r"^ +\*.*$", re.M)
     jdoc = desc.search(contents)
@@ -41,34 +47,36 @@ def generate_description(class_name, path):
 
 def get_date(path):
     path = path.replace("\\", "/")
-    result = process.run("git log --diff-filter=A --follow --format=%ai -1 -- " + path,
-                         cwd=dir.DOCS)
-    process.terminate_on_failure(result,
-                                 error_message="File list generation failed (failed to get creation date from git)")
+    result = process.run_or_die("git log --diff-filter=A --follow --format=%ai -1 -- " + path,
+                                cwd=dir.DOCS,
+                                output_function=lambda _: _,
+                                error_message="File list generation failed (failed to get creation date from git)")
 
     timezone = re.compile(r" \+[0-9]+$")
     seconds = re.compile(r":[0-9][0-9]\n", re.M)
 
-    output = timezone.sub("", result.output)
+    output = timezone.sub("", result)
     output = seconds.sub("~", output)
     output = output.replace(" ", "~")
     output = output.replace("-", ".")
     return output
 
 
+def create_entry(full_path):
+    class_name = os.path.basename(full_path).split(os.extsep)[0]
+    relative_path = os.path.relpath(full_path, dir.TOP).replace("\\", "/")
+    size = os.path.getsize(full_path)
+    date = get_date(full_path)
+    description = generate_description(class_name, full_path)
+    return Entry(class_name, relative_path, size, date, description)
+
+
 def generate_entries(path=dir.SRC_MAIN, extension="java"):
     files = util.file_list(path, os.extsep + extension)
 
-    entries = []
-    for f in files:
-        full_path = str(f)
-        class_name = os.path.basename(full_path).split(os.extsep)[0]
-        relative_path = os.path.relpath(full_path, dir.TOP).replace("\\", "/")
-        size = os.path.getsize(full_path)
-        date = get_date(full_path)
-        description = generate_description(class_name, full_path)
-        entries.append(Entry(class_name, relative_path, size, date, description))
-
+    pool = Pool(processes=multiprocessing.cpu_count())
+    entries = pool.map_async(create_entry, files).get()
+    pool.close()
     entries.sort(key=lambda x: x.path)
     return entries
 
@@ -91,7 +99,4 @@ def print_latex(files):
 
 
 def build():
-    debug.separator("Generating file list")
     print_latex(generate_entries())
-    debug.success("File generation")
-

@@ -1,26 +1,45 @@
 package feedback;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class Result {
-    private final List<String> messages;
+    private final SortedMap<Integer, String> normal;
+    private final SortedMap<Integer, String> debug;
+
+    private int counter;
+    private boolean isSuccessful;
 
     public Result() {
-        messages = new ArrayList<String>();
+        normal = new TreeMap<Integer, String>();
+        debug = new TreeMap<Integer, String>() {};
+        counter = 0;
+        isSuccessful = true;
     }
 
-    public void pushMessage(String message) {
-        messages.add(message);
+    public synchronized void pushNormal(String message) {
+        normal.put(counter, message);
+        counter += 1;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (String message : messages) {
-            sb.append(message);
-            sb.append(System.getProperty("line.separator"));
-        }
-        return sb.toString();
+    public synchronized void pushDebug(String message) {
+        debug.put(counter, message);
+        counter += 1;
+    }
+
+    public synchronized void setFailed() {
+        isSuccessful = false;
+    }
+
+    public synchronized boolean isSuccessful() {
+        return isSuccessful;
+    }
+
+    public synchronized SortedMap<Integer, String> getNormal() {
+        return normal;
+    }
+
+    public synchronized SortedMap<Integer, String> getDebug() {
+        return debug;
     }
 }

@@ -24,6 +24,7 @@ public class Oil extends Buff implements HeartbeatListener {
      */
     @Override
     public void visit(ChangeDirectionTransmit command) {
+        command.getResult().pushDebug("Change Direction blocked by Oil");
         command.setExecutable(false);
     }
 
@@ -34,6 +35,7 @@ public class Oil extends Buff implements HeartbeatListener {
      */
     @Override
     public void visit(ChangeSpeedTransmit command) {
+        command.getResult().pushDebug("Change Speed blocked by Oil");
         command.setExecutable(false);
     }
 

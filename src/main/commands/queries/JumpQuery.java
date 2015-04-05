@@ -65,6 +65,6 @@ public class JumpQuery extends AgentCommand {
     @Override
     public void visit(Robot element) {
         speed = element.getSpeed();
-        result.pushMessage(element + " jumping with speed: " + speed);
+        result.pushDebug(element + " jumping with speed: " + speed);
     }
 }
