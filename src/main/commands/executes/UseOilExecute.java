@@ -29,9 +29,9 @@ public class UseOilExecute extends FieldCommand {
     public void visit(FieldCell element) {
         if (canExecute) {
             element.placeBuff(new Oil());
-            result.pushMessage("Placed oil on " + element);
+            result.pushDebug("Placed oil on " + element);
         } else {
-            result.pushMessage("Could not place oil on " + element);
+            result.pushDebug("Could not place oil on " + element);
         }
     }
 
@@ -42,9 +42,9 @@ public class UseOilExecute extends FieldCommand {
     public void visit(FinishLineFieldCell element) {
         if (canExecute) {
             element.placeBuff(new Oil());
-            result.pushMessage("Placed oil on " + element);
+            result.pushDebug("Placed oil on " + element);
         } else {
-            result.pushMessage("Could not place oil on " + element);
+            result.pushDebug("Could not place oil on " + element);
         }
     }
 }

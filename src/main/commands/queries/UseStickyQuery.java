@@ -23,9 +23,9 @@ public class UseStickyQuery extends AgentCommand {
         canExecute = element.useSticky();
 
         if (canExecute) {
-            result.pushMessage(element + " has sticky in its inventory.");
+            result.pushDebug(element + " has sticky in its inventory.");
         } else {
-            result.pushMessage(element + " has run out of sticky.");
+            result.pushDebug(element + " has run out of sticky.");
         }
     }
 }

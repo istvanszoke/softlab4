@@ -21,9 +21,9 @@ public class KillExecute extends AgentCommand {
     public void visit(Robot element) {
         if (canExecute) {
             element.kill();
-            result.pushMessage("Killed " + element);
+            result.pushDebug("Killed " + element);
         } else {
-            result.pushMessage("Could not kill " + element);
+            result.pushDebug("Could not kill " + element);
         }
     }
 }
