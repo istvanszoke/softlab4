@@ -22,6 +22,9 @@ public class Map implements Iterable<Field> {
      */
     private final List<Field> finishLineFields;
 
+    /**
+     * Térkép osztály konstruktor
+     */
     public Map() {
         fields = new ArrayList<Field>();
         finishLineFields = new ArrayList<Field>();
@@ -103,6 +106,11 @@ public class Map implements Iterable<Field> {
         finishLineFields.clear();
     }
 
+    /**
+     * Keresse meg a kezdőáálláshoz tartozó mezőket
+     * @param numberOfPlayers - Játékosok száma akiknek kezdőpozíciót kell találni
+     * @return - A kezdőpozícióhoz tartozó mezők
+     */
     public List<Field> findStartingPositions(int numberOfPlayers) {
         if (finishLineFields.size() < numberOfPlayers) {
             throw new IllegalArgumentException();
@@ -118,6 +126,10 @@ public class Map implements Iterable<Field> {
         return suitableFields;
     }
 
+    /**
+     * Célvonali mezpk kekérdezése
+     * @return - Célvonali mezők
+     */
     public List<Field> getFinishLineFields() {
         return finishLineFields;
     }

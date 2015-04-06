@@ -26,11 +26,21 @@ public final class GameCreator {
         agents = new ArrayList<AgentHandle>();
     }
 
+    /**
+     * Ágens hozzáadása a játékmezőhöz
+     * @param player - Hozzáadandó ágens
+     * @return - Önreferencia
+     */
     public GameCreator addAgent(AgentHandle player) {
         agents.add(player);
         return this;
     }
 
+    /**
+     * Térkép hozzáadása a játékhoz
+     * @param map - Térkép
+     * @return - Önreferencia
+     */
     public GameCreator setMap(Map map) {
         this.map = map;
         return this;
