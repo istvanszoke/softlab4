@@ -23,7 +23,7 @@ public class UseStickyExecute extends FieldCommand {
      * Sosem értelmes
      *
      * @return - Nem tér vissza
-     * @throws NoFieldCommandException - Mindíg értelmetlen
+     * @throws NoAgentCommandException - Mindíg értelmetlen
      */
     @Override
     public AgentCommand getAgentCommand() throws NoAgentCommandException {

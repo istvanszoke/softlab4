@@ -29,7 +29,7 @@ public class UseOilExecute extends FieldCommand {
      * Sosem értelmes
      *
      * @return - Nem tér vissza
-     * @throws NoFieldCommandException - Mindíg értelmetlen
+     * @throws commands.NoAgentCommandException - Mindíg értelmetlen
      */
     @Override
     public AgentCommand getAgentCommand() throws NoAgentCommandException {

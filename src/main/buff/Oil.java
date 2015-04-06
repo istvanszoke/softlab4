@@ -20,7 +20,7 @@ public class Oil extends Buff implements HeartbeatListener {
     /**
      * ChangeSpeedTransmit módosítása.
      *
-     * @param element - Visitelt elem.
+     * @param command - Visitelt elem.
      */
     @Override
     public void visit(ChangeDirectionTransmit command) {
@@ -31,7 +31,7 @@ public class Oil extends Buff implements HeartbeatListener {
     /**
      * ChangeDirectionTransmit módosítása.
      *
-     * @param element - Visitelt elem.
+     * @param command - Visitelt elem.
      */
     @Override
     public void visit(ChangeSpeedTransmit command) {

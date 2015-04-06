@@ -4,17 +4,35 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+/**
+ * Egy naplózó osztály melyet a teszteléshez használunk
+ */
 public class Logger {
+    /**
+     * Aktulás naplózási szint amit végre kell hajtani
+     */
     private static LogLevel logLevel;
 
+    /**
+     * Adot naplózási szint lekérése
+     * @return
+     */
     public static LogLevel getLogLevel() {
         return logLevel;
     }
 
+    /**
+     * Másik naplózási szint beállítása
+     * @param newLevel - Új naplózási szint
+     */
     public static void setLogLevel(LogLevel newLevel) {
         logLevel = newLevel;
     }
 
+    /**
+     * Egy konrét naplóbejegyzés hozzáadása egy futási eredményből
+     * @param result - Naplóhoz hozzáadott futási eredmény
+     */
     public static void log(Result result) {
         if (logLevel == LogLevel.OFF) {
             return;

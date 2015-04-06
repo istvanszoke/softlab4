@@ -10,6 +10,9 @@ import agents.Speed;
 public class Sticky extends Buff {
     int usesRemaining;
 
+    /**
+     * Konstruktor a Sticky folthoz
+     */
     public Sticky() {
         usesRemaining = 4;
     }

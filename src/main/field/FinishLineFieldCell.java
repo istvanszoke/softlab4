@@ -14,7 +14,6 @@ public class FinishLineFieldCell extends Field {
      * Konstruktor.
      * Az ősosztály konstruktorát hívja meg.
      *
-     * @param distanceFromGoal - A céltól való távolság.
      */
     public FinishLineFieldCell() {
         super(0);
