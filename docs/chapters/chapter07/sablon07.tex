@@ -227,13 +227,15 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
 
 \subsection{Kimeneti nyelv}
 
+A gömbölyű zárójellel ellátott részletek csak megjegyzések, a kimenetben nem szerepelnek. \newline
+
 \begin{itemize}
 	\item Irányváltoztatás
 	\begin{itemize}
 		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
 		\begin{itemize}
 				\item \{0\} Robot: <robotid> Új irány: <újirány>
-				\item \{1\} Sikertelen irányváltoztatás (Robot: <robotid>)
+				\item \{1\} (Sikertelen irányváltoztatás) Robot: <robotid>
 		\end{itemize}
 	\end{itemize}
 	
@@ -242,7 +244,7 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
 		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
 		\begin{itemize}
 			\item \{0\} Robot: <robotid> Új sebesség: <újsebesség>
-			\item \{1\} Sikertelen sebesség változtatás (Robot: <robotid>)
+			\item \{1\} (Sikertelen sebesség változtatás) Robot: <robotid>
 		\end{itemize}
 	\end{itemize}
 	
@@ -251,7 +253,7 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
 		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
 		\begin{itemize}
 			\item \{0\} Robotid: <robotid> Előző cella: <fieldid> Új cella: <fieldid>
-			\item \{1\} Sikertelen ugrás (Robot: <robotid>)
+			\item \{1\} (Sikertelen ugrás) Robot: <robotid>
 		\end{itemize}
 	\end{itemize}
 	
@@ -260,7 +262,7 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
 		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
 		\begin{itemize}
 			\item \{0\} Robot: <robotid>  Érintett cella: <fieldid>
-			\item \{1\} Sikertelen olaj lerakás (Robot: <robotid>)
+			\item \{1\} (Sikertelen olaj lerakás) Robot: <robotid>
 		\end{itemize}
 	\end{itemize}
 	
@@ -269,7 +271,7 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
 		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
 		\begin{itemize}
 			\item \{0\} Robot: <robotid>. Érintett cella: <fieldid>
-			\item \{1\} Sikertelen ragacs lerakás (Robot: <robotid>)
+			\item \{1\} (Sikertelen ragacs lerakás) Robot: <robotid>
 		\end{itemize}
 	\end{itemize}	
 	
@@ -278,7 +280,7 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
 		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
 		\begin{itemize}
 			\item \{0\} Generált pálya: <Map> Generált robotok: <Robot>
-			\item \{1\} Sikertelen mentés.
+			\item \{1\} (Sikertelen mentés.)
 		\end{itemize}
 	\end{itemize}
 	
@@ -288,7 +290,7 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
 		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
 		\begin{itemize}
 			\item \{0\} Sikeres mentés megadott elérési útvonalra. 
-			\item \{1\} Sikertelen mentés.
+			\item \{1\} (Sikertelen mentés.)
 		\end{itemize}
 	\end{itemize}
 
@@ -297,7 +299,61 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
 		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
 		\begin{itemize}
 			\item \{0\} Betöltött pálya: <Map> Betöltött robotok <Robot> 
-			\item \{1\} Sikertelen betöltés.
+			\item \{1\} (Sikertelen betöltés.)
+		\end{itemize}
+	\end{itemize}
+	
+	\item Vacuum lerakása adott cellára
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Vacuum: <vacuumid> on Field: <fieldid> Célolaj on {<fieldid> | null}
+			\item \{1\} (Sikertelen lerakás.)
+		\end{itemize}
+	\end{itemize}	
+	
+	\item Robot lerakása adott cellára
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Robot: <robotid> on Field: <fieldid> 
+			\item \{1\} (Sikertelen lerakás.)
+		\end{itemize}
+	\end{itemize}	
+	
+	\item Olaj léptetése adott idővel
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Hátralévő idő: <ido> 
+			\item \{1\} (Sikertelen leptetes.)
+		\end{itemize}
+	\end{itemize}	
+	
+	\item Olaj lerakása adott cellára
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Field: <fieldid> 
+			\item \{1\} (Sikertelen lerakás.)
+		\end{itemize}
+	\end{itemize}	
+	
+	\item Ragacs lerakása adott cellára
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Field: <fieldid> 
+			\item \{1\} (Sikertelen lerakás.)
+		\end{itemize}
+	\end{itemize}		
+	
+	\item Vacuum utasítása takarításra
+	\begin{itemize}
+		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\begin{itemize}
+			\item \{0\} Hatralevo kor: <n>
+			\item \{1\} (Sikertelen takarítás.) notarget
 		\end{itemize}
 	\end{itemize}
 	
