@@ -54,12 +54,10 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 \end{itemize}
 
 \section{A tesztek részletes tervei, leírásuk a teszt nyelvén}
-[A tesztek részletes tervei alatt meg kell adni azokat a bemeneti adatsorozatokat, amelyekkel a program működése ellenőrizhető. Minden bemenő adatsorozathoz definiálni kell, hogy az adatsorozat végrehajtásától a program mely részeinek, funkcióinak ellenőrzését várjuk és konkrétan milyen eredményekre számítunk, ezek az eredmények hogyan vethetők össze a bemenetekkel.]
 
 \subsection{Általános játék logika}
 \begin{itemize}
-	\item Leírás\\
-	\item Játék kezdése. Az ágensek sorban végigmenve irányváltoztatás és sebességváltoztatás. Az ágensek egszerre ugratása. Vacuum lerakása egy adott field-re.
+	\item Leírás: Játék kezdése. Az ágensek sorban végigmenve irányváltoztatás és sebességváltoztatás. Az ágensek egszerre ugratása. Vacuum lerakása egy adott field-re.
 	\item Bemenet\\
 		jatek(szam=2, ido=5, palya=test.map) \\
 		irvalt(irany=LEFT) \\
@@ -76,8 +74,7 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 
 \subsection{Vacuum olaj felé léptetése}
 \begin{itemize}
-	\item Leírás\\
-	\item Játék kezdése után olaj lerakása, majd vacuum lerakása. A teszt lényege, hogy lássuk a vacuum helyesen talál céljául olajat.
+	\item Leírás: Játék kezdése után olaj lerakása, majd vacuum lerakása. A teszt lényege, hogy lássuk a vacuum helyesen talál céljául olajat.
 	\item Bemenet\\
 		jatek(szam=2, ido=5, palya=test.map) \\
 		olajlerak(field=45) \\
@@ -92,8 +89,7 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 
 \subsection{Vacuum feltakarítja az olajat}
 \begin{itemize}
-	\item Leírás\\
-	\item Játék kezdése után vacuum és olaj lerakása ugyanarra a cellára. Végül Vacuum utasítása takarításra.
+	\item Leírás: Játék kezdése után vacuum és olaj lerakása ugyanarra a cellára. Végül Vacuum utasítása takarításra.
 		\item Bemenet\\
 		jatek(szam=2, ido=5, palya=test.map) \\
 		olajlerak(field = 45) \\
@@ -105,7 +101,7 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 	\item Elvárt kimenet\\
 		jatek 0 \\ 
 		olajlerak 0 45 \\ 
-		listinfos 0 45 o		
+		listinfos 0 45 o \\
 		vacuumlerak 0 1 45 45 \\ 
 		vacuumtakarit 0 1 \\ 
 		vacuumtakarit 0 0 \\ 
@@ -114,8 +110,7 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 
 \subsection{Olaj léptetése}
 \begin{itemize}
-	\item Leírás\\
-	\item Játék kezdése után olaj lerakása majd utasítása száradásra.
+	\item Leírás: Játék kezdése után olaj lerakása majd utasítása száradásra.
 	\item Bemenet\\
 		jatek(szam=2, ido=5, palya=test.map) \\
 		olajlerak(field=45) \\
@@ -132,8 +127,7 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 
 \subsection{Ragacsra ráugrás és kopás}
 \begin{itemize}
-	\item Leírás\\
-	\item Játék kezdése után ragacs lerakása, majd két ágens egymás után ráugrik. Ragacs jelen esetben 2 ugrás után lekopik.
+	\item Leírás: Játék kezdése után ragacs lerakása, majd két ágens egymás után ráugrik. Ragacs jelen esetben 2 ugrás után lekopik.
 	\item Bemenet\\
 		jatek(szam=2, ido=5, palya=test.map) \\
 		ragacslerak(field=45) \\
@@ -152,12 +146,12 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 	\item Elvárt kimenet\\
 		jatek 0 \\
 		ragacslerak 0 45 \\
-		robotathelyez 1 44
+		robotathelyez 1 44 \\
 		sebvalt 0 1 2 \\ 
 		irvalt 0 1 JOBB \\  
 		ugrik 0 1 43 45 \\ 
 			  0 2 1 1 \\ 		
-		robotathelyez 0 2 46
+		robotathelyez 0 2 46 \\
 		sebvalt 0 2 1 \\ 
 		irvalt 0 2 BAL \\  
 		ugrik 0 1 45 46 \\ 
@@ -168,8 +162,7 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 
 \subsection{Olajra ráugrás}
 \begin{itemize}
-	\item Leírás\\
-	\item Játék kezdése után olaj lerakása, majd egy ágens ráugrik és megpróbál sebességet változtatni. 
+	\item Leírás: Játék kezdése után olaj lerakása, majd egy ágens ráugrik és megpróbál sebességet változtatni. 
 	\item Bemenet\\	
 		jatek(szam=2, ido=5, palya=test.map) \\
 		olajlerak(field=45) \\
@@ -191,8 +184,7 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 
 \subsection{Robot lehelyez buffot}
 \begin{itemize}
-	\item Leírás\\
-	Játék kezdése után utasítjuk az első számú ágenst egy buff lerakására.
+	\item Leírás: Játék kezdése után utasítjuk az első számú ágenst egy buff lerakására.
 	\item Bemenet\\	
 		jatek(szam=2, ido=5, palya=test.map) \\
 		robotathelyez(robot=1, field=44) \\
@@ -207,8 +199,7 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 
 \subsection{Robot ráugrik vacuumra}
 \begin{itemize}
-	\item Leírás\\
-	\item Robot és vacuum lehelyezése. Robot utasítása vacuumra ugrásra.
+	\item Leírás: Robot és vacuum lehelyezése. Robot utasítása vacuumra ugrásra.
 	\item Bemenet\\
 		jatek(szam=2, ido=5, palya=test.map) \\
 		robotathelyez(robot=1, field=45) \\
@@ -232,8 +223,7 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 
 \subsection{Vacuum találkozik vacuummal}
 \begin{itemize}
-	\item Leírás\\
-	\item Két vacuum és egy olaj lehelyézese. Az olajtól messzebb lévő vacuum léptetése, akinek útjában van a másik vacuum
+	\item Leírás: Két vacuum és egy olaj lehelyézese. Az olajtól messzebb lévő vacuum léptetése, akinek útjában van a másik vacuum
 	\item Bemenet\\
 		jatek(szam=2, ido=5, palya=test.map) \\
 		olajlerak(field=49) \\
@@ -252,8 +242,7 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 
 \subsection{Robot ütközik robottal}
 \begin{itemize}
-	\item Leírás\\
-	\item Két robot lehelyezése egy sorba, egymás felé irányítás és ütközés megfigyelése. 45ös fielden találkozás
+	\item Leírás: Két robot lehelyezése egy sorba, egymás felé irányítás és ütközés megfigyelése. 45ös fielden találkozás
 	\item Bemenet\\
 		jatek(szam=2, ido=5, palya=test.map) \\
 		robotathelyez(robot=1, field=43) \\
@@ -278,5 +267,5 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 \end{itemize}
 
 \section{A tesztelést támogató programok tervei}
-\comment{A tesztadatok előállítására, a tesztek eredményeinek kiértékelésére szolgáló segédprogramok részletes terveit kell elkészíteni.}
 
+A tesztek eredményeinek kiértékelésére szolgáló segédprogram szabványos fájlból olvassa be a bemenetet és az elvárt kimenetet az előző fejezetben leírt módon (7.1.1, 7.4). A program lefuttatja a bemenetben megadott parancsokat és a kimenetet összehasonlítja az elvárt kimenettel.
