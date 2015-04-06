@@ -56,27 +56,74 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 \section{A tesztek részletes tervei, leírásuk a teszt nyelvén}
 [A tesztek részletes tervei alatt meg kell adni azokat a bemeneti adatsorozatokat, amelyekkel a program működése ellenőrizhető. Minden bemenő adatsorozathoz definiálni kell, hogy az adatsorozat végrehajtásától a program mely részeinek, funkcióinak ellenőrzését várjuk és konkrétan milyen eredményekre számítunk, ezek az eredmények hogyan vethetők össze a bemenetekkel.]
 
-\subsection{Teszteset1}
+\subsection{Általános játék logika}
 \begin{itemize}
-\item Leírás\newline
-\comment{szöveges leírás, kb. 1-5 mondat.}
-\item Ellenőrzött funkcionalitás, várható hibahelyek
-\item Bemenet\newline
-\comment{a proto bemeneti nyelvén megadva (lásd előző anyag)}
-\item Elvárt kimenet\newline
-\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+	\item Leírás\newline
+	\item Játék kezdése. Az ágensek sorban végigmenve irányváltoztatás és sebességváltoztatás. Az ágensek egszerre ugratása. Vacuum lerakása egy adott field-re.
+	\item Bemenet\newline
+		jatek(szam=2, ido=5, palya=test.map) \newline
+		irvalt(irany=LEFT) \newline
+		sebvalt(+1) \newline
+		irvalt(irany=RIGHT) \newline
+		sebvalt(-1) \newline
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
 \end{itemize}
 
-\subsection{Teszteset2}
+\subsection{Olaj és Vacuum kapcsolata 1}
 \begin{itemize}
-\item Leírás\newline
-\comment{szöveges leírás, kb. 1-5 mondat.}
-\item Ellenőrzött funkcionalitás, várható hibahelyek
-\item Bemenet\newline
-\comment{a proto bemeneti nyelvén megadva (lásd előző anyag)}
-\item Elvárt kimenet\newline
-\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+	\item Leírás\newline
+	\item Játék kezdése után olaj lerakása, majd vacuum lerakása. A teszt lényege, hogy lássuk a vacuum helyesen talál céljául olajat.
+	\item Bemenet\newline
+		jatek(szam=2, ido=5, palya=test.map) \newline
+		olajlerak() \newline
+		vacuumlerak(field = 1) \newline
+		vacuumlep() \newline
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
 \end{itemize}
+
+\subsection{Olaj és Vacuum kapcsolata 2}
+\begin{itemize}
+	\item Leírás\newline
+	\item Játék kezdése után vacuum és olaj lerakása ugyanarra a cellára. Végül Vacuum utasítása takarításra.
+		\item Bemenet\newline
+		jatek(szam=2, ido=5, palya=test.map) \newline
+		olajlerak(field = 1) \newline
+		vacuumlerak(field = 1) \newline
+		vacuumtakarit() \newline
+		vacuumtakarit() \newline		
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+\end{itemize}
+
+\subsection{Olaj léptetése}
+\begin{itemize}
+	\item Leírás\newline
+	\item Játék kezdése után olaj lerakása majd utasítása száradásra.
+	\item Bemenet\newline
+		jatek(szam=2, ido=5, palya=test.map) \newline
+		olajlerak(field=1) \newline
+		olajszarad(field=1, ido=2500) \newline
+		olajszarad(field=1, ido=2500) \newline				
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+\end{itemize}
+
+\subsection{Ragacs léptetése}
+\begin{itemize}
+	\item Leírás\newline
+	\item Játék kezdése után olaj lerakása majd utasítása száradásra.
+	\item Bemenet\newline
+		jatek(szam=2, ido=5, palya=test.map) \newline
+		ragacslerak(field=1) \newline
+		robothelyez(robot=1, field=1) \newline
+						
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+\end{itemize}
+
+
 
 \section{A tesztelést támogató programok tervei}
 \comment{A tesztadatok előállítására, a tesztek eredményeinek kiértékelésére szolgáló segédprogramok részletes terveit kell elkészíteni.}
