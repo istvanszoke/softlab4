@@ -13,7 +13,6 @@ public class FinishLineFieldCell extends Field {
     /**
      * Konstruktor.
      * Az ősosztály konstruktorát hívja meg.
-     *
      */
     public FinishLineFieldCell() {
         super(0);

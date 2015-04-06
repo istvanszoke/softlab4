@@ -7,12 +7,14 @@ package game.control;
 public interface GameControllerSocketListener {
     /**
      * Nyitási esemény jelzésének fogadása
+     *
      * @param sender - A csatlakozó referenciája amelyik küldte a jelzést
      */
     void socketOpened(GameControllerSocket sender);
 
     /**
      * Zárási esemény jelzésének fogaddása
+     *
      * @param sender - A csatlakozó referenciája amelyik a jelzést küldte
      */
     void socketClosed(GameControllerSocket sender);

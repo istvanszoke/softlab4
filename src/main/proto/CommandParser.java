@@ -7,8 +7,13 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Teszteléshez szükséges utasításfeldolgozó
+ */
 public class CommandParser {
+    /**
+     * Elfogadott parancsok hozzárendelései
+     */
     //TODO: Change the argument of betolt() and ment() from nev to allas in the docs.
     private static final Map<String, String[]> acceptedCommands = Collections.unmodifiableMap(new HashMap<String, String[]>() {{
         put(ProtoCommand.PLAY, new String[]{"szam", "ido", "palya"});
@@ -21,7 +26,9 @@ public class CommandParser {
         put(ProtoCommand.USE_STICKY, new String[]{});
         put(ProtoCommand.EXIT, new String[]{});
     }});
-
+    /**
+     * Argumentumelleőrzők
+     */
     private static final Map<String, String> argumentValidators = Collections.unmodifiableMap(new HashMap<String, String>() {{
         put("szam", "[2-4]");
         put("ido", "[0-3]:[0-5][0-9]");
@@ -31,6 +38,14 @@ public class CommandParser {
         put("delta", "[+-]1");
     }});
 
+    /**
+     * Elpállít a PrototípusParancsot a bekért szövegből
+     *
+     * @param commandString - Bekérsz parancs szövege
+     * @return Az előállított prototípus parancs
+     * @throws InvalidCommandException         - Érvénytelen parancs
+     * @throws InvalidCommandArgumentException - Érvénytelen parancs argumentum
+     */
     public static ProtoCommand parse(String commandString) throws InvalidCommandException, InvalidCommandArgumentException {
         String stripped = commandString.replaceAll("\\s", "");
 
@@ -52,6 +67,14 @@ public class CommandParser {
         return new ProtoCommand(command, args);
     }
 
+    /**
+     * Argumentumok feloldása
+     *
+     * @param command - Parancs szövege
+     * @param rawArgs - Nyers argumentumok
+     * @return - Feldoldott argumentumok
+     * @throws InvalidCommandArgumentException - Érvénytelen argumentum
+     */
     private static Map<String, String> parseArgs(String command, String rawArgs) throws InvalidCommandArgumentException {
         if (rawArgs.equals("") && acceptedCommands.get(command).length == 0) {
             return new HashMap<String, String>();
@@ -82,6 +105,12 @@ public class CommandParser {
         return args;
     }
 
+    /**
+     * Argumentumérték validáslása
+     *
+     * @param keyValue - Validálandó argumentum kulcs
+     * @return - Validálás eredménye
+     */
     private static boolean validateArgumentValue(String[] keyValue) {
         if (!argumentValidators.containsKey(keyValue[0])) {
             return true;
@@ -90,6 +119,14 @@ public class CommandParser {
         return Pattern.compile(argumentValidators.get(keyValue[0])).matcher(keyValue[1]).matches();
     }
 
+    /**
+     * Tömbben kereső
+     *
+     * @param array - Tömb
+     * @param value - Érték
+     * @param <T>   - A tömb típusa
+     * @return - Mely tömbelemek tartalmazzák az értéket
+     */
     private static <T> boolean contains(T[] array, T value) {
         return Arrays.asList(array).contains(value);
     }

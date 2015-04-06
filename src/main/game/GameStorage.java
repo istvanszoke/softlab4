@@ -36,6 +36,7 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
 
     /**
      * Játéktároló konstruktora
+     *
      * @param handles - Ágenskezelők melyeket kezelünk
      */
     public GameStorage(Collection<AgentHandle> handles) {
@@ -75,6 +76,7 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
 
     /**
      * Ágenskezelő hozzáadása a meglévőkhöz
+     *
      * @param handle - Új ágenskezelő
      */
     public synchronized void add(AgentHandle handle) {
@@ -91,6 +93,7 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
 
     /**
      * Egy adott Ágenshez tartotó ágenskezelő lekérdezése
+     *
      * @param agent - A kulcs Ágens referencia
      * @return - Az eredményként szolgáltatott ágenskezelő
      */
@@ -100,6 +103,7 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
 
     /**
      * Aktuális ágenskezelő lekérdezése
+     *
      * @return - Aktuális ágenskezelő
      */
     public synchronized AgentHandle getCurrent() {
@@ -108,6 +112,7 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
 
     /**
      * Játékban lévő ágenskezelők lekérése
+     *
      * @return - Játékban lévő ágenskezelő
      */
     public synchronized List<AgentHandle> getInPlay() {
@@ -116,6 +121,7 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
 
     /**
      * Játékosokhoz lévő ágenskezelők lekérdezése
+     *
      * @return - Játékosokhoz tartozó ágenskezelők
      */
     public synchronized List<AgentHandle> getPlayers() {
@@ -124,6 +130,7 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
 
     /**
      * Az összes ágenskezelő iterálása
+     *
      * @return
      */
     @Override
@@ -133,6 +140,7 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
 
     /**
      * Idő telésének lekezelése
+     *
      * @param deltaTime - Legutolsó meghívás óta eltelt idő
      */
     @Override

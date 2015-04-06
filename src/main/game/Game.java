@@ -37,8 +37,9 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     /**
      * Játék osztály konstruktora
+     *
      * @param agents - A jétékban részvevő ágensek
-     * @param map - A térkép amelyen a játék játszdik
+     * @param map    - A térkép amelyen a játék játszdik
      */
     public Game(List<AgentHandle> agents, Map map) {
         controllerServer = new GameControllerServer(this);
@@ -72,6 +73,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     /**
      * Vezérlő regisztrálása a játékban
+     *
      * @param component - Regisztrálandó vezérlő
      */
     public void registerController(Component component) {
@@ -80,6 +82,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     /**
      * Jelenlegi térkép lekérése
+     *
      * @return - Az aktuális térkép
      */
     public Map getMap() {
@@ -88,6 +91,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     /**
      * Játékoscsre megvalósítása
+     *
      * @param agent - Az ágens aki jelezte a váltást
      */
     @Override
@@ -104,6 +108,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     /**
      * Sima léptetés megvalósítása
+     *
      * @param handle - Ágenskezelő referencia
      */
     @Override
@@ -142,6 +147,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     /**
      * Ágens halálát lekezelő függvény
+     *
      * @param handle - Ágenskezelő referenciája
      */
     @Override
@@ -164,6 +170,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     /**
      * Időbeliség lekezelése a szívverésre
+     *
      * @param deltaTime - mennyi idő telt el az utolsó szívütés óta
      */
     @Override
@@ -215,6 +222,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     /**
      * Beállítja az éppen aktuális Ágenst
+     *
      * @param handle - Ágenskezelő
      */
     private void register(AgentHandle handle) {
@@ -224,6 +232,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     /**
      * Lekapcsolja az éppen aktuális Ágenst
+     *
      * @param handle - Ágenskezelő
      */
     private void deregister(AgentHandle handle) {
@@ -233,6 +242,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     /**
      * Játék vége állapot lekérdezése
+     *
      * @return - Jeáték vége állapot
      */
     private boolean isGameOver() {

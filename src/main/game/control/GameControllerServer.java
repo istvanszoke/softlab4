@@ -35,6 +35,7 @@ public class GameControllerServer {
 
     /**
      * A kiszolgálónak a konstruktora
+     *
      * @param listener - Az objektum ami a kiszolgáló eseményeit figyelni fogja
      */
     public GameControllerServer(GameControllerServerListener listener) {
@@ -52,6 +53,7 @@ public class GameControllerServer {
 
     /**
      * Kör vége jelzés átvétele kliensektől
+     *
      * @param client - A küldő kliens referenciája
      * @return - Visszatérés a kliens igényének teljesüléséről
      */
@@ -74,7 +76,8 @@ public class GameControllerServer {
 
     /**
      * Ágensnek küldött utasítás átvétele egy klienstől
-     * @param socket - A csatlakozó amelyen keresztül az utasítás érkezett
+     *
+     * @param socket  - A csatlakozó amelyen keresztül az utasítás érkezett
      * @param command - Az ágesnsutasítás amit végre kell hajtani
      * @return - Visszajelzés a kérés célbajuttatásáról
      */
@@ -93,6 +96,7 @@ public class GameControllerServer {
 
     /**
      * Létrehoz egy csatlakozót egy Ágensnek az irányításához
+     *
      * @param agent - Az ágens amelyhez csatlakozót hoz létre
      * @return - A csatlakozó interfész referenciája
      */
@@ -112,6 +116,7 @@ public class GameControllerServer {
 
     /**
      * Egy ágenshez tartozó csatlakozó eltávolítása a kiszolgálás elől
+     *
      * @param agent - Az ágens amelyhez rendelt csatlakozót el akarjuk távolítani
      */
     public void removeAgent(Agent agent) {
@@ -127,6 +132,7 @@ public class GameControllerServer {
 
     /**
      * Ágenshez tartozó csatlakozó kinyitása és nyitás jelzése a tulaj felé
+     *
      * @param agent - Ágens amelyhez tartozó csatlakozót nyitjuk
      */
     public void notifyControllerSocketOpened(Agent agent) {
@@ -137,6 +143,7 @@ public class GameControllerServer {
 
     /**
      * Ágenshez tartozó  csatlakozó bezárása és zárás jelzése a tulaj felé
+     *
      * @param agent - Ágens amelyhez tartozó csatlakozót zárjuk
      */
     public void notifyControllerSocketClosed(Agent agent) {
@@ -164,6 +171,7 @@ public class GameControllerServer {
 
         /**
          * Csatlakozó konstruktora
+         *
          * @param server - A kiszolgáló amely létrehozza
          */
         private ControlSocket(GameControllerServer server) {
@@ -176,6 +184,7 @@ public class GameControllerServer {
 
         /**
          * Nyitottság lekérdezése a csatlakozótól
+         *
          * @return - A nyitottsági állapot
          */
         @Override
@@ -183,6 +192,7 @@ public class GameControllerServer {
 
         /**
          * Jelezzük egy körnek a befejezését a kiszolgáló fele
+         *
          * @return - Visszajelzés az jelzés sikerességéről
          */
         @Override
@@ -192,6 +202,7 @@ public class GameControllerServer {
 
         /**
          * Egy ágensnek szóló parancs elküldése a kliensnek
+         *
          * @param command - Az utasítás amit elküldünk
          * @return - Visszajelzés a küldés sikeressségéről
          */
@@ -202,6 +213,7 @@ public class GameControllerServer {
 
         /**
          * Nyitás és zárás eseményre való feliratkozás
+         *
          * @param client - A kliens aki feliratkozik az eseményekre
          */
         @Override

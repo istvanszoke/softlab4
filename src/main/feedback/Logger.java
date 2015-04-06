@@ -15,6 +15,7 @@ public class Logger {
 
     /**
      * Adot naplózási szint lekérése
+     *
      * @return
      */
     public static LogLevel getLogLevel() {
@@ -23,6 +24,7 @@ public class Logger {
 
     /**
      * Másik naplózási szint beállítása
+     *
      * @param newLevel - Új naplózási szint
      */
     public static void setLogLevel(LogLevel newLevel) {
@@ -31,6 +33,7 @@ public class Logger {
 
     /**
      * Egy konrét naplóbejegyzés hozzáadása egy futási eredményből
+     *
      * @param result - Naplóhoz hozzáadott futási eredmény
      */
     public static void log(Result result) {

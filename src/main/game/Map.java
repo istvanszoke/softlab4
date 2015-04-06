@@ -108,6 +108,7 @@ public class Map implements Iterable<Field> {
 
     /**
      * Keresse meg a kezdőáálláshoz tartozó mezőket
+     *
      * @param numberOfPlayers - Játékosok száma akiknek kezdőpozíciót kell találni
      * @return - A kezdőpozícióhoz tartozó mezők
      */
@@ -128,6 +129,7 @@ public class Map implements Iterable<Field> {
 
     /**
      * Célvonali mezpk kekérdezése
+     *
      * @return - Célvonali mezők
      */
     public List<Field> getFinishLineFields() {

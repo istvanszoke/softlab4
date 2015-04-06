@@ -28,6 +28,7 @@ public final class GameCreator {
 
     /**
      * Ágens hozzáadása a játékmezőhöz
+     *
      * @param player - Hozzáadandó ágens
      * @return - Önreferencia
      */
@@ -38,6 +39,7 @@ public final class GameCreator {
 
     /**
      * Térkép hozzáadása a játékhoz
+     *
      * @param map - Térkép
      * @return - Önreferencia
      */

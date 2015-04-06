@@ -37,6 +37,7 @@ public class Result {
 
     /**
      * Üzenet hozzáadása a normál tesztesetek eredményeihez
+     *
      * @param message - A hozzáadandó üzenet
      */
     public synchronized void pushNormal(String message) {
@@ -46,6 +47,7 @@ public class Result {
 
     /**
      * Üzenet hozzáadása a hibekeresési tesztesetek eredményihez
+     *
      * @param message
      */
     public synchronized void pushDebug(String message) {
@@ -62,6 +64,7 @@ public class Result {
 
     /**
      * Sikeresség lekérése
+     *
      * @return - A sikeresség
      */
     public synchronized boolean isSuccessful() {
@@ -70,6 +73,7 @@ public class Result {
 
     /**
      * Normál eredmény elemeinek lekérése
+     *
      * @return - Lekért elemek
      */
     public synchronized SortedMap<Integer, String> getNormal() {
@@ -78,6 +82,7 @@ public class Result {
 
     /**
      * Hibakeresési eredmény elemeinek lekérése
+     *
      * @return - Lekért elemek
      */
     public synchronized SortedMap<Integer, String> getDebug() {
