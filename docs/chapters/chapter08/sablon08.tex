@@ -9,20 +9,20 @@
 
 \subsection{Osztály1}
 \begin{itemize}
-\item Felelősség\newline
+\item Felelősség\\
 \comment{Mi az osztály felelőssége. Kb 1 bekezdés. Ha szükséges, akkor state-chart is.}
-\item Ősosztályok\newline
-\comment{Mely osztályokból származik (öröklési hierarchia)\newline
+\item Ősosztályok\\
+\comment{Mely osztályokból származik (öröklési hierarchia)\\
 Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
-\item Interfészek\newline
+\item Interfészek\\
 \comment{Mely interfészeket valósítja meg.}
-\item Attribútumok\newline
+\item Attribútumok\\
 \comment{Milyen attribútumai vannak}
 	\begin{itemize}
 		\item attribútum1: attribútum jellemzése: mire való, láthatósága (UML jelöléssel), típusa
 		\item attribútum2: attribútum jellemzése: mire való, láthatósága (UML jelöléssel), típusa
 	\end{itemize}
-\item Metódusok\newline
+\item Metódusok\\
 \comment{Milyen publikus, protected és privát  metódusokkal rendelkezik. Metódusonként precíz leírás, ha szükséges, activity diagram is  a metódusban megvalósítandó algoritmusról.}
 	\begin{itemize}
 		\item int foo(Osztály3 o1, Osztály4 o2): metódus leírása, láthatósága (UML jelöléssel)
@@ -32,20 +32,20 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 
 \subsection{Osztály2}
 \begin{itemize}
-\item Felelősség\newline
+\item Felelősség\\
 \comment{Mi az osztály felelőssége. Kb 1 bekezdés. Ha szükséges, akkor state-chart is.}
-\item Ősosztályok\newline
-\comment{Mely osztályokból származik (öröklési hierarchia)\newline
+\item Ősosztályok\\
+\comment{Mely osztályokból származik (öröklési hierarchia)\\
 Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
-\item Interfészek\newline
+\item Interfészek\\
 \comment{Mely interfészeket valósítja meg.}
-\item Attribútumok\newline
+\item Attribútumok\\
 \comment{Milyen attribútumai vannak}
 	\begin{itemize}
 		\item attribútum1: attribútum jellemzése: mire való, láthatósága (UML jelöléssel), típusa
 		\item attribútum2: attribútum jellemzése: mire való, láthatósága (UML jelöléssel), típusa
 	\end{itemize}
-\item Metódusok\newline
+\item Metódusok\\
 \comment{Milyen publikus, protected és privát  metódusokkal rendelkezik. Metódusonként precíz leírás, ha szükséges, activity diagram is  a metódusban megvalósítandó algoritmusról.}
 	\begin{itemize}
 		\item int foo(Osztály3 o1, Osztály4 o2): metódus leírása, láthatósága (UML jelöléssel)
@@ -54,30 +54,218 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 \end{itemize}
 
 \section{A tesztek részletes tervei, leírásuk a teszt nyelvén}
-[A tesztek részletes tervei alatt meg kell adni azokat a bemeneti adatsorozatokat, amelyekkel a program működése ellenőrizhető. Minden bemenő adatsorozathoz definiálni kell, hogy az adatsorozat végrehajtásától a program mely részeinek, funkcióinak ellenőrzését várjuk és konkrétan milyen eredményekre számítunk, ezek az eredmények hogyan vethetők össze a bemenetekkel.]
 
-\subsection{Teszteset1}
+\subsection{Általános játék logika}
 \begin{itemize}
-\item Leírás\newline
-\comment{szöveges leírás, kb. 1-5 mondat.}
-\item Ellenőrzött funkcionalitás, várható hibahelyek
-\item Bemenet\newline
-\comment{a proto bemeneti nyelvén megadva (lásd előző anyag)}
-\item Elvárt kimenet\newline
-\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+	\item Leírás: Játék kezdése. Az ágensek sorban végigmenve irányváltoztatás és sebességváltoztatás. Az ágensek egszerre ugratása. Vacuum lerakása egy adott field-re.
+	\item Bemenet\\
+		jatek(szam=2, ido=5, palya=test.map) \\
+		irvalt(irany=LEFT) \\
+		sebvalt(+1) \\
+		irvalt(irany=RIGHT) \\
+		sebvalt(-1) \\
+	\item Elvárt kimenet\\
+		jatek 0 \\ 
+		irvalt 0 1 LEFT \\ 
+		sebvalt 0 1 1 \\ 
+		irvalt 0 1 RIGHT \\ 
+		sebvalt 0 1 0	\\ 
 \end{itemize}
 
-\subsection{Teszteset2}
+\subsection{Vacuum olaj felé léptetése}
 \begin{itemize}
-\item Leírás\newline
-\comment{szöveges leírás, kb. 1-5 mondat.}
-\item Ellenőrzött funkcionalitás, várható hibahelyek
-\item Bemenet\newline
-\comment{a proto bemeneti nyelvén megadva (lásd előző anyag)}
-\item Elvárt kimenet\newline
-\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+	\item Leírás: Játék kezdése után olaj lerakása, majd vacuum lerakása. A teszt lényege, hogy lássuk a vacuum helyesen talál céljául olajat.
+	\item Bemenet\\
+		jatek(szam=2, ido=5, palya=test.map) \\
+		olajlerak(field=45) \\
+		vacuumlerak(field = 41) \\
+		vacuumlep() \\
+	\item Elvárt kimenet\\
+		jatek 0 \\
+		olajlerak 0 45 \\
+		vacuumlerak 0 1 41 45 \\
+		vacuumlep 0 1 42 \\ 
+\end{itemize}
+
+\subsection{Vacuum feltakarítja az olajat}
+\begin{itemize}
+	\item Leírás: Játék kezdése után vacuum és olaj lerakása ugyanarra a cellára. Végül Vacuum utasítása takarításra.
+		\item Bemenet\\
+		jatek(szam=2, ido=5, palya=test.map) \\
+		olajlerak(field = 45) \\
+		listinfos(field=45) \\		
+		vacuumlerak(field = 45) \\
+		vacuumtakarit() \\
+		vacuumtakarit() \\		
+		listinfos(field=45) \\
+	\item Elvárt kimenet\\
+		jatek 0 \\ 
+		olajlerak 0 45 \\ 
+		listinfos 0 45 o \\
+		vacuumlerak 0 1 45 45 \\ 
+		vacuumtakarit 0 1 \\ 
+		vacuumtakarit 0 0 \\ 
+		listinfos 0 45 \\
+\end{itemize}
+
+\subsection{Olaj léptetése}
+\begin{itemize}
+	\item Leírás: Játék kezdése után olaj lerakása majd utasítása száradásra.
+	\item Bemenet\\
+		jatek(szam=2, ido=5, palya=test.map) \\
+		olajlerak(field=45) \\
+		olajleptet(field=45, ido=2500) \\
+		olajleptet(field=45, ido=2500) \\				
+		listinfos(field=45) \\
+	\item Elvárt kimenet\\
+		jatek 0 \\
+		olajlerak 0 45 \\ 
+		olajleptet 0 2500 \\ 
+		olajleptet 0 0 \\
+		listinfos 0 45 \\		
+\end{itemize}
+
+\subsection{Ragacsra ráugrás és kopás}
+\begin{itemize}
+	\item Leírás: Játék kezdése után ragacs lerakása, majd két ágens egymás után ráugrik. Ragacs jelen esetben 2 ugrás után lekopik.
+	\item Bemenet\\
+		jatek(szam=2, ido=5, palya=test.map) \\
+		ragacslerak(field=45) \\
+		robotathelyez(robot=1, field=43) \\
+		sebvalt(+2) \\
+		irvalt(JOBB) \\
+		ugrik() \\
+		listinfos(field=45) \\
+		listinfos(robot=1) \\
+		robotathelyez(robot=2, field=46) \\
+		sebvalt(+1) \\
+		irvalt(BAL) \\
+		ugrik() \\
+		listinfos(field=50) \\		
+		listinfos(robot=1) \\		
+	\item Elvárt kimenet\\
+		jatek 0 \\
+		ragacslerak 0 45 \\
+		robotathelyez 1 44 \\
+		sebvalt 0 1 2 \\ 
+		irvalt 0 1 JOBB \\  
+		ugrik 0 1 43 45 \\ 
+			  0 2 1 1 \\ 		
+		robotathelyez 0 2 46 \\
+		sebvalt 0 2 1 \\ 
+		irvalt 0 2 BAL \\  
+		ugrik 0 1 45 46 \\ 
+		      0 2 46 45 \\ 		
+		listinfos 0 45 \\
+		listinfos 0 1 JOBB 1 0 0 \\
+\end{itemize}
+
+\subsection{Olajra ráugrás}
+\begin{itemize}
+	\item Leírás: Játék kezdése után olaj lerakása, majd egy ágens ráugrik és megpróbál sebességet változtatni. 
+	\item Bemenet\\	
+		jatek(szam=2, ido=5, palya=test.map) \\
+		olajlerak(field=45) \\
+		robotathelyez(robot=1, field=44) \\
+		sebvalt(+1) \\
+		irvalt(BAL) \\
+		ugrik() \\
+		sebvalt(+1)	\\
+	\item Elvárt kimenet\\
+		jatek 0 \\
+		olajlerak 0 45 \\
+		robotathelyez 0 1 44 \\
+		sebvalt 0 1 1 \\
+		irvalt 0 1 BAL \\
+		ugrik 0 1 44 45 \\
+		      0 2 1 1 \\
+		sebvalt 1 \\
+\end{itemize}
+
+\subsection{Robot lehelyez buffot}
+\begin{itemize}
+	\item Leírás: Játék kezdése után utasítjuk az első számú ágenst egy buff lerakására.
+	\item Bemenet\\	
+		jatek(szam=2, ido=5, palya=test.map) \\
+		robotathelyez(robot=1, field=44) \\
+		ragacslerak() \\
+		listinfos(field=44) \\
+	\item Elvárt kimenet\\
+		jatek 0 \\
+		robotathelyez 0 1 44 \\
+		ragacslerak 0 1 44 \\
+		listinfos 0 45 1 r\\		
+\end{itemize}
+
+\subsection{Robot ráugrik vacuumra}
+\begin{itemize}
+	\item Leírás: Robot és vacuum lehelyezése. Robot utasítása vacuumra ugrásra.
+	\item Bemenet\\
+		jatek(szam=2, ido=5, palya=test.map) \\
+		robotathelyez(robot=1, field=45) \\
+		sebvalt(+2) \\
+		irvalt(BAL) \\
+		vacuumlerak(field=44) \\
+		urgik() \\
+		listinfos(field=44) \\
+		listinfos(robot=1) \\
+	\item Elvárt kimenet\\
+		jatek 0 \\
+		robotathelyez 0 1 46 \\
+		sebvalt 0 1 2 \\
+		irvalt 0 1 BAL \\		
+		vacuumlerak 0 1 44 null\\
+		ugrik 0 1 45 44 \\
+	   		  0 2 1 1 \\		
+		listinfos 0 44 1 o\\
+		listinfos 0 1 2 45 0 0 \\
+\end{itemize}
+
+\subsection{Vacuum találkozik vacuummal}
+\begin{itemize}
+	\item Leírás: Két vacuum és egy olaj lehelyézese. Az olajtól messzebb lévő vacuum léptetése, akinek útjában van a másik vacuum
+	\item Bemenet\\
+		jatek(szam=2, ido=5, palya=test.map) \\
+		olajlerak(field=49) \\
+		vacuumlerak(field=45) \\
+		vacuumlerak(field=44) \\
+		vacuumlep(vacuum=2) \\
+		listinfos(vacuum=2) \\
+	\item Elvárt kimenet\\
+		jatek 0 \\
+		olajlerak 0 49 \\		
+		vacuumlerak 0 1 45 49\\		
+		vacuumlerak 0 2 44 49\\
+		vacuumlep 0 2 34 49 \\
+		listinfos 0 2 JOBB 1 49 \\
+\end{itemize}
+
+\subsection{Robot ütközik robottal}
+\begin{itemize}
+	\item Leírás: Két robot lehelyezése egy sorba, egymás felé irányítás és ütközés megfigyelése. 45ös fielden találkozás
+	\item Bemenet\\
+		jatek(szam=2, ido=5, palya=test.map) \\
+		robotathelyez(robot=1, field=43) \\
+		robotathelyez(robot=2, field=46) \\	
+		sebvalt(+2) \\
+		irvalt(JOBB) \\
+		sebvalt(+1) \\
+		irvalt(BAL) \\
+		ugrik() \\
+		listallagents() \\
+	\item Elvárt kimenet\\
+		jatek 0 \\ 
+		robotathelyez 0 1 43 \\		
+		robotathelyez 0 2 46 \\		
+		sebvalt 1 2 \\
+		irvalt 1 JOBB \\
+		sebvalt 2 1 \\
+		irvalt 2 BAL \\		
+		ugrik 0 1 43 45 \\ 
+	  		  0 2 46 45 \\ 
+		listallagents 0 1 2 45 0 0 \\
 \end{itemize}
 
 \section{A tesztelést támogató programok tervei}
-\comment{A tesztadatok előállítására, a tesztek eredményeinek kiértékelésére szolgáló segédprogramok részletes terveit kell elkészíteni.}
 
+A tesztek eredményeinek kiértékelésére szolgáló segédprogram szabványos fájlból olvassa be a bemenetet és az elvárt kimenetet az előző fejezetben leírt módon (7.1.1, 7.4). A program lefuttatja a bemenetben megadott parancsokat és a kimenetet összehasonlítja az elvárt kimenettel.
