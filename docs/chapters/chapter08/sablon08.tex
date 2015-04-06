@@ -110,20 +110,135 @@ Legősebb osztály $\rightarrow$ Ősosztály2 $\rightarrow$ Ősosztály3...}
 	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
 \end{itemize}
 
-\subsection{Ragacs léptetése}
+\subsection{Ragacsra ráugrás és kopás}
 \begin{itemize}
 	\item Leírás\newline
-	\item Játék kezdése után olaj lerakása majd utasítása száradásra.
+	\item Játék kezdése után ragacs lerakása, majd két ágens egymás után ráugrik. Ragacs jelen esetben 2 ugrás után lekopik.
 	\item Bemenet\newline
 		jatek(szam=2, ido=5, palya=test.map) \newline
-		ragacslerak(field=1) \newline
-		robothelyez(robot=1, field=1) \newline
-						
+		ragacslerak(field=45) \newline
+		robotathelyez(robot=1, field=44) \newline
+		sebvalt(+1) \newline
+		irvalt(BAL) \newline
+		ugrik() \newline
+		listinfos(field=45) \newline
+		listinfos(robot=1) \newline
+		robotathelyez(robot=2, field=46) \newline
+		sebvalt(+1) \newline
+		irvalt(JOBB) \newline
+		ugrik() \newline
+		listinfos(field=50) \newline		
+		listinfos(robot=1) \newline		
 	\item Elvárt kimenet\newline
 	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
 \end{itemize}
 
+\subsection{Olajra ráugrás}
+\begin{itemize}
+	\item Leírás\newline
+	\item Játék kezdése után olaj lerakása, majd egy ágens ráugrik és megpróbál sebességet változtatni. 
+	\item Bemenet\newline	
+		jatek(szam=2, ido=5, palya=test.map) \newline
+		ragacslerak(field=45) \newline
+		robotathelyez(robot=1, field=44) \newline
+		sebvalt(+1) \newline
+		irvalt(BAL) \newline
+		ugrik() \newline
+		sebvalt(+1)	\newline
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+\end{itemize}
 
+\subsection{Robot lehelyez buffot}
+\begin{itemize}
+	\item Leírás\newline
+	\item Játék kezdése után utasítjuk az első számú ágenst egy buff lerakására.
+	\item Bemenet\newline	
+		jatek(szam=2, ido=5, palya=test.map) \newline
+		robotathelyez(robot=1, field=44) \newline
+		ragacslerak() \newline
+		listinfos(field=44) \newline
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+\end{itemize}
+
+\subsection{Vacuum olaj felé léptetése}
+\begin{itemize}
+	\item Leírás\newline
+	\item Játék kezdése után lerakunk egy olajat egy cellára, majd egy vacuumot a pályán valahova. Végül léptetjük a vacuumot.
+	\item Bemenet\newline
+		jatek(szam=2, ido=5, palya=test.map) \newline
+		olajlerak(field=45) \newline
+		vacuumlerak(field=52) \newline
+		vacuumlep() \newline
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+\end{itemize}
+
+\subsection{Vacuum feltakarítja az olajat}
+\begin{itemize}
+	\item Leírás\newline
+	\item Játék kezdése után lerakunk egy olajat egy cellára, majd egy vacuumot a pályán valahova. Végül léptetjük a vacuumot.
+	\item Bemenet\newline
+		jatek(szam=2, ido=5, palya=test.map) \newline
+		olajlerak(field=45) \newline
+		vacuumlerak(field=45) \newline
+		vacuumtakarit() \newline
+		vacuumtakarit() \newline
+		listinfos(field=45) \newline
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+\end{itemize}
+
+\subsection{Robot ráugrik vacuumra}
+\begin{itemize}
+	\item Leírás\newline
+	\item Robot és vacuum lehelyezése. Robot utasítása vacuumra ugrásra.
+	\item Bemenet\newline
+		jatek(szam=2, ido=5, palya=test.map) \newline
+		robotathelyez(robot=1, field=45) \newline
+		sebvalt(+1) \newline
+		irvalt(BAL) \newline
+		vacuumlerak(field=44) \newline
+		urgik() \newline
+		listinfos(field=44) \newline
+		listinfos(robot=1) \newline
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+\end{itemize}
+
+\subsection{Vacuum találkozik vacuummal}
+\begin{itemize}
+	\item Leírás\newline
+	\item Két vacuum és egy olaj lehelyézese. Az olajtól messzebb lévő vacuum léptetése, akinek útjában van a másik vacuum
+	\item Bemenet\newline
+		jatek(szam=2, ido=5, palya=test.map) \newline
+		olajlerak(field=49) \newline
+		vacuumlerak(field=45) \newline
+		vacuumlerak(field=44) \newline
+		vacuumlep(vacuum=2) \newline
+		listinfos(vacuum=2) \newline
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+\end{itemize}
+
+\subsection{Robot ütközik robottal}
+\begin{itemize}
+	\item Leírás\newline
+	\item Két robot lehelyezése egy sorba, egymás felé irányítás és ütközés megfigyelése. 45ös fielden találkozás
+	\item Bemenet\newline
+	jatek(szam=2, ido=5, palya=test.map) \newline
+	robotathelyez(robot=1, field=43) \newline
+	robotathelyez(robot=2, field=46) \newline	
+	sebvalt(+2) \newline
+	irvalt(JOBB) \newline
+	sebvalt(+1) \newline
+	irvalt(BAL) \newline
+	urgik() \newline
+	listallagents() \newline
+	\item Elvárt kimenet\newline
+	\comment{a proto kimeneti nyelvén megadva (lásd előző anyag)}
+\end{itemize}
 
 \section{A tesztelést támogató programok tervei}
 \comment{A tesztadatok előállítására, a tesztek eredményeinek kiértékelésére szolgáló segédprogramok részletes terveit kell elkészíteni.}
