@@ -290,14 +290,14 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
 \subsection{Kimeneti nyelv}
 
 A gömbölyű zárójellel ellátott részletek csak megjegyzések, a kimenetben nem szerepelnek. \newline
-A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugyanabba a sorba további információk iródnak ki az esteknek megfelelően.
+Egy parancs kimenete a parancs nevével, majd 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, végül ugyanabba a sorba további információk íródnak ki az esteknek megfelelően.
 
 \begin{itemize}
 	\item jatek(szam=n, ido=m, palya=nev.map)
 	\begin{itemize}
 		\item jatek  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Generált pálya: <Map> Generált robotok: <Robot>
+			\item \{0\} (Játék generálás sikeres.)
 			\item \{1\} (Sikertelen mentés.)
 		\end{itemize}
 	\end{itemize}	
@@ -306,7 +306,7 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item betolt  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Betöltött pálya: <Map> Betöltött robotok <Robot> 
+			\item \{0\} (Betöltés sikeres.)
 			\item \{1\} (Sikertelen betöltés.)
 		\end{itemize}
 	\end{itemize}
@@ -315,7 +315,7 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item ment  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Sikeres mentés megadott elérési útvonalra. 
+			\item \{0\} (Sikeres mentés megadott elérési útvonalra.)
 			\item \{1\} (Sikertelen mentés.)
 		\end{itemize}
 	\end{itemize}		
@@ -324,8 +324,8 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item ugrik  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Robotid: <robotid> Előző cella: <fieldid> Új cella: <fieldid>
-			\item \{1\} (Sikertelen ugrás) Robot: <robotid>
+			\item \{0\} (Robotid:) <robotid> (Előző cella:) <fieldid> (Új cella:) <fieldid>
+			\item \{1\} (Sikertelen ugrás Robot:) <robotid>
 		\end{itemize}
 	\end{itemize}	
 	
@@ -333,8 +333,8 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item irvalt  <\{0\} | \{1\}>
 		\begin{itemize}
-				\item \{0\} Robot: <robotid> Új irány: <újirány>
-				\item \{1\} (Sikertelen irányváltoztatás) Robot: <robotid>
+				\item \{0\} (Robot:) <robotid> (Új irány:) <újirány>
+				\item \{1\} (Sikertelen irányváltoztatás) (Robot:) <robotid>
 		\end{itemize}
 	\end{itemize}
 	
@@ -342,7 +342,7 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item sebvalt  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Robot: <robotid> Új sebesség: <újsebesség>
+			\item \{0\} (Robot:) <robotid> (Új sebesség:) <újsebesség>
 			\item \{1\} (Sikertelen sebesség változtatás) Robot: <robotid>
 		\end{itemize}
 	\end{itemize}
@@ -353,8 +353,8 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item olajlerak  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Robot: <robotid>  Érintett cella: <fieldid>
-			\item \{1\} (Sikertelen olaj lerakás) Robot: <robotid>
+			\item \{0\} (Robot:) <robotid>  (Érintett cella:) <fieldid>
+			\item \{1\} (Sikertelen olaj lerakás) (Robot:) <robotid>
 		\end{itemize}
 	\end{itemize}
 	
@@ -362,8 +362,8 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item ragacslerak  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Robot: <robotid>. Érintett cella: <fieldid>
-			\item \{1\} (Sikertelen ragacs lerakás) Robot: <robotid>
+			\item \{0\} (Robot:) <robotid>. (Érintett cella:) <fieldid>
+			\item \{1\} (Sikertelen ragacs lerakás) (Robot:) <robotid>
 		\end{itemize}
 	\end{itemize}	
 	
@@ -371,7 +371,7 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item vacuumlerak  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Vacuum: <vacuumid> on Field: <fieldid> Célolaj on {<fieldid> | null}
+			\item \{0\} (Vacuum:) <vacuumid> (on Field:) <fieldid> (Target on:) {<fieldid> | null}
 			\item \{1\} (Sikertelen lerakás.)
 		\end{itemize}
 	\end{itemize}	
@@ -380,7 +380,7 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item robotathelyez  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Robot: <robotid> on Field: <fieldid> 
+			\item \{0\} (Robot:) <robotid> (on Field:) <fieldid> 
 			\item \{1\} (Sikertelen lerakás.)
 		\end{itemize}
 	\end{itemize}	
@@ -389,7 +389,7 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item olajleptet  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Hátralévő idő: <ido> 
+			\item \{0\} (Hátralévő idő:) <ido> 
 			\item \{1\} (Sikertelen leptetes.)
 		\end{itemize}
 	\end{itemize}	
@@ -398,7 +398,7 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item olajlerak  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Field: <fieldid> 
+			\item \{0\} (Field:) <fieldid> 
 			\item \{1\} (Sikertelen lerakás.)
 		\end{itemize}
 	\end{itemize}	
@@ -407,7 +407,7 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item ragacslerak  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Field: <fieldid> 
+			\item \{0\} (Field:) <fieldid> 
 			\item \{1\} (Sikertelen lerakás.)
 		\end{itemize}
 	\end{itemize}		
@@ -416,7 +416,7 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item vacuumtakarit  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Hatralevo kor: <n>
+			\item \{0\} (Hatralevo kor:) <n>
 			\item \{1\} (Sikertelen takarítás.) notarget
 		\end{itemize}
 	\end{itemize}
@@ -425,7 +425,7 @@ A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugy
 	\begin{itemize}
 		\item vacuumtakarit  <\{0\} | \{1\}>
 		\begin{itemize}
-			\item \{0\} Vacuum: <robotid> on Field: <fieldid> 
+			\item \{0\} (Vacuum:) <robotid> (on Field:) <fieldid> 
 			\item \{1\} (Sikertelen lépés.)
 		\end{itemize}
 	\end{itemize}	
