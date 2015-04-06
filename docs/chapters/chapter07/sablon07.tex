@@ -113,7 +113,7 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
             \end{itemize}
 	\end{itemize}
     
-    \item betolt(nev=allas.sav)
+    \item betolt(allas=allas.sav)
     \begin{itemize}
         \item Leírás: Egy mentett játékállás betöltése
         \item Opciók: 
@@ -122,7 +122,7 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
             \end{itemize}
     \end{itemize}
     
-    \item ment(nev=allas.sav)
+    \item ment(allas=allas.sav)
     \begin{itemize}
          \item Leírás: Az aktuális játékállás elmentése
          \item Opciók: 
@@ -227,8 +227,59 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
     		\item field: Az adott field fieldid-ja.
 	    	\item ido: Száradási mérték.
     	\end{itemize}	
+    \end{itemize}   
+    
+     \item vacuumlep()
+     \begin{itemize}
+        	\item Leírás: Vacuum lép a legközelebbi olaj irányába.
+        	\item Opciók: 
+     \end{itemize}    
+     
+    \item listinfos(field=fieldid)
+    \begin{itemize}
+    	\item Leírás: Listázza egy adott fieldről a rendelkezésre álló információkat (id, buffok, típus stb...)
+    	\item Opciók: 
+    	\begin{itemize}
+    		\item field: Az adott field fieldid-ja
+    	\end{itemize}	
+    \end{itemize}      
+         
+    \item listinfos(robot=robotid)
+    \begin{itemize}
+    	\item Leírás: Listázza egy adott robotról a rendelkezésre álló információkat (id, buffok, sebesség stb...)
+    	\item Opciók: 
+    	\begin{itemize}
+    		\item field: Az adott field fieldid-ja
+    	\end{itemize}	
+    \end{itemize} 
+    
+    \item listinfos(vacuum=vacuumid)
+    \begin{itemize}
+    	\item Leírás: Listázza egy adott vacuumról a rendelkezésre álló információkat (id, buffok, sebesség stb...)
+    	\item Opciók: 
+    	\begin{itemize}
+    		\item field: Az adott field fieldid-ja
+    	\end{itemize}	
+    \end{itemize}     
+    
+    \item listallagents()
+    \begin{itemize}
+    	\item Leírás: Listázza az összes agentről(vacuum, robot) a rendelkezésre álló információkat (id, buffok, sebesség stb...)
+    	\item Opciók: 
+    	\begin{itemize}
+    		\item field: Az adott field fieldid-ja
+    	\end{itemize}	
     \end{itemize}    
-
+    
+    \item listallfield()
+    \begin{itemize}
+    	\item Leírás: Listázza az összes fieldről a rendelkezésre álló információkat (id, buffok, típus stb...)
+    	\item Opciók: 
+    	\begin{itemize}
+    		\item field: Az adott field fieldid-ja
+    	\end{itemize}	
+    \end{itemize}        
+    
     
 
 \end{itemize}
@@ -239,134 +290,189 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
 \subsection{Kimeneti nyelv}
 
 A gömbölyű zárójellel ellátott részletek csak megjegyzések, a kimenetben nem szerepelnek. \newline
+A parancs kimenete 0(sikeres) vagy 1(sikertelen) karakterrel kezdődik, majd ugyanabba a sorba további információk iródnak ki az esteknek megfelelően.
 
 \begin{itemize}
-	\item Irányváltoztatás
+	\item jatek(szam=n, ido=m, palya=nev.map)
 	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
-		\begin{itemize}
-				\item \{0\} Robot: <robotid> Új irány: <újirány>
-				\item \{1\} (Sikertelen irányváltoztatás) Robot: <robotid>
-		\end{itemize}
-	\end{itemize}
-	
-	\item Sebesség változtatás
-	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
-		\begin{itemize}
-			\item \{0\} Robot: <robotid> Új sebesség: <újsebesség>
-			\item \{1\} (Sikertelen sebesség változtatás) Robot: <robotid>
-		\end{itemize}
-	\end{itemize}
-	
-	\item Ugrás
-	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
-		\begin{itemize}
-			\item \{0\} Robotid: <robotid> Előző cella: <fieldid> Új cella: <fieldid>
-			\item \{1\} (Sikertelen ugrás) Robot: <robotid>
-		\end{itemize}
-	\end{itemize}
-	
-	\item Olaj lerakása cellára
-	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
-		\begin{itemize}
-			\item \{0\} Robot: <robotid>  Érintett cella: <fieldid>
-			\item \{1\} (Sikertelen olaj lerakás) Robot: <robotid>
-		\end{itemize}
-	\end{itemize}
-	
-	\item Ragacs lerakása cellára
-	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
-		\begin{itemize}
-			\item \{0\} Robot: <robotid>. Érintett cella: <fieldid>
-			\item \{1\} (Sikertelen ragacs lerakás) Robot: <robotid>
-		\end{itemize}
-	\end{itemize}	
-	
-	\item Új játék kezdése
-	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\item jatek  <\{0\} | \{1\}>
 		\begin{itemize}
 			\item \{0\} Generált pálya: <Map> Generált robotok: <Robot>
 			\item \{1\} (Sikertelen mentés.)
 		\end{itemize}
-	\end{itemize}
+	\end{itemize}	
 	
-	
-	\item Játék elmentése
+	\item betolt(allas=allas.sav)
 	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
-		\begin{itemize}
-			\item \{0\} Sikeres mentés megadott elérési útvonalra. 
-			\item \{1\} (Sikertelen mentés.)
-		\end{itemize}
-	\end{itemize}
-
-	\item Játék betöltése
-	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\item betolt  <\{0\} | \{1\}>
 		\begin{itemize}
 			\item \{0\} Betöltött pálya: <Map> Betöltött robotok <Robot> 
 			\item \{1\} (Sikertelen betöltés.)
 		\end{itemize}
 	\end{itemize}
 	
-	\item Vacuum lerakása adott cellára
+	\item ment(allas=allas.sav)
 	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\item ment  <\{0\} | \{1\}>
+		\begin{itemize}
+			\item \{0\} Sikeres mentés megadott elérési útvonalra. 
+			\item \{1\} (Sikertelen mentés.)
+		\end{itemize}
+	\end{itemize}		
+	
+	\item ugrik()
+	\begin{itemize}
+		\item ugrik  <\{0\} | \{1\}>
+		\begin{itemize}
+			\item \{0\} Robotid: <robotid> Előző cella: <fieldid> Új cella: <fieldid>
+			\item \{1\} (Sikertelen ugrás) Robot: <robotid>
+		\end{itemize}
+	\end{itemize}	
+	
+	\item irvalt(irany=IRANY)
+	\begin{itemize}
+		\item irvalt  <\{0\} | \{1\}>
+		\begin{itemize}
+				\item \{0\} Robot: <robotid> Új irány: <újirány>
+				\item \{1\} (Sikertelen irányváltoztatás) Robot: <robotid>
+		\end{itemize}
+	\end{itemize}
+	
+	\item sebvalt(delta=n)
+	\begin{itemize}
+		\item sebvalt  <\{0\} | \{1\}>
+		\begin{itemize}
+			\item \{0\} Robot: <robotid> Új sebesség: <újsebesség>
+			\item \{1\} (Sikertelen sebesség változtatás) Robot: <robotid>
+		\end{itemize}
+	\end{itemize}
+	
+
+	
+	\item olajlerak()
+	\begin{itemize}
+		\item olajlerak  <\{0\} | \{1\}>
+		\begin{itemize}
+			\item \{0\} Robot: <robotid>  Érintett cella: <fieldid>
+			\item \{1\} (Sikertelen olaj lerakás) Robot: <robotid>
+		\end{itemize}
+	\end{itemize}
+	
+	\item ragacslerak()
+	\begin{itemize}
+		\item ragacslerak  <\{0\} | \{1\}>
+		\begin{itemize}
+			\item \{0\} Robot: <robotid>. Érintett cella: <fieldid>
+			\item \{1\} (Sikertelen ragacs lerakás) Robot: <robotid>
+		\end{itemize}
+	\end{itemize}	
+	
+	\item vacuumlerak(field=fieldid)
+	\begin{itemize}
+		\item vacuumlerak  <\{0\} | \{1\}>
 		\begin{itemize}
 			\item \{0\} Vacuum: <vacuumid> on Field: <fieldid> Célolaj on {<fieldid> | null}
 			\item \{1\} (Sikertelen lerakás.)
 		\end{itemize}
 	\end{itemize}	
 	
-	\item Robot lerakása adott cellára
+	\item robotathelyez(robot=robotid, field=fieldid)
 	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\item robotathelyez  <\{0\} | \{1\}>
 		\begin{itemize}
 			\item \{0\} Robot: <robotid> on Field: <fieldid> 
 			\item \{1\} (Sikertelen lerakás.)
 		\end{itemize}
 	\end{itemize}	
 	
-	\item Olaj léptetése adott idővel
+	\item olajleptet(ido=s)
 	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\item olajleptet  <\{0\} | \{1\}>
 		\begin{itemize}
 			\item \{0\} Hátralévő idő: <ido> 
 			\item \{1\} (Sikertelen leptetes.)
 		\end{itemize}
 	\end{itemize}	
 	
-	\item Olaj lerakása adott cellára
+	\item olajlerak(field=fieldid)
 	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\item olajlerak  <\{0\} | \{1\}>
 		\begin{itemize}
 			\item \{0\} Field: <fieldid> 
 			\item \{1\} (Sikertelen lerakás.)
 		\end{itemize}
 	\end{itemize}	
 	
-	\item Ragacs lerakása adott cellára
+	\item ragacslerak(field=fieldid) 
 	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\item ragacslerak  <\{0\} | \{1\}>
 		\begin{itemize}
 			\item \{0\} Field: <fieldid> 
 			\item \{1\} (Sikertelen lerakás.)
 		\end{itemize}
 	\end{itemize}		
 	
-	\item Vacuum utasítása takarításra
+	\item vacuumtakarit()
 	\begin{itemize}
-		\item Kimenet <sikeres \{0\} | sikertelen \{1\}>
+		\item vacuumtakarit  <\{0\} | \{1\}>
 		\begin{itemize}
 			\item \{0\} Hatralevo kor: <n>
 			\item \{1\} (Sikertelen takarítás.) notarget
 		\end{itemize}
 	\end{itemize}
+	
+	\item vacuumlep()
+	\begin{itemize}
+		\item vacuumtakarit  <\{0\} | \{1\}>
+		\begin{itemize}
+			\item \{0\} Vacuum: <robotid> on Field: <fieldid> 
+			\item \{1\} (Sikertelen lépés.)
+		\end{itemize}
+	\end{itemize}	
+	
+	\item listinfos(field=fieldid)
+	\begin{itemize}
+		\item listinfos field
+		\begin{itemize}
+			\item <fieldid> (rajtalevo) <agentid> <tipus> <buff1> <buff2> <buffn> 
+		\end{itemize}
+	\end{itemize}	
+	
+	\item listinfos(robot=robotid)
+	\begin{itemize}
+		\item listinfos robot
+		\begin{itemize}
+			\item <robotid> <speed> (jelenlegi) <fieldid> (Olajkeszlet:) <o> (Ragacskeszlet:) <r> (Buffeffects:) <buff1> <buff2> <buffn> 
+		\end{itemize}
+	\end{itemize}	
+	
+	\item listinfos(vacuum=vacuumid)
+	\begin{itemize}
+		\item listinfos vacuum
+		\begin{itemize}
+			\item <vacuumid> <speed> (Celfield:) <fieldid>
+		\end{itemize}
+	\end{itemize}		
+	
+	\item listallagents()
+	\begin{itemize}
+		\item listinfos agents
+		\begin{itemize}
+			\item (elemenkent uj sor)
+			\item <vacuumid> <speed> (Celfield:) <fieldid>
+			\item <robotid> <speed> (jelenlegi) <fieldid> (Olajkeszlet:) <o> (Ragacskeszlet:) <r> (Buffeffects:) <buff1> <buff2>
+		\end{itemize}
+	\end{itemize}	
+	
+	\item listallfield()
+	\begin{itemize}
+		\item listinfos fields
+		\begin{itemize}
+			\item (elemenkent uj sor)			
+			\item <fieldid> (rajtalevo) <agentid> <tipus> <buff1> <buff2> <buffn> 
+		\end{itemize}
+	\end{itemize}	
+	
 	
 \end{itemize}
 
