@@ -20,6 +20,10 @@ Az Oil osztályban létrehozunk egy változót, ami nyilvántartja a hátralév�
 \textbf{A robotok képesek ütközni, ha azonos helyre érkeznek ugrásuk végén. Ilyenkor a gyorsabb robot összetöri (megsemmisíti) a lassabbat, és kettejük átlagsebességével halad tovább (vektorátlag!).}\newline
 A Field onEnter(Agent agent) metódusában, ha a Field-en éppen van egy másik Agent is, akkor meghívjuk a Fielden az éppen rajtalévő Agent collide(Agent agent) metódusát. A collide-ban a vesztesre meghívjuk az agent.accept(new KillExecute) metódust.
 
+\subsection{Kisrobotok}
+\textbf{A pályára időnként keményen dolgozó kisrobotok jutnak be, akik szépen sorban feltakarítják a foltokat. A kisrobot egységnyi sebességgel halad, adott ideig (pl. két kör) takarítja a foltot. A folt feltakarítása után a legközelebbi folthoz indul. Ha egy robot ráugrik, akkor a kisrobot megsemmisül és olajfolt kerül a helyére; a ráugró robot nem szenved sérülést. Ha a kisrobot másik kisrobotnak vagy robotnak ütközik, irányt vált.}  \\
+Létrehozunk egy új osztályt (Vacuum), amit leszármaztatunk az Agent osztályból.
+
 \clearpage
 
 \subsection{Osztálydiagram módosítások}
