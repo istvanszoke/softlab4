@@ -166,6 +166,59 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
         \item Leírás: Az aktuálisan soron lévő ágenset utasítja egy ragacsfolt lehelyezésére
         \item Opciók: 
     \end{itemize}
+    
+    \item vacuumlerak(field=fieldid)
+    \begin{itemize}
+    	\item Leírás: Lerak egy adott field-re egy kisrobotot.
+       	\item Opciók: 
+            \begin{itemize}
+                  	\item field: Az adott field fieldid-ja
+            \end{itemize}	
+    \end{itemize}
+    
+    \item robotlerak(field=fieldid)
+    \begin{itemize}
+    	\item Leírás: Lerak egy adott field-re egy robotot
+    	\item Opciók: 
+    	\begin{itemize}
+    		\item field: Az adott field fieldid-ja
+    	\end{itemize}	
+    \end{itemize}      
+    
+    \item olajleptet(ido=s)
+    \begin{itemize}
+    	\item Leírás: Az olaj hátralévő idejéből levesz s időt.
+    	\item Opciók: 
+    	\begin{itemize}
+    		\item ido: A levonásra váró idő szekundumban
+    	\end{itemize}	
+    \end{itemize}
+    
+    \item olajlerak(field=fieldid)
+    \begin{itemize}
+       	\item Leírás: Lerak egy adott field-re egy olajat
+       	\item Opciók: 
+       	\begin{itemize}
+       		\item field: Az adott field fieldid-ja
+       	\end{itemize}	
+    \end{itemize}
+    
+    \item ragacslerak(field=fieldid)
+    \begin{itemize}
+    	\item Leírás: Lerak egy adott field-re egy ragacsot
+    	\item Opciók: 
+    	\begin{itemize}
+    		\item field: Az adott field fieldid-ja
+    	\end{itemize}	
+    \end{itemize}    
+    
+    \item vacuumtakarit()
+    \begin{itemize}
+    	\item Leírás: Elkezd takarítani a cellán, amin épp van. Ha nincs a cellán olaj, akkor nem takarít.
+    	\item Opciók: 
+    \end{itemize}    
+
+    
 
 \end{itemize}
 
