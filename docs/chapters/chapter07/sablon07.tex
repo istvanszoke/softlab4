@@ -176,11 +176,12 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
             \end{itemize}	
     \end{itemize}
     
-    \item robotlerak(field=fieldid)
+    \item robotathelyes(robot=robotid, field=fieldid)
     \begin{itemize}
-    	\item Leírás: Lerak egy adott field-re egy robotot
+    	\item Leírás: Lerak egy adott field-re egy adott robotot
     	\item Opciók: 
     	\begin{itemize}
+    		\item robot: Az adott robot
     		\item field: Az adott field fieldid-ja
     	\end{itemize}	
     \end{itemize}      
@@ -216,6 +217,16 @@ PARANCS(arg1=ertek1, arg2=ertek2, arg3=ertek3)
     \begin{itemize}
     	\item Leírás: Elkezd takarítani a cellán, amin épp van. Ha nincs a cellán olaj, akkor nem takarít.
     	\item Opciók: 
+    \end{itemize}    
+    
+    \item olajszarad(field=fieldid, ido=s)
+    \begin{itemize}
+    	\item Leírás: Szárítja s mértékben a field-en lévő olajat.
+    	\item Opciók: 
+    	\begin{itemize}
+    		\item field: Az adott field fieldid-ja.
+	    	\item ido: Száradási mérték.
+    	\end{itemize}	
     \end{itemize}    
 
     
