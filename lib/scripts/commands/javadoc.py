@@ -46,7 +46,7 @@ def generate_javadoc():
                            -serial
                            -private""".format(os.path.join(dir.LIB, "TeXDoclet.jar"),
                                               os.path.join(dir.JAVADOC, "javadoc.tex"),
-                                              dir.SRC_MAIN,
+                                              dir.SRC_MAIN.replace("\\", "/"),
                                               " ".join(packages)),
                        cwd=dir.DOCS,
                        error_message="JavaDoc generation failed (javadoc error)")
