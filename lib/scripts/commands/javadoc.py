@@ -4,6 +4,7 @@ from __future__ import print_function
 
 import os
 import os.path
+import re
 import shutil
 
 from lib.scripts import dir, process, util
@@ -20,22 +21,32 @@ def init():
 
 
 def generate_javadoc():
-    packages = [f for f in os.listdir(dir.SRC_MAIN) if os.path.isdir(os.path.join(dir.SRC_MAIN, f))]
+    packages = [] 
+    
+    pkg_regex = re.compile(r".*main.(.*)")
+    for dirname, dirnames, filenames in os.walk(dir.SRC_MAIN):
+        for subdirname in dirnames:
+            pkg = "{0}.{1}".format(dirname, subdirname)
+            packages.append(pkg_regex.match(pkg).group(1))
+    
+    packages.sort()
 
     process.run_or_die("""javadoc -docletpath '{0}'
                            -doclet org.stfm.texdoclet.TeXDoclet
-                           -tree
+                           -shortinherited
+                           -nosummaries
+                           -doctype fancyhdr
                            -noindex
                            -hyperref
                            -output '{1}'
                            -sourcepath {2}
-                           -subpackages {3}
+                           -subpackages {3} 
                            -include
                            -sectionlevel section
                            -serial
                            -private""".format(os.path.join(dir.LIB, "TeXDoclet.jar"),
                                               os.path.join(dir.JAVADOC, "javadoc.tex"),
-                                              dir.SRC_MAIN,
+                                              dir.SRC_MAIN.replace("\\", "/"),
                                               " ".join(packages)),
                        cwd=dir.DOCS,
                        error_message="JavaDoc generation failed (javadoc error)")
