@@ -3,13 +3,25 @@ package buff;
 import agents.Robot;
 import agents.Speed;
 
+/**
+ * Ragacsot reprezentáló osztály.
+ * Képes változtatni a Robot illetve a felülírt commandok állapotán
+ */
 public class Sticky extends Buff {
     int usesRemaining;
 
+    /**
+     * Konstruktor a Sticky folthoz
+     */
     public Sticky() {
         usesRemaining = 4;
     }
 
+    /**
+     * Robot módosítása.
+     *
+     * @param element - Visitelt elem.
+     */
     @Override
     public void visit(Robot element) {
         if (usesRemaining == 0) {

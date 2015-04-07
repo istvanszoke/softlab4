@@ -12,14 +12,35 @@ import game.control.HumanController;
 import game.handle.AgentHandle;
 import game.handle.HandleListener;
 
-
+/**
+ * A játék logikai szintű vezérlését megvalósító osztály
+ */
 public class Game implements GameControllerServerListener, HeartbeatListener, HandleListener {
+    /**
+     * Játéktárolóra való referencia
+     */
     private final GameStorage gameStorage;
+    /**
+     * Térképre való referencia
+     */
     private final Map map;
 
+    /**
+     * Referencia a játékvezérlési kiszolgálóra
+     */
     private final GameControllerServer controllerServer;
+
+    /**
+     * Egy emberi játékvezérlő referenciája
+     */
     private final HumanController humanController;
 
+    /**
+     * Játék osztály konstruktora
+     *
+     * @param agents - A jétékban részvevő ágensek
+     * @param map    - A térkép amelyen a játék játszdik
+     */
     public Game(List<AgentHandle> agents, Map map) {
         controllerServer = new GameControllerServer(this);
         humanController = new HumanController();
@@ -34,24 +55,45 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.subscribe(this);
     }
 
+    /**
+     * Elindítja a felfüggesztett játékot
+     */
     public void start() {
         register(gameStorage.getCurrent());
         Heartbeat.resume();
     }
 
+    /**
+     * Felfüggeszti a futó játékot
+     */
     public void pause() {
         Heartbeat.pause();
         deregister(gameStorage.getCurrent());
     }
 
+    /**
+     * Vezérlő regisztrálása a játékban
+     *
+     * @param component - Regisztrálandó vezérlő
+     */
     public void registerController(Component component) {
         component.addKeyListener(humanController);
     }
 
+    /**
+     * Jelenlegi térkép lekérése
+     *
+     * @return - Az aktuális térkép
+     */
     public Map getMap() {
         return map;
     }
 
+    /**
+     * Játékoscsre megvalósítása
+     *
+     * @param agent - Az ágens aki jelezte a váltást
+     */
     @Override
     public void onAgentChange(Agent agent) {
         Heartbeat.pause();
@@ -64,6 +106,11 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         handle.onTurnEnd();
     }
 
+    /**
+     * Sima léptetés megvalósítása
+     *
+     * @param handle - Ágenskezelő referencia
+     */
     @Override
     public void onRegularTurn(AgentHandle handle) {
         Heartbeat.pause();
@@ -75,6 +122,10 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.resume();
     }
 
+    /**
+     * Ágensválltó függvény
+     * Feladata, hogy a soron következő ágensre adja át vezértlést
+     */
     @Override
     public void onOutOfTime(AgentHandle handle) {
         Heartbeat.pause();
@@ -94,7 +145,11 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.resume();
     }
 
-
+    /**
+     * Ágens halálát lekezelő függvény
+     *
+     * @param handle - Ágenskezelő referenciája
+     */
     @Override
     public void onAgentDeath(AgentHandle handle) {
         Heartbeat.pause();
@@ -113,12 +168,20 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.resume();
     }
 
-
+    /**
+     * Időbeliség lekezelése a szívverésre
+     *
+     * @param deltaTime - mennyi idő telt el az utolsó szívütés óta
+     */
     @Override
     public void onTick(long deltaTime) {
         //TODO:Spawn vacuum robots or do anything time related
     }
 
+    /**
+     * Kezdő elhelyező függvény
+     * Feladata, hogy elhelyezze a játékosok ágenseit a pálya kezdőállásán
+     */
     private void placeAgents() {
         List<AgentHandle> inPlay = gameStorage.getInPlay();
         List<Field> startingFields = map.findStartingPositions(inPlay.size());
@@ -135,6 +198,9 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         }
     }
 
+    /**
+     * Ágensvezérlők beállítása
+     */
     private void setAgentControllers() {
         for (AgentHandle player : gameStorage) {
             Agent agent = player.getAgent();
@@ -143,6 +209,9 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         }
     }
 
+    /**
+     * Játék végének lekezelését végző függvény.
+     */
     //TODO: Real game finishing logic
     private void endGame() {
         pause();
@@ -151,16 +220,31 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         System.out.println("Game finished");
     }
 
+    /**
+     * Beállítja az éppen aktuális Ágenst
+     *
+     * @param handle - Ágenskezelő
+     */
     private void register(AgentHandle handle) {
         controllerServer.notifyControllerSocketOpened(handle.getAgent());
         handle.register(this);
     }
 
+    /**
+     * Lekapcsolja az éppen aktuális Ágenst
+     *
+     * @param handle - Ágenskezelő
+     */
     private void deregister(AgentHandle handle) {
         controllerServer.notifyControllerSocketClosed(handle.getAgent());
         handle.deregister(this);
     }
 
+    /**
+     * Játék vége állapot lekérdezése
+     *
+     * @return - Jeáték vége állapot
+     */
     private boolean isGameOver() {
         if (gameStorage.getPlayers().isEmpty()) {
             return true;

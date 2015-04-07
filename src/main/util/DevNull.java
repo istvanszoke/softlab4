@@ -5,6 +5,9 @@ import buff.BuffListener;
 import game.handle.AgentHandle;
 import game.handle.HandleListener;
 
+/**
+ * This is a utility class. A dummy empty device
+ */
 public final class DevNull implements HandleListener, BuffListener {
     public static final DevNull SINK = new DevNull();
 
