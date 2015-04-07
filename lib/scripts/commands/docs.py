@@ -47,7 +47,7 @@ def generate():
     process.run_or_die("pdflatex -halt-on-error szoftlab4.tex",
                        cwd=dir.DOCS,
                        encoding="windows-1252",
-                       output_function=lambda out: print(normalize(colorize(out))),
+                       output_function=lambda out: print(normalize(colorize(out)).encode('utf-8')),
                        error_message="Documentation generation failed (pdflatex error)")
 
 

@@ -7,5 +7,6 @@ sudo apt-get install -y -qq openjdk-6-jre openjdk-6-jdk openjdk-6-doc
 sudo apt-get install -y -qq python 
 sudo apt-get install -y -qq texlive-latex-base texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra texlive-lang-hungarian librsvg2-bin 
 cd /vagrant
+echo "JAVA_TOOL_OPTIONS=\"-Dfile.encoding=UTF8\"" >> /home/vagrant/.bash_profile
 sudo ln -s /vagrant /home/vagrant/project
 cd /home/vagrant
