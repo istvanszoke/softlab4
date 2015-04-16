@@ -25,7 +25,7 @@ public final class GameCreator {
         return this;
     }
 
-    public GameCreator generateTestMap(int width, int height) {
+    public GameCreator generateMap(int width, int height) {
         generateGrid(width, height);
         setNeighbours(width, height);
         return this;

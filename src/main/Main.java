@@ -71,7 +71,7 @@ public class Main extends JFrame {
     private void gameLoop() {
         int roundTime = 10;
 
-        Game game = new GameCreator().generateTestMap(10, 10)
+        Game game = new GameCreator().generateMap(10, 10)
                 .addAgent(PlayerHandle.createRobot(roundTime))
                 .addAgent(PlayerHandle.createRobot(roundTime))
                 .create();
