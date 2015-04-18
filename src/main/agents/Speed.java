@@ -7,7 +7,7 @@ import java.util.Map;
 import field.Direction;
 
 public class Speed implements Cloneable {
-    private static final Map<Direction, Direction> parallelMapping = Collections.unmodifiableMap(new HashMap<Direction, Direction>() {{
+    private static final Map<Direction, Direction> oppositeMapping = Collections.unmodifiableMap(new HashMap<Direction, Direction>() {{
         put(Direction.UP, Direction.DOWN);
         put(Direction.DOWN, Direction.UP);
         put(Direction.LEFT, Direction.RIGHT);
@@ -27,12 +27,16 @@ public class Speed implements Cloneable {
         int mag;
         if (lhs.direction == rhs.direction) {
             mag = lhs.magnitude + rhs.magnitude;
-        } else if (parallelMapping.get(lhs.direction) == rhs.direction) {
+        } else if (oppositeMapping.get(lhs.direction) == rhs.direction) {
             mag = Math.max(lhs.magnitude, rhs.magnitude) - Math.min(lhs.magnitude, rhs.magnitude);
         } else {
             mag = (int) Math.sqrt((double) (lhs.magnitude * lhs.magnitude + rhs.magnitude * rhs.magnitude));
         }
         return new Speed(dir, mag);
+    }
+
+    public static Speed getOpposite(Speed speed) {
+        return new Speed(oppositeMapping.get(speed.getDirection()), speed.getMagnitude());
     }
 
     public Direction getDirection() {
