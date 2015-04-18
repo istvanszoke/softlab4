@@ -15,11 +15,15 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     protected final ArrayList<Buff> buffs;
     protected final Map<Direction, Field> neighbours;
     protected Agent agent;
+    private int fieldId;
+    private static int instanceCount = 0;
 
     public Field(int distanceFromGoal) {
         buffs = new ArrayList<Buff>();
         neighbours = new HashMap<Direction, Field>();
         this.distanceFromGoal = distanceFromGoal;
+        ++instanceCount;
+        fieldId = instanceCount;
     }
 
     public void addNeighbour(Direction direction, Field field) {
@@ -96,5 +100,9 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
         Speed newSpeed = speed.clone();
         newSpeed.setMagnitude(newSpeed.getMagnitude() - 1);
         return neighbours.get(speed.getDirection()).searchGoal(newSpeed);
+    }
+
+    public int getFieldId() {
+        return fieldId;
     }
 }
