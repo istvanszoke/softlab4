@@ -5,18 +5,23 @@ import java.awt.KeyboardFocusManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import game.Game;
 import game.GameCreator;
+import game.GameListener;
 import game.KeyDispatcher;
+import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
 import proto.CommandParser;
 import proto.InvalidCommandArgumentException;
 import proto.InvalidCommandException;
 import proto.ProtoCommand;
 
-public class Main extends JFrame {
+public class Main extends JFrame implements GameListener {
     public static void main(String[] args) throws IOException {
         // You can use the kilep() command to proceed with the game testing
         testInput();
@@ -69,7 +74,7 @@ public class Main extends JFrame {
     }
 
     private void gameLoop() {
-        int roundTime = 10;
+        int roundTime = 5;
 
         Game game = new GameCreator().generateTestMap(10, 10)
                 .addAgent(PlayerHandle.createRobot(roundTime))
@@ -80,7 +85,48 @@ public class Main extends JFrame {
             System.out.println("Game creation was unsuccessful");
         } else {
             game.registerController(this);
+            game.addListener(this);
             game.start();
+        }
+    }
+
+    @Override
+    public void onGameFinished(List<AgentHandle> playerList) {
+        System.out.println("Game Over");
+        System.out.println("Placements: ");
+
+        Collections.sort(playerList, new Comparator<AgentHandle>() {
+            @Override
+            public int compare(AgentHandle o1, AgentHandle o2) {
+                if (o1.getAgent().isDead() && o2.getAgent().isDead()) {
+                    return 0;
+                }
+
+                if (o1.getAgent().isDead()) {
+                    return 1;
+                }
+
+                if (o2.getAgent().isDead()) {
+                    return -1;
+                }
+
+                if (o1.getAgent().getLap() < o2.getAgent().getLap()) {
+                    return 1;
+                } else if (o1.getAgent().getLap() > o2.getAgent().getLap()) {
+                    return -1;
+                }
+
+                int firstDistance = o1.getAgent().getField().getDistanceFromGoal();
+                int secondDistance = o1.getAgent().getField().getDistanceFromGoal();
+
+                return secondDistance - firstDistance;
+            }
+        });
+
+        for (AgentHandle handle : playerList) {
+            System.out.println(handle + " " +
+                               (handle.getAgent().isDead() ? "dead " : "alive ") +
+                               "distance: " + handle.getAgent().getField().getDistanceFromGoal());
         }
     }
 }
