@@ -12,16 +12,10 @@ public final class ProtoCommand {
     public static final String USE_OIL = "olajlerak";
     public static final String USE_STICKY = "ragacslerak";
     public static final String PLACE_VACUUM = "vacuumlerak";
-    public static final String STEP_OIL = "olajleptet";
     public static final String PLACE_OIL = "olajhelyez";
     public static final String PLACE_STICKY = "ragacshelyez";
     public static final String VACUUM_CLEAN = "vacuumtakarit";
-    public static final String STEP_VACUUM = "vacuumlep";
-    public static final String LIST_FIELD = "listfield";
-    public static final String LIST_ROBOT = "listrobot";
-    public static final String LIST_VACUUM = "listvacuum";
-    public static final String LIST_ALL_AGENTS = "listagents";
-    public static final String LIST_ALL_FIELDS = "listfields";
+    public static final String STEP_HEARTBEAT = "oraleptet";
     public static final String EXIT = "kilep";
     private final String command;
     private final Map<String, String> args;
