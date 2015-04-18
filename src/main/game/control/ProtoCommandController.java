@@ -44,11 +44,17 @@ public class ProtoCommandController implements GameControllerSocketListener {
 				throw new MissingCommandArgumentException();
 			}
 		} else if (cmd.equals(ProtoCommand.CHANGE_SPEED)) {
-
+			String deltaArg = command.getArgs().get("delta");
+			if (deltaArg != null) {
+				int delta = Integer.parseInt(deltaArg);
+				useCommand(new ChangeSpeedQuery(delta));
+			} else {
+				throw new MissingCommandArgumentException();
+			}
 		} else if (cmd.equals(ProtoCommand.USE_OIL)) {
-
+			useCommand(new UseOilQuery());
 		} else if (cmd.equals(ProtoCommand.USE_STICKY)) {
-
+			useCommand(new UseStickyQuery());
 		}
     }
 
