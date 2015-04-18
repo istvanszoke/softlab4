@@ -55,6 +55,8 @@ public class ProtoCommandController implements GameControllerSocketListener {
 			useCommand(new UseOilQuery());
 		} else if (cmd.equals(ProtoCommand.USE_STICKY)) {
 			useCommand(new UseStickyQuery());
+		} else if (cmd.equals(ProtoCommand.VACUUM_CLEAN)) {
+			//TODO: A command for VACUUM cleanup
 		} else {
 			return false;
 		}
