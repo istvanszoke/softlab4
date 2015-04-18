@@ -19,7 +19,20 @@ public class CommandParser {
         put(ProtoCommand.CHANGE_SPEED, new String[]{"delta"});
         put(ProtoCommand.USE_OIL, new String[]{});
         put(ProtoCommand.USE_STICKY, new String[]{});
+        put(ProtoCommand.PLACE_VACUUM, new String[]{"field"});
+        put(ProtoCommand.STEP_OIL, new String[]{"field", "ido"});
+        put(ProtoCommand.PLACE_OIL, new String[]{"field"});
+        put(ProtoCommand.PLACE_STICKY, new String[]{"field"});
+        put(ProtoCommand.VACUUM_CLEAN, new String[]{});
+        put(ProtoCommand.STEP_VACUUM, new String[]{"vacuum"});
+        put(ProtoCommand.LIST_FIELD, new String[]{"field"});
+        put(ProtoCommand.LIST_ROBOT, new String[]{"robot"});
+        put(ProtoCommand.LIST_VACUUM, new String[]{"vacuum"});
+        put(ProtoCommand.LIST_ALL_AGENTS, new String[]{});
+        put(ProtoCommand.LIST_ALL_FIELDS, new String[]{});
         put(ProtoCommand.EXIT, new String[]{});
+
+
     }});
 
     private static final Map<String, String> argumentValidators = Collections.unmodifiableMap(new HashMap<String, String>() {{
@@ -29,6 +42,9 @@ public class CommandParser {
         put("allas", "[A-Za-z0-9]+\\.sav");
         put("irany", "(FEL|LE|BAL|JOBB)");
         put("delta", "[+-]1");
+        put("field", "[0-9]+");
+        put("vacuum", "[0-9]+");
+        put("robot", "[0-9]+");
     }});
 
     public static ProtoCommand parse(String commandString) throws InvalidCommandException, InvalidCommandArgumentException {
