@@ -1,9 +1,11 @@
 package game.handle;
 
+import java.io.Serializable;
+
 import agents.Agent;
 import util.DevNull;
 
-public abstract class AgentHandle {
+public abstract class AgentHandle implements Serializable {
     protected final Agent agent;
     protected HandleListener listener;
 

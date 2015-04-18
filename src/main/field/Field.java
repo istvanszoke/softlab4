@@ -1,5 +1,6 @@
 package field;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +10,7 @@ import agents.Speed;
 import buff.Buff;
 import buff.BuffListener;
 
-public abstract class Field implements FieldElement, BuffListener {
+public abstract class Field implements FieldElement, BuffListener, Serializable {
     protected final int distanceFromGoal;
     protected final ArrayList<Buff> buffs;
     protected final Map<Direction, Field> neighbours;

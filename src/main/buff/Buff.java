@@ -1,5 +1,6 @@
 package buff;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import feedback.NoFeedbackException;
 import feedback.Result;
 import game.Heartbeat;
 
-public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor {
+public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor, Serializable {
     protected List<BuffListener> listeners;
     private boolean isRemoved;
     protected boolean isCleanable;
