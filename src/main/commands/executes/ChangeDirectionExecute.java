@@ -39,14 +39,14 @@ public class ChangeDirectionExecute extends AgentCommand {
     @Override
     public void visit(Robot element) {
         if (!canExecute) {
-            result.pushDebug("No direction changed for " + element);
+            result.pushDebug("irvalt 1" + element);
             return;
         }
 
         Speed newSpeed = element.getSpeed();
         newSpeed.setDirection(direction);
         element.setSpeed(newSpeed);
-        result.pushDebug("Changed direction for " + element + ", new direction is: " + direction);
+        result.pushDebug("irvalt 0" + element + " " + direction);
     }
 
     @Override
