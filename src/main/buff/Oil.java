@@ -1,5 +1,6 @@
 package buff;
 
+import agents.Vacuum;
 import commands.transmits.ChangeDirectionTransmit;
 import commands.transmits.ChangeSpeedTransmit;
 import game.Heartbeat;
@@ -11,6 +12,7 @@ public class Oil extends Buff implements HeartbeatListener {
     public Oil() {
         timeRemaining = 5000;
         Heartbeat.subscribe(this);
+        isCleanable = true;
     }
 
     @Override
@@ -30,10 +32,13 @@ public class Oil extends Buff implements HeartbeatListener {
         timeRemaining -= deltaTime;
 
         if (timeRemaining <= 0) {
-            for (BuffListener listener : listeners) {
-                listener.onRemove(this);
-            }
+            remove();
             Heartbeat.unsubscribe(this);
         }
+    }
+
+    @Override
+    public void visit(Vacuum element) {
+
     }
 }

@@ -1,6 +1,7 @@
 package commands.queries;
 
 import agents.Robot;
+import agents.Vacuum;
 import commands.AgentCommand;
 import commands.AgentCommandVisitor;
 import commands.FieldCommand;
@@ -35,4 +36,9 @@ public class ChangeDirectionQuery extends AgentCommand {
 
     @Override
     public void visit(Robot element) { }
+
+    @Override
+    public void visit(Vacuum element) {
+
+    }
 }
