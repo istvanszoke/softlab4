@@ -1,5 +1,8 @@
 package field;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +20,16 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     protected Agent agent;
     private int fieldId;
     private static int instanceCount = 0;
+
+    public static void writeStaticParams(ObjectOutputStream oos) throws IOException {
+        Integer wrapOutput = instanceCount;
+        oos.writeObject(wrapOutput);
+    }
+
+    public static void readStaticParams(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        Integer wrapInput = (Integer)ois.readObject();
+        instanceCount = wrapInput;
+    }
 
     public Field(int distanceFromGoal) {
         buffs = new ArrayList<Buff>();

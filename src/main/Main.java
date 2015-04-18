@@ -8,6 +8,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import agents.Robot;
+import agents.Vacuum;
+import field.Field;
 import game.*;
 import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
@@ -134,6 +137,9 @@ public class Main extends JFrame implements GameListener {
             }
             oos.writeObject(gameToSerialize.getGameStorage());
             oos.writeObject(gameToSerialize.getMap());
+            Robot.writeStaticParams(oos);
+            Vacuum.writeStaticParams(oos);
+            Field.writeStaticParams(oos);
         } catch (IOException ex) {
             return false;
         }
@@ -146,6 +152,9 @@ public class Main extends JFrame implements GameListener {
             ObjectInputStream ois = new ObjectInputStream(input);
             GameStorage restoredGameStorage = (GameStorage)ois.readObject();
             game.Map restoredMap = (game.Map)ois.readObject();
+            Robot.readStaticParams(ois);
+            Vacuum.readStaticParams(ois);
+            Field.readStaticParams(ois);
             return new Game(restoredGameStorage, restoredMap);
         } catch (IOException ex) {
             return null;
