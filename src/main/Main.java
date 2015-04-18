@@ -76,7 +76,7 @@ public class Main extends JFrame implements GameListener {
     private void gameLoop() {
         int roundTime = 5;
 
-        Game game = new GameCreator().generateTestMap(10, 10)
+        Game game = new GameCreator().generateMap(10, 10)
                 .addAgent(PlayerHandle.createRobot(roundTime))
                 .addAgent(PlayerHandle.createRobot(roundTime))
                 .create();
