@@ -2,6 +2,7 @@ package commands.executes;
 
 import agents.Robot;
 import agents.Speed;
+import agents.Vacuum;
 import commands.AgentCommand;
 import commands.AgentCommandVisitor;
 import commands.FieldCommand;
@@ -44,5 +45,10 @@ public class ChangeSpeedExecute extends AgentCommand {
         } else {
             result.pushDebug("Failed to change speed for " + element);
         }
+    }
+
+    @Override
+    public void visit(Vacuum element) {
+
     }
 }
