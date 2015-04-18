@@ -8,7 +8,7 @@ import commands.executes.KillExecute;
 import commands.queries.*;
 import feedback.Logger;
 import field.Direction;
-import proto.*;
+import proto.ProtoCommand;
 
 public class ProtoCommandController implements GameControllerSocketListener {
     private final List<GameControllerSocket> sockets;
@@ -23,7 +23,7 @@ public class ProtoCommandController implements GameControllerSocketListener {
         }
     }
 
-    public boolean procesProtoCommand(ProtoCommand command) throws InvalidCommandArgumentException, MissingCommandArgumentException {
+    public boolean procesProtoCommand(ProtoCommand command) {
 		String cmd = command.getCommand();
 		if (cmd.equals(ProtoCommand.JUMP)) {
 			useCommand(new JumpQuery());
@@ -39,10 +39,10 @@ public class ProtoCommandController implements GameControllerSocketListener {
 				} else if (dirArg.equals("JOBB")) {
 					useCommand(new ChangeDirectionQuery(Direction.RIGHT));
 				} else {
-					throw new InvalidCommandArgumentException();
+					return false;
 				}
 			} else {
-				throw new MissingCommandArgumentException();
+				return false;
 			}
 		} else if (cmd.equals(ProtoCommand.CHANGE_SPEED)) {
 			String deltaArg = command.getArgs().get("delta");
@@ -50,7 +50,7 @@ public class ProtoCommandController implements GameControllerSocketListener {
 				int delta = Integer.parseInt(deltaArg);
 				useCommand(new ChangeSpeedQuery(delta));
 			} else {
-				throw new MissingCommandArgumentException();
+				return false;
 			}
 		} else if (cmd.equals(ProtoCommand.USE_OIL)) {
 			useCommand(new UseOilQuery());
