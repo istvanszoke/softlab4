@@ -22,7 +22,7 @@ import proto.ProtoCommand;
 public class Main extends JFrame implements GameListener {
     public static void main(String[] args) throws IOException {
         // You can use the kilep() command to proceed with the game testing
-        testInput();
+        //testInput();
         testGame();
     }
 
@@ -78,6 +78,27 @@ public class Main extends JFrame implements GameListener {
                 .addAgent(PlayerHandle.createRobot(roundTime))
                 .addAgent(PlayerHandle.createRobot(roundTime))
                 .create();
+        try {
+            FileOutputStream fos = new FileOutputStream("test.sav");
+            if (serializeGame(game, fos)) {
+                fos.flush();
+                fos.close();
+                fos = null;
+                game = null;
+                System.gc();
+                FileInputStream fis = new FileInputStream("test.sav");
+                game = deserialzeGame(fis);
+                if (game != null) {
+
+                } else {
+                    return;
+                }
+            } else {
+                return;
+            }
+        } catch (IOException ex) {
+
+        }
 
         if (game == null) {
             System.out.println("Game creation was unsuccessful");

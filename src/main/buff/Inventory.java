@@ -1,9 +1,10 @@
 package buff;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inventory<T extends Buff> {
+public class Inventory<T extends Buff> implements Serializable {
     private final List<T> inventory;
 
     public Inventory() {
