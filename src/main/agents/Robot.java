@@ -15,11 +15,15 @@ public class Robot extends Agent {
     private List<Buff> buffs;
     private Inventory<Sticky> stickyInventory;
     private Inventory<Oil> oilInventory;
+    private int instanceCount = 0;
+    private int robotId;
 
     public Robot() {
         buffs = new ArrayList<Buff>();
         stickyInventory = new Inventory<Sticky>();
         oilInventory = new Inventory<Oil>();
+        ++instanceCount;
+        robotId = instanceCount;
     }
 
     public void addSticky() {
@@ -74,4 +78,14 @@ public class Robot extends Agent {
         setSpeed(Speed.add(getSpeed(), agent.getSpeed()));
         return this;
     }
+
+    public int getRobotId() {
+        return robotId;
+    }
+
+    @Override
+    public String toString() {
+        return "Robot:" + getRobotId();
+    }
+
 }

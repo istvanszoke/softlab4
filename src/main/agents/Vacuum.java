@@ -17,9 +17,13 @@ import java.util.Map;
 public class Vacuum extends Agent {
 
     public Map<Buff, Integer> cleaning;
+    private int instanceCount = 0;
+    private int vacuumId;
 
     public Vacuum() {
         cleaning = new HashMap<Buff, Integer>();
+        ++instanceCount;
+        vacuumId = instanceCount;
     }
 
     @Override
@@ -51,6 +55,16 @@ public class Vacuum extends Agent {
     @Override
     public Agent collide(Agent agent) {
         return agent;
+    }
+
+    public int getVacuumId() {
+        return vacuumId;
+    }
+
+    @Override
+    public String toString() {
+        int diff = 'z' - 'a';
+        return "Kisrobot:" + ('a' + (('a' + vacuumId) % diff));
     }
 
     private void cleanupRemovedBuffs() {
