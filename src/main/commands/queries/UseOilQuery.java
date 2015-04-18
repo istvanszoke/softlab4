@@ -1,6 +1,7 @@
 package commands.queries;
 
 import agents.Robot;
+import agents.Vacuum;
 import commands.AgentCommand;
 import commands.AgentCommandVisitor;
 import commands.FieldCommand;
@@ -27,5 +28,10 @@ public class UseOilQuery extends AgentCommand {
         } else {
             result.pushDebug(element + " has run out of oil.");
         }
+    }
+
+    @Override
+    public void visit(Vacuum element) {
+
     }
 }

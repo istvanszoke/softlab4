@@ -14,12 +14,17 @@ import commands.transmits.ChangeSpeedTransmit;
 import commands.transmits.JumpTransmit;
 import feedback.NoFeedbackException;
 import feedback.Result;
+import game.Heartbeat;
 
 public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor {
     protected List<BuffListener> listeners;
+    private boolean isRemoved;
+    protected boolean isCleanable;
 
     public Buff() {
         listeners = new ArrayList<BuffListener>();
+        isRemoved = false;
+        isCleanable = false;
     }
 
     public void subscribe(BuffListener listener) {
@@ -28,6 +33,29 @@ public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCo
 
     public void unsubscribe(BuffListener listener) {
         listeners.remove(listener);
+    }
+
+    protected void remove() {
+        if (isRemoved)
+            return;
+        for (BuffListener listener : listeners) {
+            listener.onRemove(this);
+        }
+        isRemoved = true;
+    }
+
+    public boolean getRemoved() {
+        return isRemoved;
+    }
+
+    public void clean()
+    {
+        if (getCleanable())
+            remove();
+    }
+
+    public boolean getCleanable() {
+        return !isRemoved && isCleanable;
     }
 
     @Override

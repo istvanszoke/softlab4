@@ -7,6 +7,10 @@ import java.util.TreeMap;
 public class Logger {
     private static LogLevel logLevel;
 
+    static {
+        logLevel = LogLevel.TEST;
+    }
+
     public static LogLevel getLogLevel() {
         return logLevel;
     }
@@ -31,7 +35,7 @@ public class Logger {
         }
 
         for (Map.Entry<Integer, String> message : merged.entrySet()) {
-            System.out.println(message);
+            System.out.println(message.getValue());
         }
     }
 }

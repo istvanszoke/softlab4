@@ -2,6 +2,7 @@ package commands.executes;
 
 import agents.Robot;
 import agents.Speed;
+import agents.Vacuum;
 import commands.AgentCommand;
 import commands.AgentCommandVisitor;
 import commands.FieldCommand;
@@ -46,5 +47,10 @@ public class ChangeDirectionExecute extends AgentCommand {
         newSpeed.setDirection(direction);
         element.setSpeed(newSpeed);
         result.pushDebug("Changed direction for " + element + ", new direction is: " + direction);
+    }
+
+    @Override
+    public void visit(Vacuum element) {
+
     }
 }

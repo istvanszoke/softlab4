@@ -8,6 +8,7 @@ import java.util.List;
 import commands.AgentCommand;
 import commands.executes.KillExecute;
 import commands.queries.*;
+import feedback.Logger;
 import field.Direction;
 
 public class HumanController extends KeyAdapter implements GameControllerSocketListener {
@@ -76,7 +77,7 @@ public class HumanController extends KeyAdapter implements GameControllerSocketL
         }
 
         if (sendCommandTo(command, currentSocket)) {
-            System.out.println(command.getResult());
+            Logger.log(command.getResult());
             return true;
         }
 
@@ -91,7 +92,7 @@ public class HumanController extends KeyAdapter implements GameControllerSocketL
         }
 
         if (sendCommandTo(command, currentSocket)) {
-            System.out.println(command.getResult());
+            Logger.log(command.getResult());
             currentSocket.sendEndTurn();
         }
     }

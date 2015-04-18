@@ -64,6 +64,15 @@ public abstract class Field implements FieldElement, BuffListener {
         buffs.add(buff);
     }
 
+    public Buff getFirstCleanableBuff() {
+        for (Buff buff : buffs) {
+            if (buff.getCleanable()) {
+                return buff;
+            }
+        }
+        return null;
+    }
+
     public Displacement getDisplacement(Speed speed) {
         return new Displacement(this, searchGoal(speed));
     }
