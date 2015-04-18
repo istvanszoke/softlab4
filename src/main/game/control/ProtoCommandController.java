@@ -7,12 +7,12 @@ import commands.AgentCommand;
 import commands.executes.KillExecute;
 import commands.queries.*;
 import field.Direction;
-import proto.ProtoCommand;
+import proto.*;
 
 public class ProtoCommandController implements GameControllerSocketListener {
     private final List<GameControllerSocket> sockets;
 
-    public HumanController() {
+    public ProtoCommandController() {
         sockets = new ArrayList<GameControllerSocket>();
     }
 
@@ -22,49 +22,34 @@ public class ProtoCommandController implements GameControllerSocketListener {
         }
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            // Change Direction
-            case KeyEvent.VK_W:
-                useCommand(new ChangeDirectionQuery(Direction.UP));
-                break;
-            case KeyEvent.VK_A:
-                useCommand(new ChangeDirectionQuery(Direction.LEFT));
-                break;
-            case KeyEvent.VK_S:
-                useCommand(new ChangeDirectionQuery(Direction.DOWN));
-                break;
-            case KeyEvent.VK_D:
-                useCommand(new ChangeDirectionQuery(Direction.RIGHT));
-                break;
+    public void procesProtoCommand(ProtoCommand command) throws InvalidCommandArgumentException, MissingCommandArgumentException {
+		String cmd = command.getCommand();
+		if (cmd.equals(ProtoCommand.JUMP)) {
+			useCommand(new JumpQuery());
+		} else if (cmd.equals(ProtoCommand.CHANGE_DIR)) {
+			String dirArg = command.getArgs().get("irany");
+			if (dirArg != null) {
+				if (dirArg.equals("FEL")) {
+					useCommand(new ChangeDirectionQuery(Direction.UP));
+				} else if (dirArg.equals("LE")) {
+					useCommand(new ChangeDirectionQuery(Direction.DOWN));
+				} else if (dirArg.equals("BAL")) {
+					useCommand(new ChangeDirectionQuery(Direction.LEFT));
+				} else if (dirArg.equals("JOBB")) {
+					useCommand(new ChangeDirectionQuery(Direction.RIGHT));
+				} else {
+					throw new InvalidCommandArgumentException();
+				}
+			} else {
+				throw new MissingCommandArgumentException();
+			}
+		} else if (cmd.equals(ProtoCommand.CHANGE_SPEED)) {
 
-            // Jump
-            case KeyEvent.VK_SPACE:
-                useCommandAndChangeAgent(new JumpQuery());
-                break;
+		} else if (cmd.equals(ProtoCommand.USE_OIL)) {
 
-            // Change Speed
-            case KeyEvent.VK_UP:
-                useCommand(new ChangeSpeedQuery(1));
-                break;
-            case KeyEvent.VK_DOWN:
-                useCommand(new ChangeSpeedQuery(-1));
-                break;
+		} else if (cmd.equals(ProtoCommand.USE_STICKY)) {
 
-            // Place buffs
-            case KeyEvent.VK_R:
-                useCommand(new UseOilQuery());
-                break;
-            case KeyEvent.VK_F:
-                useCommand(new UseStickyQuery());
-                break;
-
-            // Suicide
-            case KeyEvent.VK_K:
-                useCommandAndChangeAgent(new KillExecute());
-                break;
-        }
+		}
     }
 
     private boolean useCommand(AgentCommand command) {
