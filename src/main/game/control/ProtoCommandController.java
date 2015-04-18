@@ -22,7 +22,7 @@ public class ProtoCommandController implements GameControllerSocketListener {
         }
     }
 
-    public void procesProtoCommand(ProtoCommand command) throws InvalidCommandArgumentException, MissingCommandArgumentException {
+    public boolean procesProtoCommand(ProtoCommand command) throws InvalidCommandArgumentException, MissingCommandArgumentException {
 		String cmd = command.getCommand();
 		if (cmd.equals(ProtoCommand.JUMP)) {
 			useCommand(new JumpQuery());
@@ -55,7 +55,10 @@ public class ProtoCommandController implements GameControllerSocketListener {
 			useCommand(new UseOilQuery());
 		} else if (cmd.equals(ProtoCommand.USE_STICKY)) {
 			useCommand(new UseStickyQuery());
+		} else {
+			return false;
 		}
+		return true;
     }
 
     private boolean useCommand(AgentCommand command) {
