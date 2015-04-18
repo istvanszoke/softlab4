@@ -2,9 +2,12 @@ package game;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import agents.Agent;
+import buff.Oil;
 import field.Field;
 import game.control.GameControllerServer;
 import game.control.GameControllerServerListener;
@@ -203,5 +206,49 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         }
 
         return true;
+    }
+
+    private void printOutMap(int width, int cellWidth) {
+        Iterator<Field> fieldIt = map.iterator();
+
+        int totalwidth = (cellWidth+2)*width;
+        while(fieldIt.hasNext()) {
+            System.out.println(rowSeparator(totalwidth));
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < width; ++i) {
+                Field current = fieldIt.next();
+                StringBuilder sbi = new StringBuilder();
+                if (current != null) {
+                    if (current.getFirstCleanableBuff() != null) {
+                        if (current.getFirstCleanableBuff() instanceof Oil) {
+                            sbi.append('O');
+                        } else {
+                            sbi.append('S');
+                        }
+                    }
+                    sbi.append(current.getAgent().toString().split(":")[1]);
+                }
+                if (sbi.length() < cellWidth) {
+                    int more = cellWidth-sbi.length();
+                    for (int j = 0; j < more; ++j) {
+                        sbi.append(' ');
+                    }
+                } else {
+                    sbi.delete(cellWidth + 1, sbi.length());
+                }
+                sb.append('|');
+                sb.append(sbi.toString());
+                sb.append('|');
+            }
+            System.out.println(sb.toString());
+        }
+        System.out.println(rowSeparator(totalwidth));
+
+    }
+
+    private String rowSeparator(int length) {
+        StringBuilder sb = new StringBuilder();
+        sb.append('-');
+        return sb.toString();
     }
 }

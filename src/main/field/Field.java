@@ -118,4 +118,6 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     public int getFieldId() {
         return fieldId;
     }
+
+    public Agent getAgent() { return agent; }
 }
