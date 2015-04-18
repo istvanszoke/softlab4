@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.List;
 
 import agents.Agent;
@@ -14,6 +15,7 @@ import game.handle.HandleListener;
 
 
 public class Game implements GameControllerServerListener, HeartbeatListener, HandleListener {
+    private final List<GameListener> listeners;
     private final GameStorage gameStorage;
     private final Map map;
 
@@ -21,6 +23,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     private final HumanController humanController;
 
     public Game(List<AgentHandle> agents, Map map) {
+        listeners = new ArrayList<GameListener>();
         controllerServer = new GameControllerServer(this);
         humanController = new HumanController();
 
@@ -46,6 +49,14 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     public void registerController(Component component) {
         component.addKeyListener(humanController);
+    }
+
+    public void addListener(GameListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(GameListener listener) {
+        listeners.remove(listener);
     }
 
     public Map getMap() {
@@ -148,7 +159,10 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         pause();
         Heartbeat.unsubscribe(gameStorage);
         Heartbeat.unsubscribe(this);
-        System.out.println("Game finished");
+
+        for (GameListener listener: listeners) {
+            listener.onGameFinished(gameStorage.getPlayers());
+        }
     }
 
     private void register(AgentHandle handle) {
