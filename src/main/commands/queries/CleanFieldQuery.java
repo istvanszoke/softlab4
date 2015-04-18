@@ -1,4 +1,4 @@
-package commands.executes;
+package commands.queries;
 
 import agents.Robot;
 import agents.Vacuum;
@@ -7,7 +7,7 @@ import commands.AgentCommandVisitor;
 import commands.FieldCommand;
 import commands.NoFieldCommandException;
 
-public class KillExecute extends AgentCommand {
+public class CleanFieldQuery extends AgentCommand {
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
         throw new NoFieldCommandException();
@@ -15,21 +15,20 @@ public class KillExecute extends AgentCommand {
 
     @Override
     public void accept(AgentCommandVisitor modifier) {
-        modifier.visit(this);
+
     }
 
     @Override
     public void visit(Robot element) {
-        if (canExecute) {
-            element.kill();
-            result.pushDebug("Killed " + element);
-        } else {
-            result.pushDebug("Could not kill " + element);
-        }
+        canExecute = false;
+        result.pushDebug("Robot can not clean up Field!");
     }
 
     @Override
     public void visit(Vacuum element) {
-
+        canExecute = true;
+        if (!element.tryToClean()) {
+            result.pushNormal("Nothing to clean on current field");
+        }
     }
 }
