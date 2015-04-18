@@ -37,6 +37,20 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.subscribe(this);
     }
 
+    public Game(GameStorage inGameStorage, Map inMap) {
+        listeners = new ArrayList<GameListener>();
+        controllerServer = new GameControllerServer(this);
+        humanController = new HumanController();
+
+        gameStorage = inGameStorage;
+        this.map = inMap;
+
+        placeAgents();
+        setAgentControllers();
+        Heartbeat.subscribe(gameStorage);
+        Heartbeat.subscribe(this);
+    }
+
     public void start() {
         register(gameStorage.getCurrent());
         Heartbeat.resume();
@@ -62,6 +76,8 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     public Map getMap() {
         return map;
     }
+
+    public GameStorage getGameStorage() {return gameStorage; }
 
     @Override
     public void onAgentChange(Agent agent) {
