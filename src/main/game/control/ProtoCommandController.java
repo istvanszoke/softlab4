@@ -72,7 +72,7 @@ public class ProtoCommandController implements GameControllerSocketListener {
         }
 
         if (sendCommandTo(command, currentSocket)) {
-            System.out.println(command.getResult());
+            Logger.log(command.getResult());
             return true;
         }
 
