@@ -15,11 +15,10 @@ import game.handle.VacuumHandle;
 
 public class TestcaseGenerator {
     public static boolean generateTestCases(final int roundTime) {
-        // Test03
+        // Test01
         Game testCase = new Game(
                 new HashMap<AgentHandle, Integer>() {{
-                    put(PlayerHandle.createRobot(roundTime), 0);
-                    put(PlayerHandle.createRobot(roundTime), 1);
+                    put(PlayerHandle.createRobot(10000), 0);
                     put(VacuumHandle.createVacuum(), 34);
                 }},
 
@@ -29,21 +28,69 @@ public class TestcaseGenerator {
                     put(new Oil(), 34);
                 }});
 
-        if (!writeTest(testCase, "test03.map")) {
+        if (!writeTest(testCase, "test01.map")) {
             return false;
         }
 
-        // Test05
+        // Test02
+        testCase = new Game(
+                new HashMap<AgentHandle, Integer>() {{
+                    put(PlayerHandle.createRobot(10000), 0);
+                }},
+
+                new GameCreator().generateMap(10, 10).getMap(),
+
+                new HashMap<Buff, Integer>() {{
+                    put(new Oil(), 34);
+                }});
+
+        if (!writeTest(testCase, "test02.map")) {
+            return false;
+        }
+
+        // Test03
         testCase = new Game(
                 new HashMap<AgentHandle, Integer>() {{
                     put(PlayerHandle.createRobot(roundTime), 24);
-                    put(PlayerHandle.createRobot(roundTime), 35);
+                    put(PlayerHandle.createRobot(roundTime), 36);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
 
                 new HashMap<Buff, Integer>() {{
                     put(new Sticky(), 34);
+                }});
+
+        if (!writeTest(testCase, "test03.map")) {
+            return false;
+        }
+
+        // Test04
+        testCase = new Game(
+                new HashMap<AgentHandle, Integer>() {{
+                    put(PlayerHandle.createRobot(roundTime), 33);
+                }},
+
+                new GameCreator().generateMap(10, 10).getMap(),
+
+                new HashMap<Buff, Integer>() {{
+                    put(new Sticky(), 34);
+                }});
+
+        if (!writeTest(testCase, "test04.map")) {
+            return false;
+        }
+
+
+        // Test05
+        testCase = new Game(
+                new HashMap<AgentHandle, Integer>() {{
+                    put(PlayerHandle.createRobot(roundTime), 34);
+                }},
+
+                new GameCreator().generateMap(10, 10).getMap(),
+
+                new HashMap<Buff, Integer>() {{
                 }});
 
         if (!writeTest(testCase, "test05.map")) {
@@ -53,14 +100,13 @@ public class TestcaseGenerator {
         // Test06
         testCase = new Game(
                 new HashMap<AgentHandle, Integer>() {{
-                    put(PlayerHandle.createRobot(roundTime), 0);
-                    put(PlayerHandle.createRobot(roundTime), 33);
+                    put(PlayerHandle.createRobot(roundTime), 34);
+                    put(VacuumHandle.createVacuum(), 33);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
 
                 new HashMap<Buff, Integer>() {{
-                    put(new Oil(), 34);
                 }});
 
         if (!writeTest(testCase, "test06.map")) {
@@ -70,8 +116,9 @@ public class TestcaseGenerator {
         // Test07
         testCase = new Game(
                 new HashMap<AgentHandle, Integer>() {{
-                    put(PlayerHandle.createRobot(roundTime), 0);
-                    put(PlayerHandle.createRobot(roundTime), 24);
+                    put(PlayerHandle.createRobot(10000), 0);
+                    put(VacuumHandle.createVacuum(), 33);
+                    put(VacuumHandle.createVacuum(), 34);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
@@ -86,39 +133,6 @@ public class TestcaseGenerator {
         // Test08
         testCase = new Game(
                 new HashMap<AgentHandle, Integer>() {{
-                    put(PlayerHandle.createRobot(roundTime), 0);
-                    put(VacuumHandle.createVacuum(), 33);
-                    put(PlayerHandle.createRobot(roundTime), 34);
-                }},
-
-                new GameCreator().generateMap(10, 10).getMap(),
-
-                new HashMap<Buff, Integer>() {{
-                }});
-
-        if (!writeTest(testCase, "test08.map")) {
-            return false;
-        }
-
-        // Test09
-        testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
-                    put(VacuumHandle.createVacuum(), 33);
-                    put(VacuumHandle.createVacuum(), 34);
-                }},
-
-                new GameCreator().generateMap(10, 10).getMap(),
-
-                new HashMap<Buff, Integer>() {{
-                }});
-
-        if (!writeTest(testCase, "test09.map")) {
-            return false;
-        }
-
-        // Test10
-        testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
                     put(PlayerHandle.createRobot(roundTime), 32);
                     put(PlayerHandle.createRobot(roundTime), 35);
                 }},
@@ -128,7 +142,7 @@ public class TestcaseGenerator {
                 new HashMap<Buff, Integer>() {{
                 }});
 
-        if (!writeTest(testCase, "test10.map")) {
+        if (!writeTest(testCase, "test08.map")) {
             return false;
         }
 
