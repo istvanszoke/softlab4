@@ -4,8 +4,6 @@ import java.util.Map;
 
 public final class ProtoCommand {
     public static final String PLAY = "jatek";
-    public static final String LOAD = "betolt";
-    public static final String SAVE = "ment";
     public static final String JUMP = "ugrik";
     public static final String CHANGE_DIR = "irvalt";
     public static final String CHANGE_SPEED = "sebvalt";
