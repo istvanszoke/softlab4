@@ -26,18 +26,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     private final HumanController humanController;
 
     public Game(List<AgentHandle> agents, Map map) {
-        listeners = new ArrayList<GameListener>();
-        controllerServer = new GameControllerServer(this);
-        humanController = new HumanController();
-
-        gameStorage = new GameStorage(agents);
-
-        this.map = map;
-
-        placeAgents();
-        setAgentControllers();
-        Heartbeat.subscribe(gameStorage);
-        Heartbeat.subscribe(this);
+        this(new GameStorage(agents), map);
     }
 
     public Game(GameStorage inGameStorage, Map inMap) {
@@ -226,7 +215,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
                             sbi.append('S');
                         }
                     }
-                    sbi.append(current.getAgent().toString().split(":")[1]);
+                    sbi.append(current.getAgent().toString());
                 }
                 if (sbi.length() < cellWidth) {
                     int more = cellWidth-sbi.length();
