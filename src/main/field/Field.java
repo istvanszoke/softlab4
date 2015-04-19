@@ -25,6 +25,10 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     private int fieldId;
     private static int instanceCount = 0;
 
+    public static void resetInstanceCount() {
+        instanceCount = 0;
+    }
+
     public static void writeStaticParams(ObjectOutputStream oos) throws IOException {
         Integer wrapOutput = instanceCount;
         oos.writeObject(wrapOutput);

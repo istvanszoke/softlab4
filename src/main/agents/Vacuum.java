@@ -16,10 +16,13 @@ import java.util.Map;
 
 
 public class Vacuum extends Agent {
-
     public Map<Buff, Integer> cleaning;
     private static int instanceCount = 0;
     private int vacuumId;
+
+    public static void resetInstanceCount() {
+        instanceCount = 0;
+    }
 
     public static void writeStaticParams(ObjectOutputStream oos) throws IOException {
         Integer wrapOutput = instanceCount;
