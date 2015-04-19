@@ -34,7 +34,6 @@ public class Oil extends Buff implements HeartbeatListener {
         if (timeRemaining <= 0) {
             remove();
             Heartbeat.unsubscribe(this);
-            System.out.println("Oil done");
         }
     }
 

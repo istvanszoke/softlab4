@@ -1,14 +1,50 @@
 package game;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import agents.Robot;
+import agents.Vacuum;
 import field.*;
 import game.handle.AgentHandle;
 
 public final class GameCreator {
     private Map map;
     private List<AgentHandle> agents;
+
+    public static boolean serializeGame(Game gameToSerialize, OutputStream output) {
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(output);
+
+            oos.writeObject(gameToSerialize.getGameStorage());
+            oos.writeObject(gameToSerialize.getMap());
+            Robot.writeStaticParams(oos);
+            Vacuum.writeStaticParams(oos);
+            Field.writeStaticParams(oos);
+        } catch (IOException ex) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static Game deserializeGame(InputStream input) {
+        try {
+            ObjectInputStream ois = new ObjectInputStream(input);
+            GameStorage restoredGameStorage = (GameStorage)ois.readObject();
+            game.Map restoredMap = (game.Map)ois.readObject();
+            Robot.readStaticParams(ois);
+            Vacuum.readStaticParams(ois);
+            Field.readStaticParams(ois);
+            return new Game(restoredGameStorage, restoredMap);
+        } catch (IOException ex) {
+            return null;
+        } catch (ClassNotFoundException ex) {
+            return null;
+        }
+    }
 
     public GameCreator() {
         map = new Map();

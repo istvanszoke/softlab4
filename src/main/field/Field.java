@@ -105,7 +105,9 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
     @Override
     public void onRemove(Buff buff) {
+        System.out.println(buff + " removed on: " + this);
         buffsToRemove.add(buff);
+        System.out.println(buffsToRemove.size());
     }
 
     protected Field searchGoal(Speed speed) {
@@ -128,7 +130,9 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     }
 
     protected void removeBuffs() {
+        System.out.println(buffsToRemove.size());
         for (Buff b : buffsToRemove) {
+            System.out.println(b);
             b.unsubscribe(this);
         }
 
