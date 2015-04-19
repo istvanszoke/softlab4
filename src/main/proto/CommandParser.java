@@ -11,8 +11,7 @@ import java.util.regex.Pattern;
 public class CommandParser {
     //TODO: Change the argument of betolt() and ment() from nev to allas in the docs.
     private static final Map<String, String[]> acceptedCommands = Collections.unmodifiableMap(new HashMap<String, String[]>() {{
-        put(ProtoCommand.PLAY, new String[]{"szam", "ido", "palya"});
-        put(ProtoCommand.TEST, new String[]{"palya"});
+        put(ProtoCommand.PLAY, new String[]{"palya"});
         put(ProtoCommand.JUMP, new String[]{});
         put(ProtoCommand.CHANGE_DIR, new String[]{"irany"});
         put(ProtoCommand.CHANGE_SPEED, new String[]{"delta"});
