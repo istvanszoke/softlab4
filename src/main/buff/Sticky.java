@@ -11,6 +11,7 @@ public class Sticky extends Buff {
 
     public Sticky() {
         usesRemaining = 4;
+        isCleanable = true;
     }
 
     @Override
