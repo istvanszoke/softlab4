@@ -60,8 +60,7 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
         for (Buff b : buffs) {
             agent.accept(b);
         }
-        buffs.removeAll(buffsToRemove);
-        buffsToRemove.clear();
+        removeBuffs();
 
         agent.setField(this);
         this.agent = agent;
@@ -72,7 +71,7 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
             return;
         }
 
-        buffs.clear();
+        removeBuffs();
 
         agent.setField(null);
         this.agent = null;
@@ -106,7 +105,6 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
     @Override
     public void onRemove(Buff buff) {
-        buff.unsubscribe(this);
         buffsToRemove.add(buff);
     }
 
@@ -127,5 +125,14 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     @Override
     public String toString() {
         return "Field:" + fieldId;
+    }
+
+    protected void removeBuffs() {
+        for (Buff b : buffsToRemove) {
+            b.unsubscribe(this);
+        }
+
+        buffs.removeAll(buffsToRemove);
+        buffsToRemove.clear();
     }
 }
