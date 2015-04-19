@@ -1,9 +1,9 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
-/**
- * Created by nyari on 2015.04.19..
- */
+
 public class Differ
 {
     private BufferedReader left;
@@ -20,14 +20,34 @@ public class Differ
             correct = true;
     }
 
-    public void generateOutputTo(BufferedWriter bw) {
+    public void generateOutputTo(OutputStream os) throws IOException {
         boolean succeeded = true;
+        PrintWriter w = new PrintWriter(os);
 
 
+        boolean running = true;
+        while (running) {
+            String lhs = left.readLine();
+            String rhs = right.readLine();
 
-
+            if (lhs != null && rhs != null) {
+                if  (!lhs.equals(rhs)) {
+                    if (succeeded == true) {
+                        w.println("FAIL");
+                        succeeded = false;
+                    }
+                    w.println(lhs);
+                    w.println(rhs);
+                }
+            } else {
+                running = false;
+                succeeded = succeeded && ((lhs == null) && (rhs == null));
+            }
+        }
 
         if (succeeded)
-            bw.
+            w.println("PASS");
+
+        w.flush();
     }
 }
