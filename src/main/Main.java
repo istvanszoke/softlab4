@@ -64,7 +64,7 @@ public class Main extends JFrame implements GameListener {
     }
 
     private void gameLoop() {
-        String mapName = "test03.map";
+        String mapName = "test01.map";
         FileInputStream fis;
         Game testCase = null;
         try {

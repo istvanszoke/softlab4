@@ -74,7 +74,7 @@ public class TestcaseGenerator {
                 new GameCreator().generateMap(10, 10).getMap(),
 
                 new HashMap<Buff, Integer>() {{
-                    put(new Sticky(), 34);
+                    put(new Oil(), 34);
                 }});
 
         if (!writeTest(testCase, "test04.map")) {
