@@ -11,43 +11,119 @@ import game.handle.AgentHandle;
 import proto.*;
 
 public class Main extends JFrame implements GameListener {
-    public static void main(String[] args) throws IOException {
-        TestcaseGenerator.generateTestCases(30);
-        // You can use the kilep() command to proceed with the game testing
-        //testInput();
-        testGame();
+    private enum OperationMode {
+        STDIO,
+        GUI
     }
 
-    private static void testInput() throws IOException {
+    OperationMode opMode;
+    Game mainGame;
+
+    public static void main(String[] args) throws IOException {
+        boolean stdio = true;
+
+        for(String item : args) {
+            if (item.contains("--gui")) {
+                stdio = false;
+                break;
+            }
+        }
+
+        Main main = new Main (stdio ? OperationMode.STDIO : OperationMode.GUI);
+        main.start();
+    }
+
+    private Main(OperationMode opMode) {
+        this.opMode = opMode;
+        mainGame = null;
+    }
+
+    private void start() {
+        switch (opMode) {
+            case STDIO:
+                operateStdIO();
+                break;
+            case GUI:
+                operateGui();
+                break;
+        }
+    }
+
+
+    private void operateGui() {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
+        gameLoop();
+    }
+
+    private void operateStdIO() {
         ProtoCommand command = new ProtoCommand();
+        Heartbeat.manualize();
+        Game.controllerType = Game.ControllerType.PROTOCOMMAND;
 
         while (!command.getCommand().equals(ProtoCommand.EXIT)) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String line = reader.readLine();
-            try {
-                command = CommandParser.parse(line);
-                System.out.println(command.getCommand() + ": ");
-                for (Map.Entry<String, String> arg : command.getArgs().entrySet()) {
-                    System.out.println("    " + arg.getKey() + ": " + arg.getValue());
-                }
-                System.out.println();
 
+            try {
+                String line = reader.readLine();
+                command = CommandParser.parse(line);
+                if (!command.getCommand().equals(ProtoCommand.EXIT))
+                    processCommand(command);
+                Thread.sleep(1);
             } catch (InvalidCommandException ignored) {
                 System.out.println("Nem helyes parancs");
             } catch (InvalidCommandArgumentException e) {
                 System.out.println("Rossz argumentum");
+            } catch (IOException ex) {
+
+            } catch (InterruptedException e) {
+
             }
+
+
         }
     }
 
-    private static void testGame() {
-        final Main main = new Main();
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                main.createAndShowGUI();
+    private void processCommand(ProtoCommand command) {
+        String cmd = command.getCommand();
+
+        if (mainGame == null) {
+            if (cmd.equals(ProtoCommand.PLAY)) {
+                String mapName = command.getArgs().get("palya");
+                String filename = "src/resources/maps/" + mapName;
+
+                try {
+                    FileInputStream fis = new FileInputStream(filename);
+                    mainGame = GameCreator.deserializeGame(fis);
+                    fis.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                if (mainGame == null) {
+                    System.out.println("Game creation was unsuccessful");
+                } else {
+                    mainGame.addListener(this);
+                    mainGame.start();
+                }
+            } else {
+                System.out.println("Nincs betöltött pálya");
             }
-        });
-        main.gameLoop();
+        } else {
+            if (cmd.equals(ProtoCommand.STEP_HEARTBEAT)) {
+                String timeArg = command.getArgs().get("ido");
+                if (timeArg == null) {
+                    Heartbeat.beat();
+                } else {
+                    Heartbeat.beat(Integer.parseInt(timeArg));
+                }
+            } else if (!mainGame.getProtoCommandController().procesProtoCommand(command)) {
+				System.out.println("Something wrong with command");
+            }
+        }
     }
 
     private void createAndShowGUI() {
@@ -66,22 +142,21 @@ public class Main extends JFrame implements GameListener {
     private void gameLoop() {
         String mapName = "test03.map";
         FileInputStream fis;
-        Game testCase = null;
         try {
             fis = new FileInputStream("src/resources/maps/" + mapName);
-            testCase = GameCreator.deserializeGame(fis);
+            mainGame = GameCreator.deserializeGame(fis);
             fis.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
 
-        if (testCase == null) {
+        if (mainGame == null) {
             System.out.println("Game creation was unsuccessful");
         } else {
-            testCase.registerController(this);
-            testCase.addListener(this);
-            testCase.start();
+            mainGame.registerController(this);
+            mainGame.addListener(this);
+            mainGame.start();
         }
     }
 

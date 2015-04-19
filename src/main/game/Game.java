@@ -7,21 +7,27 @@ import java.util.List;
 import agents.Agent;
 import buff.Buff;
 import field.Field;
-import game.control.GameControllerServer;
-import game.control.GameControllerServerListener;
-import game.control.GameControllerSocket;
-import game.control.HumanController;
+import game.control.*;
 import game.handle.AgentHandle;
 import game.handle.HandleListener;
+import proto.ProtoCommand;
 
 
 public class Game implements GameControllerServerListener, HeartbeatListener, HandleListener {
+    public enum ControllerType {
+        HUMAN,
+        PROTOCOMMAND
+    }
+
+    public static ControllerType controllerType = ControllerType.HUMAN;
+
     private final List<GameListener> listeners;
     private final GameStorage gameStorage;
     private final Map map;
 
     private final GameControllerServer controllerServer;
     private final HumanController humanController;
+    private final ProtoCommandController protoCommandController;
 
     public Game(List<AgentHandle> agents, Map map) {
         this(new GameStorage(agents), map);
@@ -30,7 +36,8 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     public Game(GameStorage inGameStorage, Map inMap) {
         listeners = new ArrayList<GameListener>();
         controllerServer = new GameControllerServer(this);
-        humanController = new HumanController();
+        humanController = controllerType == ControllerType.HUMAN ? new HumanController() : null;
+        protoCommandController = controllerType == ControllerType.PROTOCOMMAND ? new ProtoCommandController() : null;
 
         gameStorage = inGameStorage;
         this.map = inMap;
@@ -45,6 +52,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         listeners = null;
         controllerServer = null;
         humanController = null;
+        protoCommandController = null;
 
         gameStorage = new GameStorage(agents.keySet());
         this.map = map;
@@ -70,6 +78,10 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     public void registerController(Component component) {
         component.addKeyListener(humanController);
+    }
+
+    public ProtoCommandController getProtoCommandController() {
+        return protoCommandController;
     }
 
     public void addListener(GameListener listener) {
@@ -171,7 +183,14 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         for (AgentHandle player : gameStorage) {
             Agent agent = player.getAgent();
             GameControllerSocket socket = controllerServer.createSocketForAgent(agent);
-            humanController.addControllerSocket(socket);
+            switch (controllerType) {
+                case HUMAN:
+                    humanController.addControllerSocket(socket);
+                    break;
+                case PROTOCOMMAND:
+                    protoCommandController.addControllerSocket(socket);
+                    break;
+            }
         }
     }
 

@@ -17,9 +17,6 @@ public class CommandParser {
         put(ProtoCommand.CHANGE_SPEED, new String[]{"delta"});
         put(ProtoCommand.USE_OIL, new String[]{});
         put(ProtoCommand.USE_STICKY, new String[]{});
-        put(ProtoCommand.PLACE_VACUUM, new String[]{"field"});
-        put(ProtoCommand.PLACE_OIL, new String[]{"field"});
-        put(ProtoCommand.PLACE_STICKY, new String[]{"field"});
         put(ProtoCommand.VACUUM_CLEAN, new String[]{});
         put(ProtoCommand.STEP_HEARTBEAT, new String[]{"ido"});
         put(ProtoCommand.EXIT, new String[]{});
@@ -30,7 +27,7 @@ public class CommandParser {
 
     private static final Map<String, String> argumentValidators = Collections.unmodifiableMap(new HashMap<String, String>() {{
         put("szam", "[2-4]");
-        put("ido", "[0-3]:[0-5][0-9]");
+        put("ido", "[0-9]+");
         put("palya", "[A-Za-z0-9]+\\.map");
         put("irany", "(FEL|LE|BAL|JOBB)");
         put("delta", "[+-]1");
