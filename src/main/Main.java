@@ -91,8 +91,8 @@ public class Main extends JFrame implements GameListener {
 
         if (mainGame == null) {
             if (cmd.equals(ProtoCommand.PLAY)) {
-                int mapIndex = Integer.parseInt(command.getArgs().get("palya"));
-                String filename = System.out.format("src/resources/maps/test%02d.map",mapIndex).toString();
+                String mapName = command.getArgs().get("palya");
+                String filename = "src/resources/maps/" + mapName;
 
                 try {
                     FileInputStream fis = new FileInputStream(filename);
@@ -105,14 +105,18 @@ public class Main extends JFrame implements GameListener {
                 if (mainGame == null) {
                     System.out.println("Game creation was unsuccessful");
                 } else {
-                    mainGame.registerController(this);
                     mainGame.addListener(this);
                     mainGame.start();
                 }
             }
         } else {
             if (cmd.equals(ProtoCommand.STEP_HEARTBEAT)) {
-                Heartbeat.beat();
+                String timeArg = command.getArgs().get("ido");
+                if (timeArg == null) {
+                    Heartbeat.beat();
+                } else {
+                    Heartbeat.beat(Integer.parseInt(timeArg));
+                }
             } else if (!mainGame.getProtoCommandController().procesProtoCommand(command)) {
                 System.out.println("Something wrong with command");
             }
