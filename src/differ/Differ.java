@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 
 
 public class Differ
@@ -20,7 +17,7 @@ public class Differ
             correct = true;
     }
 
-    public void generateOutputTo(OutputStream os) throws IOException {
+    public void generateOutputTo(OutputStreamWriter os) throws IOException {
         boolean succeeded = true;
         PrintWriter w = new PrintWriter(os);
 
