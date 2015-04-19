@@ -29,9 +29,9 @@ public class UseStickyExecute extends FieldCommand {
     public void visit(FieldCell element) {
         if (canExecute) {
             element.placeBuff(new Sticky());
-            result.pushDebug("ragacslerak 0");
+            result.pushNormal("ragacslerak 0");
         } else {
-            result.pushDebug("ragacslerak 1");
+            result.pushNormal("ragacslerak 1");
         }
     }
 
@@ -42,9 +42,9 @@ public class UseStickyExecute extends FieldCommand {
     public void visit(FinishLineFieldCell element) {
         if (canExecute) {
             element.placeBuff(new Sticky());
-            result.pushDebug("ragacslerak 0");
+            result.pushNormal("ragacslerak 0");
         } else {
-            result.pushDebug("ragacslerak 1");
+            result.pushNormal("ragacslerak 1");
         }
     }
 }

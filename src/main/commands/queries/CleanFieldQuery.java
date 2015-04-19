@@ -22,7 +22,7 @@ public class CleanFieldQuery extends AgentCommand {
     public void visit(Robot element) {
         canExecute = false;
     //    result.pushDebug("Robot can not clean up Field!");
-        result.pushDebug("vacuumtakarit 1 " + element);
+        result.pushNormal("vacuumtakarit 1 " + element);
     }
 
     @Override

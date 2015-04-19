@@ -29,9 +29,9 @@ public class UseOilExecute extends FieldCommand {
     public void visit(FieldCell element) {
         if (canExecute) {
             element.placeBuff(new Oil());
-            result.pushDebug("olajlerak 0");
+            result.pushNormal("olajlerak 0");
         } else {
-            result.pushDebug("olajlerak 1");
+            result.pushNormal("olajlerak 1");
         }
     }
 
@@ -42,9 +42,9 @@ public class UseOilExecute extends FieldCommand {
     public void visit(FinishLineFieldCell element) {
         if (canExecute) {
             element.placeBuff(new Oil());
-            result.pushDebug("olajlerak 0");
+            result.pushNormal("olajlerak 0");
         } else {
-            result.pushDebug("olajlerak 1");
+            result.pushNormal("olajlerak 1");
         }
     }
 }
