@@ -5,6 +5,122 @@
 
 \thispagestyle{fancy}
 
+\setcounter{section}{-1}
+\section{A tesztek részletes tervei, leírásuk a teszt nyelvén}
+
+
+\subsection{Vacuum feltakarítja az olajat}
+\begin{itemize}
+	\item Leírás: Játék kezdése után vacuum és olaj lerakása ugyanarra a cellára. Végül Vacuum utasítása takarításra.
+	\item Bemenet\\
+    jatek(palya=test1.map) \\
+    ugrik() \\
+    vacuumtakarit() \\
+    ugrik() \\
+    vacuumtakarit() \\
+    kilep() \\
+	\item Elvárt kimenet\\
+
+\end{itemize}
+
+\subsection{Olaj száradása}
+\begin{itemize}
+	\item Leírás: Játék kezdése után olaj lerakása majd utasítása száradásra.
+	\item Bemenet\\
+    jatek(palya=test2.map) \\
+    oraleptet(ido=0:10) \\
+    oraleptet(ido=0:10) \\
+    kilep() \\
+	\item Elvárt kimenet\\
+	
+\end{itemize}
+
+\subsection{Ragacsra ráugrás és kopás}
+\begin{itemize}
+	\item Leírás: Játék kezdése után ragacs lerakása, majd két ágens egymás után ráugrik. Ragacs jelen esetben 2 ugrás után lekopik.
+	\item Bemenet\\
+    jatek(palya=test3.map) \\
+    sebvalt(+1) \\
+    irvalt(LE) \\
+    ugrik() \\ 
+    sebvalt(+1) \\
+    irvalt(BAL) \\ 
+    ugrik() \\
+    ugrik() \\ 
+    ugrik()\\ 
+    kilep()\\
+	\item Elvárt kimenet\\
+
+\end{itemize}
+
+\subsection{Olajra ráugrás}
+\begin{itemize}
+	\item Leírás: Játék kezdése után olaj lerakása, majd egy ágens ráugrik és megpróbál sebességet változtatni. 
+	\item Bemenet\\	
+    jatek(palya=test4.map)\\
+    sebvalt(+1)\\
+    irvalt(JOBB)\\
+    ugrik()\\
+    sebvalt(+1)\\
+    kilep()\\
+	\item Elvárt kimenet\\
+
+\end{itemize}
+
+\subsection{Robot lehelyez buffot}
+\begin{itemize}
+	\item Leírás: Játék kezdése után utasítjuk az első számú ágenst egy buff lerakására.
+	\item Bemenet\\	
+    jatek(palya=test5.map)\\
+    ragacslerak()\\
+    kilep()\\
+	\item Elvárt kimenet\\
+		
+\end{itemize}
+
+\subsection{Robot ráugrik vacuumra}
+\begin{itemize}
+	\item Leírás: Robot és vacuum lehelyezése. Robot utasítása vacuumra ugrásra.
+	\item Bemenet\\
+    jatek(palya=test6.map)\\
+    sebvalt(+1)\\
+    irvalt(BAL)\\
+    ugrik()\\
+    kilep()\\
+	\item Elvárt kimenet\\
+
+\end{itemize}
+
+\subsection{Vacuum találkozik vacuummal}
+\begin{itemize}
+	\item Leírás: Két vacuum és egy olaj lehelyézese. Az olajtól messzebb lévő vacuum léptetése, akinek útjában van a másik vacuum
+	\item Bemenet\\
+    jatek(palya=test7.map) \\
+    ugrik() \\
+    irvalt(JOBB) \\
+    sebvalt(+1) \\
+    ugrik() \\
+    kilep()\\
+	\item Elvárt kimenet\\
+
+\end{itemize}
+
+\subsection{Robot ütközik robottal}
+\begin{itemize}
+	\item Leírás: Két robot lehelyezése egy sorba, egymás felé irányítás és ütközés megfigyelése. 45ös fielden találkozás
+	\item Bemenet\\
+    jatek(palya=test8.map)\\
+    sebvalt(+2)\\
+    irvalt(JOBB)\\
+    ugrik()\\
+    sebvalt(+1)\\
+    irvalt(BAL)\\
+    ugrik()\\
+    kilep()\\
+	\item Elvárt kimenet\\
+
+\end{itemize}
+
 \section{Fordítási és futtatási útmutató}
 \comment{A feltöltött program fordításával és futtatásával kapcsolatos útmutatás. Ennek tartalmaznia kell leltárszerűen az egyes fájlok pontos nevét, méretét byte-ban, keletkezési idejét, valamint azt, hogy a fájlban mi került megvalósításra.}
 
