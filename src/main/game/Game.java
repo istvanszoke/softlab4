@@ -23,18 +23,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     private final HumanController humanController;
 
     public Game(List<AgentHandle> agents, Map map) {
-        listeners = new ArrayList<GameListener>();
-        controllerServer = new GameControllerServer(this);
-        humanController = new HumanController();
-
-        gameStorage = new GameStorage(agents);
-
-        this.map = map;
-
-        placeAgents();
-        setAgentControllers();
-        Heartbeat.subscribe(gameStorage);
-        Heartbeat.subscribe(this);
+        this(new GameStorage(agents), map);
     }
 
     public Game(GameStorage inGameStorage, Map inMap) {
