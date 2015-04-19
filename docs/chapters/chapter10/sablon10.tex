@@ -12,26 +12,21 @@
 \input{includes/file_list.tex}
 
 \subsection{Fordítás}
-\comment{A fenti listában szereplő forrásfájlokból milyen műveletekkel lehet a bináris, futtatható kódot előállítani. Az előállításhoz csak a 2. Követelmények c. dokumentumban leírt környezetet szabad előírni.}
+A program fordítása a HSZK gépeken felállított Eclipse konzolból kiadott parancsokkal lehetséges.
+A projekt főkönyvtárában elhelyezkedve kell kiadni őket.
 
 \lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
 \begin{lstlisting}
-javac -d bin *.java
+.\build.bat
 \end{lstlisting}
 
 \subsection{Futtatás}
 Az elkészült futtatható fájlok a build/install/softlab4/bin mappában találhatók. 
-Ezeket parancssorból futtathatjuk:
+A HSZK gépein történő futtatáshoz az alábbi parancsok szükségesek, a projekt gyökérkönyvtárában tartózkodva:
 \lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
 \begin{lstlisting}
-cd build
-cd install
-cd softlab4
-cd bin
-Windows: .\softlab4.bat 
-Linux:   ./softlab4
+.\build.bat run
 \end{lstlisting}
-
 
 \section{Tesztek jegyzőkönyvei}
 
