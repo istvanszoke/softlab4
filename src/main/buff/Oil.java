@@ -1,12 +1,16 @@
 package buff;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+
 import agents.Vacuum;
 import commands.transmits.ChangeDirectionTransmit;
 import commands.transmits.ChangeSpeedTransmit;
 import game.Heartbeat;
 import game.HeartbeatListener;
 
-public class Oil extends Buff implements HeartbeatListener {
+public class Oil extends Buff implements HeartbeatListener, Serializable {
     long timeRemaining;
 
     public Oil() {
@@ -40,5 +44,10 @@ public class Oil extends Buff implements HeartbeatListener {
     @Override
     public void visit(Vacuum element) {
 
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        Heartbeat.subscribe(this);
     }
 }
