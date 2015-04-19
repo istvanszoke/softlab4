@@ -12,10 +12,12 @@ public class EmptyFieldCell extends Field {
         super(distanceFromGoal);
     }
 
-    public void onEnter(Agent agent) {
+    @Override
+    public boolean onEnter(Agent agent) {
         agent.setField(this);
         this.agent = agent;
         agent.accept(new KillExecute());
+        return true;
     }
 
     @Override

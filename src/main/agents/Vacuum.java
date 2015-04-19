@@ -4,6 +4,7 @@ import buff.Buff;
 
 import commands.AgentCommand;
 import commands.NoFieldCommandException;
+import commands.executes.KillExecute;
 import commands.queries.JumpQuery;
 import feedback.Logger;
 
@@ -71,6 +72,7 @@ public class Vacuum extends Agent {
 
     @Override
     public Agent collide(Agent agent) {
+        accept(new KillExecute());
         return agent;
     }
 

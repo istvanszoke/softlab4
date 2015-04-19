@@ -52,17 +52,21 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
         neighbours.put(direction, field);
     }
 
-    public void onEnter(Agent agent) {
-        if (agent != null && this.agent != null && agent != this.agent) {
+    public boolean onEnter(Agent agent) {
+        if (agent == this.agent) {
+            return false;
+        }
+
+        if (agent != null && this.agent != null) {
             if (agent.onCauseCollision(this.agent)) {
                 agent = this.agent.collide(agent);
             } else {
-                return;
+                return false;
             }
         }
 
         if (agent == null) {
-            return;
+            return false;
         }
 
         for (Buff b : buffs) {
@@ -72,6 +76,8 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
         agent.setField(this);
         this.agent = agent;
+
+        return true;
     }
 
     public void onExit() {
@@ -81,7 +87,6 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
         removeBuffs();
 
-        agent.setField(null);
         this.agent = null;
     }
 

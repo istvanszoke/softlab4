@@ -49,13 +49,13 @@ public class ChangeDirectionExecute extends AgentCommand {
 
     private void visitCommon(Agent element) {
         if (!canExecute) {
-            result.pushNormal("irvalt 1" + element);
+            result.pushNormal("irvalt 1 " + element);
             return;
         }
 
         Speed newSpeed = element.getSpeed();
         newSpeed.setDirection(direction);
         element.setSpeed(newSpeed);
-        result.pushNormal("irvalt 0" + element + " " + direction);
+        result.pushNormal("irvalt 0 " + element + " " + direction);
     }
 }
