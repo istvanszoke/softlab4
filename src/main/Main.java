@@ -10,6 +10,7 @@ import agents.Robot;
 import agents.Vacuum;
 import buff.Buff;
 import buff.Oil;
+import buff.Sticky;
 import field.Field;
 import game.*;
 import game.handle.AgentHandle;
@@ -75,17 +76,20 @@ public class Main extends JFrame implements GameListener {
     private void gameLoop() {
         final int roundTime = 5;
 
+        // Change these to generate the test cases. Both the agent and buff hashmaps work
+        // in a similar fashion: the first entry in put is the actual object we want to place,
+        // the second is the field ID we want to place it in. On the test maps this is a single
+        // integer, where id(cell(row, col)) = row * MAP_WIDTH + col
+        String mapName = "test10.map";
         Game testCase = new Game(
                 new HashMap<AgentHandle, Integer>() {{
-                    put(PlayerHandle.createRobot(roundTime), 0);
-                    put(PlayerHandle.createRobot(roundTime), 1);
-                    put(VacuumHandle.createVacuum(), 34);
+                    put(PlayerHandle.createRobot(roundTime), 32);
+                    put(PlayerHandle.createRobot(roundTime), 35);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
 
                 new HashMap<Buff, Integer>() {{
-                    put(new Oil(),34);
                 }});
 
 
@@ -93,14 +97,14 @@ public class Main extends JFrame implements GameListener {
         //This part is just to test out Serialization
         //I didn't mean this to be a final code
         try {
-            FileOutputStream fos = new FileOutputStream("test.sav");
+            FileOutputStream fos = new FileOutputStream("src/resources/maps/" + mapName);
             if (serializeGame(testCase, fos)) {
                 fos.flush();
                 fos.close();
                 fos = null;
                 testCase = null;
                 System.gc();
-                FileInputStream fis = new FileInputStream("test.sav");
+                FileInputStream fis = new FileInputStream("src/resources/maps/" + mapName);
                 testCase = deserializeGame(fis);
                 if (testCase == null)
                     return;
