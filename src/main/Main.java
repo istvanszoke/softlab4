@@ -70,7 +70,8 @@ public class Main extends JFrame implements GameListener {
             try {
                 String line = reader.readLine();
                 command = CommandParser.parse(line);
-                processCommand(command);
+                if (!command.getCommand().equals(ProtoCommand.EXIT))
+                    processCommand(command);
                 Thread.sleep(1);
             } catch (InvalidCommandException ignored) {
                 System.out.println("Nem helyes parancs");
@@ -108,6 +109,8 @@ public class Main extends JFrame implements GameListener {
                     mainGame.addListener(this);
                     mainGame.start();
                 }
+            } else {
+                System.out.println("Nincs betöltött pálya");
             }
         } else {
             if (cmd.equals(ProtoCommand.STEP_HEARTBEAT)) {
@@ -118,8 +121,7 @@ public class Main extends JFrame implements GameListener {
                     Heartbeat.beat(Integer.parseInt(timeArg));
                 }
             } else if (!mainGame.getProtoCommandController().procesProtoCommand(command)) {
-                if (!cmd.equals(ProtoCommand.EXIT))
-					System.out.println("Something wrong with command");
+				System.out.println("Something wrong with command");
             }
         }
     }
