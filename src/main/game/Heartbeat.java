@@ -14,6 +14,7 @@ public class Heartbeat {
 
     private static long elapsedTime;
     private static boolean isPaused;
+    private static boolean isManual;
 
     static {
         listeners = new ArrayList<HeartbeatListener>();
@@ -23,6 +24,7 @@ public class Heartbeat {
         elapsedTime = 0;
         Timer timer = new Timer(true);
         isPaused = true;
+        isManual = false;
 
         timer.schedule(new TimerTask() {
             @Override
@@ -54,12 +56,49 @@ public class Heartbeat {
     }
 
     public synchronized static void pause() {
-        isPaused = true;
+        if (!isManual)
+            isPaused = true;
     }
 
     public synchronized static void resume() {
+        if (!isManual)
+            isPaused = false;
+    }
+
+    public synchronized static void manualize () {
+        isPaused = true;
+        isManual = true;
+    }
+
+    public synchronized static void automatize () {
+        isManual = false;
         isPaused = false;
     }
+
+    public static void beat(int diff) {
+        if (!isManual)
+            return;
+
+        if (!toAdd.isEmpty()) {
+            listeners.addAll(toAdd);
+            toAdd.clear();
+        }
+
+        elapsedTime += diff;
+        for (HeartbeatListener listener : listeners) {
+            listener.onTick(diff);
+        }
+
+        if (!toRemove.isEmpty()) {
+            listeners.removeAll(toRemove);
+            toRemove.clear();
+        }
+    }
+
+    public static void beat() {
+        beat(RESOLUTION);
+    }
+
 
     public static void subscribe(HeartbeatListener listener) {
         toAdd.add(listener);

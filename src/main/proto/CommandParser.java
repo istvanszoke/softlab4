@@ -17,9 +17,6 @@ public class CommandParser {
         put(ProtoCommand.CHANGE_SPEED, new String[]{"delta"});
         put(ProtoCommand.USE_OIL, new String[]{});
         put(ProtoCommand.USE_STICKY, new String[]{});
-        put(ProtoCommand.PLACE_VACUUM, new String[]{"field"});
-        put(ProtoCommand.PLACE_OIL, new String[]{"field"});
-        put(ProtoCommand.PLACE_STICKY, new String[]{"field"});
         put(ProtoCommand.VACUUM_CLEAN, new String[]{});
         put(ProtoCommand.STEP_HEARTBEAT, new String[]{"ido"});
         put(ProtoCommand.EXIT, new String[]{});
