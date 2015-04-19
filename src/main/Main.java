@@ -3,24 +3,16 @@ import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 import java.awt.KeyboardFocusManager;
 import java.io.*;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
 
-import agents.Robot;
-import agents.Vacuum;
-import field.Field;
 import game.*;
 import game.handle.AgentHandle;
-import game.handle.PlayerHandle;
-import proto.CommandParser;
-import proto.InvalidCommandArgumentException;
-import proto.InvalidCommandException;
-import proto.ProtoCommand;
+import proto.*;
 
 public class Main extends JFrame implements GameListener {
     public static void main(String[] args) throws IOException {
+        TestcaseGenerator.generateTestCases(30);
         // You can use the kilep() command to proceed with the game testing
         //testInput();
         testGame();
@@ -72,43 +64,24 @@ public class Main extends JFrame implements GameListener {
     }
 
     private void gameLoop() {
-        int roundTime = 5;
-
-        Game game = new GameCreator().generateMap(10, 10)
-                .addAgent(PlayerHandle.createRobot(roundTime))
-                .addAgent(PlayerHandle.createRobot(roundTime))
-                .create();
-
-        //This part is just to test out Serialization
-        //I didn't mean this to be a final code
+        String mapName = "test03.map";
+        FileInputStream fis;
+        Game testCase = null;
         try {
-            FileOutputStream fos = new FileOutputStream("test.sav");
-            if (serializeGame(game, fos)) {
-                fos.flush();
-                fos.close();
-                fos = null;
-                game = null;
-                System.gc();
-                FileInputStream fis = new FileInputStream("test.sav");
-                game = deserialzeGame(fis);
-                if (game == null)
-                    return;
-            } else {
-                fos.flush();
-                fos.close();
-                return;
-            }
+            fis = new FileInputStream("src/resources/maps/" + mapName);
+            testCase = GameCreator.deserializeGame(fis);
+            fis.close();
         } catch (IOException ex) {
-
+            ex.printStackTrace();
         }
-        //-----------------------------------------------------------------------
 
-        if (game == null) {
+
+        if (testCase == null) {
             System.out.println("Game creation was unsuccessful");
         } else {
-            game.registerController(this);
-            game.addListener(this);
-            game.start();
+            testCase.registerController(this);
+            testCase.addListener(this);
+            testCase.start();
         }
     }
 
@@ -149,41 +122,6 @@ public class Main extends JFrame implements GameListener {
             System.out.println(handle + " " +
                                (handle.getAgent().isDead() ? "dead " : "alive ") +
                                "distance: " + handle.getAgent().getField().getDistanceFromGoal());
-        }
-    }
-
-    public boolean serializeGame(Game gameToSerialize, OutputStream output) {
-
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(output);
-            if (oos == null) {
-                return false;
-            }
-            oos.writeObject(gameToSerialize.getGameStorage());
-            oos.writeObject(gameToSerialize.getMap());
-            Robot.writeStaticParams(oos);
-            Vacuum.writeStaticParams(oos);
-            Field.writeStaticParams(oos);
-        } catch (IOException ex) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public Game deserialzeGame(InputStream input) {
-        try {
-            ObjectInputStream ois = new ObjectInputStream(input);
-            GameStorage restoredGameStorage = (GameStorage)ois.readObject();
-            game.Map restoredMap = (game.Map)ois.readObject();
-            Robot.readStaticParams(ois);
-            Vacuum.readStaticParams(ois);
-            Field.readStaticParams(ois);
-            return new Game(restoredGameStorage, restoredMap);
-        } catch (IOException ex) {
-            return null;
-        } catch (ClassNotFoundException ex) {
-            return null;
         }
     }
 }

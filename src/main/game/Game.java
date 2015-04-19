@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import agents.Agent;
+import buff.Buff;
 import field.Field;
 import game.control.GameControllerServer;
 import game.control.GameControllerServerListener;
@@ -34,10 +35,27 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         gameStorage = inGameStorage;
         this.map = inMap;
 
-        placeAgents();
         setAgentControllers();
         Heartbeat.subscribe(gameStorage);
         Heartbeat.subscribe(this);
+    }
+
+    public Game(java.util.Map<AgentHandle, Integer> agents, Map map,
+                java.util.Map<Buff, Integer> buffs) {
+        listeners = null;
+        controllerServer = null;
+        humanController = null;
+
+        gameStorage = new GameStorage(agents.keySet());
+        this.map = map;
+
+        for (java.util.Map.Entry<AgentHandle, Integer> a : agents.entrySet()) {
+            map.get(a.getValue()).onEnter(a.getKey().getAgent());
+        }
+
+        for (java.util.Map.Entry<Buff, Integer> b : buffs.entrySet()) {
+            map.get(b.getValue()).placeBuff(b.getKey());
+        }
     }
 
     public void start() {
@@ -117,8 +135,6 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
         deregister(handle);
         gameStorage.update();
-
-        System.out.println("Killed " + handle);
 
         if (isGameOver()) {
             endGame();

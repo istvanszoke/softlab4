@@ -21,7 +21,6 @@ public class CleanFieldQuery extends AgentCommand {
     @Override
     public void visit(Robot element) {
         canExecute = false;
-        result.pushDebug("Robot can not clean up Field!");
     }
 
     @Override

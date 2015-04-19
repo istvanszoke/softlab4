@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import agents.Agent;
@@ -14,8 +15,11 @@ import buff.Buff;
 import buff.BuffListener;
 
 public abstract class Field implements FieldElement, BuffListener, Serializable {
+    public static final Field GRAVEYARD = new EmptyFieldCell(-1);
+
     protected final int distanceFromGoal;
-    protected final ArrayList<Buff> buffs;
+    protected final List<Buff> buffs;
+    protected final List<Buff> buffsToRemove;
     protected final Map<Direction, Field> neighbours;
     protected Agent agent;
     private int fieldId;
@@ -33,6 +37,7 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
     public Field(int distanceFromGoal) {
         buffs = new ArrayList<Buff>();
+        buffsToRemove = new ArrayList<Buff>();
         neighbours = new HashMap<Direction, Field>();
         this.distanceFromGoal = distanceFromGoal;
         ++instanceCount;
@@ -57,6 +62,7 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
         for (Buff b : buffs) {
             agent.accept(b);
         }
+        removeBuffs();
 
         agent.setField(this);
         this.agent = agent;
@@ -67,7 +73,7 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
             return;
         }
 
-        buffs.clear();
+        removeBuffs();
 
         agent.setField(null);
         this.agent = null;
@@ -101,8 +107,7 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
     @Override
     public void onRemove(Buff buff) {
-        buff.unsubscribe(this);
-        buffs.remove(buff);
+        buffsToRemove.add(buff);
     }
 
     protected Field searchGoal(Speed speed) {
@@ -122,5 +127,14 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     @Override
     public String toString() {
         return "Field:" + fieldId;
+    }
+
+    protected void removeBuffs() {
+        for (Buff b : buffsToRemove) {
+            b.unsubscribe(this);
+        }
+
+        buffs.removeAll(buffsToRemove);
+        buffsToRemove.clear();
     }
 }

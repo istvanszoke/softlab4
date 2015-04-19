@@ -7,10 +7,7 @@ import commands.FieldCommandVisitor;
 import commands.NoAgentCommandException;
 import commands.executes.JumpExecute;
 import commands.queries.JumpQuery;
-import field.Displacement;
-import field.EmptyFieldCell;
-import field.FieldCell;
-import field.FinishLineFieldCell;
+import field.*;
 
 public class JumpTransmit extends FieldCommand {
     private Displacement displacement;
@@ -49,16 +46,20 @@ public class JumpTransmit extends FieldCommand {
 
     @Override
     public void visit(FieldCell element) {
-        displacement = element.getDisplacement(speed);
+        visitCommon(element);
     }
 
     @Override
     public void visit(EmptyFieldCell element) {
-        displacement = element.getDisplacement(speed);
+        visitCommon(element);
     }
 
     @Override
     public void visit(FinishLineFieldCell element) {
+        visitCommon(element);
+    }
+
+    private void visitCommon(Field element) {
         displacement = element.getDisplacement(speed);
     }
 }

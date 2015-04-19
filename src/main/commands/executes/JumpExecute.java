@@ -1,5 +1,6 @@
 package commands.executes;
 
+import agents.Agent;
 import agents.Robot;
 import agents.Vacuum;
 import commands.AgentCommand;
@@ -37,19 +38,21 @@ public class JumpExecute extends AgentCommand {
 
     @Override
     public void visit(Robot element) {
-        if (canExecute) {
-            displacement.getStart().onExit();
-            displacement.getGoal().onEnter(element);
-            result.pushDebug("Jumping " + element + " " +
-                             "from " + displacement.getStart() +
-                             " to " + displacement.getGoal());
-        } else {
-            result.pushDebug("Cannot execute jump for " + element);
-        }
+        visitCommon(element);
     }
 
     @Override
     public void visit(Vacuum element) {
+        visitCommon(element);
+    }
 
+    private void visitCommon(Agent element) {
+        if (canExecute) {
+            displacement.getStart().onExit();
+            displacement.getGoal().onEnter(element);
+            result.pushNormal("ugrik 0 " + element);
+        } else {
+            result.pushNormal("ugrik 1 " + element);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package commands.executes;
 
+import agents.Agent;
 import agents.Robot;
 import agents.Speed;
 import agents.Vacuum;
@@ -37,18 +38,22 @@ public class ChangeSpeedExecute extends AgentCommand {
 
     @Override
     public void visit(Robot element) {
-        if (canExecute) {
-            Speed newSpeed = element.getSpeed();
-            newSpeed.setMagnitude(newSpeed.getMagnitude() + magnitudeDelta);
-            element.setSpeed(newSpeed);
-            result.pushDebug("Changed speed for " + element + ", new speed is: " + newSpeed.getMagnitude());
-        } else {
-            result.pushDebug("Failed to change speed for " + element);
-        }
+        visitCommon(element);
     }
 
     @Override
     public void visit(Vacuum element) {
+        visitCommon(element);
+    }
 
+    private void visitCommon(Agent element) {
+        if (canExecute) {
+            Speed newSpeed = element.getSpeed();
+            newSpeed.setMagnitude(newSpeed.getMagnitude() + magnitudeDelta);
+            element.setSpeed(newSpeed);
+            result.pushNormal("sebvalt 0 " + element + " " + newSpeed.getMagnitude());
+        } else {
+            result.pushNormal("sebvalt 1 " + element);
+        }
     }
 }

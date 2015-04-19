@@ -11,11 +11,13 @@ public class FinishLineFieldCell extends Field {
 
     @Override
     public void accept(FieldVisitor visitor) {
+        removeBuffs();
         visitor.visit(this);
     }
 
     @Override
     public void accept(FieldCommand command) {
+        removeBuffs();
         for (Buff b : buffs) {
             command.accept(b);
         }

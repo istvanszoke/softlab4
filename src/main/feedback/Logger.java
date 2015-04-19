@@ -8,7 +8,7 @@ public class Logger {
     private static LogLevel logLevel;
 
     static {
-        logLevel = LogLevel.TEST;
+        logLevel = LogLevel.NORMAL;
     }
 
     public static LogLevel getLogLevel() {

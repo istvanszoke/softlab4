@@ -4,7 +4,6 @@ import buff.Buff;
 
 import commands.AgentCommand;
 import commands.NoFieldCommandException;
-import commands.executes.KillExecute;
 import commands.queries.JumpQuery;
 
 import java.io.IOException;
@@ -12,7 +11,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 

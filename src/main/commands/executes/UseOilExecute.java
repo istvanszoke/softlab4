@@ -7,6 +7,7 @@ import commands.FieldCommandVisitor;
 import commands.NoAgentCommandException;
 import commands.queries.UseOilQuery;
 import field.EmptyFieldCell;
+import field.Field;
 import field.FieldCell;
 import field.FinishLineFieldCell;
 
@@ -27,12 +28,7 @@ public class UseOilExecute extends FieldCommand {
 
     @Override
     public void visit(FieldCell element) {
-        if (canExecute) {
-            element.placeBuff(new Oil());
-            result.pushDebug("Placed oil on " + element);
-        } else {
-            result.pushDebug("Could not place oil on " + element);
-        }
+        visitCommon(element);
     }
 
     @Override
@@ -40,11 +36,15 @@ public class UseOilExecute extends FieldCommand {
 
     @Override
     public void visit(FinishLineFieldCell element) {
+        visitCommon(element);
+    }
+
+    private void visitCommon(Field element) {
         if (canExecute) {
             element.placeBuff(new Oil());
-            result.pushDebug("Placed oil on " + element);
+            result.pushNormal("olajlerak 0");
         } else {
-            result.pushDebug("Could not place oil on " + element);
+            result.pushNormal("olajlerak 1");
         }
     }
 }

@@ -1,5 +1,6 @@
 package commands.queries;
 
+import agents.Agent;
 import agents.Robot;
 import agents.Speed;
 import agents.Vacuum;
@@ -32,12 +33,16 @@ public class JumpQuery extends AgentCommand {
 
     @Override
     public void visit(Robot element) {
-        speed = element.getSpeed();
+        visitCommon(element);
         result.pushDebug(element + " jumping with speed: " + speed);
     }
 
     @Override
     public void visit(Vacuum element) {
+        visitCommon(element);
+    }
 
+    private void visitCommon(Agent element) {
+        speed = element.getSpeed();
     }
 }
