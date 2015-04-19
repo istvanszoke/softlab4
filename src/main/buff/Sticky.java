@@ -33,4 +33,8 @@ public class Sticky extends Buff {
 
     }
 
+    @Override
+    public String toString() {
+        return "S";
+    }
 }

@@ -59,6 +59,8 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         for (java.util.Map.Entry<Buff, Integer> b : buffs.entrySet()) {
             map.get(b.getValue()).placeBuff(b.getKey());
         }
+
+        printOutMap(10, 3);
     }
 
     public void start() {
@@ -216,30 +218,26 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     private void printOutMap(int width, int cellWidth) {
         Iterator<Field> fieldIt = map.iterator();
 
-        int totalwidth = (cellWidth+2)*width;
+        int totalWidth = (cellWidth+2)*width;
         while(fieldIt.hasNext()) {
-            System.out.println(rowSeparator(totalwidth));
+            System.out.println(rowSeparator(totalWidth));
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < width; ++i) {
                 Field current = fieldIt.next();
                 StringBuilder sbi = new StringBuilder();
                 if (current != null) {
                     if (current.getFirstCleanableBuff() != null) {
-                        if (current.getFirstCleanableBuff() instanceof Oil) {
-                            sbi.append('O');
-                        } else {
-                            sbi.append('S');
-                        }
+                        sbi.append(current.getFirstCleanableBuff().toString());
                     }
-                    sbi.append(current.getAgent().toString());
+                    if (current.getAgent() != null) {
+                        sbi.append(current.getAgent().toString());
+                    }
                 }
                 if (sbi.length() < cellWidth) {
                     int more = cellWidth-sbi.length();
                     for (int j = 0; j < more; ++j) {
                         sbi.append(' ');
                     }
-                } else {
-                    sbi.delete(cellWidth + 1, sbi.length());
                 }
                 sb.append('|');
                 sb.append(sbi.toString());
@@ -247,13 +245,15 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
             }
             System.out.println(sb.toString());
         }
-        System.out.println(rowSeparator(totalwidth));
+        System.out.println(rowSeparator(totalWidth) + "\n\n");
 
     }
 
     private String rowSeparator(int length) {
         StringBuilder sb = new StringBuilder();
-        sb.append('-');
+        for (int i = 0; i < length; ++i) {
+            sb.append('-');
+        }
         return sb.toString();
     }
 }

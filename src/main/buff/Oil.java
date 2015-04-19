@@ -51,4 +51,9 @@ public class Oil extends Buff implements HeartbeatListener, Serializable {
         in.defaultReadObject();
         Heartbeat.subscribe(this);
     }
+
+    @Override
+    public String toString() {
+        return "O";
+    }
 }

@@ -74,8 +74,7 @@ public class Vacuum extends Agent {
 
     @Override
     public String toString() {
-        int diff = 'z' - 'a';
-        return "" + ('a' + (('a' + vacuumId) % diff));
+        return Character.toString((char)(('a' + vacuumId - 1)));
     }
 
     private void cleanupRemovedBuffs() {
