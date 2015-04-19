@@ -131,7 +131,6 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
     protected void removeBuffs() {
         for (Buff b : buffsToRemove) {
-            System.out.println(b);
             b.unsubscribe(this);
         }
 
