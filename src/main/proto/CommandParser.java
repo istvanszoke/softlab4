@@ -13,8 +13,6 @@ public class CommandParser {
     private static final Map<String, String[]> acceptedCommands = Collections.unmodifiableMap(new HashMap<String, String[]>() {{
         put(ProtoCommand.PLAY, new String[]{"szam", "ido", "palya"});
         put(ProtoCommand.TEST, new String[]{"palya"});
-        put(ProtoCommand.LOAD, new String[]{"allas"});
-        put(ProtoCommand.SAVE, new String[]{"allas"});
         put(ProtoCommand.JUMP, new String[]{});
         put(ProtoCommand.CHANGE_DIR, new String[]{"irany"});
         put(ProtoCommand.CHANGE_SPEED, new String[]{"delta"});
@@ -35,7 +33,6 @@ public class CommandParser {
         put("szam", "[2-4]");
         put("ido", "[0-3]:[0-5][0-9]");
         put("palya", "[A-Za-z0-9]+\\.map");
-        put("allas", "[A-Za-z0-9]+\\.sav");
         put("irany", "(FEL|LE|BAL|JOBB)");
         put("delta", "[+-]1");
         put("field", "[0-9]+");
