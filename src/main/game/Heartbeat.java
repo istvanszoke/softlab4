@@ -29,7 +29,10 @@ public class Heartbeat {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (!toAdd.isEmpty()) {
+                if (isManual)
+					return;
+
+				if (!toAdd.isEmpty()) {
                     listeners.addAll(toAdd);
                     toAdd.clear();
                 }
