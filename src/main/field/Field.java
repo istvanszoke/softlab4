@@ -1,5 +1,9 @@
 package field;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,16 +13,30 @@ import agents.Speed;
 import buff.Buff;
 import buff.BuffListener;
 
-public abstract class Field implements FieldElement, BuffListener {
+public abstract class Field implements FieldElement, BuffListener, Serializable {
     protected final int distanceFromGoal;
     protected final ArrayList<Buff> buffs;
     protected final Map<Direction, Field> neighbours;
     protected Agent agent;
+    private int fieldId;
+    private static int instanceCount = 0;
+
+    public static void writeStaticParams(ObjectOutputStream oos) throws IOException {
+        Integer wrapOutput = instanceCount;
+        oos.writeObject(wrapOutput);
+    }
+
+    public static void readStaticParams(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        Integer wrapInput = (Integer)ois.readObject();
+        instanceCount = wrapInput;
+    }
 
     public Field(int distanceFromGoal) {
         buffs = new ArrayList<Buff>();
         neighbours = new HashMap<Direction, Field>();
         this.distanceFromGoal = distanceFromGoal;
+        ++instanceCount;
+        fieldId = instanceCount;
     }
 
     public void addNeighbour(Direction direction, Field field) {
@@ -95,5 +113,14 @@ public abstract class Field implements FieldElement, BuffListener {
         Speed newSpeed = speed.clone();
         newSpeed.setMagnitude(newSpeed.getMagnitude() - 1);
         return neighbours.get(speed.getDirection()).searchGoal(newSpeed);
+    }
+
+    public int getFieldId() {
+        return fieldId;
+    }
+
+    @Override
+    public String toString() {
+        return "Field:" + fieldId;
     }
 }

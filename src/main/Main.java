@@ -2,18 +2,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 import java.awt.KeyboardFocusManager;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import game.Game;
-import game.GameCreator;
-import game.GameListener;
-import game.KeyDispatcher;
+import agents.Robot;
+import agents.Vacuum;
+import field.Field;
+import game.*;
 import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
 import proto.CommandParser;
@@ -24,7 +22,7 @@ import proto.ProtoCommand;
 public class Main extends JFrame implements GameListener {
     public static void main(String[] args) throws IOException {
         // You can use the kilep() command to proceed with the game testing
-        testInput();
+        //testInput();
         testGame();
     }
 
@@ -81,6 +79,30 @@ public class Main extends JFrame implements GameListener {
                 .addAgent(PlayerHandle.createRobot(roundTime))
                 .create();
 
+        //This part is just to test out Serialization
+        //I didn't mean this to be a final code
+        try {
+            FileOutputStream fos = new FileOutputStream("test.sav");
+            if (serializeGame(game, fos)) {
+                fos.flush();
+                fos.close();
+                fos = null;
+                game = null;
+                System.gc();
+                FileInputStream fis = new FileInputStream("test.sav");
+                game = deserialzeGame(fis);
+                if (game == null)
+                    return;
+            } else {
+                fos.flush();
+                fos.close();
+                return;
+            }
+        } catch (IOException ex) {
+
+        }
+        //-----------------------------------------------------------------------
+
         if (game == null) {
             System.out.println("Game creation was unsuccessful");
         } else {
@@ -127,6 +149,41 @@ public class Main extends JFrame implements GameListener {
             System.out.println(handle + " " +
                                (handle.getAgent().isDead() ? "dead " : "alive ") +
                                "distance: " + handle.getAgent().getField().getDistanceFromGoal());
+        }
+    }
+
+    public boolean serializeGame(Game gameToSerialize, OutputStream output) {
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(output);
+            if (oos == null) {
+                return false;
+            }
+            oos.writeObject(gameToSerialize.getGameStorage());
+            oos.writeObject(gameToSerialize.getMap());
+            Robot.writeStaticParams(oos);
+            Vacuum.writeStaticParams(oos);
+            Field.writeStaticParams(oos);
+        } catch (IOException ex) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public Game deserialzeGame(InputStream input) {
+        try {
+            ObjectInputStream ois = new ObjectInputStream(input);
+            GameStorage restoredGameStorage = (GameStorage)ois.readObject();
+            game.Map restoredMap = (game.Map)ois.readObject();
+            Robot.readStaticParams(ois);
+            Vacuum.readStaticParams(ois);
+            Field.readStaticParams(ois);
+            return new Game(restoredGameStorage, restoredMap);
+        } catch (IOException ex) {
+            return null;
+        } catch (ClassNotFoundException ex) {
+            return null;
         }
     }
 }

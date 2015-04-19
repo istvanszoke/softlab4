@@ -7,6 +7,9 @@ import commands.NoFieldCommandException;
 import commands.executes.KillExecute;
 import commands.queries.JumpQuery;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +20,23 @@ import java.util.Map;
 public class Vacuum extends Agent {
 
     public Map<Buff, Integer> cleaning;
+    private static int instanceCount = 0;
+    private int vacuumId;
+
+    public static void writeStaticParams(ObjectOutputStream oos) throws IOException {
+        Integer wrapOutput = instanceCount;
+        oos.writeObject(wrapOutput);
+    }
+
+    public static void readStaticParams(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        Integer wrapInput = (Integer)ois.readObject();
+        instanceCount = wrapInput;
+    }
 
     public Vacuum() {
         cleaning = new HashMap<Buff, Integer>();
+        ++instanceCount;
+        vacuumId = instanceCount;
     }
 
     @Override
@@ -51,6 +68,16 @@ public class Vacuum extends Agent {
     @Override
     public Agent collide(Agent agent) {
         return agent;
+    }
+
+    public int getVacuumId() {
+        return vacuumId;
+    }
+
+    @Override
+    public String toString() {
+        int diff = 'z' - 'a';
+        return "" + ('a' + (('a' + vacuumId) % diff));
     }
 
     private void cleanupRemovedBuffs() {

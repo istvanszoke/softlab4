@@ -1,5 +1,8 @@
 package agents;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +18,25 @@ public class Robot extends Agent {
     private List<Buff> buffs;
     private Inventory<Sticky> stickyInventory;
     private Inventory<Oil> oilInventory;
+    private static int instanceCount = 0;
+    private int robotId;
+
+    public static void writeStaticParams(ObjectOutputStream oos) throws IOException {
+        Integer wrapOutput = instanceCount;
+        oos.writeObject(wrapOutput);
+    }
+
+    public static void readStaticParams(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        Integer wrapInput = (Integer)ois.readObject();
+        instanceCount = wrapInput;
+    }
 
     public Robot() {
         buffs = new ArrayList<Buff>();
         stickyInventory = new Inventory<Sticky>();
         oilInventory = new Inventory<Oil>();
+        ++instanceCount;
+        robotId = instanceCount;
     }
 
     public void addSticky() {
@@ -74,4 +91,14 @@ public class Robot extends Agent {
         setSpeed(Speed.add(getSpeed(), agent.getSpeed()));
         return this;
     }
+
+    public int getRobotId() {
+        return robotId;
+    }
+
+    @Override
+    public String toString() {
+        return "" + getRobotId();
+    }
+
 }

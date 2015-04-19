@@ -23,13 +23,16 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     private final HumanController humanController;
 
     public Game(List<AgentHandle> agents, Map map) {
+        this(new GameStorage(agents), map);
+    }
+
+    public Game(GameStorage inGameStorage, Map inMap) {
         listeners = new ArrayList<GameListener>();
         controllerServer = new GameControllerServer(this);
         humanController = new HumanController();
 
-        gameStorage = new GameStorage(agents);
-
-        this.map = map;
+        gameStorage = inGameStorage;
+        this.map = inMap;
 
         placeAgents();
         setAgentControllers();
@@ -62,6 +65,8 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     public Map getMap() {
         return map;
     }
+
+    public GameStorage getGameStorage() {return gameStorage; }
 
     @Override
     public void onAgentChange(Agent agent) {

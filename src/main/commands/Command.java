@@ -1,9 +1,11 @@
 package commands;
 
+import java.io.Serializable;
+
 import feedback.Feedback;
 import feedback.Result;
 
-public abstract class Command implements Feedback {
+public abstract class Command implements Feedback, Serializable {
     protected final Result result;
     protected boolean canExecute;
 

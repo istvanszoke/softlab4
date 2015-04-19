@@ -1,5 +1,6 @@
 package game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 import field.Field;
 import field.FinishLineFieldCell;
 
-public class Map implements Iterable<Field> {
+public class Map implements Iterable<Field>, Serializable {
     private final List<Field> fields;
     private final List<Field> finishLineFields;
 

@@ -1,9 +1,11 @@
 package agents;
 
+import java.io.Serializable;
+
 import field.Direction;
 import field.Field;
 
-public abstract class Agent implements AgentElement {
+public abstract class Agent implements AgentElement, Serializable {
     protected Speed speed;
     protected Field field;
     protected boolean isDead;

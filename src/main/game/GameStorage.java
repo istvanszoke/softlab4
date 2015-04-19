@@ -1,12 +1,13 @@
 package game;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.Map;
 
 import agents.Agent;
 import game.handle.AgentHandle;
 
-public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
+public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener, Serializable {
     private final List<AgentHandle> all;
     private final List<AgentHandle> inPlay;
     private final List<AgentHandle> players;

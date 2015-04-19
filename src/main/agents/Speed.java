@@ -1,12 +1,13 @@
 package agents;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import field.Direction;
 
-public class Speed implements Cloneable {
+public class Speed implements Cloneable, Serializable {
     private static final Map<Direction, Direction> oppositeMapping = Collections.unmodifiableMap(new HashMap<Direction, Direction>() {{
         put(Direction.UP, Direction.DOWN);
         put(Direction.DOWN, Direction.UP);
