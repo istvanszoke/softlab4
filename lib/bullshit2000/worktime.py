@@ -37,7 +37,6 @@ def generate_dates(begin, end):
     while dt.day != end.day:
         dt = dt + datetime.timedelta(days=1)
         result.append(dt + datetime.timedelta(hours=random.randint(17,23)))
-        print dt
     return result
 
 def choose_participant():
