@@ -62,7 +62,9 @@ public class Vacuum extends Agent {
     @Override
     public boolean onCauseCollision(Agent agent) {
         setSpeed(Speed.getOpposite(getSpeed()));
-        accept(new JumpQuery());
+        JumpQuery bounce = new JumpQuery();
+        accept(bounce);
+
         return false;
     }
 

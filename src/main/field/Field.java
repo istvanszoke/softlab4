@@ -56,6 +56,8 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
         if (agent != null && this.agent != null && agent != this.agent) {
             if (agent.onCauseCollision(this.agent)) {
                 agent = this.agent.collide(agent);
+            } else {
+                return;
             }
         }
 
