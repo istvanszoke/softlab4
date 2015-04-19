@@ -1,5 +1,6 @@
 package commands.executes;
 
+import agents.Agent;
 import agents.Robot;
 import agents.Speed;
 import agents.Vacuum;
@@ -38,6 +39,15 @@ public class ChangeDirectionExecute extends AgentCommand {
 
     @Override
     public void visit(Robot element) {
+        visitCommon(element);
+    }
+
+    @Override
+    public void visit(Vacuum element) {
+        visitCommon(element);
+    }
+
+    private void visitCommon(Agent element) {
         if (!canExecute) {
             result.pushNormal("irvalt 1" + element);
             return;
@@ -47,10 +57,5 @@ public class ChangeDirectionExecute extends AgentCommand {
         newSpeed.setDirection(direction);
         element.setSpeed(newSpeed);
         result.pushNormal("irvalt 0" + element + " " + direction);
-    }
-
-    @Override
-    public void visit(Vacuum element) {
-
     }
 }
