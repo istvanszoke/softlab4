@@ -5,6 +5,7 @@ import buff.Buff;
 import commands.AgentCommand;
 import commands.NoFieldCommandException;
 import commands.queries.JumpQuery;
+import feedback.Logger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -64,7 +65,7 @@ public class Vacuum extends Agent {
         setSpeed(Speed.getOpposite(getSpeed()));
         JumpQuery bounce = new JumpQuery();
         accept(bounce);
-
+        Logger.log(bounce.getResult());
         return false;
     }
 

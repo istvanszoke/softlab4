@@ -46,7 +46,11 @@ public class Result {
 
     public synchronized void append(Result result) {
         for (String entry : result.getNormal().values()) {
+            pushNormal(entry);
+        }
 
+        for (String entry : result.getDebug().values()) {
+            pushDebug(entry);
         }
     }
 }
