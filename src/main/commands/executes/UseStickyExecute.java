@@ -7,6 +7,7 @@ import commands.FieldCommandVisitor;
 import commands.NoAgentCommandException;
 import commands.queries.UseStickyQuery;
 import field.EmptyFieldCell;
+import field.Field;
 import field.FieldCell;
 import field.FinishLineFieldCell;
 
@@ -27,12 +28,7 @@ public class UseStickyExecute extends FieldCommand {
 
     @Override
     public void visit(FieldCell element) {
-        if (canExecute) {
-            element.placeBuff(new Sticky());
-            result.pushNormal("ragacslerak 0");
-        } else {
-            result.pushNormal("ragacslerak 1");
-        }
+        visitCommon(element);
     }
 
     @Override
@@ -40,6 +36,10 @@ public class UseStickyExecute extends FieldCommand {
 
     @Override
     public void visit(FinishLineFieldCell element) {
+        visitCommon(element);
+    }
+
+    private void visitCommon(Field element) {
         if (canExecute) {
             element.placeBuff(new Sticky());
             result.pushNormal("ragacslerak 0");

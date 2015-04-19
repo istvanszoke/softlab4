@@ -32,6 +32,6 @@ public class UseStickyQuery extends AgentCommand {
 
     @Override
     public void visit(Vacuum element) {
-
+        canExecute = false;
     }
 }

@@ -32,6 +32,6 @@ public class UseOilQuery extends AgentCommand {
 
     @Override
     public void visit(Vacuum element) {
-
+        canExecute = true;
     }
 }

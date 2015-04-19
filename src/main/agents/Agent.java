@@ -39,6 +39,8 @@ public abstract class Agent implements AgentElement, Serializable {
 
     public void kill() {
         this.isDead = true;
+        field.onExit();
+        setField(Field.GRAVEYARD);
     }
 
     public int getLap() {
