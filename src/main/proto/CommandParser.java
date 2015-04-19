@@ -12,6 +12,7 @@ public class CommandParser {
     //TODO: Change the argument of betolt() and ment() from nev to allas in the docs.
     private static final Map<String, String[]> acceptedCommands = Collections.unmodifiableMap(new HashMap<String, String[]>() {{
         put(ProtoCommand.PLAY, new String[]{"szam", "ido", "palya"});
+        put(ProtoCommand.TEST, new String[]{"palya"});
         put(ProtoCommand.LOAD, new String[]{"allas"});
         put(ProtoCommand.SAVE, new String[]{"allas"});
         put(ProtoCommand.JUMP, new String[]{});
@@ -25,6 +26,7 @@ public class CommandParser {
         put(ProtoCommand.VACUUM_CLEAN, new String[]{});
         put(ProtoCommand.STEP_HEARTBEAT, new String[]{"ido"});
         put(ProtoCommand.EXIT, new String[]{});
+
 
 
     }});
