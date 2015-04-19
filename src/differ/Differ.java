@@ -21,9 +21,13 @@ public class Differ
     }
 
     public void generateOutputTo(BufferedWriter bw) {
-        if (!correct)
-            return null;
+        boolean succeeded = true;
 
-        while (left.)
+
+
+
+
+        if (succeeded)
+            bw.
     }
 }
