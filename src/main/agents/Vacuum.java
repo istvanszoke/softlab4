@@ -97,12 +97,15 @@ public class Vacuum extends Agent {
         cleanupRemovedBuffs();
         Buff toClean = field.getFirstCleanableBuff();
 
-        if (toClean == null)
+        if (toClean == null) {
+            System.out.println("vacuumtakarit 1");
             return false;
+        }
 
         Integer state = cleaning.get(toClean);
         if (state == null) {
             cleaning.put(toClean, 1);
+            System.out.println("vacuumtakarit 0 1");
         } else {
             state = state - 1;
             if (state == 0) {
@@ -110,6 +113,7 @@ public class Vacuum extends Agent {
             } else {
                 cleaning.put(toClean, state);
             }
+            System.out.println("vacuumtakarit 0 " + state);
         }
         return true;
     }

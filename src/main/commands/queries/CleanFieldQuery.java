@@ -26,8 +26,6 @@ public class CleanFieldQuery extends AgentCommand {
     @Override
     public void visit(Vacuum element) {
         canExecute = true;
-        if (!element.tryToClean()) {
-            result.pushNormal("Nothing to clean on current field");
-        }
+        element.tryToClean();
     }
 }
