@@ -98,7 +98,7 @@ public class Robot extends Agent {
 
     @Override
     public String toString() {
-        return "Robot:" + getRobotId();
+        return "" + getRobotId();
     }
 
 }
