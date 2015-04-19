@@ -118,4 +118,9 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     public int getFieldId() {
         return fieldId;
     }
+
+    @Override
+    public String toString() {
+        return "Field:" + fieldId;
+    }
 }

@@ -78,6 +78,9 @@ public class Main extends JFrame implements GameListener {
                 .addAgent(PlayerHandle.createRobot(roundTime))
                 .addAgent(PlayerHandle.createRobot(roundTime))
                 .create();
+
+        //This part is just to test out Serialization
+        //I didn't mean this to be a final code
         try {
             FileOutputStream fos = new FileOutputStream("test.sav");
             if (serializeGame(game, fos)) {
@@ -88,17 +91,17 @@ public class Main extends JFrame implements GameListener {
                 System.gc();
                 FileInputStream fis = new FileInputStream("test.sav");
                 game = deserialzeGame(fis);
-                if (game != null) {
-
-                } else {
+                if (game == null)
                     return;
-                }
             } else {
+                fos.flush();
+                fos.close();
                 return;
             }
         } catch (IOException ex) {
 
         }
+        //-----------------------------------------------------------------------
 
         if (game == null) {
             System.out.println("Game creation was unsuccessful");
