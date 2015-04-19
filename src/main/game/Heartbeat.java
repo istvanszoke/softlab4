@@ -69,6 +69,12 @@ public class Heartbeat {
         toRemove.add(listener);
     }
 
+    public static void purgeListeners() {
+        listeners.clear();
+        toAdd.clear();
+        toRemove.clear();
+    }
+
     public static long getElapsedTime() {
         return elapsedTime;
     }

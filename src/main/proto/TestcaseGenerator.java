@@ -8,6 +8,7 @@ import buff.Oil;
 import buff.Sticky;
 import game.Game;
 import game.GameCreator;
+import game.Heartbeat;
 import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
 import game.handle.VacuumHandle;
@@ -131,6 +132,7 @@ public class TestcaseGenerator {
             return false;
         }
 
+        Heartbeat.purgeListeners();
         return true;
     }
 

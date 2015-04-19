@@ -1,10 +1,8 @@
 package commands;
 
-import java.io.Serializable;
-
 import agents.AgentVisitor;
 
-public abstract class AgentCommand extends Command implements AgentVisitor{
+public abstract class AgentCommand extends Command implements AgentVisitor {
     protected AgentCommand() { }
 
     protected AgentCommand(Command parent) {

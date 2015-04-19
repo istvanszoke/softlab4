@@ -50,9 +50,9 @@ public class JumpExecute extends AgentCommand {
         if (canExecute) {
             displacement.getStart().onExit();
             displacement.getGoal().onEnter(element);
-            result.pushNormal("ugrik 0" + element);
+            result.pushNormal("ugrik 0 " + element);
         } else {
-            result.pushNormal("ugrik 1" + element);
+            result.pushNormal("ugrik 1 " + element);
         }
     }
 }

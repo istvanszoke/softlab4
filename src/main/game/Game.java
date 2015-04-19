@@ -40,9 +40,6 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.subscribe(this);
     }
 
-    // Mapgen: null initialization and missing Heartbeat subscriptions, because
-    // Java doesn't GCs quickly enough after testcase generation (System.gc() does
-    // not work either).
     public Game(java.util.Map<AgentHandle, Integer> agents, Map map,
                 java.util.Map<Buff, Integer> buffs) {
         listeners = null;
@@ -138,8 +135,6 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
         deregister(handle);
         gameStorage.update();
-
-        System.out.println("Killed " + handle);
 
         if (isGameOver()) {
             endGame();
