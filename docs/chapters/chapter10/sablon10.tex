@@ -9,22 +9,7 @@
 \comment{A feltöltött program fordításával és futtatásával kapcsolatos útmutatás. Ennek tartalmaznia kell leltárszerűen az egyes fájlok pontos nevét, méretét byte-ban, keletkezési idejét, valamint azt, hogy a fájlban mi került megvalósításra.}
 
 \subsection{Fájllista}
-
-\begin{fajllista}
-
-\fajl
-{Main.java} % Kezdet
-{250 byte} % Idptartam
-{2009.10.10~18:05~} % Résztvevők
-{...} % Leírás
-
-\fajl
-{...}
-{...}
-{...}
-{...}
-
-\end{fajllista}
+\input{includes/file_list.tex}
 
 \subsection{Fordítás}
 \comment{A fenti listában szereplő forrásfájlokból milyen műveletekkel lehet a bináris, futtatható kódot előállítani. Az előállításhoz csak a 2. Követelmények c. dokumentumban leírt környezetet szabad előírni.}
@@ -35,12 +20,16 @@ javac -d bin *.java
 \end{lstlisting}
 
 \subsection{Futtatás}
-\comment{A futtatható kód elindításával kapcsolatos teendők leírása. Az indításhoz csak a 2. Követelmények c. dokumentumban leírt környezetet szabad előírni.}
-
+Az elkészült futtatható fájlok a build/install/softlab4/bin mappában találhatók. 
+Ezeket parancssorból futtathatjuk:
 \lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
 \begin{lstlisting}
+cd build
+cd install
+cd softlab4
 cd bin
-java Main.java
+Windows: .\softlab4.bat 
+Linux:   ./softlab4
 \end{lstlisting}
 
 
@@ -56,16 +45,14 @@ java Main.java
 \tesztfail{...}{...}{...}{...}{...}
 
 \section{Értékelés}
-\comment{A projekt kezdete óta az értékelésig eltelt időben tagokra bontva, százalékban.}
-
 \begin{ertekeles}
-\tag{Horváth} % Tag neve
-{23.5}        % Munka szazalekban
-\tag{Német}
-{24.5}
-\tag{Tóth}
+\tag{Paral} % Tag neve
+{25}        % Munka szazalekban
+\tag{Szőke}
 {25}
-\tag{Oláh}
-{27}
+\tag{Nyári}
+{25}
+\tag{Nagy}
+{25}
 \end{ertekeles}
 
