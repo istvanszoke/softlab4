@@ -3,6 +3,8 @@ package buff;
 import agents.Robot;
 import agents.Speed;
 import agents.Vacuum;
+import feedback.NoFeedbackException;
+import feedback.Result;
 
 public class Sticky extends Buff {
     int usesRemaining;
@@ -14,6 +16,7 @@ public class Sticky extends Buff {
     @Override
     public void visit(Robot element) {
         if (usesRemaining == 0) {
+            System.out.println("Sticky has worn off.");
             remove();
             return;
         }
@@ -29,4 +32,5 @@ public class Sticky extends Buff {
     public void visit(Vacuum element) {
 
     }
+
 }

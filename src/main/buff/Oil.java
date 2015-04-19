@@ -21,13 +21,13 @@ public class Oil extends Buff implements HeartbeatListener, Serializable {
 
     @Override
     public void visit(ChangeDirectionTransmit command) {
-        command.getResult().pushDebug("Change Direction blocked by Oil");
+        //command.getResult().pushDebug("Change Direction blocked by Oil");
         command.setExecutable(false);
     }
 
     @Override
     public void visit(ChangeSpeedTransmit command) {
-        command.getResult().pushDebug("Change Speed blocked by Oil");
+        //command.getResult().pushDebug("Change Speed blocked by Oil");
         command.setExecutable(false);
     }
 
@@ -36,6 +36,7 @@ public class Oil extends Buff implements HeartbeatListener, Serializable {
         timeRemaining -= deltaTime;
 
         if (timeRemaining <= 0) {
+            System.out.println("Sticky has worn off.");
             remove();
             Heartbeat.unsubscribe(this);
         }
