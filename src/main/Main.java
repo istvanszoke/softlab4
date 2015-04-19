@@ -3,17 +3,18 @@ import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 import java.awt.KeyboardFocusManager;
 import java.io.*;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
 
 import agents.Robot;
 import agents.Vacuum;
+import buff.Buff;
+import buff.Oil;
 import field.Field;
 import game.*;
 import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
+import game.handle.VacuumHandle;
 import proto.CommandParser;
 import proto.InvalidCommandArgumentException;
 import proto.InvalidCommandException;
@@ -72,26 +73,36 @@ public class Main extends JFrame implements GameListener {
     }
 
     private void gameLoop() {
-        int roundTime = 5;
+        final int roundTime = 5;
 
-        Game game = new GameCreator().generateMap(10, 10)
-                .addAgent(PlayerHandle.createRobot(roundTime))
-                .addAgent(PlayerHandle.createRobot(roundTime))
-                .create();
+        Game testCase = new Game(
+                new HashMap<AgentHandle, Integer>() {{
+                    put(PlayerHandle.createRobot(roundTime), 0);
+                    put(PlayerHandle.createRobot(roundTime), 1);
+                    put(VacuumHandle.createVacuum(), 34);
+                }},
+
+                new GameCreator().generateMap(10, 10).getMap(),
+
+                new HashMap<Buff, Integer>() {{
+                    put(new Oil(),34);
+                }});
+
+
 
         //This part is just to test out Serialization
         //I didn't mean this to be a final code
         try {
             FileOutputStream fos = new FileOutputStream("test.sav");
-            if (serializeGame(game, fos)) {
+            if (serializeGame(testCase, fos)) {
                 fos.flush();
                 fos.close();
                 fos = null;
-                game = null;
+                testCase = null;
                 System.gc();
                 FileInputStream fis = new FileInputStream("test.sav");
-                game = deserialzeGame(fis);
-                if (game == null)
+                testCase = deserializeGame(fis);
+                if (testCase == null)
                     return;
             } else {
                 fos.flush();
@@ -103,12 +114,12 @@ public class Main extends JFrame implements GameListener {
         }
         //-----------------------------------------------------------------------
 
-        if (game == null) {
+        if (testCase == null) {
             System.out.println("Game creation was unsuccessful");
         } else {
-            game.registerController(this);
-            game.addListener(this);
-            game.start();
+            testCase.registerController(this);
+            testCase.addListener(this);
+            testCase.start();
         }
     }
 
@@ -156,9 +167,7 @@ public class Main extends JFrame implements GameListener {
 
         try {
             ObjectOutputStream oos = new ObjectOutputStream(output);
-            if (oos == null) {
-                return false;
-            }
+
             oos.writeObject(gameToSerialize.getGameStorage());
             oos.writeObject(gameToSerialize.getMap());
             Robot.writeStaticParams(oos);
@@ -171,7 +180,7 @@ public class Main extends JFrame implements GameListener {
         return true;
     }
 
-    public Game deserialzeGame(InputStream input) {
+    public Game deserializeGame(InputStream input) {
         try {
             ObjectInputStream ois = new ObjectInputStream(input);
             GameStorage restoredGameStorage = (GameStorage)ois.readObject();

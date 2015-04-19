@@ -39,6 +39,11 @@ public final class GameCreator {
         return new Game(agents, map);
     }
 
+    // Mapgen
+    public Map getMap() {
+        return map;
+    }
+
     private void generateGrid(int width, int height) {
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {

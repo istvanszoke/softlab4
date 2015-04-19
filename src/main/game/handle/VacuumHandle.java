@@ -2,6 +2,7 @@ package game.handle;
 
 import agents.Agent;
 import agents.Robot;
+import agents.Vacuum;
 
 public class VacuumHandle extends AgentHandle {
     private int turnsRemaining;
@@ -11,9 +12,8 @@ public class VacuumHandle extends AgentHandle {
         turnsRemaining = 2;
     }
 
-    //TODO: Return the correct Agent type
     public static VacuumHandle createVacuum() {
-        return new VacuumHandle(new Robot());
+        return new VacuumHandle(new Vacuum());
     }
 
     @Override
