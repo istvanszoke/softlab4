@@ -118,7 +118,8 @@ public class Main extends JFrame implements GameListener {
                     Heartbeat.beat(Integer.parseInt(timeArg));
                 }
             } else if (!mainGame.getProtoCommandController().procesProtoCommand(command)) {
-                System.out.println("Something wrong with command");
+                if (!cmd.equals(ProtoCommand.EXIT))
+					System.out.println("Something wrong with command");
             }
         }
     }
