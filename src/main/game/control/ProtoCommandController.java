@@ -26,7 +26,7 @@ public class ProtoCommandController implements GameControllerSocketListener {
     public boolean procesProtoCommand(ProtoCommand command) {
 		String cmd = command.getCommand();
 		if (cmd.equals(ProtoCommand.JUMP)) {
-			useCommand(new JumpQuery());
+			useCommandAndChangeAgent((new JumpQuery());
 		} else if (cmd.equals(ProtoCommand.CHANGE_DIR)) {
 			String dirArg = command.getArgs().get("irany");
 			if (dirArg != null) {
