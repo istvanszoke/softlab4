@@ -32,6 +32,7 @@ public class Oil extends Buff implements HeartbeatListener {
         timeRemaining -= deltaTime;
 
         if (timeRemaining <= 0) {
+            System.out.println("Sticky has worn off.");
             remove();
             Heartbeat.unsubscribe(this);
         }

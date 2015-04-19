@@ -13,8 +13,6 @@ import commands.queries.*;
 import commands.transmits.ChangeDirectionTransmit;
 import commands.transmits.ChangeSpeedTransmit;
 import commands.transmits.JumpTransmit;
-import feedback.NoFeedbackException;
-import feedback.Result;
 import game.Heartbeat;
 
 public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor, Serializable {
@@ -104,8 +102,5 @@ public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCo
     @Override
     public void visit(UseOilExecute modifier) { }
 
-    @Override
-    public Result getResult() throws NoFeedbackException {
-        throw new NoFeedbackException();
-    }
+
 }
