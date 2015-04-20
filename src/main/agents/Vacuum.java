@@ -72,7 +72,9 @@ public class Vacuum extends Agent {
 
     @Override
     public Agent collide(Agent agent) {
-        accept(new KillExecute());
+        KillExecute kill = new KillExecute();
+        accept(kill);
+        Logger.log(kill.getResult());
         return agent;
     }
 

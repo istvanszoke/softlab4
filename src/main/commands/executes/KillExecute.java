@@ -8,6 +8,7 @@ import commands.AgentCommandVisitor;
 import commands.FieldCommand;
 import commands.NoFieldCommandException;
 import commands.queries.UseOilQuery;
+import feedback.Logger;
 
 public class KillExecute extends AgentCommand {
     @Override
@@ -27,7 +28,9 @@ public class KillExecute extends AgentCommand {
 
     @Override
     public void visit(Vacuum element) {
-        element.accept(new UseOilQuery());
+        UseOilQuery useOil = new UseOilQuery();
+        element.accept(useOil);
+        Logger.log(useOil.getResult());
         visitCommon(element);
     }
 

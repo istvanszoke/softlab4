@@ -13,6 +13,7 @@ import buff.Sticky;
 import commands.AgentCommand;
 import commands.NoFieldCommandException;
 import commands.executes.KillExecute;
+import feedback.Logger;
 
 public class Robot extends Agent {
     private List<Buff> buffs;
@@ -87,11 +88,15 @@ public class Robot extends Agent {
     @Override
     public Agent collide(Agent agent) {
         if (getSpeed().getMagnitude() < agent.getSpeed().getMagnitude()) {
-            this.accept(new KillExecute());
+            KillExecute kill = new KillExecute();
+            this.accept(kill);
+            Logger.log(kill.getResult());
             agent.setSpeed(Speed.add(getSpeed(), agent.getSpeed()));
             return agent;
         }
-        agent.accept(new KillExecute());
+        KillExecute kill = new KillExecute();
+        agent.accept(kill);
+        Logger.log(kill.getResult());
         setSpeed(Speed.add(getSpeed(), agent.getSpeed()));
         return this;
     }
