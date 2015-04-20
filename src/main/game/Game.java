@@ -2,10 +2,13 @@ package game;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import agents.Agent;
 import buff.Buff;
+import buff.Oil;
 import field.Field;
 import game.control.*;
 import game.handle.AgentHandle;
@@ -64,6 +67,8 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         for (java.util.Map.Entry<Buff, Integer> b : buffs.entrySet()) {
             map.get(b.getValue()).placeBuff(b.getKey());
         }
+
+        printOutMap(10, 3);
     }
 
     public void start() {
@@ -225,5 +230,47 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         }
 
         return true;
+    }
+
+    private void printOutMap(int width, int cellWidth) {
+        Iterator<Field> fieldIt = map.iterator();
+
+        int totalWidth = (cellWidth+2)*width;
+        while(fieldIt.hasNext()) {
+            System.out.println(rowSeparator(totalWidth));
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < width; ++i) {
+                Field current = fieldIt.next();
+                StringBuilder sbi = new StringBuilder();
+                if (current != null) {
+                    if (current.getFirstCleanableBuff() != null) {
+                        sbi.append(current.getFirstCleanableBuff().toString());
+                    }
+                    if (current.getAgent() != null) {
+                        sbi.append(current.getAgent().toString());
+                    }
+                }
+                if (sbi.length() < cellWidth) {
+                    int more = cellWidth-sbi.length();
+                    for (int j = 0; j < more; ++j) {
+                        sbi.append(' ');
+                    }
+                }
+                sb.append('|');
+                sb.append(sbi.toString());
+                sb.append('|');
+            }
+            System.out.println(sb.toString());
+        }
+        System.out.println(rowSeparator(totalWidth) + "\n\n");
+
+    }
+
+    private String rowSeparator(int length) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; ++i) {
+            sb.append('-');
+        }
+        return sb.toString();
     }
 }
