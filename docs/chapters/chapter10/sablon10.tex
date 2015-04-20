@@ -14,15 +14,15 @@ Kérjük, hogy a tesztelő csapat a következő módosításokkal hajtsák végr
 
 \subsubsection{Vacuum feltakarítja az olajat}
 \begin{itemize}
-	\item Leírás: Játék kezdése után vacuum és olaj lerakása ugyanarra a cellára. Végül Vacuum utasítása takarításra.
-	\item Bemenet\\
+  \item Leírás: Játék kezdése után vacuum és olaj lerakása ugyanarra a cellára. Végül Vacuum utasítása takarításra.
+  \item Bemenet\\
     jatek(palya=test01.map) \\
     ugrik() \\
     vacuumtakarit() \\
     ugrik() \\
     vacuumtakarit() \\
     kilep() \\
-	\item Elvárt kimenet\\
+  \item Elvárt kimenet\\
     vacuumtakarit 0 1 \\
     ugrik 0 1 \\
     vacuumtakarit 0 0 \\
@@ -31,20 +31,20 @@ Kérjük, hogy a tesztelő csapat a következő módosításokkal hajtsák végr
 
 \subsubsection{Olaj száradása}
 \begin{itemize}
-	\item Leírás: Játék kezdése után olaj lerakása majd utasítása száradásra.
-	\item Bemenet\\
+  \item Leírás: Játék kezdése után olaj lerakása majd utasítása száradásra.
+  \item Bemenet\\
     jatek(palya=test02.map) \\
     oraleptet(ido=2500) \\
     oraleptet(ido=2500) \\
     kilep() \\
-	\item Elvárt kimenet\\
+  \item Elvárt kimenet\\
     Olaj felszáradt.\\
 \end{itemize}
 
 \subsubsection{Ragacsra ráugrás és kopás}
 \begin{itemize}
-	\item Leírás: Játék kezdése után ragacs lerakása, majd két ágens egymás után ráugrik. Ragacs jelen esetben 2 ugrás után lekopik.
-	\item Bemenet\\
+  \item Leírás: Játék kezdése után ragacs lerakása, majd két ágens egymás után ráugrik. Ragacs jelen esetben 2 ugrás után lekopik.
+  \item Bemenet\\
     jatek(palya=test03.map)\\
     ugrik()\\
     sebvalt(delta=+1)\\
@@ -74,7 +74,7 @@ Kérjük, hogy a tesztelő csapat a következő módosításokkal hajtsák végr
     irvalt(irany=JOBB)\\
     ugrik()\\
     kilep()\\
-	\item Elvárt kimenet\\
+  \item Elvárt kimenet\\
     ugrik 0 2 \\
     sebvalt 0 1 1 \\
     irvalt 0 1 DOWN \\
@@ -110,15 +110,15 @@ Kérjük, hogy a tesztelő csapat a következő módosításokkal hajtsák végr
 
 \subsubsection{Olajra ráugrás}
 \begin{itemize}
-	\item Leírás: Játék kezdése után olaj lerakása, majd egy ágens ráugrik és megpróbál sebességet változtatni. 
-	\item Bemenet\\	
+  \item Leírás: Játék kezdése után olaj lerakása, majd egy ágens ráugrik és megpróbál sebességet változtatni. 
+  \item Bemenet\\ 
     jatek(palya=test04.map)\\
     sebvalt(delta=+1)\\
     irvalt(irany=JOBB)\\
     ugrik()\\
     sebvalt(delta=+1)\\
     kilep()\\
-	\item Elvárt kimenet\\
+  \item Elvárt kimenet\\
     sebvalt 0 1 1 \\
     irvalt 0 1 RIGHT \\
     ugrik 0 1 \\
@@ -129,46 +129,43 @@ Kérjük, hogy a tesztelő csapat a következő módosításokkal hajtsák végr
 
 \subsubsection{Robot lehelyez buffot}
 \begin{itemize}
-	\item Leírás: Játék kezdése után utasítjuk az első számú ágenst egy buff lerakására. Mivel az ágens nem rendelkezik buff-al, ezért ezt nem tudja megtenni.
-	\item Bemenet\\	
+  \item Leírás: Játék kezdése után utasítjuk az első számú ágenst egy buff lerakására. Mivel az ágens nem rendelkezik buff-al, ezért ezt nem tudja megtenni.
+  \item Bemenet\\ 
     jatek(palya=test05.map)\\
     ragacslerak()\\
     kilep()\\
-	\item Elvárt kimenet\\
+  \item Elvárt kimenet\\
     ragacslerak 1 \\
-    
-		
 \end{itemize}
 
 \subsubsection{Robot ráugrik vacuumra}
 \begin{itemize}
-	\item Leírás: Robot és vacuum lehelyezése. Robot utasítása vacuumra ugrásra.
-	\item Bemenet\\
+  \item Leírás: Robot és vacuum lehelyezése. Robot utasítása vacuumra ugrásra.
+  \item Bemenet\\
     jatek(palya=test06.map)\\
     sebvalt(delta=+1)\\
     irvalt(irany=BAL)\\
     ugrik()\\
     kilep()\\
-	\item Elvárt kimenet\\
+  \item Elvárt kimenet\\
     sebvalt 0 1 1 \\
     irvalt 0 1 LEFT \\
     olajlerak 0 \\ 
     agenshalott 0 a \\
     ugrik 0 1 \\
-    
 
 \end{itemize}
 
 \subsubsection{Vacuum találkozik vacuummal}
 \begin{itemize}
-	\item Leírás: Két vacuum és egy olaj lehelyézese. Az olajtól messzebb lévő vacuum léptetése, akinek útjában van a másik vacuum
-	\item Bemenet\\
+  \item Leírás: Két vacuum és egy olaj lehelyézese. Az olajtól messzebb lévő vacuum léptetése, akinek útjában van a másik vacuum
+  \item Bemenet\\
     jatek(palya=test07.map)\\
     irvalt(irany=JOBB)\\
     sebvalt(delta=+1)\\
     ugrik()\\
     kilep()\\
-	\item Elvárt kimenet\\
+  \item Elvárt kimenet\\
     irvalt 0 a RIGHT \\
     sebvalt 0 a 1 \\ 
     ugrik 0 a \\
@@ -179,8 +176,8 @@ Kérjük, hogy a tesztelő csapat a következő módosításokkal hajtsák végr
 
 \subsubsection{Robot ütközik robottal}
 \begin{itemize}
-	\item Leírás: Két robot lehelyezése egy sorba, egymás felé irányítás és ütközés megfigyelése. 45ös fielden találkozás
-	\item Bemenet\\
+  \item Leírás: Két robot lehelyezése egy sorba, egymás felé irányítás és ütközés megfigyelése. 45ös fielden találkozás
+  \item Bemenet\\
     jatek(palya=test08.map)\\
     sebvalt(delta=+2)\\
     irvalt(irany=JOBB)\\
@@ -189,7 +186,7 @@ Kérjük, hogy a tesztelő csapat a következő módosításokkal hajtsák végr
     irvalt(irany=BAL)\\
     ugrik()\\
     kilep()\\
-	\item Elvárt kimenet\\
+  \item Elvárt kimenet\\
     sebvalt 0 1 2 \\
     irvalt 0 1 RIGHT \\
     ugrik 0 1 \\
@@ -197,12 +194,10 @@ Kérjük, hogy a tesztelő csapat a következő módosításokkal hajtsák végr
     irvalt 0 2 LEFT \\
     agenshalott 0 2 \\
     ugrik 0 2 \\
-    
 
 \end{itemize}
 
 \section{Fordítási és futtatási útmutató}
-\comment{A feltöltött program fordításával és futtatásával kapcsolatos útmutatás. Ennek tartalmaznia kell leltárszerűen az egyes fájlok pontos nevét, méretét byte-ban, keletkezési idejét, valamint azt, hogy a fájlban mi került megvalósításra.}
 
 \subsection{Fájllista}
 \input{includes/file_list.tex}
