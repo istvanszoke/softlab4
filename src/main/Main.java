@@ -20,7 +20,7 @@ public class Main extends JFrame implements GameListener {
     Game mainGame;
 
     public static void main(String[] args) throws IOException {
-    //TestcaseGenerator.generateTestCases(30);
+        //TestcaseGenerator.generateTestCases(30);
         boolean stdio = true;
 
         for(String item : args) {
