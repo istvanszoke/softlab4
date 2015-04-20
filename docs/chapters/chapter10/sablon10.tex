@@ -214,9 +214,28 @@ A projekt főkönyvtárában elhelyezkedve kell kiadni őket.
 \subsection{Futtatás}
 A HSZK gépein történő futtatáshoz az alábbi parancsok szükségesek, a projekt gyökérkönyvtárában tartózkodva:
 
+Program futtatása standard bemenetről olvasva és standard kimenetre írva
 \lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
 \begin{lstlisting}
 .\build.bat run
+\end{lstlisting}
+
+Program futtatása teszfájl alkalmazásával és standard kimenetre írva
+\lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
+\begin{lstlisting}
+.\build.bat run < src\resources\tests\protoin\test[1-8].txt
+\end{lstlisting}
+
+Eltérsvizsgáló segédprogram standard bemenetről olvasva, referencia fájl mint paramter és standard kimenetre írva
+\lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
+\begin{lstlisting}
+java -jar .\lib\differ.jar src\resources\tests\protoout\test[1-8].txt
+\end{lstlisting}
+
+Egy teszteset autómatikus vizsgálata
+\lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
+\begin{lstlisting}
+./build.bat run < src\resources\tests\protoin\test[1-8].txt | java -jar .\lib\differ.jar  src\resources\tests\protoout\test[1-8].txt
 \end{lstlisting}
 
 \section{Tesztek jegyzőkönyvei}
