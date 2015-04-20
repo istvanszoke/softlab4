@@ -7,6 +7,7 @@ import sys
 def generate_entry(date, duration, participiants, description):
     participiants_string = "\\newline".join(participiants)
     return """
+            \\bejegyzes
             {%s}
             {%s h}
             {%s}
