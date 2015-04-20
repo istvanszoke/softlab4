@@ -1,0 +1,5 @@
+sebvalt 0 1 1
+irvalt 0 1 LEFT
+olajlerak 0
+agenshalott 0 a
+ugrik 0 1

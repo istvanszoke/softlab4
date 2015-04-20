@@ -16,6 +16,7 @@ public class Sticky extends Buff {
 
     @Override
     public void visit(Robot element) {
+        usesRemaining -= 1;
         if (usesRemaining == 0) {
             System.out.println("Ragacs elkopott.");
             remove();
@@ -26,7 +27,6 @@ public class Sticky extends Buff {
         Speed newSpeed = element.getSpeed();
         newSpeed.setMagnitude(newSpeed.getMagnitude() / 2);
         element.setSpeed(newSpeed);
-        usesRemaining -= 1;
         System.out.println("ragacsfelez 0 " + oldSpeed.getMagnitude() + " " + newSpeed.getMagnitude());
     }
 

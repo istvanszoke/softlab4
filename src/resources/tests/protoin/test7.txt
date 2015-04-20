@@ -1,0 +1,5 @@
+jatek(palya=test07.map)
+irvalt(irany=JOBB)
+sebvalt(delta=+1)
+ugrik()
+kilep()

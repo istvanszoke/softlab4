@@ -1,0 +1,6 @@
+jatek(palya=test01.map)
+vacuumtakarit()
+ugrik()
+vacuumtakarit()
+ugrik()
+kilep()

@@ -1,0 +1,7 @@
+sebvalt 0 1 2
+irvalt 0 1 RIGHT
+ugrik 0 1
+sebvalt 0 2 1
+irvalt 0 2 LEFT
+agenshalott 0 2
+ugrik 0 2

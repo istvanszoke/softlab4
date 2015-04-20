@@ -1,0 +1,4 @@
+irvalt 0 a RIGHT
+sebvalt 0 a 1
+ugrik 0 a
+ugrik 0 a

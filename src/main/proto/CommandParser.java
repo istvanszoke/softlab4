@@ -30,7 +30,7 @@ public class CommandParser {
         put("ido", "[0-9]+");
         put("palya", "[A-Za-z0-9]+\\.map");
         put("irany", "(FEL|LE|BAL|JOBB)");
-        put("delta", "[+-]1");
+        put("delta", "[+-][1-2]");
         put("field", "[0-9]+");
     }});
 
