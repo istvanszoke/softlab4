@@ -1,0 +1,4 @@
+vacuumtakarit 0 1
+ugrik 0 1
+vacuumtakarit 0 0
+ugrik 0 1

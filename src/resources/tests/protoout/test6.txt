@@ -1,0 +1,3 @@
+sebvalt 0 1 1
+irvalt 0 1 LEFT
+ugrik 0 1

@@ -1,0 +1,31 @@
+ugrik 0 2
+sebvalt 0 1 1
+irvalt 0 1 DOWN
+ragacsfelez 0 1 0
+ugrik 0 1
+sebvalt 0 2 1
+irvalt 0 2 LEFT
+ugrik 0 2
+sebvalt 0 1 1
+irvalt 0 1 DOWN
+ugrik 0 1
+ragacsfelez 0 1 0
+ugrik 0 2
+sebvalt 0 1 0
+ugrik 0 1
+sebvalt 0 2 1
+irvalt 0 2 LEFT
+ugrik 0 2
+sebvalt 0 1 1
+irvalt 0 1 UP
+ragacsfelez 0 1 0
+ugrik 0 1
+sebvalt 0 2 0
+ugrik 0 2
+sebvalt 0 1 1
+irvalt 0 1 UP
+ugrik 0 1
+sebvalt 0 2 1
+irvalt 0 2 RIGHT
+Ragacs elkopott.
+ugrik 0 2
