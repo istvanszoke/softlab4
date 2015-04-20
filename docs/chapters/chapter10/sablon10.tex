@@ -46,14 +46,33 @@ java Main.java
 
 \section{Tesztek jegyzőkönyvei}
 
-\subsection{Teszteset1}
-\comment{Az alábbi táblázatot az utolsó, sikeres tesztfuttatáshoz kell kitölteni}
+\subsection{Vacuum feltakarítja az olajat}
+\tesztok{Nagy}{2015-04-14 17.00}
 
-\tesztok{...}{...}
+\subsection{Olaj száradása}
+\tesztok{Nagy}{2015-04-18 20.00}
 
-\comment{Az alábbi táblázatot a megismételt (hibás) tesztek esetén kell kitölteni minden ismétléshez egyszer. Ha szükséges, akkor a valós kimenet is mellékelhető mint a teszt eredménye.}
+\subsection{Ragacsra ráugrás és ragacs kopása}
+\tesztok{Nyari}{2015-04-17 17.00}
 
-\tesztfail{...}{...}{...}{...}{...}
+\subsection{Olajra ráugrás}
+\tesztok{Nagy}{2015-04-17 20.00}
+
+\subsection{Robot lehelyez egy buffot}
+\tesztok{Nyari}{2015-04-17 16.00}
+
+\subsection{Robot ráugrik vacumra}
+\tesztok{Szőke}{2015-04-19 20.00}
+
+\subsection{Vacum vs vacum}
+\tesztok{Szőke}{2015-04-18 18.00}
+
+\subsection{Robot vs Robot}
+\tesztok{Paral}{2015-04-17 21.00}
+
+\tesztfail{Paral}{2015-04-14 15.00}{FAIL: segfault}{Robot vs Robot}{Az ütközési mechanizmus kódjának módosítása.}
+\tesztfail{Nagy}{2015-04-14 15.00}{FAIL: segfault}{Vacuum vs Vacuum}{Az ütközési mechanizmus kódjának módosítása.}
+\tesztfail{Szőke}{2015-04-15 13.00}{FAIL: nem kopik}{Ragacs kopás}{A ragacs érzékenység mechanizmus kódjának átírása, csökkentés.}
 
 \section{Értékelés}
 \comment{A projekt kezdete óta az értékelésig eltelt időben tagokra bontva, százalékban.}
