@@ -20,6 +20,7 @@ public class Main extends JFrame implements GameListener {
     Game mainGame;
 
     public static void main(String[] args) throws IOException {
+    //TestcaseGenerator.generateTestCases(30);
         boolean stdio = true;
 
         for(String item : args) {
@@ -64,8 +65,8 @@ public class Main extends JFrame implements GameListener {
         Heartbeat.manualize();
         Game.controllerType = Game.ControllerType.PROTOCOMMAND;
 
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (!command.getCommand().equals(ProtoCommand.EXIT)) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
             try {
                 String line = reader.readLine();
