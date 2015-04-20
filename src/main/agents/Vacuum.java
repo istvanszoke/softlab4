@@ -4,7 +4,9 @@ import buff.Buff;
 
 import commands.AgentCommand;
 import commands.NoFieldCommandException;
+import commands.executes.KillExecute;
 import commands.queries.JumpQuery;
+import feedback.Logger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,10 +18,13 @@ import java.util.Map;
 
 
 public class Vacuum extends Agent {
-
     public Map<Buff, Integer> cleaning;
     private static int instanceCount = 0;
     private int vacuumId;
+
+    public static void resetInstanceCount() {
+        instanceCount = 0;
+    }
 
     public static void writeStaticParams(ObjectOutputStream oos) throws IOException {
         Integer wrapOutput = instanceCount;
@@ -59,12 +64,15 @@ public class Vacuum extends Agent {
     @Override
     public boolean onCauseCollision(Agent agent) {
         setSpeed(Speed.getOpposite(getSpeed()));
-        accept(new JumpQuery());
+        JumpQuery bounce = new JumpQuery();
+        accept(bounce);
+        Logger.log(bounce.getResult());
         return false;
     }
 
     @Override
     public Agent collide(Agent agent) {
+        accept(new KillExecute());
         return agent;
     }
 
@@ -94,12 +102,15 @@ public class Vacuum extends Agent {
         cleanupRemovedBuffs();
         Buff toClean = field.getFirstCleanableBuff();
 
-        if (toClean == null)
+        if (toClean == null) {
+            System.out.println("vacuumtakarit 1");
             return false;
+        }
 
         Integer state = cleaning.get(toClean);
         if (state == null) {
             cleaning.put(toClean, 1);
+            System.out.println("vacuumtakarit 0 1");
         } else {
             state = state - 1;
             if (state == 0) {
@@ -107,6 +118,7 @@ public class Vacuum extends Agent {
             } else {
                 cleaning.put(toClean, state);
             }
+            System.out.println("vacuumtakarit 0 " + state);
         }
         return true;
     }

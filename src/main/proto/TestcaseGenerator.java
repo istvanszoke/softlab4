@@ -3,9 +3,12 @@ package proto;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 
+import agents.Robot;
+import agents.Vacuum;
 import buff.Buff;
 import buff.Oil;
 import buff.Sticky;
+import field.Field;
 import game.Game;
 import game.GameCreator;
 import game.Heartbeat;
@@ -15,11 +18,10 @@ import game.handle.VacuumHandle;
 
 public class TestcaseGenerator {
     public static boolean generateTestCases(final int roundTime) {
-        // Test03
+        // Test01
         Game testCase = new Game(
                 new HashMap<AgentHandle, Integer>() {{
-                    put(PlayerHandle.createRobot(roundTime), 0);
-                    put(PlayerHandle.createRobot(roundTime), 1);
+                    put(PlayerHandle.createRobot(10000), 0);
                     put(VacuumHandle.createVacuum(), 34);
                 }},
 
@@ -29,15 +31,33 @@ public class TestcaseGenerator {
                     put(new Oil(), 34);
                 }});
 
-        if (!writeTest(testCase, "test03.map")) {
+        if (!writeTest(testCase, "test01.map")) {
             return false;
         }
+        resetInstanceCounts();
 
-        // Test05
+        // Test02
+        testCase = new Game(
+                new HashMap<AgentHandle, Integer>() {{
+                    put(PlayerHandle.createRobot(10000), 0);
+                }},
+
+                new GameCreator().generateMap(10, 10).getMap(),
+
+                new HashMap<Buff, Integer>() {{
+                    put(new Oil(), 34);
+                }});
+
+        if (!writeTest(testCase, "test02.map")) {
+            return false;
+        }
+        resetInstanceCounts();
+
+        // Test03
         testCase = new Game(
                 new HashMap<AgentHandle, Integer>() {{
                     put(PlayerHandle.createRobot(roundTime), 24);
-                    put(PlayerHandle.createRobot(roundTime), 35);
+                    put(PlayerHandle.createRobot(roundTime), 36);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
@@ -46,14 +66,14 @@ public class TestcaseGenerator {
                     put(new Sticky(), 34);
                 }});
 
-        if (!writeTest(testCase, "test05.map")) {
+        if (!writeTest(testCase, "test03.map")) {
             return false;
         }
+        resetInstanceCounts();
 
-        // Test06
+        // Test04
         testCase = new Game(
                 new HashMap<AgentHandle, Integer>() {{
-                    put(PlayerHandle.createRobot(roundTime), 0);
                     put(PlayerHandle.createRobot(roundTime), 33);
                 }},
 
@@ -63,15 +83,51 @@ public class TestcaseGenerator {
                     put(new Oil(), 34);
                 }});
 
+        if (!writeTest(testCase, "test04.map")) {
+            return false;
+        }
+        resetInstanceCounts();
+
+
+        // Test05
+        testCase = new Game(
+                new HashMap<AgentHandle, Integer>() {{
+                    put(PlayerHandle.createRobot(roundTime), 34);
+                }},
+
+                new GameCreator().generateMap(10, 10).getMap(),
+
+                new HashMap<Buff, Integer>() {{
+                }});
+
+        if (!writeTest(testCase, "test05.map")) {
+            return false;
+        }
+        resetInstanceCounts();
+
+        // Test06
+        testCase = new Game(
+                new HashMap<AgentHandle, Integer>() {{
+                    put(PlayerHandle.createRobot(roundTime), 34);
+                    put(VacuumHandle.createVacuum(), 33);
+                }},
+
+                new GameCreator().generateMap(10, 10).getMap(),
+
+                new HashMap<Buff, Integer>() {{
+                }});
+
         if (!writeTest(testCase, "test06.map")) {
             return false;
         }
+        resetInstanceCounts();
 
         // Test07
         testCase = new Game(
                 new HashMap<AgentHandle, Integer>() {{
-                    put(PlayerHandle.createRobot(roundTime), 0);
-                    put(PlayerHandle.createRobot(roundTime), 24);
+                    put(PlayerHandle.createRobot(10000), 0);
+                    put(VacuumHandle.createVacuum(), 33);
+                    put(VacuumHandle.createVacuum(), 34);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
@@ -82,41 +138,9 @@ public class TestcaseGenerator {
         if (!writeTest(testCase, "test07.map")) {
             return false;
         }
+        resetInstanceCounts();
 
         // Test08
-        testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
-                    put(PlayerHandle.createRobot(roundTime), 0);
-                    put(VacuumHandle.createVacuum(), 33);
-                    put(PlayerHandle.createRobot(roundTime), 34);
-                }},
-
-                new GameCreator().generateMap(10, 10).getMap(),
-
-                new HashMap<Buff, Integer>() {{
-                }});
-
-        if (!writeTest(testCase, "test08.map")) {
-            return false;
-        }
-
-        // Test09
-        testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
-                    put(VacuumHandle.createVacuum(), 33);
-                    put(VacuumHandle.createVacuum(), 34);
-                }},
-
-                new GameCreator().generateMap(10, 10).getMap(),
-
-                new HashMap<Buff, Integer>() {{
-                }});
-
-        if (!writeTest(testCase, "test09.map")) {
-            return false;
-        }
-
-        // Test10
         testCase = new Game(
                 new HashMap<AgentHandle, Integer>() {{
                     put(PlayerHandle.createRobot(roundTime), 32);
@@ -128,9 +152,10 @@ public class TestcaseGenerator {
                 new HashMap<Buff, Integer>() {{
                 }});
 
-        if (!writeTest(testCase, "test10.map")) {
+        if (!writeTest(testCase, "test08.map")) {
             return false;
         }
+        resetInstanceCounts();
 
         Heartbeat.purgeListeners();
         return true;
@@ -149,5 +174,11 @@ public class TestcaseGenerator {
             return false;
         }
         return true;
+    }
+
+    private static void resetInstanceCounts() {
+        Robot.resetInstanceCount();
+        Vacuum.resetInstanceCount();
+        Field.resetInstanceCount();
     }
 }

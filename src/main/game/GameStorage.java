@@ -44,8 +44,6 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener, Se
                 agentMapping.remove(previous.getAgent());
             }
         }
-
-        System.out.println("In play:" + inPlay.size());
     }
 
     public synchronized void add(AgentHandle handle) {

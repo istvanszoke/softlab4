@@ -21,6 +21,10 @@ public class Robot extends Agent {
     private static int instanceCount = 0;
     private int robotId;
 
+    public static void resetInstanceCount() {
+        instanceCount = 0;
+    }
+
     public static void writeStaticParams(ObjectOutputStream oos) throws IOException {
         Integer wrapOutput = instanceCount;
         oos.writeObject(wrapOutput);

@@ -1,5 +1,6 @@
 package feedback;
 
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -41,5 +42,15 @@ public class Result {
 
     public synchronized SortedMap<Integer, String> getDebug() {
         return debug;
+    }
+
+    public synchronized void append(Result result) {
+        for (String entry : result.getNormal().values()) {
+            pushNormal(entry);
+        }
+
+        for (String entry : result.getDebug().values()) {
+            pushDebug(entry);
+        }
     }
 }

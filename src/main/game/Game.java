@@ -128,8 +128,6 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         deregister(handle);
         gameStorage.update();
 
-        System.out.println("Timed out " + handle);
-
         if (isGameOver()) {
             endGame();
             return;

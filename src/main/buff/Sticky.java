@@ -11,21 +11,23 @@ public class Sticky extends Buff {
 
     public Sticky() {
         usesRemaining = 4;
+        isCleanable = true;
     }
 
     @Override
     public void visit(Robot element) {
         if (usesRemaining == 0) {
-            System.out.println("Sticky has worn off.");
+            System.out.println("Ragacs elkopott.");
             remove();
             return;
         }
 
+        Speed oldSpeed = element.getSpeed();
         Speed newSpeed = element.getSpeed();
         newSpeed.setMagnitude(newSpeed.getMagnitude() / 2);
         element.setSpeed(newSpeed);
         usesRemaining -= 1;
-        isCleanable = true;
+        System.out.println("ragacsfelez 0 " + oldSpeed.getMagnitude() + " " + newSpeed.getMagnitude());
     }
 
     @Override

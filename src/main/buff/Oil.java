@@ -36,7 +36,7 @@ public class Oil extends Buff implements HeartbeatListener, Serializable {
         timeRemaining -= deltaTime;
 
         if (timeRemaining <= 0) {
-            System.out.println("Oil has worn off.");
+            System.out.println("Olaj felszáradt.");
             remove();
             Heartbeat.unsubscribe(this);
         }

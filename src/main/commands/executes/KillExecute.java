@@ -38,5 +38,6 @@ public class KillExecute extends AgentCommand {
         } else {
             result.pushDebug("Could not kill " + element);
         }
+        result.pushNormal("agenshalott 0 " + element);
     }
 }

@@ -48,8 +48,9 @@ public class JumpExecute extends AgentCommand {
 
     private void visitCommon(Agent element) {
         if (canExecute) {
-            displacement.getStart().onExit();
-            displacement.getGoal().onEnter(element);
+            if (displacement.getGoal().onEnter(element)) {
+                displacement.getStart().onExit();
+            }
             result.pushNormal("ugrik 0 " + element);
         } else {
             result.pushNormal("ugrik 1 " + element);
