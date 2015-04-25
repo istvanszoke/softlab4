@@ -11,8 +11,7 @@ import feedback.Result;
 import graphics.handles.RobotSprite;
 import graphics.handles.VacuumSprite;
 
-public class AgentElementSprite implements SpriteHandle, AgentVisitor
-{
+public class AgentElementSprite implements SpriteHandle, AgentVisitor {
     SpriteHandle agentSprite;
     Agent agent;
 

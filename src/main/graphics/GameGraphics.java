@@ -1,7 +1,6 @@
 package graphics;
 
 import javax.swing.JPanel;
-
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
@@ -11,14 +10,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 
-import agents.Agent;
-import buff.Buff;
-import buff.BuffListener;
 import field.Field;
-import game.Game;
 
-public class GameGraphics extends JPanel implements ImageObserver
-{
+public class GameGraphics extends JPanel implements ImageObserver {
     public static BufferedImage deepCopyBufferedImage(BufferedImage image) {
         ColorModel cm = image.getColorModel();
         boolean isAlphaPremultiplied = image.isAlphaPremultiplied();
@@ -61,17 +55,17 @@ public class GameGraphics extends JPanel implements ImageObserver
     }
 
     public void centerFieldTo(Field center, int radius) {
-        BufferedImage workingImage = new BufferedImage(50*radius, 50*radius, ColorModel.TRANSLUCENT);
+        BufferedImage workingImage = new BufferedImage(50 * radius, 50 * radius, ColorModel.TRANSLUCENT);
         //TODO here is where we iterate on given fields
 
-        int size = 2*radius + 1;
+        int size = 2 * radius + 1;
         int fieldsToDisplay = size * size;
         int origo = mainMap.indexOf(center);
 
         //TODO we have to handle if we leave map
-        for (int i = origo - fieldsToDisplay/2; i < origo + fieldsToDisplay/2; ++i) {
+        for (int i = origo - fieldsToDisplay / 2; i < origo + fieldsToDisplay / 2; ++i) {
             FieldElementSprite fieldSprite = drawableFields.get(mainMap.get(i));
-            workingImage.getGraphics().drawImage(fieldSprite.getItemImage(), i/size, i%size, this);
+            workingImage.getGraphics().drawImage(fieldSprite.getItemImage(), i / size, i % size, this);
         }
 
 
@@ -80,8 +74,9 @@ public class GameGraphics extends JPanel implements ImageObserver
 
     @Override
     public void paintComponent(Graphics g) {
-        if (mainMap == null)
+        if (mainMap == null) {
             return;
+        }
 
         g.drawImage(bufferedImage, 0, 0, this);
     }

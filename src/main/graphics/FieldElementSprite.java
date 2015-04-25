@@ -15,8 +15,7 @@ import graphics.handles.FinishLineFieldCellSprite;
 /**
  * Created by nyari on 2015.04.25..
  */
-public class FieldElementSprite implements SpriteHandle, FieldVisitor
-{
+public class FieldElementSprite implements SpriteHandle, FieldVisitor {
     SpriteHandle fieldSprite;
     Field field;
 
@@ -28,6 +27,7 @@ public class FieldElementSprite implements SpriteHandle, FieldVisitor
             throw new NullPointerException();
         }
     }
+
     @Override
     public void visit(FieldCell element) {
         fieldSprite = new FieldCellSprite(element);
@@ -56,13 +56,13 @@ public class FieldElementSprite implements SpriteHandle, FieldVisitor
             buffSprites.add(new BuffElementSprite(buff));
         }
 
-        BufferedImage fieldImage =GameGraphics.deepCopyBufferedImage(fieldSprite.getItemImage());
+        BufferedImage fieldImage = GameGraphics.deepCopyBufferedImage(fieldSprite.getItemImage());
 
-        fieldImage.getGraphics().drawImage(fieldImage,0,0,null);
+        fieldImage.getGraphics().drawImage(fieldImage, 0, 0, null);
         for (BuffElementSprite buffSprite : buffSprites) {
-            fieldImage.getGraphics().drawImage(buffSprite.getItemImage(),0,0,null);
+            fieldImage.getGraphics().drawImage(buffSprite.getItemImage(), 0, 0, null);
         }
-        fieldImage.getGraphics().drawImage(agentSprite.getItemImage(),0,0,null);
+        fieldImage.getGraphics().drawImage(agentSprite.getItemImage(), 0, 0, null);
 
         return fieldImage;
     }

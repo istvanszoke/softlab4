@@ -11,21 +11,22 @@ public class OilSprite implements SpriteHandle {
 
     private Oil oil;
     private static BufferedImage image;
+
     static {
-        image = new BufferedImage(50,50, ColorModel.TRANSLUCENT);
+        image = new BufferedImage(50, 50, ColorModel.TRANSLUCENT);
         //TODO draw one of these, or we can load it even from a file
     }
 
     public OilSprite(Oil oil) {
-        if (oil != null)
+        if (oil != null) {
             this.oil = oil;
-        else
+        } else {
             throw new NullPointerException();
+        }
     }
 
     @Override
-    public BufferedImage getItemImage()
-    {
+    public BufferedImage getItemImage() {
         return image;
     }
 

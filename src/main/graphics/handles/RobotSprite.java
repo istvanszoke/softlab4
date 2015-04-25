@@ -11,10 +11,11 @@ public class RobotSprite implements SpriteHandle {
     private Robot robot;
 
     public RobotSprite(Robot robot) {
-        if (robot != null)
+        if (robot != null) {
             this.robot = robot;
-        else
+        } else {
             throw new NullPointerException();
+        }
     }
 
     @Override

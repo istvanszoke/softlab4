@@ -11,17 +11,19 @@ public class VacuumSprite implements SpriteHandle {
 
     private Vacuum vacuum;
     private static BufferedImage image;
+
     static {
-        image = new BufferedImage(50,50, ColorModel.TRANSLUCENT);
+        image = new BufferedImage(50, 50, ColorModel.TRANSLUCENT);
         //TODO draw one of these
 
     }
 
     public VacuumSprite(Vacuum vacuum) {
-        if (vacuum != null)
+        if (vacuum != null) {
             this.vacuum = vacuum;
-        else
+        } else {
             throw new NullPointerException();
+        }
     }
 
     @Override

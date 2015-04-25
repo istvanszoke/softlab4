@@ -11,17 +11,19 @@ public class EmptyFieldCellSprite implements SpriteHandle {
 
     private EmptyFieldCell cell;
     private static BufferedImage image;
+
     static {
-        image = new BufferedImage(50,50, ColorModel.TRANSLUCENT);
+        image = new BufferedImage(50, 50, ColorModel.TRANSLUCENT);
         //TODO draw one of these
 
     }
 
     public EmptyFieldCellSprite(EmptyFieldCell cell) {
-        if (cell != null)
+        if (cell != null) {
             this.cell = cell;
-        else
+        } else {
             throw new NullPointerException();
+        }
     }
 
     @Override
