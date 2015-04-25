@@ -65,7 +65,7 @@ public class GameGraphics extends JPanel implements ImageObserver {
         //TODO we have to handle if we leave map
         for (int i = origo - fieldsToDisplay / 2; i < origo + fieldsToDisplay / 2; ++i) {
             FieldElementSprite fieldSprite = drawableFields.get(mainMap.get(i));
-            workingImage.getGraphics().drawImage(fieldSprite.getItemImage(), i / size, i % size, this);
+            workingImage.getGraphics().drawImage(fieldSprite.getItemImage(), (i / size) * 50, (i % size) * 50, this);
         }
 
 

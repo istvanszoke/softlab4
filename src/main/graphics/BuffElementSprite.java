@@ -9,9 +9,6 @@ import buff.Sticky;
 import graphics.handles.OilSprite;
 import graphics.handles.StickySprite;
 
-/**
- * Created by nyari on 2015.04.25..
- */
 public class BuffElementSprite implements SpriteHandle, BuffVisitor {
     SpriteHandle buffSprite;
     Buff buff;

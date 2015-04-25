@@ -12,9 +12,6 @@ import graphics.handles.EmptyFieldCellSprite;
 import graphics.handles.FieldCellSprite;
 import graphics.handles.FinishLineFieldCellSprite;
 
-/**
- * Created by nyari on 2015.04.25..
- */
 public class FieldElementSprite implements SpriteHandle, FieldVisitor {
     SpriteHandle fieldSprite;
     Field field;
