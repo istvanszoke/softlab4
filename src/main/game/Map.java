@@ -9,6 +9,9 @@ import field.Field;
 import field.FinishLineFieldCell;
 
 public class Map implements Iterable<Field>, Serializable {
+
+    private static final long serialVersionUID = -6752689712870327480L;
+
     private final List<Field> fields;
     private final List<Field> finishLineFields;
 

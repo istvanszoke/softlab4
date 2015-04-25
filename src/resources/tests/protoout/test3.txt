@@ -1,4 +1,3 @@
-ugrik 0 2
 sebvalt 0 1 1
 irvalt 0 1 DOWN
 ragacsfelez 0 1 0

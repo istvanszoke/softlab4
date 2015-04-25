@@ -1,3 +1,4 @@
+ugrik 0 a
 sebvalt 0 1 1
 irvalt 0 1 LEFT
 olajlerak 0

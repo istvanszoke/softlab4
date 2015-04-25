@@ -11,6 +11,9 @@ import commands.NoFieldCommandException;
 import commands.transmits.JumpTransmit;
 
 public class JumpQuery extends AgentCommand {
+
+    private static final long serialVersionUID = 1882648361848672688L;
+
     private Speed speed;
 
     public Speed getSpeed() {

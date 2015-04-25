@@ -9,6 +9,9 @@ import commands.NoFieldCommandException;
 import commands.executes.UseOilExecute;
 
 public class UseOilQuery extends AgentCommand {
+
+    private static final long serialVersionUID = 8151746119286582360L;
+
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
         return new UseOilExecute(this);

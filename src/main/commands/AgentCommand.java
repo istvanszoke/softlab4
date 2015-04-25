@@ -3,6 +3,9 @@ package commands;
 import agents.AgentVisitor;
 
 public abstract class AgentCommand extends Command implements AgentVisitor {
+
+    private static final long serialVersionUID = 897859986718960218L;
+
     protected AgentCommand() { }
 
     protected AgentCommand(Command parent) {

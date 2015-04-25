@@ -6,6 +6,8 @@ import field.Direction;
 import field.Field;
 
 public abstract class Agent implements AgentElement, Serializable {
+    private static final long serialVersionUID = -9123063851218789245L;
+
     protected Speed speed;
     protected Field field;
     protected boolean isDead;

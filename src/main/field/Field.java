@@ -16,6 +16,7 @@ import buff.BuffListener;
 
 public abstract class Field implements FieldElement, BuffListener, Serializable {
     public static final Field GRAVEYARD = new EmptyFieldCell(-1);
+    private static final long serialVersionUID = 6678011536302536430L;
 
     protected final int distanceFromGoal;
     protected final List<Buff> buffs;

@@ -11,6 +11,9 @@ import commands.NoFieldCommandException;
 import commands.transmits.ChangeSpeedTransmit;
 
 public class ChangeSpeedExecute extends AgentCommand {
+
+    private static final long serialVersionUID = 282496136538937406L;
+
     private int magnitudeDelta;
 
     public ChangeSpeedExecute(ChangeSpeedTransmit parent) {

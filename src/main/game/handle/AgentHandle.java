@@ -6,6 +6,9 @@ import agents.Agent;
 import util.DevNull;
 
 public abstract class AgentHandle implements Serializable {
+
+    private static final long serialVersionUID = 7535691148906563257L;
+
     protected final Agent agent;
     protected HandleListener listener;
 

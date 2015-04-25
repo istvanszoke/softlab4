@@ -8,6 +8,9 @@ import agents.Agent;
 import game.handle.AgentHandle;
 
 public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener, Serializable {
+
+    private static final long serialVersionUID = 7225789350225557116L;
+
     private final List<AgentHandle> all;
     private final List<AgentHandle> inPlay;
     private final List<AgentHandle> players;

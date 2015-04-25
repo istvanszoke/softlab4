@@ -13,7 +13,9 @@ public class Result {
 
     public Result() {
         normal = new TreeMap<Integer, String>();
-        debug = new TreeMap<Integer, String>() {};
+        debug = new TreeMap<Integer, String>() {
+            private static final long serialVersionUID = -468708202057870843L;
+        };
         counter = 0;
         isSuccessful = true;
     }

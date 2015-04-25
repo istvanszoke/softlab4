@@ -12,6 +12,9 @@ import field.FieldCell;
 import field.FinishLineFieldCell;
 
 public class UseOilExecute extends FieldCommand {
+
+    private static final long serialVersionUID = 4441657558685380271L;
+
     public UseOilExecute(UseOilQuery parent) {
         super(parent);
     }

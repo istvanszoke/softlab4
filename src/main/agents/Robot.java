@@ -16,6 +16,9 @@ import commands.executes.KillExecute;
 import feedback.Logger;
 
 public class Robot extends Agent {
+
+    private static final long serialVersionUID = 560375494406502740L;
+
     private List<Buff> buffs;
     private Inventory<Sticky> stickyInventory;
     private Inventory<Oil> oilInventory;

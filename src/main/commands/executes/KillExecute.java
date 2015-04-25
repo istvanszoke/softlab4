@@ -11,6 +11,8 @@ import commands.queries.UseOilQuery;
 import feedback.Logger;
 
 public class KillExecute extends AgentCommand {
+    private static final long serialVersionUID = 5989361089376300423L;
+
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
         throw new NoFieldCommandException();
