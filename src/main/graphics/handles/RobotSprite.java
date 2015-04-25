@@ -4,14 +4,13 @@ package graphics.handles;
 import java.awt.image.BufferedImage;
 
 import agents.Robot;
-import field.FinishLineFieldCell;
-import graphics.DrawHandle;
+import graphics.SpriteHandle;
 
-public class RobotDraw implements DrawHandle {
+public class RobotSprite implements SpriteHandle {
 
     private Robot robot;
 
-    public RobotDraw(Robot robot) {
+    public RobotSprite(Robot robot) {
         if (robot != null)
             this.robot = robot;
         else
@@ -19,7 +18,8 @@ public class RobotDraw implements DrawHandle {
     }
 
     @Override
-    public BufferedImage getItemDrawing() {
+    public BufferedImage getItemImage() {
+        //TODO Here we actually have to implement it becuse different robots may have different representations
         return null;
     }
 

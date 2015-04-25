@@ -4,9 +4,11 @@ import javax.swing.JPanel;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.awt.image.ImageObserver;
+import java.awt.image.WritableRaster;
 import java.util.Collections;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 
 import agents.Agent;
@@ -14,34 +16,43 @@ import buff.Buff;
 import buff.BuffListener;
 import field.Field;
 import game.Game;
-import graphics.handles.EmptyFieldCellDraw;
-import graphics.handles.RobotDraw;
 
-public class GameGraphics extends JPanel implements ImageObserver, BuffListener
+public class GameGraphics extends JPanel implements ImageObserver
 {
-    private Game mainGame;
-    private boolean refresh;
-    private BufferedImage bufferedImage;
-    private Map<Field, DrawHandle> drawableFields;
-    private Map<Agent, DrawHandle> drawableRobots;
-    private Map<Buff, DrawHandle> drawableBuffs;
-
-    private void setUp() {
-
+    public static BufferedImage deepCopyBufferedImage(BufferedImage image) {
+        ColorModel cm = image.getColorModel();
+        boolean isAlphaPremultiplied = image.isAlphaPremultiplied();
+        WritableRaster raster = image.copyData(null);
+        return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
 
-    public GameGraphics(Game game) {
-        mainGame = game;
+    private game.Map mainMap;
+
+
+    private BufferedImage bufferedImage;
+    private Map<Field, FieldElementSprite> drawableFields;
+
+
+    private void setUp() {
+        Iterator<Field> fieldIt = mainMap.iterator();
+        while (fieldIt.hasNext()) {
+            Field next = fieldIt.next();
+            drawableFields.put(next, new FieldElementSprite(next));
+        }
+    }
+
+    public GameGraphics(game.Map map) {
+        mainMap = map;
         setUp();
     }
 
     public GameGraphics() {
-        mainGame = null;
+        mainMap = null;
     }
 
-    public boolean attachToGame(Game game) {
-        if (mainGame == null) {
-            mainGame = game;
+    public boolean attachToMap(game.Map map) {
+        if (mainMap == null) {
+            mainMap = map;
             setUp();
             return true;
         } else {
@@ -49,38 +60,33 @@ public class GameGraphics extends JPanel implements ImageObserver, BuffListener
         }
     }
 
-    public void refresh() {
-        refresh = true;
+    public void centerFieldTo(Field center, int radius) {
+        BufferedImage workingImage = new BufferedImage(50*radius, 50*radius, ColorModel.TRANSLUCENT);
+        //TODO here is where we iterate on given fields
+
+        int size = 2*radius + 1;
+        int fieldsToDisplay = size * size;
+        int origo = mainMap.indexOf(center);
+
+        //TODO we have to handle if we leave map
+        for (int i = origo - fieldsToDisplay/2; i < origo + fieldsToDisplay/2; ++i) {
+            FieldElementSprite fieldSprite = drawableFields.get(mainMap.get(i));
+            workingImage.getGraphics().drawImage(fieldSprite.getItemImage(), i/size, i%size, this);
+        }
+
+
+        bufferedImage = workingImage;
     }
 
     @Override
     public void paintComponent(Graphics g) {
-        if (mainGame == null)
+        if (mainMap == null)
             return;
-        if (!refresh) {
-            g.drawImage(bufferedImage, 0, 0, this);
-            return;
-        }
-        //TODO
 
-
-        refresh = false;
+        g.drawImage(bufferedImage, 0, 0, this);
     }
 
-    public Map<Field, DrawHandle> getDrawableFields() {
+    public Map<Field, FieldElementSprite> getDrawableFields() {
         return Collections.unmodifiableMap(drawableFields);
-    }
-
-    public Map<Agent, DrawHandle> getDrawableRobots() {
-        return Collections.unmodifiableMap(drawableRobots);
-    }
-
-    public Map<Buff, DrawHandle> getDrawableBuffs () {
-        return Collections.unmodifiableMap(drawableBuffs);
-    }
-
-    @Override
-    public void onRemove(Buff buff) {
-        drawableBuffs.remove(buff);
     }
 }

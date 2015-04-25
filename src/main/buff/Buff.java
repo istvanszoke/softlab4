@@ -17,7 +17,7 @@ import feedback.NoFeedbackException;
 import feedback.Result;
 import game.Heartbeat;
 
-public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor, Serializable {
+public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor, Serializable, BuffElement {
     protected List<BuffListener> listeners;
     private boolean isRemoved;
     protected boolean isCleanable;

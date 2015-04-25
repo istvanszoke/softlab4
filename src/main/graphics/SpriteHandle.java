@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 /**
  * Created by nyari on 2015.04.25..
  */
-public interface DrawHandle {
+public interface SpriteHandle {
 
-    public BufferedImage getItemDrawing();
+    public BufferedImage getItemImage();
 
 }
