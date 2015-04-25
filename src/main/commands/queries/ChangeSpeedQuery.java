@@ -9,6 +9,9 @@ import commands.NoFieldCommandException;
 import commands.transmits.ChangeSpeedTransmit;
 
 public class ChangeSpeedQuery extends AgentCommand {
+
+    private static final long serialVersionUID = 2189129397704268863L;
+
     private int magnitudeDelta;
 
     public ChangeSpeedQuery(int magnitudeDelta) {

@@ -11,6 +11,9 @@ import game.Heartbeat;
 import game.HeartbeatListener;
 
 public class Oil extends Buff implements HeartbeatListener, Serializable {
+
+    private static final long serialVersionUID = 1558101339032962867L;
+
     long timeRemaining;
 
     public Oil() {
@@ -36,7 +39,7 @@ public class Oil extends Buff implements HeartbeatListener, Serializable {
         timeRemaining -= deltaTime;
 
         if (timeRemaining <= 0) {
-            System.out.println("Olaj felszáradt.");
+            System.out.println("Olaj felszaradt.");
             remove();
             Heartbeat.unsubscribe(this);
         }

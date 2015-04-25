@@ -11,6 +11,9 @@ import commands.transmits.JumpTransmit;
 import field.Displacement;
 
 public class JumpExecute extends AgentCommand {
+
+    private static final long serialVersionUID = 2944562279386578159L;
+
     private Displacement displacement;
 
     public JumpExecute(JumpTransmit parent) {

@@ -18,6 +18,10 @@ import feedback.Result;
 import game.Heartbeat;
 
 public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor, Serializable {
+
+    private static final long serialVersionUID = 8797081898675710692L;
+
+
     protected List<BuffListener> listeners;
     private boolean isRemoved;
     protected boolean isCleanable;

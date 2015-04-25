@@ -11,6 +11,9 @@ import game.handle.AgentHandle;
 import proto.*;
 
 public class Main extends JFrame implements GameListener {
+
+    private static final long serialVersionUID = -6767044297674099347L;
+
     private enum OperationMode {
         STDIO,
         GUI
@@ -20,7 +23,7 @@ public class Main extends JFrame implements GameListener {
     Game mainGame;
 
     public static void main(String[] args) throws IOException {
-        //TestcaseGenerator.generateTestCases(30);
+        TestcaseGenerator.generateTestCases(30);
         boolean stdio = true;
 
         for(String item : args) {

@@ -6,6 +6,9 @@ import feedback.Feedback;
 import feedback.Result;
 
 public abstract class Command implements Feedback, Serializable {
+
+    private static final long serialVersionUID = 6701324582389674206L;
+
     protected final Result result;
     protected boolean canExecute;
 

@@ -18,6 +18,8 @@ import java.util.Map;
 
 
 public class Vacuum extends Agent {
+    private static final long serialVersionUID = -6656316872391342564L;
+
     public Map<Buff, Integer> cleaning;
     private static int instanceCount = 0;
     private int vacuumId;

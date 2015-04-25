@@ -10,6 +10,9 @@ import commands.queries.JumpQuery;
 import field.*;
 
 public class JumpTransmit extends FieldCommand {
+
+    private static final long serialVersionUID = -7576028340378330362L;
+
     private Displacement displacement;
     private Speed speed;
 

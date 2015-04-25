@@ -6,6 +6,8 @@ import commands.NoAgentCommandException;
 
 public class FieldCell extends Field {
 
+    private static final long serialVersionUID = -4169827249003445650L;
+
     public FieldCell(int distanceFromGoal) {
         super(distanceFromGoal);
     }

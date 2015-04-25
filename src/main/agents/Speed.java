@@ -8,12 +8,16 @@ import java.util.Map;
 import field.Direction;
 
 public class Speed implements Cloneable, Serializable {
-    private static final Map<Direction, Direction> oppositeMapping = Collections.unmodifiableMap(new HashMap<Direction, Direction>() {{
+    private static final Map<Direction, Direction> oppositeMapping = Collections.unmodifiableMap(new HashMap<Direction, Direction>() {
+        private static final long serialVersionUID = 8404668215822539457L;
+
+        {
         put(Direction.UP, Direction.DOWN);
         put(Direction.DOWN, Direction.UP);
         put(Direction.LEFT, Direction.RIGHT);
         put(Direction.RIGHT, Direction.LEFT);
     }});
+    private static final long serialVersionUID = 624748655659797670L;
 
     private Direction direction;
     private int magnitude;

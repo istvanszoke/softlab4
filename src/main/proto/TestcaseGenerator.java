@@ -20,14 +20,20 @@ public class TestcaseGenerator {
     public static boolean generateTestCases(final int roundTime) {
         // Test01
         Game testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
+                new HashMap<AgentHandle, Integer>() {
+                    private static final long serialVersionUID = -1094092084000350243L;
+
+                    {
                     put(PlayerHandle.createRobot(10000), 0);
                     put(VacuumHandle.createVacuum(), 34);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
 
-                new HashMap<Buff, Integer>() {{
+                new HashMap<Buff, Integer>() {
+                    private static final long serialVersionUID = 3682889641377510397L;
+
+                    {
                     put(new Oil(), 34);
                 }});
 
@@ -38,13 +44,19 @@ public class TestcaseGenerator {
 
         // Test02
         testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
+                new HashMap<AgentHandle, Integer>() {
+                    private static final long serialVersionUID = 6891509298292059684L;
+
+                    {
                     put(PlayerHandle.createRobot(10000), 0);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
 
-                new HashMap<Buff, Integer>() {{
+                new HashMap<Buff, Integer>() {
+                    private static final long serialVersionUID = 6125162343457752432L;
+
+                    {
                     put(new Oil(), 34);
                 }});
 
@@ -55,14 +67,20 @@ public class TestcaseGenerator {
 
         // Test03
         testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
+                new HashMap<AgentHandle, Integer>() {
+                    private static final long serialVersionUID = -3704276563919281756L;
+
+                    {
                     put(PlayerHandle.createRobot(roundTime), 24);
                     put(PlayerHandle.createRobot(roundTime), 36);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
 
-                new HashMap<Buff, Integer>() {{
+                new HashMap<Buff, Integer>() {
+                    private static final long serialVersionUID = -4900102987982341874L;
+
+                    {
                     put(new Sticky(), 34);
                 }});
 
@@ -73,13 +91,19 @@ public class TestcaseGenerator {
 
         // Test04
         testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
+                new HashMap<AgentHandle, Integer>() {
+                    private static final long serialVersionUID = 4293277202439248750L;
+
+                    {
                     put(PlayerHandle.createRobot(roundTime), 33);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
 
-                new HashMap<Buff, Integer>() {{
+                new HashMap<Buff, Integer>() {
+                    private static final long serialVersionUID = -8120027226408767670L;
+
+                    {
                     put(new Oil(), 34);
                 }});
 
@@ -91,13 +115,19 @@ public class TestcaseGenerator {
 
         // Test05
         testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
+                new HashMap<AgentHandle, Integer>() {
+                    private static final long serialVersionUID = 6552228675807577774L;
+
+                    {
                     put(PlayerHandle.createRobot(roundTime), 34);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
 
-                new HashMap<Buff, Integer>() {{
+                new HashMap<Buff, Integer>() {
+                    private static final long serialVersionUID = 8920644231877239310L;
+
+                    {
                 }});
 
         if (!writeTest(testCase, "test05.map")) {
@@ -107,14 +137,20 @@ public class TestcaseGenerator {
 
         // Test06
         testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
+                new HashMap<AgentHandle, Integer>() {
+                    private static final long serialVersionUID = -7486302688733593858L;
+
+                    {
                     put(PlayerHandle.createRobot(roundTime), 34);
                     put(VacuumHandle.createVacuum(), 33);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
 
-                new HashMap<Buff, Integer>() {{
+                new HashMap<Buff, Integer>() {
+                    private static final long serialVersionUID = -2871839714906164754L;
+
+                    {
                 }});
 
         if (!writeTest(testCase, "test06.map")) {
@@ -124,7 +160,10 @@ public class TestcaseGenerator {
 
         // Test07
         testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
+                new HashMap<AgentHandle, Integer>() {
+                    private static final long serialVersionUID = 6024511841574842543L;
+
+                    {
                     put(PlayerHandle.createRobot(10000), 0);
                     put(VacuumHandle.createVacuum(), 33);
                     put(VacuumHandle.createVacuum(), 34);
@@ -132,7 +171,10 @@ public class TestcaseGenerator {
 
                 new GameCreator().generateMap(10, 10).getMap(),
 
-                new HashMap<Buff, Integer>() {{
+                new HashMap<Buff, Integer>() {
+                    private static final long serialVersionUID = -7148940774077296044L;
+
+                    {
                 }});
 
         if (!writeTest(testCase, "test07.map")) {
@@ -142,14 +184,20 @@ public class TestcaseGenerator {
 
         // Test08
         testCase = new Game(
-                new HashMap<AgentHandle, Integer>() {{
+                new HashMap<AgentHandle, Integer>() {
+                    private static final long serialVersionUID = 4581504709607493522L;
+
+                    {
                     put(PlayerHandle.createRobot(roundTime), 32);
                     put(PlayerHandle.createRobot(roundTime), 35);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
 
-                new HashMap<Buff, Integer>() {{
+                new HashMap<Buff, Integer>() {
+                    private static final long serialVersionUID = -2333321273183682870L;
+
+                    {
                 }});
 
         if (!writeTest(testCase, "test08.map")) {
