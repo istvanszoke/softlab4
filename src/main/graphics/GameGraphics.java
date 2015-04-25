@@ -44,7 +44,7 @@ public class GameGraphics extends JPanel implements ImageObserver
         refresh = true;
     }
 
-    @Override   
+    @Override
     public void paintComponent(Graphics g) {
         if (mainGame == null)
             return;
