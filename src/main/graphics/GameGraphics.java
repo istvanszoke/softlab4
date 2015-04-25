@@ -62,7 +62,7 @@ public class GameGraphics extends JPanel implements ImageObserver {
         int fieldsToDisplay = size * size;
         int origo = mainMap.indexOf(center);
 
-        //TODO we have to handle if we leave map
+        //TODO THIS ALGORITHM IS INCORRECT. JUST FOR SEQENCE GENERATION, AND OVERVIEW:
         for (int i = origo - fieldsToDisplay / 2; i < origo + fieldsToDisplay / 2; ++i) {
             FieldElementSprite fieldSprite = drawableFields.get(mainMap.get(i));
             workingImage.getGraphics().drawImage(fieldSprite.getItemImage(), (i / size) * 50, (i % size) * 50, this);
