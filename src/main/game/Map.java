@@ -69,6 +69,15 @@ public class Map implements Iterable<Field>, Serializable {
         return suitableFields;
     }
 
+    public Field[][] getRegion(Field center, int width, int height)
+    {
+        Field[][] fields = new Field[width][height];
+
+        //TODO, the Map has to now how wide the mep is to deduce this information
+
+        return fields;
+    }
+
     public List<Field> getFinishLineFields() {
         return finishLineFields;
     }

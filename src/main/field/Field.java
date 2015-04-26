@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import agents.Agent;
 import agents.Speed;
@@ -138,6 +135,10 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
 
     public Agent getAgent() { return agent; }
+
+    public List<Buff> getBuffs() {
+        return Collections.unmodifiableList(buffs);
+    }
 
     @Override
     public String toString() {
