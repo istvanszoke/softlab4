@@ -47,7 +47,6 @@ public class FieldElementSprite implements SpriteHandle, FieldVisitor {
 
     @Override
     public BufferedImage getItemImage() {
-        AgentElementSprite agentSprite = new AgentElementSprite(field.getAgent());
         List<BuffElementSprite> buffSprites = new ArrayList<BuffElementSprite>();
         for (Buff buff : field.getBuffs()) {
             buffSprites.add(new BuffElementSprite(buff));
@@ -59,8 +58,10 @@ public class FieldElementSprite implements SpriteHandle, FieldVisitor {
         for (BuffElementSprite buffSprite : buffSprites) {
             fieldImage.getGraphics().drawImage(buffSprite.getItemImage(), 0, 0, null);
         }
-        fieldImage.getGraphics().drawImage(agentSprite.getItemImage(), 0, 0, null);
-
+        if (field.getAgent() != null) {
+            AgentElementSprite agentSprite = new AgentElementSprite(field.getAgent());
+            fieldImage.getGraphics().drawImage(agentSprite.getItemImage(), 0, 0, null);
+        }
         return fieldImage;
     }
 

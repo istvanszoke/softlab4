@@ -28,10 +28,8 @@ public class GameGraphics extends JPanel implements ImageObserver {
 
 
     private void setUp() {
-        Iterator<Field> fieldIt = mainMap.iterator();
-        while (fieldIt.hasNext()) {
-            Field next = fieldIt.next();
-            drawableFields.put(next, new FieldElementSprite(next));
+        for (Field field : mainMap) {
+            drawableFields.put(field, new FieldElementSprite(field));
         }
     }
 
@@ -46,7 +44,7 @@ public class GameGraphics extends JPanel implements ImageObserver {
 
     public boolean attachToMap(game.Map map) {
         if (mainMap == null) {
-            mainMap = map;
+                mainMap = map;
             setUp();
             return true;
         } else {
@@ -58,18 +56,19 @@ public class GameGraphics extends JPanel implements ImageObserver {
         BufferedImage workingImage = new BufferedImage(50 * radius, 50 * radius, ColorModel.TRANSLUCENT);
         //TODO here is where we iterate on given fields
 
-        int size = 2 * radius + 1;
-        int fieldsToDisplay = size * size;
-        int origo = mainMap.indexOf(center);
+        int dim = 2*radius + 1;
 
-        //TODO THIS ALGORITHM IS INCORRECT. JUST FOR SEQENCE GENERATION, AND OVERVIEW:
-        for (int i = origo - fieldsToDisplay / 2; i < origo + fieldsToDisplay / 2; ++i) {
-            FieldElementSprite fieldSprite = drawableFields.get(mainMap.get(i));
-            workingImage.getGraphics().drawImage(fieldSprite.getItemImage(), (i / size) * 50, (i % size) * 50, this);
+        Field[][] fields = mainMap.getRegion(center, dim, dim);
+        for (int x = 0; x < dim; ++x) {
+            for (int y = 0; y < dim; ++y) {
+                FieldElementSprite toDraw = drawableFields.get(fields[x][y]);
+                workingImage.getGraphics().drawImage(toDraw.getItemImage(),x*50,y*50,this);
+            }
         }
 
-
-        bufferedImage = workingImage;
+        synchronized (bufferedImage) {
+            bufferedImage = workingImage;
+        }
     }
 
     @Override
@@ -77,8 +76,9 @@ public class GameGraphics extends JPanel implements ImageObserver {
         if (mainMap == null) {
             return;
         }
-
-        g.drawImage(bufferedImage, 0, 0, this);
+        synchronized (bufferedImage) {
+            g.drawImage(bufferedImage, 0, 0, this);
+        }
     }
 
     public Map<Field, FieldElementSprite> getDrawableFields() {
