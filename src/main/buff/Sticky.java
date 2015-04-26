@@ -42,4 +42,9 @@ public class Sticky extends Buff {
     public String toString() {
         return "S";
     }
+
+    @Override
+    public void accept(BuffVisitor visitor) {
+        visitor.visit(this);
+    }
 }
