@@ -44,7 +44,9 @@ public class GameGraphics extends JPanel implements ImageObserver {
 
     public boolean attachToMap(game.Map map) {
         if (mainMap == null) {
-                mainMap = map;
+            if (map == null)
+                return false;
+            mainMap = map;
             setUp();
             return true;
         } else {
