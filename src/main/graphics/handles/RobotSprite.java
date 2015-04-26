@@ -10,6 +10,7 @@ public class RobotSprite implements SpriteHandle {
 
     private Robot robot;
     private static int startColorIndex = 0;
+    private int colorIndex;
 
     public static boolean setStartColorIndex(int input) {
         if (input >= 0) {
@@ -23,6 +24,8 @@ public class RobotSprite implements SpriteHandle {
     public RobotSprite(Robot robot) {
         if (robot != null) {
             this.robot = robot;
+            colorIndex = startColorIndex;
+            ++startColorIndex;
         } else {
             throw new NullPointerException();
         }
