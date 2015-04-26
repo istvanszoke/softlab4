@@ -20,7 +20,14 @@
 \comment{A felület működésének elve, a grafikus rendszer architektúrája (struktúra diagramok). A struktúra diagramokon a prototípus azon és csak azon osztályainak is szerepelnie kell, amelyekhez a grafikus felületet létrehozó osztályok kapcsolódnak.}
 
 \subsection{A felület működési elve}
-\comment{Le kell írni, hogy a grafikai megjelenésért felelős osztályok, objektumok hogyan kapcsolódnak a meglevő rendszerhez, a megjelenítés során mi volt az alapelv. Törekedni kell az MVC megvalósításra. Alapelvek lehetnek: \textbf{push} alapú: a modell értesíti a felületet, hogy változott; \textbf{pull} alapú: a felület kérdezi le a modellt, hogy változott-e; \textbf{kevert}: a kettő kombinációja.}
+\noindent A grafikus felület \textbf{pull} alapú működést valósít meg, tehát mindig a felület megjelenítéséért felelős objektumok fogják lekérdezni a modell aktuális állapotát. 
+
+\noindent Ezen új, a megjelenítést szolgáló objektumok adapterként szolgálnak a modell megfelelő elemeihez: minden megjeleníteni kívánt típushoz definiálni kell egy megjelenítőt (ezután: \textbf{Sprite}), ami képes visszaadni egy adott modellobjektum vizuális reprezentációját. 
+
+\noindent A \textbf{Spriteokat} gyűjtőosztályok
+foglalják magukba, amelyek létre tudják hozni a megfelelő \textbf{Spriteokat}, valamint képesek egy modellbeli absztrakt osztály vagy interfész (\textbf{Agent}, \textbf{Field} vagy \textbf{Buff}) grafikus reprezentációjának előállítására. 
+
+\noindent A tényleges rajzolást egy osztály végzi, amely a képrenyőre rajzolja az összes, a gyűjtőosztályok által előállított képet.
 
 \subsection{A felület osztály-struktúrája}
 \comment{Osztálydiagram. Minden új osztály, és azon régiek, akik az újakhoz közvetlenül kapcsolódnak.}
