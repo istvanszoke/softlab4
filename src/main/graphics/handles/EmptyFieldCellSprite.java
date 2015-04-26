@@ -31,8 +31,4 @@ public class EmptyFieldCellSprite implements SpriteHandle {
         return image;
     }
 
-    public EmptyFieldCell getEmptyFieldCell() {
-        return cell;
-    }
-
 }

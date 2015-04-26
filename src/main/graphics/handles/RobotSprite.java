@@ -9,6 +9,16 @@ import graphics.SpriteHandle;
 public class RobotSprite implements SpriteHandle {
 
     private Robot robot;
+    private static int startColorIndex = 0;
+
+    public static boolean setStartColorIndex(int input) {
+        if (input >= 0) {
+            startColorIndex = input;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public RobotSprite(Robot robot) {
         if (robot != null) {
@@ -24,7 +34,4 @@ public class RobotSprite implements SpriteHandle {
         return null;
     }
 
-    public Robot getRobot() {
-        return robot;
-    }
 }

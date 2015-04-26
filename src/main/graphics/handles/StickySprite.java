@@ -30,7 +30,4 @@ public class StickySprite implements SpriteHandle {
         return image;
     }
 
-    public Sticky getSticky() {
-        return sticky;
-    }
 }

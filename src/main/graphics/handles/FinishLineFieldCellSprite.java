@@ -30,7 +30,4 @@ public class FinishLineFieldCellSprite implements SpriteHandle {
         return image;
     }
 
-    public FinishLineFieldCell getFinishLineFieldCell() {
-        return cell;
-    }
 }

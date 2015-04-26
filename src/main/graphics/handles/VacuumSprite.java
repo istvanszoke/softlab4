@@ -31,7 +31,4 @@ public class VacuumSprite implements SpriteHandle {
         return image;
     }
 
-    public Vacuum getVacuum() {
-        return vacuum;
-    }
 }

@@ -30,7 +30,4 @@ public class OilSprite implements SpriteHandle {
         return image;
     }
 
-    public Oil getOil() {
-        return oil;
-    }
 }

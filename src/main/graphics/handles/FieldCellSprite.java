@@ -30,8 +30,4 @@ public class FieldCellSprite implements SpriteHandle {
         return image;
     }
 
-    public FieldCell getFieldCell() {
-        return cell;
-    }
-
 }
