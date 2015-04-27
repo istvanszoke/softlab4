@@ -293,5 +293,25 @@ foglalják magukba, amelyek létre tudják hozni a megfelelő \textbf{Spriteokat
 \end{itemize}
 
 \section{Kapcsolat az alkalmazói rendszerrel}
-\comment{Szekvencia-diagramokon ábrázolni kell a grafikus rendszer működését. Konzisztens kell legyen az előző alfejezetekkel. Minden metódus, ami ott szerepel, fel kell tűnjön valamelyik szekvenciában. Minden metódusnak, ami szekvenciában szerepel, szereplnie kell a valamelyik osztálydiagramon.}
 
+A következő diagramon látható, hogy miképpen tudja meg a GameGraphics osztály, hogy milyen típusú Field-et kell rajzoljon egy adott helyre. Ugyanígy derül ki a program egy mélyebbik pontján, hogy milyen típusú Agent és Buff van egy adott Field-en. Mindezt Visitor pattern segítségével oldjuk meg. 
+A FieldElementSprite FieldVisitorként megtudja, hogy a fieldSprite tagváltozójának milyen értéket adjon.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=\textwidth]{chapters/chapter11/fieldbeallitas.pdf}
+        \caption{Egy Field beállítása}
+        \label{fig:fieldbeallitas}
+    \end{center}
+\end{figure}
+
+
+Ezen a diagramon egy Rajzolási szekvencia látható. Itt arra fektetünk hangsúlyt, hogy miképpen kérdezi le egy Field a rajtalévő elemeket és hogy azokat, hogyan rajzoljuk egymásra. A félkövér-dölttel jelzett metódushívások a tényleges rajzolásokat hivatottak jelölni.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=\textwidth]{chapters/chapter11/rajzolas.pdf}
+        \caption{Rajzolási szekvencia}
+        \label{fig:rajzolas}
+    \end{center}
+\end{figure}
