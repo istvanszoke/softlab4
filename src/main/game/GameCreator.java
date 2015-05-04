@@ -47,7 +47,7 @@ public final class GameCreator {
     }
 
     public GameCreator() {
-        map = new Map();
+        map = null;
         agents = new ArrayList<AgentHandle>();
     }
 
@@ -62,6 +62,7 @@ public final class GameCreator {
     }
 
     public GameCreator generateMap(int width, int height) {
+        map = new Map(width, height);
         generateGrid(width, height);
         setNeighbours(width, height);
         return this;

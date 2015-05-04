@@ -4,7 +4,6 @@ import javax.swing.WindowConstants;
 import java.awt.KeyboardFocusManager;
 import java.io.*;
 import java.util.*;
-import java.util.Map;
 
 import game.*;
 import game.handle.AgentHandle;
@@ -23,6 +22,8 @@ public class Main extends JFrame implements GameListener {
     Game mainGame;
 
     public static void main(String[] args) throws IOException {
+        Game g = GameSerializer.load("new_format.map");
+
         TestcaseGenerator.generateTestCases(30);
         boolean stdio = true;
 

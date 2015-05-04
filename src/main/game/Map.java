@@ -12,12 +12,24 @@ public class Map implements Iterable<Field>, Serializable {
 
     private static final long serialVersionUID = -6752689712870327480L;
 
+    private final int width;
+    private final int height;
     private final List<Field> fields;
     private final List<Field> finishLineFields;
 
-    public Map() {
+    public Map(int width, int height) {
+        this.width = width;
+        this.height = height;
         fields = new ArrayList<Field>();
         finishLineFields = new ArrayList<Field>();
+    }
+
+    public Map(int width, int height,
+               List<Field> fields, List<Field> finishLineFields) {
+        this.width = width;
+        this.height = height;
+        this.fields = fields;
+        this.finishLineFields = finishLineFields;
     }
 
     public Field get(int index) {
