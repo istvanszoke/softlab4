@@ -45,7 +45,7 @@ public class Vacuum extends Agent {
     }
 
     @Override
-    public void accept(AgentVisitor visitor) {}
+    public void accept(AgentVisitor visitor) { visitor.visit(this); }
 
     @Override
     public void accept(AgentCommand command) {

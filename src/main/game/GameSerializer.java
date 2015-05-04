@@ -1,22 +1,66 @@
 package game;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.Map;
 
+import agents.Agent;
+import agents.AgentVisitor;
+import agents.Robot;
+import agents.Vacuum;
 import buff.Buff;
+import buff.BuffVisitor;
 import buff.Oil;
 import buff.Sticky;
+import feedback.NoFeedbackException;
+import feedback.Result;
 import field.*;
 import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
 import game.handle.VacuumHandle;
 
 public class GameSerializer {
-    public static void save(Game game, String fileName) {
+    public static void save(Game game, int roundTime, String fileName) throws IOException {
+        game.Map map = game.getMap();
+        Map<String, Collection<Integer>> agents = splitAgents(game);
+        Map<String, Collection<Integer>> buffs = splitBuffs(game);
 
+        PrintWriter pw = new PrintWriter(new FileOutputStream("src/resources/maps/" + fileName));
+        InstanceOfWorkaround wa = new InstanceOfWorkaround();
+
+        pw.println("Map:");
+        for (int i = 0; i < map.getHeight(); ++i) {
+            for (int j = 0; j < map.getWidth(); ++j) {
+                Field f = map.get(i * map.getWidth() + j);
+                f.accept(wa);
+                pw.print(wa.output);
+            }
+            pw.println();
+        }
+        pw.println();
+
+        pw.println("Agents(roundTime=" + roundTime + "):");
+        for (Map.Entry<String, Collection<Integer>> e : agents.entrySet()) {
+            pw.print(e.getKey() + ":");
+            for (Integer i : e.getValue()) {
+                pw.print(" " + i);
+            }
+            pw.println();
+        }
+        pw.println();
+
+        pw.println("Buffs:");
+        for (Map.Entry<String, Collection<Integer>> e : buffs.entrySet()) {
+            pw.print(e.getKey() + ":");
+            for (Integer i : e.getValue()) {
+                pw.print(" " + i);
+            }
+            pw.println();
+        }
+        pw.println();
+
+        pw.flush();
+        pw.close();
     }
 
     public static Game load(String fileName) throws IOException {
@@ -54,6 +98,87 @@ public class GameSerializer {
         }
     }
 
+    private static class InstanceOfWorkaround implements FieldVisitor, AgentVisitor, BuffVisitor {
+        public String output = "INVALID";
+
+        @Override
+        public void visit(Robot element) {
+            output = "Robot";
+        }
+
+        @Override
+        public void visit(Vacuum element) {
+            output = "Vacuum";
+        }
+
+        @Override
+        public void visit(Oil element) {
+            output = "Oil";
+        }
+
+        @Override
+        public void visit(Sticky element) {
+            output = "Sticky";
+        }
+
+        @Override
+        public void visit(FieldCell element) {
+            output = " ";
+        }
+
+        @Override
+        public void visit(EmptyFieldCell element) {
+            output = "#";
+        }
+
+        @Override
+        public void visit(FinishLineFieldCell element) {
+            output = "$";
+        }
+
+        @Override
+        public Result getResult() throws NoFeedbackException {
+            return null;
+        }
+    }
+
+    private static Map<String, Collection<Integer>> splitAgents(Game game) {
+        Map<String, Collection<Integer>> ret = new HashMap<String, Collection<Integer>>();
+        InstanceOfWorkaround wa = new InstanceOfWorkaround();
+
+        for (Field f : game.getMap()) {
+            Agent a = f.getAgent();
+            if (a != null) {
+                a.accept(wa);
+                if (ret.get(wa.output) == null) {
+                    ret.put(wa.output, new ArrayList<Integer>());
+                }
+
+                ret.get(wa.output).add(game.getMap().indexOf(f));
+            }
+        }
+
+        return ret;
+    }
+
+    private static Map<String, Collection<Integer>> splitBuffs(Game game) {
+        Map<String, Collection<Integer>> ret = new HashMap<String, Collection<Integer>>();
+        InstanceOfWorkaround wa = new InstanceOfWorkaround();
+
+        for (Field f : game.getMap()) {
+            for (Buff b : f.getBuffs()) {
+                b.accept(wa);
+                if (ret.get(wa.output) == null) {
+                    ret.put(wa.output, new ArrayList<Integer>());
+                }
+
+                ret.get(wa.output).add(game.getMap().indexOf(f));
+            }
+        }
+
+        return ret;
+    }
+
     private static game.Map processMap(BufferedReader reader) throws IOException {
         List<FieldPlaceholder> placeholders = new ArrayList<FieldPlaceholder>();
 
@@ -77,9 +202,9 @@ public class GameSerializer {
             ++height;
         }
 
-        updateDistances(placeholders, numberOfRegularFields, width);
+        updateDistances(placeholders, numberOfRegularFields, width, height);
         //TODO: remove debug print
-        debugDistances(placeholders, width, height);
+        //debugDistances(placeholders, width, height);
 
         return mapFromPlaceholders(width, height, placeholders);
 
@@ -116,6 +241,7 @@ public class GameSerializer {
                 if (buffs.get(fieldIndex) == null) {
                     buffs.put(fieldIndex, new ArrayList<Buff>());
                 }
+
                 if (split[0].equals("oil")) {
                     buffs.get(fieldIndex).add(new Oil());
                 } else if (split[0].equals("sticky")) {
@@ -149,7 +275,8 @@ public class GameSerializer {
         return new Game(new GameStorage(agents.values()), map);
     }
 
-    private static void updateDistances(List<FieldPlaceholder> fields, int numberOfRegularFields, int mapWidth) {
+    private static void updateDistances(List<FieldPlaceholder> fields, int numberOfRegularFields,
+                                        int mapWidth, int mapHeight) {
         Set<FieldPlaceholder> finishLineFields = new HashSet<FieldPlaceholder>();
         for (FieldPlaceholder f : fields) {
             if (f.distanceFromStart != null && f.distanceFromStart.equals(0)) {
@@ -161,8 +288,8 @@ public class GameSerializer {
         // ones written). Currently from the finish line we will always step either UP or LEFT to begin the race
         // TODO: this limits finish lines to be either horizontal or vertical. This QUIETLY BREAKS on diagonal finish lines
         Set<FieldPlaceholder> current = new HashSet<FieldPlaceholder>();
-        current.addAll(neighboursInDirection(fields, finishLineFields, Direction.DOWN, mapWidth));
-        current.addAll(neighboursInDirection(fields, finishLineFields, Direction.RIGHT, mapWidth));
+        current.addAll(neighboursInDirection(fields, finishLineFields, Direction.DOWN, mapWidth, mapHeight));
+        current.addAll(neighboursInDirection(fields, finishLineFields, Direction.RIGHT, mapWidth, mapHeight));
         cleanupCurrent(current);
 
         int distance = 1;
@@ -173,7 +300,7 @@ public class GameSerializer {
         // behaviour we want, but it is by far the easiest to implement (among the possiblities that still
         // make sense)
         while (numberOfProcessed < numberOfRegularFields) {
-            current.addAll(allNeighbours(fields, current, mapWidth));
+            current.addAll(allNeighbours(fields, current, mapWidth, mapHeight));
             cleanupCurrent(current);
             numberOfProcessed += setDistances(current, distance);
             ++distance;
@@ -208,23 +335,23 @@ public class GameSerializer {
         return numberOfSet;
     }
 
-    // No bounds checking, requires a boundary of empty fields on the map to work correctly
     private static List<FieldPlaceholder> neighboursInDirection(List<FieldPlaceholder> fields,
                                                                 Collection<FieldPlaceholder> current,
                                                                 Direction d,
-                                                                int mapWidth) {
+                                                                int mapWidth, int mapHeight) {
+        int maxIndex = mapWidth * mapHeight - 1;
         List<FieldPlaceholder> ret = new ArrayList<FieldPlaceholder>();
 
         for (FieldPlaceholder field : current) {
             int index = fields.indexOf(field);
 
-            if (d == Direction.UP) {
+            if (d == Direction.UP && index >= mapWidth) {
                 ret.add(fields.get(index - mapWidth));
-            } else if (d == Direction.DOWN) {
+            } else if (d == Direction.DOWN && index <= maxIndex - mapWidth) {
                 ret.add(fields.get(index + mapWidth));
-            } else if (d == Direction.LEFT) {
+            } else if (d == Direction.LEFT && index > 0) {
                 ret.add(fields.get(index - 1));
-            } else if (d == Direction.RIGHT) {
+            } else if (d == Direction.RIGHT && index < maxIndex) {
                 ret.add(fields.get(index + 1));
             }
         }
@@ -232,17 +359,29 @@ public class GameSerializer {
         return ret;
     }
 
-    // No bounds checking, requires a boundary of empty fields on the map to work correctly
     private static List<FieldPlaceholder> allNeighbours(List<FieldPlaceholder> fields,
                                                         Collection<FieldPlaceholder> current,
-                                                        int mapWidth) {
+                                                        int mapWidth, int mapHeight) {
+        int maxIndex = mapWidth * mapHeight - 1;
         List<FieldPlaceholder> ret = new ArrayList<FieldPlaceholder>();
+
         for (FieldPlaceholder field : current) {
             int index = fields.indexOf(field);
-            ret.add(fields.get(index - mapWidth));
-            ret.add(fields.get(index + mapWidth));
-            ret.add(fields.get(index - 1));
-            ret.add(fields.get(index + 1));
+            if (index >= mapWidth) {
+                ret.add(fields.get(index - mapWidth));
+            }
+
+            if (index <= maxIndex - mapWidth) {
+                ret.add(fields.get(index + mapWidth));
+            }
+
+            if (index > 0) {
+                ret.add(fields.get(index - 1));
+            }
+
+            if (index < maxIndex) {
+                ret.add(fields.get(index + 1));
+            }
         }
 
         return ret;

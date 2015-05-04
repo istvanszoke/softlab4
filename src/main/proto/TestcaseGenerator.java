@@ -1,6 +1,5 @@
 package proto;
 
-import java.io.FileOutputStream;
 import java.util.HashMap;
 
 import agents.Robot;
@@ -11,6 +10,7 @@ import buff.Sticky;
 import field.Field;
 import game.Game;
 import game.GameCreator;
+import game.GameSerializer;
 import game.Heartbeat;
 import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
@@ -24,7 +24,7 @@ public class TestcaseGenerator {
                     private static final long serialVersionUID = -1094092084000350243L;
 
                     {
-                    put(PlayerHandle.createRobot(10000), 0);
+                    put(PlayerHandle.createRobot(10000), 11);
                     put(VacuumHandle.createVacuum(), 34);
                 }},
 
@@ -37,7 +37,7 @@ public class TestcaseGenerator {
                     put(new Oil(), 34);
                 }});
 
-        if (!writeTest(testCase, "test01.map")) {
+        if (!writeTest(testCase, 10000, "test01.map")) {
             return false;
         }
         resetInstanceCounts();
@@ -48,7 +48,7 @@ public class TestcaseGenerator {
                     private static final long serialVersionUID = 6891509298292059684L;
 
                     {
-                    put(PlayerHandle.createRobot(10000), 0);
+                    put(PlayerHandle.createRobot(10000), 11);
                 }},
 
                 new GameCreator().generateMap(10, 10).getMap(),
@@ -60,7 +60,7 @@ public class TestcaseGenerator {
                     put(new Oil(), 34);
                 }});
 
-        if (!writeTest(testCase, "test02.map")) {
+        if (!writeTest(testCase, 10000, "test02.map")) {
             return false;
         }
         resetInstanceCounts();
@@ -84,7 +84,7 @@ public class TestcaseGenerator {
                     put(new Sticky(), 34);
                 }});
 
-        if (!writeTest(testCase, "test03.map")) {
+        if (!writeTest(testCase, roundTime, "test03.map")) {
             return false;
         }
         resetInstanceCounts();
@@ -107,7 +107,7 @@ public class TestcaseGenerator {
                     put(new Oil(), 34);
                 }});
 
-        if (!writeTest(testCase, "test04.map")) {
+        if (!writeTest(testCase, roundTime, "test04.map")) {
             return false;
         }
         resetInstanceCounts();
@@ -130,7 +130,7 @@ public class TestcaseGenerator {
                     {
                 }});
 
-        if (!writeTest(testCase, "test05.map")) {
+        if (!writeTest(testCase, roundTime, "test05.map")) {
             return false;
         }
         resetInstanceCounts();
@@ -153,7 +153,7 @@ public class TestcaseGenerator {
                     {
                 }});
 
-        if (!writeTest(testCase, "test06.map")) {
+        if (!writeTest(testCase, roundTime, "test06.map")) {
             return false;
         }
         resetInstanceCounts();
@@ -164,7 +164,7 @@ public class TestcaseGenerator {
                     private static final long serialVersionUID = 6024511841574842543L;
 
                     {
-                    put(PlayerHandle.createRobot(10000), 0);
+                    put(PlayerHandle.createRobot(10000), 11);
                     put(VacuumHandle.createVacuum(), 33);
                     put(VacuumHandle.createVacuum(), 34);
                 }},
@@ -177,7 +177,7 @@ public class TestcaseGenerator {
                     {
                 }});
 
-        if (!writeTest(testCase, "test07.map")) {
+        if (!writeTest(testCase, 10000, "test07.map")) {
             return false;
         }
         resetInstanceCounts();
@@ -200,7 +200,7 @@ public class TestcaseGenerator {
                     {
                 }});
 
-        if (!writeTest(testCase, "test08.map")) {
+        if (!writeTest(testCase, roundTime, "test08.map")) {
             return false;
         }
         resetInstanceCounts();
@@ -209,15 +209,9 @@ public class TestcaseGenerator {
         return true;
     }
 
-    private static boolean writeTest(Game testCase, String mapName) {
+    private static boolean writeTest(Game testCase, int roundTime, String mapName) {
         try {
-            FileOutputStream fos = new FileOutputStream("src/resources/maps/" + mapName);
-            if (GameCreator.serializeGame(testCase, fos)) {
-                fos.flush();
-                fos.close();
-            } else {
-                return false;
-            }
+            GameSerializer.save(testCase, roundTime, mapName);
         } catch (Exception e) {
             return false;
         }

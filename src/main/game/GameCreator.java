@@ -62,9 +62,7 @@ public final class GameCreator {
     }
 
     public GameCreator generateMap(int width, int height) {
-        map = new Map(width, height);
         generateGrid(width, height);
-        setNeighbours(width, height);
         return this;
     }
 
@@ -76,59 +74,30 @@ public final class GameCreator {
         return new Game(agents, map);
     }
 
-    // Mapgen
     public Map getMap() {
         return map;
     }
 
     private void generateGrid(int width, int height) {
+        List<Field> fields = new ArrayList<Field>();
+        List<Field> finishLineFields = new ArrayList<Field>();
+
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
                 int distanceFromGoal = i < height / 2 ? height / 2 - i : i - height / 2;
 
-                if (i == height / 2) {
-                    map.add(new FinishLineFieldCell());
+                if (i == 0 || i == height - 1 || j == 0 || j == width - 1) {
+                    fields.add(new EmptyFieldCell(-1));
+                } else if (i == height / 2 && j != width - 2) { // Workaround for non-circular map
+                    Field f = new FinishLineFieldCell();
+                    fields.add(f);
+                    finishLineFields.add(f);
                 } else {
-                    map.add(new FieldCell(distanceFromGoal));
+                    fields.add(new FieldCell(distanceFromGoal));
                 }
             }
         }
-    }
 
-    private void setNeighbours(int width, int height) {
-        for (int i = 0; i < height; ++i) {
-            for (int j = 0; j < width; ++j) {
-                Field field = map.get(i * width + j);
-
-                if (i > 0) {
-                    field.addNeighbour(Direction.UP, map.get((i - 1) * width + j));
-                }
-
-                if (i < height - 1) {
-                    field.addNeighbour(Direction.DOWN, map.get((i + 1) * width + j));
-                }
-
-                if (i == 0) {
-                    field.addNeighbour(Direction.UP, new EmptyFieldCell(-1));
-                }
-                if (i == height - 1) {
-                    field.addNeighbour(Direction.DOWN, new EmptyFieldCell(-1));
-                }
-
-                if (j > 0) {
-                    field.addNeighbour(Direction.LEFT, map.get(i * width + j - 1));
-                }
-                if (j < width - 1) {
-                    field.addNeighbour(Direction.RIGHT, map.get(i * width + j + 1));
-                }
-
-                if (j == 0) {
-                    field.addNeighbour(Direction.LEFT, new EmptyFieldCell(-1));
-                }
-                if (j == width - 1) {
-                    field.addNeighbour(Direction.RIGHT, new EmptyFieldCell(-1));
-                }
-            }
-        }
+        map = new Map(width, height, fields, finishLineFields);
     }
 }

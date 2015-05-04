@@ -22,8 +22,6 @@ public class Main extends JFrame implements GameListener {
     Game mainGame;
 
     public static void main(String[] args) throws IOException {
-        Game g = GameSerializer.load("new_format.map");
-
         TestcaseGenerator.generateTestCases(30);
         boolean stdio = true;
 
@@ -98,14 +96,11 @@ public class Main extends JFrame implements GameListener {
         if (mainGame == null) {
             if (cmd.equals(ProtoCommand.PLAY)) {
                 String mapName = command.getArgs().get("palya");
-                String filename = "src/resources/maps/" + mapName;
 
                 try {
-                    FileInputStream fis = new FileInputStream(filename);
-                    mainGame = GameCreator.deserializeGame(fis);
-                    fis.close();
+                    mainGame = GameSerializer.load(mapName);
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    //ex.printStackTrace();
                 }
 
                 if (mainGame == null) {
