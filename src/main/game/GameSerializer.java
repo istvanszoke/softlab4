@@ -169,6 +169,9 @@ public class GameSerializer {
         int numberOfProcessed = setDistances(current, distance);
         ++distance;
 
+        // Currently this calculates a worst-case distance from the finish line. This might not be the
+        // behaviour we want, but it is by far the easiest to implement (among the possiblities that still
+        // make sense)
         while (numberOfProcessed < numberOfRegularFields) {
             current.addAll(allNeighbours(fields, current, mapWidth));
             cleanupCurrent(current);
