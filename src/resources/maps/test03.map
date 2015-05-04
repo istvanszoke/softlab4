@@ -1,4 +1,4 @@
-Map:
+[Map]
 ##########
 #        #
 #        #
@@ -10,9 +10,9 @@ Map:
 #        #
 ##########
 
-Agents(roundTime=30):
+[Agents(roundTime=30)]
 Robot: 24 36
 
-Buffs:
+[Buffs]
 Sticky: 34
 

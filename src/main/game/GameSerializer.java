@@ -28,7 +28,7 @@ public class GameSerializer {
         PrintWriter pw = new PrintWriter(new FileOutputStream("src/resources/maps/" + fileName));
         InstanceOfWorkaround wa = new InstanceOfWorkaround();
 
-        pw.println("Map:");
+        pw.println("[Map]");
         for (int i = 0; i < map.getHeight(); ++i) {
             for (int j = 0; j < map.getWidth(); ++j) {
                 Field f = map.get(i * map.getWidth() + j);
@@ -39,7 +39,7 @@ public class GameSerializer {
         }
         pw.println();
 
-        pw.println("Agents(roundTime=" + roundTime + "):");
+        pw.println("[Agents(roundTime=" + roundTime + ")]");
         for (Map.Entry<String, Collection<Integer>> e : agents.entrySet()) {
             pw.print(e.getKey() + ":");
             for (Integer i : e.getValue()) {
@@ -49,7 +49,7 @@ public class GameSerializer {
         }
         pw.println();
 
-        pw.println("Buffs:");
+        pw.println("[Buffs]");
         for (Map.Entry<String, Collection<Integer>> e : buffs.entrySet()) {
             pw.print(e.getKey() + ":");
             for (Integer i : e.getValue()) {
@@ -73,12 +73,12 @@ public class GameSerializer {
         String line = reader.readLine();
         while (line != null) {
             String processedLine = line.trim().toLowerCase();
-            if (processedLine.equals("map:")) {
+            if (processedLine.equals("[map]")) {
                 map = processMap(reader);
-            } else if (processedLine.matches("agents\\(\\w+=\\d+\\):")) {
-                int roundTime = Integer.parseInt(processedLine.replaceAll("[):]", "").split("=")[1]);
+            } else if (processedLine.matches("\\[agents\\(\\w+=\\d+\\)\\]")) {
+                int roundTime = Integer.parseInt(processedLine.replaceAll("[)]]", "").split("=")[1]);
                 agents = processAgents(reader, roundTime);
-            } else if (processedLine.equals("buffs:")) {
+            } else if (processedLine.equals("[buffs]")) {
                 buffs = processBuffs(reader);
             }
 

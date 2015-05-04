@@ -1,4 +1,4 @@
-Map:
+[Map]
 ##########
 #        #
 #        #
@@ -10,9 +10,9 @@ Map:
 #        #
 ##########
 
-Agents(roundTime=10000):
+[Agents(roundTime=10000)]
 Robot: 11
 
-Buffs:
+[Buffs]
 Oil: 34
 
