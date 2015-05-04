@@ -7,8 +7,13 @@ import java.util.List;
 import java.util.ListIterator;
 
 import agents.Agent;
+import agents.AgentVisitor;
+import agents.Robot;
+import agents.Vacuum;
 import buff.Buff;
 import buff.Oil;
+import feedback.NoFeedbackException;
+import feedback.Result;
 import field.Field;
 import game.control.*;
 import game.handle.AgentHandle;
@@ -183,17 +188,10 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     }
 
     private void setAgentControllers() {
+        ControllerAssigner assigner = new ControllerAssigner(controllerServer);
         for (AgentHandle player : gameStorage) {
             Agent agent = player.getAgent();
-            GameControllerSocket socket = controllerServer.createSocketForAgent(agent);
-            switch (controllerType) {
-                case HUMAN:
-                    humanController.addControllerSocket(socket);
-                    break;
-                case PROTOCOMMAND:
-                    protoCommandController.addControllerSocket(socket);
-                    break;
-            }
+            agent.accept(assigner);
         }
     }
 
@@ -272,5 +270,45 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
             sb.append('-');
         }
         return sb.toString();
+    }
+
+    private class ControllerAssigner implements AgentVisitor {
+        GameControllerServer server;
+
+        ControllerAssigner(GameControllerServer server) {
+            this.server = server;
+        }
+
+        @Override
+        public void visit(Robot element) {
+            GameControllerSocket socket = controllerServer.createSocketForAgent(element);
+            switch (controllerType) {
+                case HUMAN:
+                    humanController.addControllerSocket(socket);
+                    break;
+                case PROTOCOMMAND:
+                    protoCommandController.addControllerSocket(socket);
+                    break;
+            }
+        }
+
+        @Override
+        public void visit(Vacuum element) {
+            GameControllerSocket socket = controllerServer.createSocketForAgent(element);
+            switch (controllerType) {
+                case HUMAN:
+                    humanController.addControllerSocket(socket);
+                    break;
+                case PROTOCOMMAND:
+                    protoCommandController.addControllerSocket(socket);
+                    break;
+            }
+        }
+
+        @Override
+        public Result getResult() throws NoFeedbackException {
+            return null;
+        }
+
     }
 }
