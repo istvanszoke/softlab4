@@ -6,9 +6,13 @@ import java.io.IOException;
 import java.util.*;
 import java.util.Map;
 
-import agents.Agent;
 import buff.Buff;
+import buff.Oil;
+import buff.Sticky;
 import field.*;
+import game.handle.AgentHandle;
+import game.handle.PlayerHandle;
+import game.handle.VacuumHandle;
 
 public class GameSerializer {
     public static void save(Game game, String fileName) {
@@ -17,8 +21,8 @@ public class GameSerializer {
 
     public static Game load(String fileName) throws IOException {
         game.Map map = null;
-        Map<Integer, Agent> agents = null;
-        Map<Integer, Buff> buffs = null;
+        Map<Integer, AgentHandle> agents = null;
+        Map<Integer, Collection<Buff>> buffs = null;
 
         BufferedReader reader = new BufferedReader(new FileReader("src/resources/maps/" + fileName));
 
@@ -27,14 +31,17 @@ public class GameSerializer {
             String processedLine = line.trim().toLowerCase();
             if (processedLine.equals("map:")) {
                 map = processMap(reader);
-            } else if (processedLine.equals("agents:")) {
-                agents = processAgents(reader);
+            } else if (processedLine.matches("agents\\(\\w+=\\d+\\):")) {
+                int roundTime = Integer.parseInt(processedLine.replaceAll("[):]", "").split("=")[1]);
+                agents = processAgents(reader, roundTime);
             } else if (processedLine.equals("buffs:")) {
                 buffs = processBuffs(reader);
             }
 
             line = reader.readLine();
         }
+
+        reader.close();
 
         return merge(map, agents, buffs);
     }
@@ -78,20 +85,68 @@ public class GameSerializer {
 
     }
 
-    private static Map<Integer, Agent> processAgents(BufferedReader reader) throws IOException {
-        return null;
+    private static Map<Integer, AgentHandle> processAgents(BufferedReader reader, int roundTime) throws IOException {
+        Map<Integer, AgentHandle> agents = new HashMap<Integer, AgentHandle>();
+
+        String line = reader.readLine();
+        while (line != null && !line.isEmpty()) {
+            String[] split = line.trim().toLowerCase().split(":");
+            for (String field : split[1].trim().split(" ")) {
+                if (split[0].equals("robot")) {
+                    agents.put(Integer.parseInt(field), PlayerHandle.createRobot(roundTime));
+                } else if (split[0].equals("vacuum")) {
+                    agents.put(Integer.parseInt(field), VacuumHandle.createVacuum());
+                }
+            }
+
+            line = reader.readLine();
+        }
+
+        return agents;
     }
 
-    private static Map<Integer, Buff> processBuffs(BufferedReader reader) throws IOException {
-        return null;
+    private static Map<Integer, Collection<Buff>> processBuffs(BufferedReader reader) throws IOException {
+        Map<Integer, Collection<Buff>> buffs = new HashMap<Integer, Collection<Buff>>();
+
+        String line = reader.readLine();
+        while (line != null && !line.isEmpty()) {
+            String[] split = line.trim().toLowerCase().split(":");
+            for (String field : split[1].trim().split(" ")) {
+                int fieldIndex = Integer.parseInt(field);
+                if (buffs.get(fieldIndex) == null) {
+                    buffs.put(fieldIndex, new ArrayList<Buff>());
+                }
+                if (split[0].equals("oil")) {
+                    buffs.get(fieldIndex).add(new Oil());
+                } else if (split[0].equals("sticky")) {
+                    buffs.get(fieldIndex).add(new Sticky());
+                }
+            }
+
+            line = reader.readLine();
+        }
+
+        return buffs;
     }
 
-    private static Game merge(game.Map map, Map<Integer, Agent> agents, Map<Integer, Buff> buffs) {
+    private static Game merge(game.Map map,
+                              Map<Integer, AgentHandle> agents,
+                              Map<Integer, Collection<Buff>> buffs) {
         if (map == null || agents == null || buffs == null) {
             return null;
         }
 
-        return null;
+        for (Map.Entry<Integer, AgentHandle> e : agents.entrySet()) {
+            map.get(e.getKey()).onEnter(e.getValue().getAgent());
+        }
+
+        for (Map.Entry<Integer, Collection<Buff>> e : buffs.entrySet()) {
+            for (Buff b : e.getValue()) {
+                map.get(e.getKey()).placeBuff(b);
+            }
+        }
+
+        return new Game(new GameStorage(agents.values()), map);
     }
 
     private static void updateDistances(List<FieldPlaceholder> fields, int numberOfRegularFields, int mapWidth) {
@@ -102,7 +157,10 @@ public class GameSerializer {
             }
         }
 
-        Set<FieldPlaceholder> current = new LinkedHashSet<FieldPlaceholder>();
+        // The two directions determine the racing direction on the map (it will be the opposite of the
+        // ones written). Currently from the finish line we will always step either UP or LEFT to begin the race
+        // TODO: this limits finish lines to be either horizontal or vertical. This QUIETLY BREAKS on diagonal finish lines
+        Set<FieldPlaceholder> current = new HashSet<FieldPlaceholder>();
         current.addAll(neighboursInDirection(fields, finishLineFields, Direction.DOWN, mapWidth));
         current.addAll(neighboursInDirection(fields, finishLineFields, Direction.RIGHT, mapWidth));
         cleanupCurrent(current);
@@ -147,6 +205,7 @@ public class GameSerializer {
         return numberOfSet;
     }
 
+    // No bounds checking, requires a boundary of empty fields on the map to work correctly
     private static List<FieldPlaceholder> neighboursInDirection(List<FieldPlaceholder> fields,
                                                                 Collection<FieldPlaceholder> current,
                                                                 Direction d,
@@ -170,6 +229,7 @@ public class GameSerializer {
         return ret;
     }
 
+    // No bounds checking, requires a boundary of empty fields on the map to work correctly
     private static List<FieldPlaceholder> allNeighbours(List<FieldPlaceholder> fields,
                                                         Collection<FieldPlaceholder> current,
                                                         int mapWidth) {

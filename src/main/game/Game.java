@@ -68,7 +68,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
             map.get(b.getValue()).placeBuff(b.getKey());
         }
 
-        printOutMap(10, 3);
+        //printOutMap(10, 3);
     }
 
     public void start() {

@@ -14,6 +14,6 @@ Buffs:
 Oil: 23 33
 Sticky: 51 52 53
 
-Agents:
+Agents(roundTime=10):
 Robot: 56 57 58
 Vacuum: 73 
