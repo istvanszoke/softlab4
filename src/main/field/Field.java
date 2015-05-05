@@ -50,6 +50,10 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
         neighbours.put(direction, field);
     }
 
+    public Field getNeighbour(Direction direction) {
+        return neighbours.get(direction);
+    }
+
     public boolean onEnter(Agent agent) {
         if (agent == this.agent) {
             return false;

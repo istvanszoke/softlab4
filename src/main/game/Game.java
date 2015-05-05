@@ -66,11 +66,15 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         this.map = map;
 
         for (java.util.Map.Entry<AgentHandle, Integer> a : agents.entrySet()) {
-            map.get(a.getValue()).onEnter(a.getKey().getAgent());
+            int row = a.getValue() / map.getWidth();
+            int col = a.getValue() - (a.getValue() / map.getWidth()) * map.getWidth();
+            map.get(row, col).onEnter(a.getKey().getAgent());
         }
 
         for (java.util.Map.Entry<Buff, Integer> b : buffs.entrySet()) {
-            map.get(b.getValue()).placeBuff(b.getKey());
+            int row = b.getValue() / map.getWidth();
+            int col = b.getValue() - (b.getValue() / map.getWidth()) * map.getWidth();
+            map.get(row, col).placeBuff(b.getKey());
         }
 
         //printOutMap(10, 3);

@@ -31,7 +31,7 @@ public class GameSerializer {
         pw.println("[Map]");
         for (int i = 0; i < map.getHeight(); ++i) {
             for (int j = 0; j < map.getWidth(); ++j) {
-                Field f = map.get(i * map.getWidth() + j);
+                Field f = map.get(i, j);
                 f.accept(wa);
                 pw.print(wa.output);
             }
@@ -154,7 +154,8 @@ public class GameSerializer {
                     ret.put(wa.output, new ArrayList<Integer>());
                 }
 
-                ret.get(wa.output).add(game.getMap().indexOf(f));
+                Coord index = game.getMap().indexOf(f);
+                ret.get(wa.output).add(index.getRow() * game.getMap().getWidth() + index.getCol());
             }
         }
 
@@ -172,7 +173,8 @@ public class GameSerializer {
                     ret.put(wa.output, new ArrayList<Integer>());
                 }
 
-                ret.get(wa.output).add(game.getMap().indexOf(f));
+                Coord index = game.getMap().indexOf(f);
+                ret.get(wa.output).add(index.getRow() * game.getMap().getWidth() + index.getCol());
             }
         }
 
@@ -263,12 +265,16 @@ public class GameSerializer {
         }
 
         for (Map.Entry<Integer, AgentHandle> e : agents.entrySet()) {
-            map.get(e.getKey()).onEnter(e.getValue().getAgent());
+            int row = e.getKey() / map.getWidth();
+            int col = e.getKey() - (e.getKey() / map.getWidth()) * map.getWidth();
+            map.get(row, col).onEnter(e.getValue().getAgent());
         }
 
         for (Map.Entry<Integer, Collection<Buff>> e : buffs.entrySet()) {
+            int row = e.getKey() / map.getWidth();
+            int col = e.getKey() - (e.getKey() / map.getWidth()) * map.getWidth();
             for (Buff b : e.getValue()) {
-                map.get(e.getKey()).placeBuff(b);
+                map.get(row, col).placeBuff(b);
             }
         }
 
@@ -296,7 +302,7 @@ public class GameSerializer {
         int numberOfProcessed = setDistances(current, distance);
         ++distance;
 
-        // Currently this calculates a worst-case distance from the finish line. This might not be the
+        // Currently this calculates a worst-case manhattan_distance from the finish line. This might not be the
         // behaviour we want, but it is by far the easiest to implement (among the possiblities that still
         // make sense)
         while (numberOfProcessed < numberOfRegularFields) {

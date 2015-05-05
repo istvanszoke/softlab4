@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.*;
 
 import game.*;
+import game.control.VacuumController;
 import game.handle.AgentHandle;
 import proto.*;
 
