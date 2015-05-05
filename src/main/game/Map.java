@@ -57,8 +57,9 @@ public class Map implements Iterable<Field>, Serializable {
         return fields.remove(field);
     }
 
-    public int indexOf(Field field) {
-        return fields.indexOf(field);
+    public Coord indexOf(Field field) {
+        int index = fields.indexOf(field);
+        return new Coord(0, 0);
     }
 
     public boolean isEmpty() {
