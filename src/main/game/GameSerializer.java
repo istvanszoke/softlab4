@@ -154,8 +154,7 @@ public class GameSerializer {
                     ret.put(wa.output, new ArrayList<Integer>());
                 }
 
-                Coord index = game.getMap().indexOf(f);
-                ret.get(wa.output).add(index.getRow() * game.getMap().getWidth() + index.getCol());
+                ret.get(wa.output).add(game.getMap().indexOf(f));
             }
         }
 
@@ -173,8 +172,7 @@ public class GameSerializer {
                     ret.put(wa.output, new ArrayList<Integer>());
                 }
 
-                Coord index = game.getMap().indexOf(f);
-                ret.get(wa.output).add(index.getRow() * game.getMap().getWidth() + index.getCol());
+                ret.get(wa.output).add(game.getMap().indexOf(f));
             }
         }
 
@@ -265,16 +263,12 @@ public class GameSerializer {
         }
 
         for (Map.Entry<Integer, AgentHandle> e : agents.entrySet()) {
-            int row = e.getKey() / map.getWidth();
-            int col = e.getKey() - (e.getKey() / map.getWidth()) * map.getWidth();
-            map.get(row, col).onEnter(e.getValue().getAgent());
+            map.get(e.getKey()).onEnter(e.getValue().getAgent());
         }
 
         for (Map.Entry<Integer, Collection<Buff>> e : buffs.entrySet()) {
-            int row = e.getKey() / map.getWidth();
-            int col = e.getKey() - (e.getKey() / map.getWidth()) * map.getWidth();
             for (Buff b : e.getValue()) {
-                map.get(row, col).placeBuff(b);
+                map.get(e.getKey()).placeBuff(b);
             }
         }
 
@@ -302,8 +296,8 @@ public class GameSerializer {
         int numberOfProcessed = setDistances(current, distance);
         ++distance;
 
-        // Currently this calculates a worst-case manhattan_distance from the finish line. This might not be the
-        // behaviour we want, but it is by far the easiest to implement (among the possiblities that still
+        // Currently this calculates a worst-case distance from the finish line. This might not be the
+        // behaviour we want, but it is by far the easiest to implement (among the possibilities that still
         // make sense)
         while (numberOfProcessed < numberOfRegularFields) {
             current.addAll(allNeighbours(fields, current, mapWidth, mapHeight));

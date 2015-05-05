@@ -6,7 +6,6 @@ import java.io.*;
 import java.util.*;
 
 import game.*;
-import game.control.VacuumController;
 import game.handle.AgentHandle;
 import proto.*;
 
@@ -121,7 +120,7 @@ public class Main extends JFrame implements GameListener {
                 } else {
                     Heartbeat.beat(Integer.parseInt(timeArg));
                 }
-            } else if (!mainGame.getProtoCommandController().procesProtoCommand(command)) {
+            } else if (!mainGame.getProtoCommandController().processProtoCommand(command)) {
 				System.out.println("Something wrong with command");
             }
         }

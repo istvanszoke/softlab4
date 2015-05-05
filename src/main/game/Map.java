@@ -41,6 +41,10 @@ public class Map implements Iterable<Field>, Serializable {
         return fields.get(row * width + col);
     }
 
+    public Field get(int index) {
+        return fields.get(index);
+    }
+
     public void add(Field field) {
         fields.add(field);
     }
@@ -58,11 +62,15 @@ public class Map implements Iterable<Field>, Serializable {
         return fields.remove(field);
     }
 
-    public Coord indexOf(Field field) {
+    public Coord coordOf(Field field) {
         int index = fields.indexOf(field);
         int row = index / width;
         int col = index - (index / width) * width;
         return new Coord(row, col);
+    }
+
+    public int indexOf(Field field) {
+        return fields.indexOf(field);
     }
 
     public boolean isEmpty() {

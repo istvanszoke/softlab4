@@ -135,7 +135,7 @@ public class VacuumController implements GameControllerSocketListener {
                 }
 
                 successor.g = current.g + 1;
-                successor.h = Coord.manhattan_distance(map.indexOf(successor.field), map.indexOf(goal));
+                successor.h = Coord.manhattan_distance(map.coordOf(successor.field), map.coordOf(goal));
                 successor.f = successor.g + successor.h;
 
                 if (open.get(successor) != null && open.get(successor).f <= successor.f) {

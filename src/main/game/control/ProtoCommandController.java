@@ -23,7 +23,7 @@ public class ProtoCommandController implements GameControllerSocketListener {
         }
     }
 
-    public boolean procesProtoCommand(ProtoCommand command) {
+    public boolean processProtoCommand(ProtoCommand command) {
 		String cmd = command.getCommand();
 		if (cmd.equals(ProtoCommand.JUMP)) {
 			useCommandAndChangeAgent(new JumpQuery());
