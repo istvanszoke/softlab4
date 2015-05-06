@@ -150,6 +150,7 @@ public class VacuumController implements GameControllerSocketListener {
 
         while (!open.isEmpty()) {
             Node current = popLowest(open);
+            closed.put(current.coord, current);
 
             Collection<Field> successors = map.getNeighbours(current.field);
             removeEmptyFields(successors);
@@ -160,23 +161,22 @@ public class VacuumController implements GameControllerSocketListener {
                     return reconstructPath(successor);
                 }
 
+                if (closed.get(successor.coord) != null) {
+                    continue;
+                }
+
                 successor.g = current.g + 1;
                 successor.h = Coord.manhattan_distance(map.coordOf(successor.field), map.coordOf(goal));
                 successor.f = successor.g + successor.h;
 
 
                 Node openNode = open.get(successor.coord);
-                Node closedNode = closed.get(successor.coord);
                 if (openNode != null && openNode.f <= successor.f) {
-                    continue;
-                } else if (closedNode != null && closedNode.f <= successor.f) {
                     continue;
                 }
 
-                open.remove(successor.coord);
                 open.put(successor.coord, successor);
             }
-            refreshNode(closed, current);
         }
 
         return null;
@@ -430,15 +430,5 @@ public class VacuumController implements GameControllerSocketListener {
         c.remove(ret.coord);
 
         return ret;
-    }
-
-    private void refreshNode(Map<Coord, Node> c, Node n) {
-        Node inMap = c.get(n.coord);
-
-        if (inMap == null) {
-            c.put(n.coord, n);
-        } else if (inMap.f > n.f) {
-            inMap.f = n.f;
-        }
     }
 }
