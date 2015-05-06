@@ -1,4 +1,5 @@
 jatek(palya=test03.map)
+ugrik()
 sebvalt(delta=+1)
 irvalt(irany=LE)
 ugrik()

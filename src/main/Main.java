@@ -4,7 +4,6 @@ import javax.swing.WindowConstants;
 import java.awt.KeyboardFocusManager;
 import java.io.*;
 import java.util.*;
-import java.util.Map;
 
 import game.*;
 import game.handle.AgentHandle;
@@ -97,14 +96,11 @@ public class Main extends JFrame implements GameListener {
         if (mainGame == null) {
             if (cmd.equals(ProtoCommand.PLAY)) {
                 String mapName = command.getArgs().get("palya");
-                String filename = "src/resources/maps/" + mapName;
 
                 try {
-                    FileInputStream fis = new FileInputStream(filename);
-                    mainGame = GameCreator.deserializeGame(fis);
-                    fis.close();
+                    mainGame = GameSerializer.load(mapName);
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    //ex.printStackTrace();
                 }
 
                 if (mainGame == null) {
