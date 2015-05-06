@@ -3,6 +3,7 @@ package game.control;
 import java.util.*;
 
 import agents.Speed;
+import agents.Vacuum;
 import commands.AgentCommand;
 import commands.AgentCommandVisitor;
 import commands.executes.ChangeDirectionExecute;
@@ -14,32 +15,37 @@ import feedback.NoFeedbackException;
 import feedback.Result;
 import field.*;
 import game.Coord;
-import game.handle.VacuumHandle;
 
 public class VacuumController implements GameControllerSocketListener {
-    private VacuumHandle vacuum;
+    private Vacuum vacuum;
     private game.Map map;
     private Field expectedField;
+    private GameControllerSocket socket;
 
     private List<AiCommand> commandQueue;
 
-    public VacuumController(VacuumHandle vacuum, game.Map map) {
+    public VacuumController(Vacuum vacuum, game.Map map, GameControllerSocket socket) {
         this.vacuum = vacuum;
         this.map = map;
         this.expectedField = null;
+        this.socket = socket;
 
         this.commandQueue = new ArrayList<AiCommand>();
     }
 
     @Override
     public void socketOpened(GameControllerSocket sender) {
-        if (vacuum.isDisqualified()) {
+        if (socket != sender) {
+            return;
+        }
+
+        if (vacuum.isDead()) {
             return;
         }
 
         if (commandQueue.isEmpty()) {
             calculateCommands();
-        } else if (vacuum.getAgent().getField() != expectedField) {
+        } else if (vacuum.getField() != expectedField) {
             // If there was an unexpected collision then we'll recalculate our path
             commandQueue.clear();
             calculateCommands();
@@ -48,13 +54,13 @@ public class VacuumController implements GameControllerSocketListener {
         // TODO: Get rid of hardcoded speed? I don't really want to add ChangeSpeedQueries to
         // the command queue, because that would mean we have to recalculate the queue every time
         // something changes our speed
-        vacuum.getAgent().setSpeed(new Speed(Direction.UP, 1));
+        vacuum.setSpeed(new Speed(Direction.UP, 1));
 
         Iterator<AiCommand> i = commandQueue.iterator();
         TurnChangeAgentCommandProbe probe = new TurnChangeAgentCommandProbe();
         while (i.hasNext()) {
             AiCommand current = i.next();
-            vacuum.getAgent().accept(current.command);
+            vacuum.accept(current.command);
             expectedField = current.expectedField;
             i.remove();
 
@@ -68,8 +74,20 @@ public class VacuumController implements GameControllerSocketListener {
 
     @Override
     public void socketClosed(GameControllerSocket sender) {
+        if (socket != sender) {
+            return;
+        }
+
         // TODO: You cannot put any code that modifies the commandQueue in here (it will lead to concurrent modification
         // exceptions (this is due to us calling the socket's sendEndTurn() while iterating on the commands
+    }
+
+    public GameControllerSocket getSocket() {
+        return socket;
+    }
+
+    public Vacuum getVacuum() {
+        return vacuum;
     }
 
     private void calculateCommands() {
@@ -78,7 +96,7 @@ public class VacuumController implements GameControllerSocketListener {
             return;
         }
 
-        List<Field> path = getPath(vacuum.getAgent().getField(), destination);
+        List<Field> path = getPath(vacuum.getField(), destination);
         if (path == null) {
             return;
         }
@@ -99,7 +117,7 @@ public class VacuumController implements GameControllerSocketListener {
             return null;
         }
 
-        Field agentField = vacuum.getAgent().getField();
+        Field agentField = vacuum.getField();
         Field destination = cleanableFields.get(0);
         int minDistance = Coord.manhattan_distance(map.coordOf(agentField), map.coordOf(destination));
 
@@ -161,7 +179,7 @@ public class VacuumController implements GameControllerSocketListener {
     }
 
     private void populateCommandQueue(List<Field> path) {
-        Field current = vacuum.getAgent().getField();
+        Field current = vacuum.getField();
         path.remove(current);
 
         boolean directionSet;

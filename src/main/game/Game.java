@@ -37,6 +37,8 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     private final HumanController humanController;
     private final ProtoCommandController protoCommandController;
 
+    private final List<VacuumController> vacuumControllers;
+
     public Game(List<AgentHandle> agents, Map map) {
         this(new GameStorage(agents), map);
     }
@@ -46,6 +48,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         controllerServer = new GameControllerServer(this);
         humanController = controllerType == ControllerType.HUMAN ? new HumanController() : null;
         protoCommandController = controllerType == ControllerType.PROTOCOMMAND ? new ProtoCommandController() : null;
+        vacuumControllers = new ArrayList<VacuumController>();
 
         gameStorage = inGameStorage;
         this.map = inMap;
@@ -61,6 +64,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         controllerServer = null;
         humanController = null;
         protoCommandController = null;
+        vacuumControllers = null;
 
         gameStorage = new GameStorage(agents.keySet());
         this.map = map;
@@ -129,6 +133,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         register(gameStorage.getCurrent());
 
         Heartbeat.resume();
+        printOutMap(10, 3);
     }
 
     @Override
@@ -146,6 +151,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         register(gameStorage.getCurrent());
 
         Heartbeat.resume();
+        printOutMap(10, 3);
     }
 
 
@@ -163,6 +169,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
         register(gameStorage.getCurrent());
         Heartbeat.resume();
+        printOutMap(10, 3);
     }
 
 
@@ -300,7 +307,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
                     humanController.addControllerSocket(socket);
                     break;
                 case PROTOCOMMAND:
-                    protoCommandController.addControllerSocket(socket);
+                    vacuumControllers.add(new VacuumController(element, map, socket));
                     break;
             }
         }
