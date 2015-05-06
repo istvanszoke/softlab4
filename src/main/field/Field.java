@@ -33,7 +33,7 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     }
 
     public static void readStaticParams(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        instanceCount = (Integer)ois.readObject();;
+        instanceCount = (Integer)ois.readObject();
     }
 
     public Field(int distanceFromGoal) {

@@ -217,7 +217,7 @@ public class VacuumController implements GameControllerSocketListener {
         commandQueue.add(new AiCommand(new CleanFieldQuery(), current));
     }
 
-    private class AiCommand {
+    private static class AiCommand {
         public AgentCommand command;
         public Field expectedField;
 
@@ -283,7 +283,7 @@ public class VacuumController implements GameControllerSocketListener {
         }
     }
 
-    private class EmptyFieldProbe implements FieldVisitor {
+    private static class EmptyFieldProbe implements FieldVisitor {
         public boolean isEmpty = false;
 
         @Override
@@ -307,7 +307,7 @@ public class VacuumController implements GameControllerSocketListener {
         }
     }
 
-    private class VacuumProbe implements AgentVisitor {
+    private static class VacuumProbe implements AgentVisitor {
         public boolean isVacuum = false;
         @Override
         public void visit(Robot element) {
@@ -325,7 +325,7 @@ public class VacuumController implements GameControllerSocketListener {
         }
     }
 
-    private class TurnChangeAgentCommandProbe implements AgentCommandVisitor {
+    private static class TurnChangeAgentCommandProbe implements AgentCommandVisitor {
         public boolean changesTurn = false;
 
         @Override
