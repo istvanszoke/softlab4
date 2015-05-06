@@ -137,16 +137,16 @@ public class VacuumController implements GameControllerSocketListener {
         return destination;
     }
 
-    // Unoptimized, naive A* implementation
     private List<Field> getPath(final Field start, final Field goal) {
         if (map.coordOf(start).equals(map.coordOf(goal))) {
             return new ArrayList<Field>() {{ add(start); }};
         }
 
-        List<Node> open = new ArrayList<Node>();
-        List<Node> closed = new ArrayList<Node>();
+        Map<Coord, Node> open = new HashMap<Coord, Node>();
+        Map<Coord, Node> closed = new HashMap<Coord, Node>();
 
-        open.add(new Node(null, start, 0, 0, 0));
+        Node startNode = new Node(null, start, 0, 0, 0);
+        open.put(startNode.coord, startNode);
 
         while (!open.isEmpty()) {
             Node current = popLowest(open);
@@ -165,15 +165,16 @@ public class VacuumController implements GameControllerSocketListener {
                 successor.f = successor.g + successor.h;
 
 
-                Node openNode = getNode(open, successor);
-                Node closedNode = getNode(closed, successor);
+                Node openNode = open.get(successor.coord);
+                Node closedNode = closed.get(successor.coord);
                 if (openNode != null && openNode.f <= successor.f) {
                     continue;
                 } else if (closedNode != null && closedNode.f <= successor.f) {
                     continue;
                 }
 
-                open.add(successor);
+                open.remove(successor.coord);
+                open.put(successor.coord, successor);
             }
             refreshNode(closed, current);
         }
@@ -413,50 +414,31 @@ public class VacuumController implements GameControllerSocketListener {
         return path;
     }
 
-    private Node getNode(List<Node> c, Node n) {
-        for (Node i : c) {
-            if (i.coord == n.coord) {
-                return i;
-            }
-        }
-        return null;
-    }
-
-    private Node popLowest(List<Node> c) {
-        Iterator<Node> i = c.iterator();
-        Node ret = i.next();
+    private Node popLowest(Map<Coord, Node> c) {
+        Iterator<Map.Entry<Coord, Node>> i = c.entrySet().iterator();
+        Node ret = i.next().getValue();
         int minF = ret.f;
-        int toRemove = 0;
 
-        int index = 1;
         while (i.hasNext()) {
-            Node current = i.next();
+            Node current = i.next().getValue();
             if (current.f < minF) {
                 ret = current;
                 minF = current.f;
-                toRemove = index;
             }
-            ++index;
         }
 
-        c.remove(toRemove);
+        c.remove(ret.coord);
 
         return ret;
     }
 
-    private void refreshNode(List<Node> c, Node n) {
-        boolean inCollection = false;
-        for (Node current : c) {
-            if (current.coord.equals(n.coord)) {
-                if (current.f >= n.f) {
-                    current.f = n.f;
-                    inCollection = true;
-                }
-            }
-        }
+    private void refreshNode(Map<Coord, Node> c, Node n) {
+        Node inMap = c.get(n.coord);
 
-        if (!inCollection) {
-            c.add(n);
+        if (inMap == null) {
+            c.put(n.coord, n);
+        } else if (inMap.f > n.f) {
+            inMap.f = n.f;
         }
     }
 }
