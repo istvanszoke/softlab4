@@ -11,6 +11,7 @@ import commands.executes.ChangeSpeedExecute;
 import commands.executes.JumpExecute;
 import commands.executes.KillExecute;
 import commands.queries.*;
+import feedback.Logger;
 import feedback.NoFeedbackException;
 import feedback.Result;
 import field.*;
@@ -45,6 +46,10 @@ public class VacuumController implements GameControllerSocketListener {
             calculateCommands();
         }
 
+        if (commandQueue.isEmpty()) {
+            sender.sendEndTurn();
+        }
+
         // TODO: Get rid of hardcoded speed? I don't really want to add ChangeSpeedQueries to
         // the command queue, because that would mean we have to recalculate the queue every time
         // something changes our speed
@@ -54,11 +59,12 @@ public class VacuumController implements GameControllerSocketListener {
         TurnChangeAgentCommandProbe probe = new TurnChangeAgentCommandProbe();
         while (i.hasNext()) {
             AiCommand current = i.next();
-            vacuum.accept(current.command);
+            sender.sendAgentCommand(current.command);
             expectedField = current.expectedField;
             i.remove();
 
             current.command.accept(probe);
+            Logger.log(current.command.getResult());
             if (probe.changesTurn) {
                 sender.sendEndTurn();
                 break;
@@ -324,6 +330,11 @@ public class VacuumController implements GameControllerSocketListener {
         @Override
         public void visit(UseOilQuery command) {
             changesTurn = false;
+        }
+
+        @Override
+        public void visit(CleanFieldQuery command) {
+            changesTurn = true;
         }
     }
 

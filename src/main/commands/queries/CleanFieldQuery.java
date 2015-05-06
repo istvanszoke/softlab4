@@ -17,7 +17,7 @@ public class CleanFieldQuery extends AgentCommand {
 
     @Override
     public void accept(AgentCommandVisitor modifier) {
-
+        modifier.visit(this);
     }
 
     @Override

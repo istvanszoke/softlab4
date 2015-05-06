@@ -130,10 +130,10 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
         deregister(handle);
         gameStorage.update();
+        printOutMap(10, 3);
         register(gameStorage.getCurrent());
 
         Heartbeat.resume();
-        printOutMap(10, 3);
     }
 
     @Override
@@ -151,7 +151,6 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         register(gameStorage.getCurrent());
 
         Heartbeat.resume();
-        printOutMap(10, 3);
     }
 
 
@@ -169,7 +168,6 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
         register(gameStorage.getCurrent());
         Heartbeat.resume();
-        printOutMap(10, 3);
     }
 
 
@@ -214,8 +212,8 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     }
 
     private void register(AgentHandle handle) {
-        controllerServer.notifyControllerSocketOpened(handle.getAgent());
         handle.register(this);
+        controllerServer.notifyControllerSocketOpened(handle.getAgent());
     }
 
     private void deregister(AgentHandle handle) {
@@ -302,16 +300,9 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         @Override
         public void visit(Vacuum element) {
             GameControllerSocket socket = controllerServer.createSocketForAgent(element);
-            switch (controllerType) {
-                case HUMAN:
-                    humanController.addControllerSocket(socket);
-                    break;
-                case PROTOCOMMAND:
-                    VacuumController controller = new VacuumController(element, map);
-                    vacuumControllers.add(controller);
-                    socket.enableStateNotification(controller);
-                    break;
-            }
+            VacuumController controller = new VacuumController(element, map);
+            vacuumControllers.add(controller);
+            socket.enableStateNotification(controller);
         }
 
         @Override

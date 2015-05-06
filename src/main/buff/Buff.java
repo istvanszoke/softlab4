@@ -107,6 +107,9 @@ public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCo
     public void visit(UseOilExecute modifier) { }
 
     @Override
+    public void visit(CleanFieldQuery query) {}
+
+    @Override
     public Result getResult() throws NoFeedbackException {
         throw new NoFeedbackException();
     }

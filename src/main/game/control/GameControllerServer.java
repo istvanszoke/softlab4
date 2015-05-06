@@ -132,10 +132,10 @@ public class GameControllerServer {
         }
 
         private void notifySocketOpened() {
+            isOpened = true;
             if (clientToNofify != null) {
                 clientToNofify.socketOpened(this);
             }
-            isOpened = true;
         }
 
         private void notifySocketClosed() {
