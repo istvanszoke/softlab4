@@ -8,32 +8,12 @@ public class VacuumHandle extends AgentHandle {
 
     private static final long serialVersionUID = -9092309162816953432L;
 
-    private int turnsRemaining;
-
     private VacuumHandle(Agent agent) {
         super(agent);
-        turnsRemaining = 2;
     }
 
     public static VacuumHandle createVacuum() {
         return new VacuumHandle(new Vacuum());
-    }
-
-    @Override
-    public void onTurnEnd() {
-        //TODO: Why does the VacuumHandle get events when it shouldn't
-        if (isDisqualified()) {
-            return;
-        }
-
-        turnsRemaining -= 1;
-
-        if (turnsRemaining <= 0) {
-            listener.onOutOfTime(this);
-        } else {
-            super.onTurnEnd();
-        }
-
     }
 
     @Override
@@ -46,7 +26,7 @@ public class VacuumHandle extends AgentHandle {
 
     @Override
     public boolean isDisqualified() {
-        return turnsRemaining <= 0;
+        return agent.isDead();
     }
 
     @Override

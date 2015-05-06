@@ -2,6 +2,7 @@ package game;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Map implements Iterable<Field>, Serializable {
         this.height = height;
         this.fields = fields;
         this.finishLineFields = finishLineFields;
-        setNeigbours();
+        setNeighbours();
     }
 
     public int getWidth() {
@@ -34,6 +35,10 @@ public class Map implements Iterable<Field>, Serializable {
 
     public int getHeight() {
         return height;
+    }
+
+    public Field get(int row, int col) {
+        return fields.get(row * width + col);
     }
 
     public Field get(int index) {
@@ -55,6 +60,13 @@ public class Map implements Iterable<Field>, Serializable {
         }
 
         return fields.remove(field);
+    }
+
+    public Coord coordOf(Field field) {
+        int index = fields.indexOf(field);
+        int row = index / width;
+        int col = index - (index / width) * width;
+        return new Coord(row, col);
     }
 
     public int indexOf(Field field) {
@@ -102,17 +114,36 @@ public class Map implements Iterable<Field>, Serializable {
         return fields.iterator();
     }
 
-    private void setNeigbours() {
+    public Collection<Field> getNeighbours(final Field f) {
+        List<Field> ret = new ArrayList<Field>() {{
+            add(f.getNeighbour(Direction.UP));
+            add(f.getNeighbour(Direction.DOWN));
+            add(f.getNeighbour(Direction.LEFT));
+            add(f.getNeighbour(Direction.RIGHT));
+        }};
+
+        Iterator<Field> i = ret.iterator();
+        while (i.hasNext()) {
+            Field current = i.next();
+            if (current == null) {
+                i.remove();
+            }
+        }
+
+        return ret;
+    }
+
+    private void setNeighbours() {
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
-                Field field = get(i * width + j);
+                Field field = get(i, j);
 
                 if (i > 0) {
-                    field.addNeighbour(Direction.UP, get((i - 1) * width + j));
+                    field.addNeighbour(Direction.UP, get(i - 1, j));
                 }
 
                 if (i < height - 1) {
-                    field.addNeighbour(Direction.DOWN, get((i + 1) * width + j));
+                    field.addNeighbour(Direction.DOWN, get(i + 1, j));
                 }
 
                 if (i == 0) {
@@ -123,10 +154,10 @@ public class Map implements Iterable<Field>, Serializable {
                 }
 
                 if (j > 0) {
-                    field.addNeighbour(Direction.LEFT, get(i * width + j - 1));
+                    field.addNeighbour(Direction.LEFT, get(i, j - 1));
                 }
                 if (j < width - 1) {
-                    field.addNeighbour(Direction.RIGHT, get(i * width + j + 1));
+                    field.addNeighbour(Direction.RIGHT, get(i, j + 1));
                 }
 
                 if (j == 0) {

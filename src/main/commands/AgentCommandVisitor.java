@@ -24,4 +24,6 @@ public interface AgentCommandVisitor {
     void visit(UseStickyQuery command);
 
     void visit(UseOilQuery command);
+
+    void visit(CleanFieldQuery command);
 }

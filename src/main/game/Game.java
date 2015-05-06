@@ -37,8 +37,11 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     private final HumanController humanController;
     private final ProtoCommandController protoCommandController;
 
+    private final List<VacuumController> vacuumControllers;
+
     public Game(List<AgentHandle> agents, Map map) {
         this(new GameStorage(agents), map);
+        placeAgents();
     }
 
     public Game(GameStorage inGameStorage, Map inMap) {
@@ -46,6 +49,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         controllerServer = new GameControllerServer(this);
         humanController = controllerType == ControllerType.HUMAN ? new HumanController() : null;
         protoCommandController = controllerType == ControllerType.PROTOCOMMAND ? new ProtoCommandController() : null;
+        vacuumControllers = new ArrayList<VacuumController>();
 
         gameStorage = inGameStorage;
         this.map = inMap;
@@ -61,6 +65,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         controllerServer = null;
         humanController = null;
         protoCommandController = null;
+        vacuumControllers = null;
 
         gameStorage = new GameStorage(agents.keySet());
         this.map = map;
@@ -72,8 +77,6 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         for (java.util.Map.Entry<Buff, Integer> b : buffs.entrySet()) {
             map.get(b.getValue()).placeBuff(b.getKey());
         }
-
-        //printOutMap(10, 3);
     }
 
     public void start() {
@@ -126,6 +129,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
         deregister(handle);
         gameStorage.update();
+        MapPrinter.print(map, 3);
         register(gameStorage.getCurrent());
 
         Heartbeat.resume();
@@ -207,8 +211,8 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     }
 
     private void register(AgentHandle handle) {
-        controllerServer.notifyControllerSocketOpened(handle.getAgent());
         handle.register(this);
+        controllerServer.notifyControllerSocketOpened(handle.getAgent());
     }
 
     private void deregister(AgentHandle handle) {
@@ -228,48 +232,6 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         }
 
         return true;
-    }
-
-    private void printOutMap(int width, int cellWidth) {
-        Iterator<Field> fieldIt = map.iterator();
-
-        int totalWidth = (cellWidth+2)*width;
-        while(fieldIt.hasNext()) {
-            System.out.println(rowSeparator(totalWidth));
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < width; ++i) {
-                Field current = fieldIt.next();
-                StringBuilder sbi = new StringBuilder();
-                if (current != null) {
-                    if (current.getFirstCleanableBuff() != null) {
-                        sbi.append(current.getFirstCleanableBuff().toString());
-                    }
-                    if (current.getAgent() != null) {
-                        sbi.append(current.getAgent().toString());
-                    }
-                }
-                if (sbi.length() < cellWidth) {
-                    int more = cellWidth-sbi.length();
-                    for (int j = 0; j < more; ++j) {
-                        sbi.append(' ');
-                    }
-                }
-                sb.append('|');
-                sb.append(sbi.toString());
-                sb.append('|');
-            }
-            System.out.println(sb.toString());
-        }
-        System.out.println(rowSeparator(totalWidth) + "\n\n");
-
-    }
-
-    private String rowSeparator(int length) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; ++i) {
-            sb.append('-');
-        }
-        return sb.toString();
     }
 
     private class ControllerAssigner implements AgentVisitor {
@@ -295,14 +257,9 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         @Override
         public void visit(Vacuum element) {
             GameControllerSocket socket = controllerServer.createSocketForAgent(element);
-            switch (controllerType) {
-                case HUMAN:
-                    humanController.addControllerSocket(socket);
-                    break;
-                case PROTOCOMMAND:
-                    protoCommandController.addControllerSocket(socket);
-                    break;
-            }
+            VacuumController controller = new VacuumController(element, map);
+            vacuumControllers.add(controller);
+            socket.enableStateNotification(controller);
         }
 
         @Override

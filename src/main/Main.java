@@ -120,7 +120,7 @@ public class Main extends JFrame implements GameListener {
                 } else {
                     Heartbeat.beat(Integer.parseInt(timeArg));
                 }
-            } else if (!mainGame.getProtoCommandController().procesProtoCommand(command)) {
+            } else if (!mainGame.getProtoCommandController().processProtoCommand(command)) {
 				System.out.println("Something wrong with command");
             }
         }
@@ -141,11 +141,8 @@ public class Main extends JFrame implements GameListener {
 
     private void gameLoop() {
         String mapName = "test01.map";
-        FileInputStream fis;
         try {
-            fis = new FileInputStream("src/resources/maps/" + mapName);
-            mainGame = GameCreator.deserializeGame(fis);
-            fis.close();
+            mainGame = GameSerializer.load(mapName);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

@@ -31,7 +31,7 @@ public class GameSerializer {
         pw.println("[Map]");
         for (int i = 0; i < map.getHeight(); ++i) {
             for (int j = 0; j < map.getWidth(); ++j) {
-                Field f = map.get(i * map.getWidth() + j);
+                Field f = map.get(i, j);
                 f.accept(wa);
                 pw.print(wa.output);
             }
@@ -297,7 +297,7 @@ public class GameSerializer {
         ++distance;
 
         // Currently this calculates a worst-case distance from the finish line. This might not be the
-        // behaviour we want, but it is by far the easiest to implement (among the possiblities that still
+        // behaviour we want, but it is by far the easiest to implement (among the possibilities that still
         // make sense)
         while (numberOfProcessed < numberOfRegularFields) {
             current.addAll(allNeighbours(fields, current, mapWidth, mapHeight));
