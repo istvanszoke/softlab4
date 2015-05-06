@@ -17,16 +17,6 @@ public class VacuumHandle extends AgentHandle {
     }
 
     @Override
-    public void onTurnEnd() {
-        //TODO: Why does the VacuumHandle get events when it shouldn't
-        if (isDisqualified()) {
-            return;
-        }
-
-        super.onTurnEnd();
-    }
-
-    @Override
     public long getTimeRemaining() {
         return 1;
     }

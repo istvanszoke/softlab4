@@ -2,6 +2,8 @@ package game.control;
 
 import java.util.*;
 
+import agents.AgentVisitor;
+import agents.Robot;
 import agents.Speed;
 import agents.Vacuum;
 import commands.AgentCommand;
@@ -97,6 +99,10 @@ public class VacuumController implements GameControllerSocketListener {
     }
 
     private Field getDestination() {
+        if (vacuum.getField().getFirstCleanableBuff() != null) {
+            return vacuum.getField();
+        }
+
         List<Field> cleanableFields = new ArrayList<Field>();
 
         for (Field f : map) {
@@ -109,6 +115,7 @@ public class VacuumController implements GameControllerSocketListener {
             return null;
         }
 
+        VacuumProbe probe = new VacuumProbe();
         Field agentField = vacuum.getField();
         Field destination = cleanableFields.get(0);
         int minDistance = Coord.manhattan_distance(map.coordOf(agentField), map.coordOf(destination));
@@ -116,7 +123,12 @@ public class VacuumController implements GameControllerSocketListener {
         for (Field f : cleanableFields) {
             int newDistance = Coord.manhattan_distance(map.coordOf(agentField), map.coordOf(f));
 
-            if (newDistance < minDistance) {
+            probe.isVacuum = false;
+            if (f.getAgent() != null) {
+                f.getAgent().accept(probe);
+            }
+
+            if (newDistance <= minDistance && !probe.isVacuum) {
                 destination = f;
                 minDistance = newDistance;
             }
@@ -126,7 +138,11 @@ public class VacuumController implements GameControllerSocketListener {
     }
 
     // Unoptimized, naive A* implementation
-    private List<Field> getPath(Field start, Field goal) {
+    private List<Field> getPath(final Field start, final Field goal) {
+        if (map.coordOf(start).equals(map.coordOf(goal))) {
+            return new ArrayList<Field>() {{ add(start); }};
+        }
+
         List<Node> open = new ArrayList<Node>();
         List<Node> closed = new ArrayList<Node>();
 
@@ -166,7 +182,13 @@ public class VacuumController implements GameControllerSocketListener {
     }
 
     private void populateCommandQueue(List<Field> path) {
-        Field current = vacuum.getField();
+        Field current = path.get(0);
+        if (path.size() == 1) {
+            commandQueue.add(new AiCommand(new CleanFieldQuery(), current));
+            commandQueue.add(new AiCommand(new CleanFieldQuery(), current));
+            return;
+        }
+        path.remove(0);
 
         boolean directionSet;
         for (Field next : path) {
@@ -284,6 +306,24 @@ public class VacuumController implements GameControllerSocketListener {
         }
     }
 
+    private class VacuumProbe implements AgentVisitor {
+        public boolean isVacuum = false;
+        @Override
+        public void visit(Robot element) {
+            isVacuum = false;
+        }
+
+        @Override
+        public void visit(Vacuum element) {
+            isVacuum = true;
+        }
+
+        @Override
+        public Result getResult() throws NoFeedbackException {
+            return null;
+        }
+    }
+
     private class TurnChangeAgentCommandProbe implements AgentCommandVisitor {
         public boolean changesTurn = false;
 
@@ -360,8 +400,7 @@ public class VacuumController implements GameControllerSocketListener {
     private List<Field> reconstructPath(Node goal) {
         List<Field> path = new ArrayList<Field>();
 
-        // The path will not include the starting position
-        while (goal.parent != null) {
+        while (goal != null) {
             path.add(goal.field);
             goal = goal.parent;
         }
