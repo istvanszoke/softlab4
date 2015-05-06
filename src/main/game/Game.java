@@ -307,7 +307,9 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
                     humanController.addControllerSocket(socket);
                     break;
                 case PROTOCOMMAND:
-                    vacuumControllers.add(new VacuumController(element, map, socket));
+                    VacuumController controller = new VacuumController(element, map);
+                    vacuumControllers.add(controller);
+                    socket.enableStateNotification(controller);
                     break;
             }
         }

@@ -34,7 +34,7 @@ public class CommandParser {
         {
         put("szam", "[2-4]");
         put("ido", "[0-9]+");
-        put("palya", "[A-Za-z0-9]+\\.map");
+        put("palya", "[A-Za-z0-9_-]+\\.map");
         put("irany", "(FEL|LE|BAL|JOBB)");
         put("delta", "[+-][1-2]");
         put("field", "[0-9]+");

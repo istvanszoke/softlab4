@@ -20,25 +20,19 @@ public class VacuumController implements GameControllerSocketListener {
     private Vacuum vacuum;
     private game.Map map;
     private Field expectedField;
-    private GameControllerSocket socket;
 
     private List<AiCommand> commandQueue;
 
-    public VacuumController(Vacuum vacuum, game.Map map, GameControllerSocket socket) {
+    public VacuumController(Vacuum vacuum, game.Map map) {
         this.vacuum = vacuum;
         this.map = map;
         this.expectedField = null;
-        this.socket = socket;
 
         this.commandQueue = new ArrayList<AiCommand>();
     }
 
     @Override
     public void socketOpened(GameControllerSocket sender) {
-        if (socket != sender) {
-            return;
-        }
-
         if (vacuum.isDead()) {
             return;
         }
@@ -74,16 +68,8 @@ public class VacuumController implements GameControllerSocketListener {
 
     @Override
     public void socketClosed(GameControllerSocket sender) {
-        if (socket != sender) {
-            return;
-        }
-
         // TODO: You cannot put any code that modifies the commandQueue in here (it will lead to concurrent modification
         // exceptions (this is due to us calling the socket's sendEndTurn() while iterating on the commands
-    }
-
-    public GameControllerSocket getSocket() {
-        return socket;
     }
 
     public Vacuum getVacuum() {
@@ -135,17 +121,13 @@ public class VacuumController implements GameControllerSocketListener {
 
     // Unoptimized, naive A* implementation
     private List<Field> getPath(Field start, Field goal) {
-        // This is some ugly workaround, because Java doesn't support getting an arbitrary value with equals()
-        // from HashSets
-        SortedMap<Node, Node> open = new TreeMap<Node, Node>();
-        SortedMap<Node, Node> closed = new TreeMap<Node, Node>();
+        List<Node> open = new ArrayList<Node>();
+        List<Node> closed = new ArrayList<Node>();
 
-        Node s = new Node(null, start, 0, 0, 0);
-        open.put(s, s);
+        open.add(new Node(null, start, 0, 0, 0));
 
         while (!open.isEmpty()) {
-            Node current = open.firstKey();
-            open.remove(current);
+            Node current = popLowest(open);
 
             Collection<Field> successors = map.getNeighbours(current.field);
             removeEmptyFields(successors);
@@ -153,26 +135,25 @@ public class VacuumController implements GameControllerSocketListener {
             Collection<Node> successorNodes = toNodes(successors, current);
             for (Node successor : successorNodes) {
                 if (successor.field == goal) {
-                    reconstructPath(successor);
+                    return reconstructPath(successor);
                 }
 
                 successor.g = current.g + 1;
                 successor.h = Coord.manhattan_distance(map.coordOf(successor.field), map.coordOf(goal));
                 successor.f = successor.g + successor.h;
 
-                if (open.get(successor) != null && open.get(successor).f <= successor.f) {
-                    continue;
-                } else if (closed.get(successor) != null && closed.get(successor).f <= successor.f) {
-                    continue;
-                } else {
-                    // We remove the old value in the map, just in case Java would decide to optimize the
-                    // put() when the in-map value is equal to successor
-                    open.remove(successor);
-                    open.put(successor, successor);
-                }
-            }
 
-            closed.put(current, current);
+                Node openNode = getNode(open, successor);
+                Node closedNode = getNode(closed, successor);
+                if (openNode != null && openNode.f <= successor.f) {
+                    continue;
+                } else if (closedNode != null && closedNode.f <= successor.f) {
+                    continue;
+                }
+
+                open.add(successor);
+            }
+            refreshNode(closed, current);
         }
 
         return null;
@@ -180,7 +161,6 @@ public class VacuumController implements GameControllerSocketListener {
 
     private void populateCommandQueue(List<Field> path) {
         Field current = vacuum.getField();
-        path.remove(current);
 
         boolean directionSet;
         for (Field next : path) {
@@ -221,11 +201,13 @@ public class VacuumController implements GameControllerSocketListener {
     private class Node implements Comparable<Node> {
         public Node parent;
         public Field field;
+        public Coord coord;
         public int f, g, h;
 
         public Node(Node parent, Field field, int f, int g, int h) {
             this.parent = parent;
             this.field = field;
+            this.coord = map.coordOf(field);
             this.f = f;
             this.g = g;
             this.h = h;
@@ -234,6 +216,7 @@ public class VacuumController implements GameControllerSocketListener {
         public Node(Node parent, Field field) {
             this.parent = parent;
             this.field = field;
+            this.coord = map.coordOf(field);
             this.f = 0;
             this.g = 0;
             this.h = 0;
@@ -250,8 +233,6 @@ public class VacuumController implements GameControllerSocketListener {
             }
         }
 
-        // For out A* algorithm we only care about the equality of Fields contained in the Node.
-        // For the rest of the values, we'll do manual comparisons
         @Override
         public boolean equals(Object o) {
             if (this == o) {
@@ -263,13 +244,13 @@ public class VacuumController implements GameControllerSocketListener {
 
             Node node = (Node) o;
 
-            return !(field != null ? !field.equals(node.field) : node.field != null);
+            return !(coord != null ? !coord.equals(node.coord) : node.coord != null);
 
         }
 
         @Override
         public int hashCode() {
-            return field != null ? field.hashCode() : 0;
+            return coord != null ? coord.hashCode() : 0;
         }
     }
 
@@ -368,12 +349,64 @@ public class VacuumController implements GameControllerSocketListener {
     private List<Field> reconstructPath(Node goal) {
         List<Field> path = new ArrayList<Field>();
 
+        // The path will not include the starting position
         while (goal.parent != null) {
             path.add(goal.field);
             goal = goal.parent;
         }
 
         Collections.reverse(path);
+        for (Field f : path) {
+            System.out.println(map.coordOf(f));
+        }
+
         return path;
+    }
+
+    private Node getNode(List<Node> c, Node n) {
+        for (Node i : c) {
+            if (i.coord == n.coord) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    private Node popLowest(List<Node> c) {
+        Iterator<Node> i = c.iterator();
+        Node ret = i.next();
+        int minF = ret.f;
+        int toRemove = 0;
+
+        int index = 1;
+        while (i.hasNext()) {
+            Node current = i.next();
+            if (current.f < minF) {
+                ret = current;
+                minF = current.f;
+                toRemove = index;
+            }
+            ++index;
+        }
+
+        c.remove(toRemove);
+
+        return ret;
+    }
+
+    private void refreshNode(List<Node> c, Node n) {
+        boolean inCollection = false;
+        for (Node current : c) {
+            if (current.coord.equals(n.coord)) {
+                if (current.f >= n.f) {
+                    current.f = n.f;
+                    inCollection = true;
+                }
+            }
+        }
+
+        if (!inCollection) {
+            c.add(n);
+        }
     }
 }

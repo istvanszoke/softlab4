@@ -22,4 +22,31 @@ public class Coord {
     public int getCol() {
         return col;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Coord coord = (Coord) o;
+
+        return row == coord.row && col == coord.col;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = row;
+        result = 31 * result + col;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "row: " + row + " col: " + col;
+    }
 }
