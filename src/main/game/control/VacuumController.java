@@ -97,14 +97,14 @@ public class VacuumController implements GameControllerSocketListener {
 
         Field agentField = vacuum.getAgent().getField();
         Field destination = cleanableFields.get(0);
-        int minDelta = Math.abs(agentField.getDistanceFromGoal() - destination.getDistanceFromGoal());
+        int minDistance = Coord.manhattan_distance(map.coordOf(agentField), map.coordOf(destination));
 
         for (Field f : cleanableFields) {
-            int newDelta = Math.abs(agentField.getDistanceFromGoal() - f.getDistanceFromGoal());
-
-            if (newDelta < minDelta) {
+            int newDistance = Coord.manhattan_distance(map.coordOf(agentField), map.coordOf(f));
+            
+            if (newDistance < minDistance) {
                 destination = f;
-                minDelta = newDelta;
+                minDistance = newDistance;
             }
         }
 
