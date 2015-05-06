@@ -33,6 +33,10 @@ public class VacuumController implements GameControllerSocketListener {
 
     @Override
     public void socketOpened(GameControllerSocket sender) {
+        if (vacuum.isDisqualified()) {
+            return;
+        }
+
         if (commandQueue.isEmpty()) {
             calculateCommands();
         } else if (vacuum.getAgent().getField() != expectedField) {
@@ -101,7 +105,7 @@ public class VacuumController implements GameControllerSocketListener {
 
         for (Field f : cleanableFields) {
             int newDistance = Coord.manhattan_distance(map.coordOf(agentField), map.coordOf(f));
-            
+
             if (newDistance < minDistance) {
                 destination = f;
                 minDistance = newDistance;
