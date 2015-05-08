@@ -10,10 +10,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.List;
 
 import field.Field;
+import game.GameListener;
+import game.handle.AgentHandle;
 
-public class GameGraphics extends JPanel implements ImageObserver {
+public class GameGraphics extends JPanel implements ImageObserver, GameListener {
     public static BufferedImage deepCopyBufferedImage(BufferedImage image) {
         ColorModel cm = image.getColorModel();
         boolean isAlphaPremultiplied = image.isAlphaPremultiplied();
@@ -107,5 +110,10 @@ public class GameGraphics extends JPanel implements ImageObserver {
 
     public Map<Field, FieldElementSprite> getDrawableFields() {
         return Collections.unmodifiableMap(drawableFields);
+    }
+
+    @Override
+    public void onGameFinished(List<AgentHandle> playerList) {
+
     }
 }

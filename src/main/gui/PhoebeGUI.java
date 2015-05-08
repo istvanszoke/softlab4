@@ -3,6 +3,7 @@ package gui;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.File;
 
 import game.Game;
 import graphics.GameGraphics;
@@ -43,12 +44,16 @@ public class PhoebeGUI extends JFrame
         pack();
     }
 
-    void startGame(Game game) {
-
+    boolean startNewGame(File map, int playerCount) {
+        return true;
     }
 
-    void stopGame() {
+    boolean stopGame() {
+        return true;
+    }
 
+    boolean tooglePause() {
+        return true;
     }
 
     public void createAndShowGUI() {

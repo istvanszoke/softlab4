@@ -1,11 +1,12 @@
 package gui;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 public class GameOperationPanel extends JPanel
@@ -16,7 +17,7 @@ public class GameOperationPanel extends JPanel
     private JButton gLoadMatBtn;
     private JButton gStartGameBtn;
     private JButton gPauseGameBtn;
-    private JButton gResetGameBtn;
+    private JButton gStopGameBtn;
 
     private File loadedFile;
 
@@ -31,8 +32,62 @@ public class GameOperationPanel extends JPanel
     }
 
     private void setEventListeners() {
+        gLoadMatBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(new FileNameExtensionFilter("Térkép fájl", "map"));
+                fileChooser.showDialog(null, "Betöltés");
+                loadedFile = fileChooser.getSelectedFile();
+                if (loadedFile.exists()) {
+                    gStartGameBtn.setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Nincs ilyen fájl", "Hiba", JOptionPane.ERROR_MESSAGE);
+                    gStartGameBtn.setEnabled(false);
+                }
+            }
+        });
 
-    }
+        gStartGameBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (mainFrame.startNewGame(loadedFile,
+                                            gNumOfPlayersCmb.getItemAt(gNumOfPlayersCmb.getSelectedIndex()))) {
+                    gStopGameBtn.setEnabled(true);
+                    gPauseGameBtn.setEnabled(true);
+                    gStartGameBtn.setEnabled(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Hiba történt indításkor", "Hiba", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        gStopGameBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainFrame.stopGame();
+                gPauseGameBtn.setEnabled(false);
+                gStopGameBtn.setEnabled(false);
+                gStartGameBtn.setEnabled(true);
+            }
+        });
+
+        gPauseGameBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (mainFrame.tooglePause()) {
+                    if (gPauseGameBtn.getText().equals("Játék felfüggesztése")) {
+                        gPauseGameBtn.setText("Játék folytatása");
+                    } else if (gPauseGameBtn.getText().equals("Játék folytatása")) {
+                        gPauseGameBtn.setText("Játék felfüggesztése");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Hiba történt felfüggesztéskor", "Hiba", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        }
 
     private void buildPanel() {
         //Temporary control declaration
@@ -42,7 +97,7 @@ public class GameOperationPanel extends JPanel
 
         //Panel initialization
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),"Játék"));
+        setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Játék"));
         //setMaximumSize(new Dimension(250, 200));
 
         //Global and temporary controls initilaization
@@ -55,8 +110,17 @@ public class GameOperationPanel extends JPanel
             }
             gLoadMatBtn = new JButton("Pálya betöltése");
             gStartGameBtn = new JButton("Játék indítása");
+            {
+                gStartGameBtn.setEnabled(false);
+            }
             gPauseGameBtn = new JButton("Játék felfüggesztése");
-            gResetGameBtn = new JButton("Játék megszakítása");
+            {
+                gPauseGameBtn.setEnabled(false);
+            }
+            gStopGameBtn = new JButton("Játék megszakítása");
+            {
+                gStopGameBtn.setEnabled(false);
+            }
         }
 
         lContPanel.add(lNumOfPlayersLbl);
@@ -64,7 +128,7 @@ public class GameOperationPanel extends JPanel
         lContPanel.add(gLoadMatBtn);
         lContPanel.add(gStartGameBtn);
         lContPanel.add(gPauseGameBtn);
-        lContPanel.add(gResetGameBtn);
+        lContPanel.add(gStopGameBtn);
 
         add(lContPanel);
     }
