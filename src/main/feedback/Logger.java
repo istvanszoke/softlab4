@@ -1,5 +1,6 @@
 package feedback;
 
+import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -24,18 +25,18 @@ public class Logger {
             return;
         }
 
-        SortedMap<Integer, String> merged = new TreeMap<Integer, String>();
+        List<Message> messages = result.getMessages();
+
         if (logLevel == LogLevel.NORMAL) {
-            merged.putAll(result.getNormal());
-        }
-
-        if (logLevel == LogLevel.TEST) {
-            merged.putAll(result.getNormal());
-            merged.putAll(result.getDebug());
-        }
-
-        for (Map.Entry<Integer, String> message : merged.entrySet()) {
-            System.out.println(message.getValue());
+            for (Message m : messages) {
+                if (m.getLevel() == LogLevel.NORMAL) {
+                    System.out.println(m.getMessage());
+                }
+            }
+        } else if (logLevel == LogLevel.DEBUG) {
+            for (Message m : messages) {
+                System.out.println(m.getMessage());
+            }
         }
     }
 }
