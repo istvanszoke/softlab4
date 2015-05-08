@@ -101,7 +101,7 @@ public class Main extends JFrame implements GameListener {
             if (cmd.equals(ProtoCommand.PLAY)) {
                 String mapName = command.getArgs().get("palya");
 
-                mainGame = GameSerializer.load(mapName);
+                mainGame = GameSerializer.load(new File("src/resources/maps/" + mapName));
 
                 if (mainGame == null) {
                     System.out.println("Game creation was unsuccessful");
@@ -140,9 +140,7 @@ public class Main extends JFrame implements GameListener {
     }
 
     private void gameLoop() {
-        String mapName = "test01.map";
-
-        mainGame = GameSerializer.load(mapName);
+        mainGame = GameSerializer.load(new File("src/resources/maps/test01.map"));
 
         if (mainGame == null) {
             System.out.println("Game creation was unsuccessful");

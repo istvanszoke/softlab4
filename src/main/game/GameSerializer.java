@@ -76,7 +76,7 @@ public class GameSerializer {
         return true;
     }
 
-    public static Game load(String fileName) {
+    public static Game load(File file) {
         game.Map map = null;
         Map<Integer, AgentHandle> agents = null;
         Map<Integer, Collection<Buff>> buffs = null;
@@ -85,7 +85,7 @@ public class GameSerializer {
 
         try {
             CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/resources/maps/" + fileName), decoder));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), decoder));
 
             String line = reader.readLine();
             while (line != null) {
@@ -114,6 +114,40 @@ public class GameSerializer {
         }
 
         return merge(map, agents, buffs);
+    }
+
+    public static game.Map loadMap(File file) {
+        game.Map map = null;
+        Map<Integer, Collection<Buff>> buffs = null;
+
+        BufferedReader reader = null;
+
+        try {
+            CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), decoder));
+
+            String line = reader.readLine();
+            while (line != null) {
+                String processedLine = line.trim().toLowerCase();
+                if (processedLine.equals("[map]")) {
+                    map = processMap(reader);
+                } else if (processedLine.equals("[buffs]")) {
+                    buffs = processBuffs(reader);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return merge(map, buffs);
     }
 
     private static class FieldPlaceholder {
@@ -303,6 +337,20 @@ public class GameSerializer {
         }
 
         return new Game(new GameStorage(agents.values()), map);
+    }
+
+    private static game.Map merge(game.Map map, Map<Integer, Collection<Buff>> buffs) {
+        if (map == null || buffs == null) {
+            return null;
+        }
+
+        for (Map.Entry<Integer, Collection<Buff>> e : buffs.entrySet()) {
+            for (Buff b : e.getValue()) {
+                map.get(e.getKey()).placeBuff(b);
+            }
+        }
+
+        return map;
     }
 
     private static void updateDistances(List<FieldPlaceholder> fields, int numberOfRegularFields,
