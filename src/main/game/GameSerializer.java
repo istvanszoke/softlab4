@@ -1,6 +1,9 @@
 package game;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
 import java.util.*;
 import java.util.Map;
 
@@ -20,12 +23,20 @@ import game.handle.PlayerHandle;
 import game.handle.VacuumHandle;
 
 public class GameSerializer {
-    public static void save(Game game, int roundTime, String fileName) throws IOException {
+    public static boolean save(Game game, int roundTime, String fileName) {
         game.Map map = game.getMap();
         Map<String, Collection<Integer>> agents = splitAgents(game);
         Map<String, Collection<Integer>> buffs = splitBuffs(game);
 
-        PrintWriter pw = new PrintWriter(new FileOutputStream("src/resources/maps/" + fileName));
+        CharsetEncoder encoder = Charset.forName("UTF-8").newEncoder();
+        PrintWriter pw;
+        try {
+            pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("src/resources/maps/" + fileName), encoder));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
         InstanceOfWorkaround wa = new InstanceOfWorkaround();
 
         pw.println("[Map]");
@@ -61,31 +72,46 @@ public class GameSerializer {
 
         pw.flush();
         pw.close();
+
+        return true;
     }
 
-    public static Game load(String fileName) throws IOException {
+    public static Game load(String fileName) {
         game.Map map = null;
         Map<Integer, AgentHandle> agents = null;
         Map<Integer, Collection<Buff>> buffs = null;
 
-        BufferedReader reader = new BufferedReader(new FileReader("src/resources/maps/" + fileName));
+        BufferedReader reader = null;
 
-        String line = reader.readLine();
-        while (line != null) {
-            String processedLine = line.trim().toLowerCase();
-            if (processedLine.equals("[map]")) {
-                map = processMap(reader);
-            } else if (processedLine.matches("\\[agents\\(\\w+=\\d+\\)\\]")) {
-                int roundTime = Integer.parseInt(processedLine.replaceAll("[)]]", "").split("=")[1]);
-                agents = processAgents(reader, roundTime);
-            } else if (processedLine.equals("[buffs]")) {
-                buffs = processBuffs(reader);
+        try {
+            CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/resources/maps/" + fileName), decoder));
+
+            String line = reader.readLine();
+            while (line != null) {
+                String processedLine = line.trim().toLowerCase();
+                if (processedLine.equals("[map]")) {
+                    map = processMap(reader);
+                } else if (processedLine.matches("\\[agents\\(\\w+=\\d+\\)\\]")) {
+                    int roundTime = Integer.parseInt(processedLine.replaceAll("[)]]", "").split("=")[1]);
+                    agents = processAgents(reader, roundTime);
+                } else if (processedLine.equals("[buffs]")) {
+                    buffs = processBuffs(reader);
+                }
+
+                line = reader.readLine();
             }
-
-            line = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-        reader.close();
 
         return merge(map, agents, buffs);
     }
@@ -183,6 +209,10 @@ public class GameSerializer {
         List<FieldPlaceholder> placeholders = new ArrayList<FieldPlaceholder>();
 
         String line = reader.readLine();
+        if (line == null || line.isEmpty()) {
+            return null;
+        }
+
         int width = line.length();
         int height = 0;
         int numberOfRegularFields = 0;

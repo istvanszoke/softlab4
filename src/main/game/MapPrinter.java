@@ -10,7 +10,7 @@ public class MapPrinter {
         FieldPrinter p = new FieldPrinter();
         StringBuilder sb = new StringBuilder();
 
-        sb.append(rowSeparator(map.getWidth(), cellWidth)).append("\n");
+        sb.append(rowSeparator(map.getWidth(), cellWidth)).append(System.getProperty("line.separator"));
         for (int row = 0; row < map.getHeight(); ++row) {
             for (int col = 0; col < map.getWidth(); ++col) {
                 Field f = map.get(row, col);
@@ -37,7 +37,7 @@ public class MapPrinter {
                 }
                 sb.append("|");
             }
-            sb.append("\n").append(rowSeparator(map.getWidth(), cellWidth)).append("\n");
+            sb.append("\n").append(rowSeparator(map.getWidth(), cellWidth)).append(System.getProperty("line.separator"));
         }
         System.out.println(sb.toString());
     }

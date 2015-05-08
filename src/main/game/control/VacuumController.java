@@ -137,19 +137,20 @@ public class VacuumController implements GameControllerSocketListener {
         return destination;
     }
 
-    // Unoptimized, naive A* implementation
     private List<Field> getPath(final Field start, final Field goal) {
         if (map.coordOf(start).equals(map.coordOf(goal))) {
             return new ArrayList<Field>() {{ add(start); }};
         }
 
-        List<Node> open = new ArrayList<Node>();
-        List<Node> closed = new ArrayList<Node>();
+        Map<Coord, Node> open = new HashMap<Coord, Node>();
+        Map<Coord, Node> closed = new HashMap<Coord, Node>();
 
-        open.add(new Node(null, start, 0, 0, 0));
+        Node startNode = new Node(null, start, 0, 0, 0);
+        open.put(startNode.coord, startNode);
 
         while (!open.isEmpty()) {
             Node current = popLowest(open);
+            closed.put(current.coord, current);
 
             Collection<Field> successors = map.getNeighbours(current.field);
             removeEmptyFields(successors);
@@ -160,22 +161,22 @@ public class VacuumController implements GameControllerSocketListener {
                     return reconstructPath(successor);
                 }
 
+                if (closed.get(successor.coord) != null) {
+                    continue;
+                }
+
                 successor.g = current.g + 1;
                 successor.h = Coord.manhattan_distance(map.coordOf(successor.field), map.coordOf(goal));
                 successor.f = successor.g + successor.h;
 
 
-                Node openNode = getNode(open, successor);
-                Node closedNode = getNode(closed, successor);
+                Node openNode = open.get(successor.coord);
                 if (openNode != null && openNode.f <= successor.f) {
-                    continue;
-                } else if (closedNode != null && closedNode.f <= successor.f) {
                     continue;
                 }
 
-                open.add(successor);
+                open.put(successor.coord, successor);
             }
-            refreshNode(closed, current);
         }
 
         return null;
@@ -216,7 +217,7 @@ public class VacuumController implements GameControllerSocketListener {
         commandQueue.add(new AiCommand(new CleanFieldQuery(), current));
     }
 
-    private class AiCommand {
+    private static class AiCommand {
         public AgentCommand command;
         public Field expectedField;
 
@@ -282,7 +283,7 @@ public class VacuumController implements GameControllerSocketListener {
         }
     }
 
-    private class EmptyFieldProbe implements FieldVisitor {
+    private static class EmptyFieldProbe implements FieldVisitor {
         public boolean isEmpty = false;
 
         @Override
@@ -306,7 +307,7 @@ public class VacuumController implements GameControllerSocketListener {
         }
     }
 
-    private class VacuumProbe implements AgentVisitor {
+    private static class VacuumProbe implements AgentVisitor {
         public boolean isVacuum = false;
         @Override
         public void visit(Robot element) {
@@ -324,7 +325,7 @@ public class VacuumController implements GameControllerSocketListener {
         }
     }
 
-    private class TurnChangeAgentCommandProbe implements AgentCommandVisitor {
+    private static class TurnChangeAgentCommandProbe implements AgentCommandVisitor {
         public boolean changesTurn = false;
 
         @Override
@@ -413,50 +414,21 @@ public class VacuumController implements GameControllerSocketListener {
         return path;
     }
 
-    private Node getNode(List<Node> c, Node n) {
-        for (Node i : c) {
-            if (i.coord == n.coord) {
-                return i;
-            }
-        }
-        return null;
-    }
-
-    private Node popLowest(List<Node> c) {
-        Iterator<Node> i = c.iterator();
-        Node ret = i.next();
+    private Node popLowest(Map<Coord, Node> c) {
+        Iterator<Map.Entry<Coord, Node>> i = c.entrySet().iterator();
+        Node ret = i.next().getValue();
         int minF = ret.f;
-        int toRemove = 0;
 
-        int index = 1;
         while (i.hasNext()) {
-            Node current = i.next();
+            Node current = i.next().getValue();
             if (current.f < minF) {
                 ret = current;
                 minF = current.f;
-                toRemove = index;
             }
-            ++index;
         }
 
-        c.remove(toRemove);
+        c.remove(ret.coord);
 
         return ret;
-    }
-
-    private void refreshNode(List<Node> c, Node n) {
-        boolean inCollection = false;
-        for (Node current : c) {
-            if (current.coord.equals(n.coord)) {
-                if (current.f >= n.f) {
-                    current.f = n.f;
-                    inCollection = true;
-                }
-            }
-        }
-
-        if (!inCollection) {
-            c.add(n);
-        }
     }
 }

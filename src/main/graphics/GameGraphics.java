@@ -7,6 +7,7 @@ import java.awt.image.ColorModel;
 import java.awt.image.ImageObserver;
 import java.awt.image.WritableRaster;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -26,6 +27,8 @@ public class GameGraphics extends JPanel implements ImageObserver {
     private BufferedImage bufferedImage;
     private Map<Field, FieldElementSprite> drawableFields;
 
+    private final Object imageLock = new Object();
+
 
     private void setUp() {
         for (Field field : mainMap) {
@@ -35,6 +38,7 @@ public class GameGraphics extends JPanel implements ImageObserver {
 
     public GameGraphics(game.Map map) {
         mainMap = map;
+        drawableFields = new HashMap<Field, FieldElementSprite>();
         setUp();
     }
 
@@ -68,7 +72,7 @@ public class GameGraphics extends JPanel implements ImageObserver {
             }
         }
 
-        synchronized (bufferedImage) {
+        synchronized (imageLock) {
             bufferedImage = workingImage;
         }
     }
@@ -78,7 +82,7 @@ public class GameGraphics extends JPanel implements ImageObserver {
         if (mainMap == null) {
             return;
         }
-        synchronized (bufferedImage) {
+        synchronized (imageLock) {
             g.drawImage(bufferedImage, 0, 0, this);
         }
     }

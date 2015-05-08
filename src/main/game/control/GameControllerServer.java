@@ -94,7 +94,7 @@ public class GameControllerServer {
         }
     }
 
-    private class ControlSocket implements GameControllerSocket {
+    private static class ControlSocket implements GameControllerSocket {
 
         GameControllerSocketListener clientToNofify = null;
         GameControllerServer server;

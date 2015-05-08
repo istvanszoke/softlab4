@@ -14,6 +14,7 @@ import commands.AgentCommand;
 import commands.NoFieldCommandException;
 import commands.executes.KillExecute;
 import feedback.Logger;
+import feedback.Result;
 
 public class Robot extends Agent {
 
@@ -35,8 +36,7 @@ public class Robot extends Agent {
     }
 
     public static void readStaticParams(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        Integer wrapInput = (Integer)ois.readObject();
-        instanceCount = wrapInput;
+        instanceCount = (Integer)ois.readObject();;
     }
 
     public Robot() {
@@ -90,17 +90,21 @@ public class Robot extends Agent {
 
     @Override
     public Agent collide(Agent agent) {
-        if (getSpeed().getMagnitude() < agent.getSpeed().getMagnitude()) {
-            KillExecute kill = new KillExecute();
+        Speed ownSpeed = getSpeed();
+        Speed otherSpeed = agent.getSpeed();
+        Speed postCollisionSpeed = Speed.add(ownSpeed, otherSpeed);
+
+        KillExecute kill = new KillExecute();
+        Result killResult = kill.getResult();
+        if (ownSpeed.getMagnitude() < otherSpeed.getMagnitude()) {
             this.accept(kill);
-            Logger.log(kill.getResult());
-            agent.setSpeed(Speed.add(getSpeed(), agent.getSpeed()));
+            Logger.log(killResult);
+            agent.setSpeed(postCollisionSpeed);
             return agent;
         }
-        KillExecute kill = new KillExecute();
         agent.accept(kill);
-        Logger.log(kill.getResult());
-        setSpeed(Speed.add(getSpeed(), agent.getSpeed()));
+        Logger.log(killResult);
+        setSpeed(postCollisionSpeed);
         return this;
     }
 

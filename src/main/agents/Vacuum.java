@@ -34,8 +34,7 @@ public class Vacuum extends Agent {
     }
 
     public static void readStaticParams(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        Integer wrapInput = (Integer)ois.readObject();
-        instanceCount = wrapInput;
+        instanceCount = (Integer)ois.readObject();
     }
 
     public Vacuum() {

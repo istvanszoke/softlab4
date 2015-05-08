@@ -35,13 +35,18 @@ public class Oil extends Buff implements HeartbeatListener, Serializable {
     }
 
     @Override
+    public void remove() {
+        super.remove();
+        Heartbeat.unsubscribe(this);
+    }
+
+    @Override
     public void onTick(long deltaTime) {
         timeRemaining -= deltaTime;
 
         if (timeRemaining <= 0) {
             System.out.println("Olaj felszaradt.");
             remove();
-            Heartbeat.unsubscribe(this);
         }
     }
 

@@ -15,7 +15,6 @@ import commands.transmits.ChangeSpeedTransmit;
 import commands.transmits.JumpTransmit;
 import feedback.NoFeedbackException;
 import feedback.Result;
-import game.Heartbeat;
 
 public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor, Serializable, BuffElement {
     private static final long serialVersionUID = 8797081898675710692L;
@@ -41,7 +40,12 @@ public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCo
     protected void remove() {
         if (isRemoved)
             return;
-        for (BuffListener listener : listeners) {
+        List<BuffListener> listenerCopies = new ArrayList<BuffListener>(listeners.size());
+        for (BuffListener l : listeners) {
+            listenerCopies.add(l);
+        }
+
+        for (BuffListener listener : listenerCopies) {
             listener.onRemove(this);
         }
         isRemoved = true;

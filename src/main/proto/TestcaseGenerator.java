@@ -210,12 +210,7 @@ public class TestcaseGenerator {
     }
 
     private static boolean writeTest(Game testCase, int roundTime, String mapName) {
-        try {
-            GameSerializer.save(testCase, roundTime, mapName);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+        return GameSerializer.save(testCase, roundTime, mapName);
     }
 
     private static void resetInstanceCounts() {

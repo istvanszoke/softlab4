@@ -257,6 +257,10 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         @Override
         public void visit(Vacuum element) {
             GameControllerSocket socket = controllerServer.createSocketForAgent(element);
+            if (socket == null) {
+                return;
+            }
+
             VacuumController controller = new VacuumController(element, map);
             vacuumControllers.add(controller);
             socket.enableStateNotification(controller);
