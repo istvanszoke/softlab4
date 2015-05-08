@@ -23,8 +23,8 @@ public class EmptyFieldCell extends Field {
     }
 
     @Override
-    protected Field searchGoal(Speed speed) {
-        return this;
+    protected SearchResult searchGoal(Speed speed, int depth) {
+        return new SearchResult(this, false);
     }
 
     @Override

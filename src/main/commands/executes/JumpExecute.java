@@ -53,6 +53,11 @@ public class JumpExecute extends AgentCommand {
         if (canExecute) {
             if (displacement.getGoal().onEnter(element)) {
                 displacement.getStart().onExit();
+
+                if (displacement.passedFinishLine()) {
+                    element.incrementLap();
+                    result.pushNormal("celvonal 0");
+                }
             }
             result.pushNormal("ugrik 0 " + element);
         } else {

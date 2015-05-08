@@ -6,17 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import field.Direction;
+import field.DirectionHelper;
 
 public class Speed implements Cloneable, Serializable {
-    private static final Map<Direction, Direction> oppositeMapping = Collections.unmodifiableMap(new HashMap<Direction, Direction>() {
-        private static final long serialVersionUID = 8404668215822539457L;
-
-        {
-        put(Direction.UP, Direction.DOWN);
-        put(Direction.DOWN, Direction.UP);
-        put(Direction.LEFT, Direction.RIGHT);
-        put(Direction.RIGHT, Direction.LEFT);
-    }});
     private static final long serialVersionUID = 624748655659797670L;
 
     private Direction direction;
@@ -32,7 +24,7 @@ public class Speed implements Cloneable, Serializable {
         int mag;
         if (lhs.direction == rhs.direction) {
             mag = lhs.magnitude + rhs.magnitude;
-        } else if (oppositeMapping.get(lhs.direction) == rhs.direction) {
+        } else if (DirectionHelper.getOpposite(lhs.direction) == rhs.direction) {
             mag = Math.max(lhs.magnitude, rhs.magnitude) - Math.min(lhs.magnitude, rhs.magnitude);
         } else {
             mag = (int) Math.sqrt((double) (lhs.magnitude * lhs.magnitude + rhs.magnitude * rhs.magnitude));
@@ -41,7 +33,7 @@ public class Speed implements Cloneable, Serializable {
     }
 
     public static Speed getOpposite(Speed speed) {
-        return new Speed(oppositeMapping.get(speed.getDirection()), speed.getMagnitude());
+        return new Speed(DirectionHelper.getOpposite(speed.getDirection()), speed.getMagnitude());
     }
 
     public Direction getDirection() {

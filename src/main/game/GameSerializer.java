@@ -23,7 +23,7 @@ import game.handle.PlayerHandle;
 import game.handle.VacuumHandle;
 
 public class GameSerializer {
-    public static boolean save(Game game, int roundTime, String fileName) {
+    public static boolean save(Game game, int roundTime, Direction startingDirection, String fileName) {
         game.Map map = game.getMap();
         Map<String, Collection<Integer>> agents = splitAgents(game);
         Map<String, Collection<Integer>> buffs = splitBuffs(game);
@@ -39,7 +39,7 @@ public class GameSerializer {
 
         InstanceOfWorkaround wa = new InstanceOfWorkaround();
 
-        pw.println("[Map]");
+        pw.println("[Map(startingDirection=" + startingDirection.toString() + ")]");
         for (int i = 0; i < map.getHeight(); ++i) {
             for (int j = 0; j < map.getWidth(); ++j) {
                 Field f = map.get(i, j);
@@ -76,7 +76,7 @@ public class GameSerializer {
         return true;
     }
 
-    public static Game load(String fileName) {
+    public static Game load(File file) {
         game.Map map = null;
         Map<Integer, AgentHandle> agents = null;
         Map<Integer, Collection<Buff>> buffs = null;
@@ -85,13 +85,19 @@ public class GameSerializer {
 
         try {
             CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/resources/maps/" + fileName), decoder));
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), decoder));
 
             String line = reader.readLine();
             while (line != null) {
                 String processedLine = line.trim().toLowerCase();
-                if (processedLine.equals("[map]")) {
-                    map = processMap(reader);
+                if (processedLine.matches("\\[map\\(\\w+=\\w+\\)\\]")) {
+                    String dirString = processedLine.replaceAll("[)]]", "").split("=")[1];
+                    Direction startingDir = DirectionHelper.fromString(dirString);
+                    if (startingDir == null) {
+                        return null;
+                    }
+
+                    map = processMap(reader, startingDir);
                 } else if (processedLine.matches("\\[agents\\(\\w+=\\d+\\)\\]")) {
                     int roundTime = Integer.parseInt(processedLine.replaceAll("[)]]", "").split("=")[1]);
                     agents = processAgents(reader, roundTime);
@@ -114,6 +120,46 @@ public class GameSerializer {
         }
 
         return merge(map, agents, buffs);
+    }
+
+    public static game.Map loadMap(File file) {
+        game.Map map = null;
+        Map<Integer, Collection<Buff>> buffs = null;
+
+        BufferedReader reader = null;
+
+        try {
+            CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), decoder));
+
+            String line = reader.readLine();
+            while (line != null) {
+                String processedLine = line.trim().toLowerCase();
+                if (processedLine.matches("\\[map\\(\\w+=\\w+\\)\\]")) {
+                    String dirString = processedLine.replaceAll("[)]]", "").split("=")[1];
+                    Direction startingDir = DirectionHelper.fromString(dirString);
+                    if (startingDir == null) {
+                        return null;
+                    }
+
+                    map = processMap(reader, startingDir);
+                } else if (processedLine.equals("[buffs]")) {
+                    buffs = processBuffs(reader);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return merge(map, buffs);
     }
 
     private static class FieldPlaceholder {
@@ -205,7 +251,7 @@ public class GameSerializer {
         return ret;
     }
 
-    private static game.Map processMap(BufferedReader reader) throws IOException {
+    private static game.Map processMap(BufferedReader reader, Direction startingDir) throws IOException {
         List<FieldPlaceholder> placeholders = new ArrayList<FieldPlaceholder>();
 
         String line = reader.readLine();
@@ -232,11 +278,11 @@ public class GameSerializer {
             ++height;
         }
 
-        updateDistances(placeholders, numberOfRegularFields, width, height);
+        updateDistances(placeholders, numberOfRegularFields, width, height, startingDir);
         //TODO: remove debug print
         //debugDistances(placeholders, width, height);
 
-        return mapFromPlaceholders(width, height, placeholders);
+        return mapFromPlaceholders(width, height, placeholders, startingDir);
 
     }
 
@@ -305,8 +351,22 @@ public class GameSerializer {
         return new Game(new GameStorage(agents.values()), map);
     }
 
+    private static game.Map merge(game.Map map, Map<Integer, Collection<Buff>> buffs) {
+        if (map == null || buffs == null) {
+            return null;
+        }
+
+        for (Map.Entry<Integer, Collection<Buff>> e : buffs.entrySet()) {
+            for (Buff b : e.getValue()) {
+                map.get(e.getKey()).placeBuff(b);
+            }
+        }
+
+        return map;
+    }
+
     private static void updateDistances(List<FieldPlaceholder> fields, int numberOfRegularFields,
-                                        int mapWidth, int mapHeight) {
+                                        int mapWidth, int mapHeight, Direction startingDir) {
         Set<FieldPlaceholder> finishLineFields = new HashSet<FieldPlaceholder>();
         for (FieldPlaceholder f : fields) {
             if (f.distanceFromStart != null && f.distanceFromStart.equals(0)) {
@@ -317,9 +377,13 @@ public class GameSerializer {
         // The two directions determine the racing direction on the map (it will be the opposite of the
         // ones written). Currently from the finish line we will always step either UP or LEFT to begin the race
         // TODO: this limits finish lines to be either horizontal or vertical. This QUIETLY BREAKS on diagonal finish lines
+        Direction opposite = DirectionHelper.getOpposite(startingDir);
+        if (opposite == null) {
+            throw new IllegalArgumentException();
+        }
+
         Set<FieldPlaceholder> current = new HashSet<FieldPlaceholder>();
-        current.addAll(neighboursInDirection(fields, finishLineFields, Direction.DOWN, mapWidth, mapHeight));
-        current.addAll(neighboursInDirection(fields, finishLineFields, Direction.RIGHT, mapWidth, mapHeight));
+        current.addAll(neighboursInDirection(fields, finishLineFields, opposite, mapWidth, mapHeight));
         cleanupCurrent(current);
 
         int distance = 1;
@@ -337,7 +401,8 @@ public class GameSerializer {
         }
     }
 
-    private static game.Map mapFromPlaceholders(int width, int height, Collection<FieldPlaceholder> placeholders) {
+    private static game.Map mapFromPlaceholders(int width, int height, Collection<FieldPlaceholder> placeholders,
+                                                Direction startingDir) {
         List<Field> fields = new ArrayList<Field>();
         List<Field> finishLineFields = new ArrayList<Field>();
         for (FieldPlaceholder f : placeholders) {
@@ -345,7 +410,7 @@ public class GameSerializer {
             if (distance.equals(-1)) {
                 fields.add(new EmptyFieldCell(-1));
             } else if (distance.equals(0)) {
-                Field field = new FinishLineFieldCell();
+                Field field = new FinishLineFieldCell(startingDir);
                 fields.add(field);
                 finishLineFields.add(field);
             } else {
@@ -443,5 +508,4 @@ public class GameSerializer {
         }
         System.out.flush();
     }
-
 }

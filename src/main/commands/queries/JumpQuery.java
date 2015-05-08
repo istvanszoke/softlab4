@@ -15,6 +15,7 @@ public class JumpQuery extends AgentCommand {
     private static final long serialVersionUID = 1882648361848672688L;
 
     private Speed speed;
+    private boolean isUnconditional = false;
 
     public Speed getSpeed() {
         return speed.clone();
@@ -22,6 +23,10 @@ public class JumpQuery extends AgentCommand {
 
     public void setSpeed(Speed speed) {
         this.speed = speed;
+    }
+
+    public boolean isUnconditional() {
+        return isUnconditional;
     }
 
     @Override
@@ -43,6 +48,7 @@ public class JumpQuery extends AgentCommand {
     @Override
     public void visit(Vacuum element) {
         visitCommon(element);
+        isUnconditional = true;
     }
 
     private void visitCommon(Agent element) {

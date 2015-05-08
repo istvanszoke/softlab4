@@ -11,9 +11,9 @@
 ##########
 
 [Buffs]
-Oil: 43 51 27 47
+Oil: 66 51 27 47
 
 [Agents(roundTime=10)]
-Robot: 66
-Vacuum: 37 27
+Robot: 41
+Vacuum: 46 27
 
