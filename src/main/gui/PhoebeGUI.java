@@ -48,15 +48,15 @@ public class PhoebeGUI extends JFrame
     }
 
     boolean startNewGame(File map, int playerCount) {
-        try {
-            mainGame = GameSerializer.load(map);
-        } catch (IOException ex) {
+        mainGame = GameSerializer.load(map);
+        if (mainGame != null) {
+            controlsPanel.remove(gameControlPanel);
+            gameControlPanel = mainGame.getGameControlPanelController();
+            add(gameControlPanel);
+            return true;
+        } else {
             return false;
         }
-        controlsPanel.remove(gameControlPanel);
-        gameControlPanel = mainGame.getGameControlPanelController();
-        add(gameControlPanel);
-        return true;
     }
 
     boolean stopGame() {
