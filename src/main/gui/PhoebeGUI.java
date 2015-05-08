@@ -2,17 +2,16 @@ package gui;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
-import java.awt.KeyboardFocusManager;
+import java.awt.Dimension;
 
 import game.Game;
-import game.KeyDispatcher;
 import graphics.GameGraphics;
 
 
 public class PhoebeGUI extends JFrame
 {
-    private GameControlPanel gameControlPanel;
     private GameOperationPanel gameOperationPanel;
+    private GameControlPanel gameControlPanel;
     private JPanel controlsPanel;
     private GameGraphics gameGraphics;
     private Game mainGame;
@@ -26,6 +25,7 @@ public class PhoebeGUI extends JFrame
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setTitle("Phoebe game");
+        setMinimumSize(new Dimension(700,500));
 
         gameGraphics = new GameGraphics();
         add(gameGraphics, BorderLayout.CENTER);
@@ -33,8 +33,8 @@ public class PhoebeGUI extends JFrame
         controlsPanel = new JPanel();
         controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.Y_AXIS));
         {
-            gameControlPanel = new GameControlPanel(this);
             gameOperationPanel = new GameOperationPanel(this);
+            gameControlPanel = new GameControlPanel(this);
             controlsPanel.add(gameOperationPanel);
             controlsPanel.add(gameControlPanel);
         }

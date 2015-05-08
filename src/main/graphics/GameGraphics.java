@@ -1,8 +1,7 @@
 package graphics;
 
 import javax.swing.JPanel;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.ImageObserver;
@@ -31,6 +30,10 @@ public class GameGraphics extends JPanel implements ImageObserver {
     private final Object imageLock = new Object();
 
 
+    private void buildGUI() {
+
+    }
+
     private void setUp() {
         for (Field field : mainMap) {
             drawableFields.put(field, new FieldElementSprite(field));
@@ -40,11 +43,13 @@ public class GameGraphics extends JPanel implements ImageObserver {
     public GameGraphics(game.Map map) {
         mainMap = map;
         drawableFields = new HashMap<Field, FieldElementSprite>();
+        buildGUI();
         setUp();
     }
 
     public GameGraphics() {
         mainMap = null;
+        buildGUI();
     }
 
     public boolean attachToMap(game.Map map) {
@@ -91,6 +96,8 @@ public class GameGraphics extends JPanel implements ImageObserver {
     @Override
     public void paintComponent(Graphics g) {
         if (mainMap == null || bufferedImage == null) {
+            g.setColor(Color.BLACK);
+            g.fillOval(0,0,100,100);
             return;
         }
         synchronized (imageLock) {
