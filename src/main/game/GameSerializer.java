@@ -92,16 +92,8 @@ public class GameSerializer {
                 String processedLine = line.trim().toLowerCase();
                 if (processedLine.matches("\\[map\\(\\w+=\\w+\\)\\]")) {
                     String dirString = processedLine.replaceAll("[)]]", "").split("=")[1];
-                    Direction startingDir;
-                    if (dirString.equals("up")) {
-                        startingDir = Direction.UP;
-                    } else if (dirString.equals("down")) {
-                        startingDir = Direction.DOWN;
-                    } else if (dirString.equals("left")) {
-                        startingDir = Direction.LEFT;
-                    } else if (dirString.equals("right")) {
-                        startingDir = Direction.RIGHT;
-                    } else {
+                    Direction startingDir = DirectionHelper.fromString(dirString);
+                    if (startingDir == null) {
                         return null;
                     }
 
@@ -145,16 +137,8 @@ public class GameSerializer {
                 String processedLine = line.trim().toLowerCase();
                 if (processedLine.matches("\\[map\\(\\w+=\\w+\\)\\]")) {
                     String dirString = processedLine.replaceAll("[)]]", "").split("=")[1];
-                    Direction startingDir;
-                    if (dirString.equals("up")) {
-                        startingDir = Direction.UP;
-                    } else if (dirString.equals("down")) {
-                        startingDir = Direction.DOWN;
-                    } else if (dirString.equals("left")) {
-                        startingDir = Direction.LEFT;
-                    } else if (dirString.equals("right")) {
-                        startingDir = Direction.RIGHT;
-                    } else {
+                    Direction startingDir = DirectionHelper.fromString(dirString);
+                    if (startingDir == null) {
                         return null;
                     }
 
@@ -393,17 +377,8 @@ public class GameSerializer {
         // The two directions determine the racing direction on the map (it will be the opposite of the
         // ones written). Currently from the finish line we will always step either UP or LEFT to begin the race
         // TODO: this limits finish lines to be either horizontal or vertical. This QUIETLY BREAKS on diagonal finish lines
-        Direction opposite;
-
-        if (startingDir == Direction.UP) {
-            opposite = Direction.DOWN;
-        } else if (startingDir == Direction.DOWN) {
-            opposite = Direction.UP;
-        } else if (startingDir == Direction.LEFT) {
-            opposite = Direction.RIGHT;
-        } else if (startingDir == Direction.RIGHT) {
-            opposite = Direction.LEFT;
-        } else {
+        Direction opposite = DirectionHelper.getOpposite(startingDir);
+        if (opposite == null) {
             throw new IllegalArgumentException();
         }
 
@@ -533,5 +508,4 @@ public class GameSerializer {
         }
         System.out.flush();
     }
-
 }
