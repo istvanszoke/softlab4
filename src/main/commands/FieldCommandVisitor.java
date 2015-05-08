@@ -1,6 +1,5 @@
 package commands;
 
-import commands.executes.CleanFieldExecute;
 import commands.executes.UseOilExecute;
 import commands.executes.UseStickyExecute;
 import commands.transmits.ChangeDirectionTransmit;
@@ -17,6 +16,4 @@ public interface FieldCommandVisitor {
     void visit(UseStickyExecute modifier);
 
     void visit(UseOilExecute modifier);
-
-    void visit(CleanFieldExecute modifier);
 }

@@ -15,7 +15,6 @@ import commands.transmits.ChangeSpeedTransmit;
 import commands.transmits.JumpTransmit;
 import feedback.NoFeedbackException;
 import feedback.Result;
-import game.Heartbeat;
 
 public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor, Serializable, BuffElement {
     private static final long serialVersionUID = 8797081898675710692L;
@@ -113,9 +112,6 @@ public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCo
 
     @Override
     public void visit(CleanFieldQuery query) {}
-
-    @Override
-    public void visit(CleanFieldExecute execute) {}
 
     @Override
     public Result getResult() throws NoFeedbackException {

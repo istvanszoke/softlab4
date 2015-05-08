@@ -6,14 +6,13 @@ import commands.AgentCommand;
 import commands.AgentCommandVisitor;
 import commands.FieldCommand;
 import commands.NoFieldCommandException;
-import commands.executes.CleanFieldExecute;
 
 public class CleanFieldQuery extends AgentCommand {
     private static final long serialVersionUID = -8165111680281711995L;
 
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
-        return new CleanFieldExecute();
+        throw new NoFieldCommandException();
     }
 
     @Override

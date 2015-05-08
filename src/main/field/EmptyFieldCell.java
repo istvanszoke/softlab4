@@ -2,7 +2,6 @@ package field;
 
 import agents.Agent;
 import agents.Speed;
-import buff.Buff;
 import commands.FieldCommand;
 import commands.NoAgentCommandException;
 import commands.executes.KillExecute;
