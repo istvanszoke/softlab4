@@ -10,6 +10,7 @@ import agents.Agent;
 import agents.Speed;
 import buff.Buff;
 import buff.BuffListener;
+import commands.FieldCommand;
 
 public abstract class Field implements FieldElement, BuffListener, Serializable {
     public static final Field GRAVEYARD = new EmptyFieldCell(-1);
@@ -17,7 +18,6 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
     protected final int distanceFromGoal;
     protected final List<Buff> buffs;
-    protected final List<Buff> buffsToRemove;
     protected final Map<Direction, Field> neighbours;
     protected Agent agent;
     private int fieldId;
@@ -38,7 +38,6 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
     public Field(int distanceFromGoal) {
         buffs = new ArrayList<Buff>();
-        buffsToRemove = new ArrayList<Buff>();
         neighbours = new HashMap<Direction, Field>();
         this.distanceFromGoal = distanceFromGoal;
         ++instanceCount;
@@ -70,10 +69,7 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
             return false;
         }
 
-        for (Buff b : buffs) {
-            agent.accept(b);
-        }
-        removeBuffs();
+        acceptBuffs(agent);
 
         agent.setField(this);
         this.agent = agent;
@@ -85,8 +81,6 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
         if (agent == null) {
             return;
         }
-
-        removeBuffs();
 
         this.agent = null;
     }
@@ -119,7 +113,8 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
     @Override
     public void onRemove(Buff buff) {
-        buffsToRemove.add(buff);
+        buff.unsubscribe(this);
+        buffs.remove(buff);
     }
 
     protected Field searchGoal(Speed speed) {
@@ -130,6 +125,37 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
         Speed newSpeed = speed.clone();
         newSpeed.setMagnitude(newSpeed.getMagnitude() - 1);
         return neighbours.get(speed.getDirection()).searchGoal(newSpeed);
+    }
+
+    protected void acceptBuffs(FieldCommand command) {
+        if (buffs.isEmpty()) {
+            return;
+        }
+
+        List<Buff> buffsCopy = new ArrayList<Buff>(buffs.size());
+        for (Buff b : buffs) {
+            buffsCopy.add(b);
+        }
+
+        Collections.copy(buffsCopy, buffs);
+        for (Buff b : buffsCopy) {
+            command.accept(b);
+        }
+    }
+
+    protected void acceptBuffs(Agent agent) {
+        if (buffs.isEmpty()) {
+            return;
+        }
+
+        List<Buff> buffsCopy = new ArrayList<Buff>(buffs.size());
+        for (Buff b : buffs) {
+            buffsCopy.add(b);
+        }
+
+        for (Buff b : buffsCopy) {
+            agent.accept(b);
+        }
     }
 
     public int getFieldId() {
@@ -146,14 +172,5 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     @Override
     public String toString() {
         return "Field:" + fieldId;
-    }
-
-    protected void removeBuffs() {
-        for (Buff b : buffsToRemove) {
-            b.unsubscribe(this);
-        }
-
-        buffs.removeAll(buffsToRemove);
-        buffsToRemove.clear();
     }
 }

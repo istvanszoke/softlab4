@@ -35,11 +35,6 @@ public class EmptyFieldCell extends Field {
 
     @Override
     public void accept(FieldCommand command) {
-        removeBuffs();
-        for (Buff b : buffs) {
-            command.accept(b);
-        }
-
         command.visit(this);
 
         try {

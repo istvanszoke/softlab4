@@ -1,5 +1,9 @@
 package field;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import buff.Buff;
 import commands.FieldCommand;
 import commands.NoAgentCommandException;
@@ -19,11 +23,7 @@ public class FinishLineFieldCell extends Field {
 
     @Override
     public void accept(FieldCommand command) {
-        removeBuffs();
-        for (Buff b : buffs) {
-            command.accept(b);
-        }
-
+        acceptBuffs(agent);
         command.visit(this);
 
         try {

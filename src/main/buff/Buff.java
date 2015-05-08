@@ -41,7 +41,12 @@ public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCo
     protected void remove() {
         if (isRemoved)
             return;
-        for (BuffListener listener : listeners) {
+        List<BuffListener> listenerCopies = new ArrayList<BuffListener>(listeners.size());
+        for (BuffListener l : listeners) {
+            listenerCopies.add(l);
+        }
+
+        for (BuffListener listener : listenerCopies) {
             listener.onRemove(this);
         }
         isRemoved = true;
