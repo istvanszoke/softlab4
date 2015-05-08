@@ -18,6 +18,7 @@ public class PhoebeGUI extends JFrame
     private JPanel controlsPanel;
     private GameGraphics gameGraphics;
     private Game mainGame;
+    private boolean isPaused = false;
 
     public PhoebeGUI () {
         super();
@@ -53,6 +54,7 @@ public class PhoebeGUI extends JFrame
             controlsPanel.remove(gameControlPanel);
             gameControlPanel = mainGame.getGameControlPanelController();
             add(gameControlPanel);
+            isPaused = false;
             return true;
         } else {
             return false;
@@ -60,11 +62,27 @@ public class PhoebeGUI extends JFrame
     }
 
     boolean stopGame() {
+        mainGame = null;
+        remove(gameControlPanel);
+        gameControlPanel = new GameControlPanel();
+        add(gameControlPanel);
+        isPaused = false;
         return true;
     }
 
     boolean tooglePause() {
-        return true;
+        if (mainGame != null) {
+            if (!isPaused) {
+                mainGame.pause();
+                isPaused = true;
+            } else {
+                mainGame.start();
+                isPaused = false;
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void createAndShowGUI() {

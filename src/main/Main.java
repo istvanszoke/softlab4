@@ -57,6 +57,7 @@ public class Main implements GameListener {
 
     private void operateGui() {
         phoebeGUI = new PhoebeGUI();
+        Game.controllerType = Game.ControllerType.GUI;
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 phoebeGUI.createAndShowGUI();
