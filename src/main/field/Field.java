@@ -104,7 +104,13 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     }
 
     public Displacement getDisplacement(Speed speed) {
-        return new Displacement(this, searchGoal(speed));
+        SearchResult result = searchGoal(speed, 0);
+        return new Displacement(this, result.field, result.passedFinishLine);
+    }
+
+    public Displacement getUnconditionalDisplacement(Speed speed) {
+        SearchResult result = unconditionalSearchGoal(speed, 0);
+        return new Displacement(this, result.field, result.passedFinishLine);
     }
 
     public boolean isEmpty() {
@@ -117,14 +123,18 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
         buffs.remove(buff);
     }
 
-    protected Field searchGoal(Speed speed) {
+    protected SearchResult searchGoal(Speed speed, int depth) {
         if (speed.getMagnitude() == 0) {
-            return this;
+            return new SearchResult(this, false);
         }
 
         Speed newSpeed = speed.clone();
         newSpeed.setMagnitude(newSpeed.getMagnitude() - 1);
-        return neighbours.get(speed.getDirection()).searchGoal(newSpeed);
+        return neighbours.get(speed.getDirection()).searchGoal(newSpeed, depth + 1);
+    }
+
+    protected SearchResult unconditionalSearchGoal(Speed speed, int depth) {
+        return searchGoal(speed, depth);
     }
 
     protected void acceptBuffs(FieldCommand command) {
@@ -172,5 +182,15 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
     @Override
     public String toString() {
         return "Field:" + fieldId;
+    }
+
+    protected static class SearchResult {
+        public boolean passedFinishLine;
+        public Field field;
+
+        public SearchResult(Field field, boolean passedFinishLine) {
+            this.field = field;
+            this.passedFinishLine = passedFinishLine;
+        }
     }
 }

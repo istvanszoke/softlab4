@@ -15,10 +15,12 @@ public class JumpTransmit extends FieldCommand {
 
     private Displacement displacement;
     private Speed speed;
+    private boolean isUnconditional;
 
     public JumpTransmit(JumpQuery parent) {
         super(parent);
         this.speed = parent.getSpeed();
+        this.isUnconditional = parent.isUnconditional();
     }
 
     public Displacement getDisplacement() {
@@ -63,6 +65,10 @@ public class JumpTransmit extends FieldCommand {
     }
 
     private void visitCommon(Field element) {
-        displacement = element.getDisplacement(speed);
+        if (isUnconditional) {
+            displacement = element.getUnconditionalDisplacement(speed);
+        } else {
+            displacement = element.getDisplacement(speed);
+        }
     }
 }

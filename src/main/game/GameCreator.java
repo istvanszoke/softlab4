@@ -89,7 +89,7 @@ public final class GameCreator {
                 if (i == 0 || i == height - 1 || j == 0 || j == width - 1) {
                     fields.add(new EmptyFieldCell(-1));
                 } else if (i == height / 2 && j != width - 2) { // Workaround for non-circular map
-                    Field f = new FinishLineFieldCell();
+                    Field f = new FinishLineFieldCell(Direction.UP);
                     fields.add(f);
                     finishLineFields.add(f);
                 } else {

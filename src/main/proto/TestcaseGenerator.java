@@ -7,6 +7,7 @@ import agents.Vacuum;
 import buff.Buff;
 import buff.Oil;
 import buff.Sticky;
+import field.Direction;
 import field.Field;
 import game.Game;
 import game.GameCreator;
@@ -210,7 +211,7 @@ public class TestcaseGenerator {
     }
 
     private static boolean writeTest(Game testCase, int roundTime, String mapName) {
-        return GameSerializer.save(testCase, roundTime, mapName);
+        return GameSerializer.save(testCase, roundTime, Direction.UP, mapName);
     }
 
     private static void resetInstanceCounts() {
