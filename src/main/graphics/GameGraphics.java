@@ -12,9 +12,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.List;
 
+import field.EmptyFieldCell;
 import field.Field;
 import game.GameListener;
 import game.handle.AgentHandle;
+import graphics.handles.EmptyFieldCellSprite;
 
 public class GameGraphics extends JPanel implements ImageObserver, GameListener {
     public static BufferedImage deepCopyBufferedImage(BufferedImage image) {
@@ -77,13 +79,19 @@ public class GameGraphics extends JPanel implements ImageObserver, GameListener 
         BufferedImage workingImage = new BufferedImage(50 * radius, 50 * radius, ColorModel.TRANSLUCENT);
         //TODO here is where we iterate on given fields
 
+        EmptyFieldCellSprite defaultFieldSprite = new EmptyFieldCellSprite(new EmptyFieldCell(0));
+
         int dim = 2*radius + 1;
 
         Field[][] fields = mainMap.getRegion(center, dim, dim);
         for (int x = 0; x < dim; ++x) {
             for (int y = 0; y < dim; ++y) {
-                FieldElementSprite toDraw = drawableFields.get(fields[x][y]);
-                workingImage.getGraphics().drawImage(toDraw.getItemImage(),x*50,y*50,this);
+                if (fields[x][y] != null) {
+                    FieldElementSprite toDraw = drawableFields.get(fields[x][y]);
+                    workingImage.getGraphics().drawImage(toDraw.getItemImage(), x * 50, y * 50, this);
+                } else {
+                    workingImage.getGraphics().drawImage(defaultFieldSprite.getItemImage(), x*50, y*50, this);
+                }
             }
         }
 
