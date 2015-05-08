@@ -30,7 +30,6 @@ public class EmptyFieldCell extends Field {
 
     @Override
     public void accept(FieldVisitor visitor) {
-        removeBuffs();
         visitor.visit(this);
     }
 

@@ -14,7 +14,6 @@ public class FinishLineFieldCell extends Field {
 
     @Override
     public void accept(FieldVisitor visitor) {
-        removeBuffs();
         visitor.visit(this);
     }
 

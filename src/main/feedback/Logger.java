@@ -27,16 +27,18 @@ public class Logger {
 
         List<Message> messages = result.getMessages();
 
+        StringBuilder sb = new StringBuilder();
         if (logLevel == LogLevel.NORMAL) {
             for (Message m : messages) {
                 if (m.getLevel() == LogLevel.NORMAL) {
-                    System.out.println(m.getMessage());
+                    sb.append(m.getMessage()).append(System.lineSeparator());
                 }
             }
         } else if (logLevel == LogLevel.DEBUG) {
             for (Message m : messages) {
-                System.out.println(m.getMessage());
+                sb.append(m.getMessage()).append(System.lineSeparator());
             }
         }
+        System.out.print(sb.toString());
     }
 }
