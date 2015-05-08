@@ -31,12 +31,12 @@ public class Logger {
         if (logLevel == LogLevel.NORMAL) {
             for (Message m : messages) {
                 if (m.getLevel() == LogLevel.NORMAL) {
-                    sb.append(m.getMessage()).append(System.lineSeparator());
+                    sb.append(m.getMessage()).append(System.getProperty("line.separator"));
                 }
             }
         } else if (logLevel == LogLevel.DEBUG) {
             for (Message m : messages) {
-                sb.append(m.getMessage()).append(System.lineSeparator());
+                sb.append(m.getMessage()).append(System.getProperty("line.separator"));
             }
         }
         System.out.print(sb.toString());
