@@ -5,8 +5,10 @@ import java.awt.*;
 
 import game.Heartbeat;
 import game.HeartbeatListener;
+import game.control.GameControllerSocket;
+import game.control.GameControllerSocketListener;
 
-public class GameControlPanel extends JPanel implements HeartbeatListener
+public class GameControlPanel extends JPanel implements HeartbeatListener, GameControllerSocketListener
 {
     private PhoebeGUI mainFrame;
 
@@ -28,12 +30,15 @@ public class GameControlPanel extends JPanel implements HeartbeatListener
     private JLabel gTotalTimeLeftLbl;
 
 
-    GameControlPanel(PhoebeGUI mainFrame) {
-        if (mainFrame != null) {
-            this.mainFrame = mainFrame;
+    public GameControlPanel() {
             buildPanel();
             setEventListeners();
             Heartbeat.subscribe(this);
+    }
+
+    void setMainFrame(PhoebeGUI mainFrame) {
+        if (mainFrame != null) {
+            this.mainFrame = mainFrame;
         } else {
             throw new NullPointerException();
         }
@@ -128,6 +133,20 @@ public class GameControlPanel extends JPanel implements HeartbeatListener
 
     @Override
     public void onTick(long deltaTime) {
+
+    }
+
+    @Override
+    public void socketOpened(GameControllerSocket sender) {
+
+    }
+
+    @Override
+    public void socketClosed(GameControllerSocket sender) {
+
+    }
+
+    public void addControllerSocket(GameControllerSocket socket) {
 
     }
 }

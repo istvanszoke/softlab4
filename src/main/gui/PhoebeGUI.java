@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
+import java.io.IOException;
 
 import game.Game;
+import game.GameSerializer;
 import graphics.GameGraphics;
 
 
@@ -35,7 +37,8 @@ public class PhoebeGUI extends JFrame
         controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.Y_AXIS));
         {
             gameOperationPanel = new GameOperationPanel(this);
-            gameControlPanel = new GameControlPanel(this);
+            gameControlPanel = new GameControlPanel();
+            gameControlPanel.setEnabled(false);
             controlsPanel.add(gameOperationPanel);
             controlsPanel.add(gameControlPanel);
         }
@@ -45,6 +48,14 @@ public class PhoebeGUI extends JFrame
     }
 
     boolean startNewGame(File map, int playerCount) {
+        try {
+            mainGame = GameSerializer.load(map);
+        } catch (IOException ex) {
+            return false;
+        }
+        controlsPanel.remove(gameControlPanel);
+        gameControlPanel = mainGame.getGameControlPanelController();
+        add(gameControlPanel);
         return true;
     }
 
