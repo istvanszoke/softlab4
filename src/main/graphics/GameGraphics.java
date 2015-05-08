@@ -55,7 +55,13 @@ public class GameGraphics extends JPanel implements ImageObserver {
             setUp();
             return true;
         } else {
-            return false;
+            bufferedImage = null;
+            drawableFields.clear();
+            mainMap = map;
+            System.gc();
+            if (map != null)
+                setUp();
+            return true;
         }
     }
 
@@ -84,7 +90,7 @@ public class GameGraphics extends JPanel implements ImageObserver {
 
     @Override
     public void paintComponent(Graphics g) {
-        if (mainMap == null) {
+        if (mainMap == null || bufferedImage == null) {
             return;
         }
         synchronized (imageLock) {
