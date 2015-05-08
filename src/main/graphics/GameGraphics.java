@@ -2,6 +2,7 @@ package graphics;
 
 import javax.swing.JPanel;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.ImageObserver;
@@ -73,7 +74,11 @@ public class GameGraphics extends JPanel implements ImageObserver {
         }
 
         synchronized (imageLock) {
-            bufferedImage = workingImage;
+            bufferedImage = new BufferedImage(Math.round(getWidth()), Math.round(getHeight()), ColorModel.TRANSLUCENT);
+            bufferedImage.getGraphics().drawImage(workingImage.getScaledInstance(Math.round(getWidth()),
+                                                                                 Math.round(getHeight()),
+                                                                                 Image.SCALE_DEFAULT),
+                                                  0,0,this);
         }
     }
 

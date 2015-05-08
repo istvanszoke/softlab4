@@ -1,6 +1,7 @@
 package graphics.handles;
 
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 
@@ -14,8 +15,9 @@ public class EmptyFieldCellSprite implements SpriteHandle {
 
     static {
         image = new BufferedImage(50, 50, ColorModel.TRANSLUCENT);
-        //TODO draw one of these
-
+        Graphics2D g = image.createGraphics();
+        g.setColor(Color.BLACK);
+        g.fillRect(0,0,50,50);
     }
 
     public EmptyFieldCellSprite(EmptyFieldCell cell) {

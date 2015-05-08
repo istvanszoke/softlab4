@@ -1,6 +1,9 @@
 package graphics.handles;
 
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 
@@ -14,7 +17,10 @@ public class FieldCellSprite implements SpriteHandle {
 
     static {
         image = new BufferedImage(50, 50, ColorModel.TRANSLUCENT);
-        //TODO draw one of these
+        Graphics2D g = image.createGraphics();
+        g.setColor(Color.cyan);
+        g.setStroke(new BasicStroke(5));
+        g.drawRect(0,0,50,50);
     }
 
     public FieldCellSprite(FieldCell cell) {
