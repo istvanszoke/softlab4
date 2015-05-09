@@ -17,7 +17,7 @@ public class Oil extends Buff implements HeartbeatListener, Serializable {
     long timeRemaining;
 
     public Oil() {
-        timeRemaining = 5000;
+        timeRemaining = 60000;
         Heartbeat.subscribe(this);
         isCleanable = true;
     }
@@ -71,6 +71,6 @@ public class Oil extends Buff implements HeartbeatListener, Serializable {
     }
 
     public double getWear() {
-        return timeRemaining / 5000.0;
+        return timeRemaining / 60000.0;
     }
 }
