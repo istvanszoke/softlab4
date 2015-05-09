@@ -6,7 +6,9 @@ import java.awt.Dimension;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
+import agents.Agent;
 import agents.Robot;
 import game.*;
 import game.handle.AgentHandle;
@@ -68,7 +70,7 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
             mainGame.start();
             pack();
             isPaused = false;
-            gameGraphics.centerFieldTo(gameControlPanel.getCurrentAgent().getField(), zoom);
+            refreshGraphics();
             Heartbeat.subscribe(this);
             return true;
         } else {
@@ -106,15 +108,25 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
     void zoomInMap() {
         if (zoom > 1) {
             --zoom;
-            gameGraphics.centerFieldTo(gameControlPanel.getCurrentAgent().getField(), zoom);
+            refreshGraphics();
         }
     }
 
     void zoomOutMap() {
         if (zoom < 100) {
             ++zoom;
-            gameGraphics.centerFieldTo(gameControlPanel.getCurrentAgent().getField(), zoom);
+            refreshGraphics();
         }
+    }
+
+    void refreshGraphics() {
+        Agent agent = null;
+        try {
+            agent = gameControlPanel.getCurrentAgent();
+        } catch (NoSuchElementException ex) {
+            return;
+        }
+        gameGraphics.centerFieldTo(agent.getField(), zoom);
     }
 
     public void createAndShowGUI() {
