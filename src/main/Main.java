@@ -24,7 +24,7 @@ public class Main implements GameListener {
     PhoebeGUI phoebeGUI;
 
     public static void main(String[] args) throws IOException {
-        TestcaseGenerator.generateTestCases(30);
+        //TestcaseGenerator.generateTestCases(30);
         boolean stdio = false;
 
         for(String item : args) {

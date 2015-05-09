@@ -2,13 +2,17 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.Socket;
 import java.util.*;
 
 import agents.*;
 import commands.AgentCommand;
-import commands.queries.IdentificationQuery;
+import commands.executes.JumpExecute;
+import commands.queries.*;
 import feedback.Logger;
+import field.Direction;
 import game.Heartbeat;
 import game.HeartbeatListener;
 import game.control.GameControllerSocket;
@@ -43,12 +47,14 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
     public GameControlPanel() {
             buildPanel();
             setEventListeners();
-            Heartbeat.subscribe(this);
+            setEnabled(false);
     }
 
     void setMainFrame(PhoebeGUI mainFrame) {
         if (mainFrame != null) {
             this.mainFrame = mainFrame;
+            setEnabled(true);
+            Heartbeat.subscribe(this);
         } else {
             throw new NullPointerException();
         }
@@ -56,7 +62,82 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
 
     private void setEventListeners()
     {
+        gZoomInBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainFrame.zoomInMap();
+            }
+        });
 
+        gZoomOutBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainFrame.zoomOutMap();
+            }
+        });
+
+        gDirectionUpBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                useCommand(new ChangeDirectionQuery(Direction.UP));
+            }
+        });
+
+        gDirectionDownBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                useCommand(new ChangeDirectionQuery(Direction.DOWN));
+            }
+        });
+
+        gDirectionLeftBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                useCommand(new ChangeDirectionQuery(Direction.LEFT));
+            }
+        });
+
+        gDirectionRightBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                useCommand(new ChangeDirectionQuery(Direction.RIGHT));
+            }
+        });
+
+        gJumpBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                useCommandAndChangeAgent(new JumpQuery());
+            }
+        });
+
+        gIncreaseSpeedBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                useCommand(new ChangeSpeedQuery(1));
+            }
+        });
+
+        gDecreaseSpeedBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                useCommand(new ChangeSpeedQuery(-1));
+            }
+        });
+
+        gPlaceOilBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                useCommand(new UseOilQuery());
+            }
+        });
+
+        gPlaceStickyBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                useCommand(new UseStickyQuery());
+            }
+        });
     }
 
     private void buildPanel() {
@@ -72,7 +153,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
         gPlaceOilBtn = new JButton("0");
         gPlaceStickyBtn = new JButton("0");
 
-        gSpeedLbl = new JLabel();
+        gSpeedLbl = new JLabel("0");
 
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -152,6 +233,9 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             currentSocket = null;
             currentRobot = null;
         }
+
+        gIncreaseSpeedBtn.setEnabled(true);
+        gDecreaseSpeedBtn.setEnabled(true);
     }
 
     @Override
@@ -221,4 +305,20 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             }
         }
     }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        gZoomInBtn.setEnabled(enabled);
+        gZoomOutBtn.setEnabled(enabled);
+        gDirectionUpBtn.setEnabled(enabled);
+        gDirectionDownBtn.setEnabled(enabled);
+        gDirectionRightBtn.setEnabled(enabled);
+        gDirectionLeftBtn.setEnabled(enabled);
+        gJumpBtn.setEnabled(enabled);
+        gIncreaseSpeedBtn.setEnabled(enabled);
+        gDecreaseSpeedBtn.setEnabled(enabled);
+        gPlaceOilBtn.setEnabled(enabled);
+        gPlaceStickyBtn.setEnabled(enabled);
+    }
+
 }

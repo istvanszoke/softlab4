@@ -5,9 +5,15 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import agents.Agent;
+import agents.Robot;
 import game.Game;
 import game.GameSerializer;
+import game.handle.AgentHandle;
+import game.handle.PlayerHandle;
 import graphics.GameGraphics;
 
 
@@ -39,7 +45,6 @@ public class PhoebeGUI extends JFrame
         {
             gameOperationPanel = new GameOperationPanel(this);
             gameControlPanel = new GameControlPanel();
-            gameControlPanel.setEnabled(false);
             controlsPanel.add(gameOperationPanel);
             controlsPanel.add(gameControlPanel);
         }
@@ -48,11 +53,18 @@ public class PhoebeGUI extends JFrame
         pack();
     }
 
-    boolean startNewGame(File map, int playerCount) {
-        mainGame = GameSerializer.load(map);
+    boolean startNewGame(File map, int playerCount, int playerTime) {
+        game.Map loadedMap = GameSerializer.loadMap(map);
+        List<AgentHandle> players = new ArrayList<AgentHandle>();
+        for (int i = 0; i < playerCount; ++i) {
+            AgentHandle agentHandle = new PlayerHandle(new Robot(), playerTime * 60);
+            players.add(agentHandle);
+        }
+        mainGame = new Game(players, loadedMap);
         if (mainGame != null) {
             controlsPanel.remove(gameControlPanel);
             gameControlPanel = mainGame.getGameControlPanelController();
+            gameControlPanel.setMainFrame(this);
             add(gameControlPanel);
             isPaused = false;
             return true;
@@ -74,15 +86,25 @@ public class PhoebeGUI extends JFrame
         if (mainGame != null) {
             if (!isPaused) {
                 mainGame.pause();
+                gameControlPanel.setEnabled(false);
                 isPaused = true;
             } else {
                 mainGame.start();
+                gameControlPanel.setEnabled(true);
                 isPaused = false;
             }
             return true;
         } else {
             return false;
         }
+    }
+
+    void zoomInMap() {
+
+    }
+
+    void zoomOutMap() {
+
     }
 
     public void createAndShowGUI() {

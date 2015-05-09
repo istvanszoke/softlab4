@@ -13,7 +13,8 @@ public class GameOperationPanel extends JPanel
 {
     private PhoebeGUI mainFrame;
 
-    private JComboBox<Integer> gNumOfPlayersCmb;
+    private JComboBox gNumOfPlayersCmb;
+    private JComboBox gPlayerTimeCmb;
     private JButton gLoadMatBtn;
     private JButton gStartGameBtn;
     private JButton gPauseGameBtn;
@@ -52,7 +53,8 @@ public class GameOperationPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if (mainFrame.startNewGame(loadedFile,
-                                            gNumOfPlayersCmb.getItemAt(gNumOfPlayersCmb.getSelectedIndex()))) {
+                                           (Integer)gNumOfPlayersCmb.getSelectedItem(),
+                                           (Integer)gPlayerTimeCmb.getSelectedItem())) {
                     gStopGameBtn.setEnabled(true);
                     gPauseGameBtn.setEnabled(true);
                     gStartGameBtn.setEnabled(false);
@@ -92,6 +94,8 @@ public class GameOperationPanel extends JPanel
     private void buildPanel() {
         //Temporary control declaration
         JLabel lNumOfPlayersLbl = new JLabel("Játékosok száma", JLabel.LEFT);
+        JLabel lPlayerTimeLbl = new JLabel("Játékosok körideje (perc)", JLabel.LEFT);
+
         JPanel lContPanel = new JPanel();
         Dimension lItemDimension = new Dimension(500,25);
 
@@ -101,12 +105,20 @@ public class GameOperationPanel extends JPanel
         //setMaximumSize(new Dimension(250, 200));
 
         //Global and temporary controls initilaization
-        lContPanel.setLayout(new GridLayout(6,1));
-        lContPanel.setMaximumSize(new Dimension(250,180));
+        lContPanel.setLayout(new GridLayout(0,1));
+        lContPanel.setMaximumSize(new Dimension(250,240));
         {
-            gNumOfPlayersCmb = new JComboBox<Integer>();
+            gNumOfPlayersCmb = new JComboBox();
             for (int i = 2; i <= 4; ++i) {
                 gNumOfPlayersCmb.addItem(i);
+            }
+            gPlayerTimeCmb = new JComboBox();
+            {
+                gPlayerTimeCmb.addItem(2);
+                gPlayerTimeCmb.addItem(5);
+                gPlayerTimeCmb.addItem(7);
+                gPlayerTimeCmb.addItem(10);
+                gPlayerTimeCmb.addItem(15);
             }
             gLoadMatBtn = new JButton("Pálya betöltése");
             gStartGameBtn = new JButton("Játék indítása");
@@ -125,6 +137,8 @@ public class GameOperationPanel extends JPanel
 
         lContPanel.add(lNumOfPlayersLbl);
         lContPanel.add(gNumOfPlayersCmb);
+        lContPanel.add(lPlayerTimeLbl);
+        lContPanel.add(gPlayerTimeCmb);
         lContPanel.add(gLoadMatBtn);
         lContPanel.add(gStartGameBtn);
         lContPanel.add(gPauseGameBtn);

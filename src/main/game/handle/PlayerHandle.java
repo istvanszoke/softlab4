@@ -9,7 +9,7 @@ public class PlayerHandle extends AgentHandle {
 
     private long timeRemaining;
 
-    private PlayerHandle(Agent agent, long timeRemaining) {
+    public PlayerHandle(Agent agent, long timeRemaining) {
         super(agent);
         this.timeRemaining = timeRemaining * 1000;
     }
