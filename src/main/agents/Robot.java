@@ -43,6 +43,10 @@ public class Robot extends Agent {
         buffs = new ArrayList<Buff>();
         stickyInventory = new Inventory<Sticky>();
         oilInventory = new Inventory<Oil>();
+        oilInventory.addItem(new Oil());
+        oilInventory.addItem(new Oil());
+        stickyInventory.addItem(new Sticky());
+        stickyInventory.addItem(new Sticky());
         ++instanceCount;
         robotId = instanceCount;
     }
