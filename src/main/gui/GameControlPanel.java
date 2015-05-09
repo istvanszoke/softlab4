@@ -45,6 +45,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
     private GameControllerSocket currentSocket;
 
     public GameControlPanel() {
+            sockets = new ArrayList<GameControllerSocket>();
             buildPanel();
             setEventListeners();
             setEnabled(false);

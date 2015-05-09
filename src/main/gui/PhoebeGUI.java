@@ -65,7 +65,8 @@ public class PhoebeGUI extends JFrame
             controlsPanel.remove(gameControlPanel);
             gameControlPanel = mainGame.getGameControlPanelController();
             gameControlPanel.setMainFrame(this);
-            add(gameControlPanel);
+            controlsPanel.add(gameControlPanel);
+            pack();
             isPaused = false;
             return true;
         } else {
