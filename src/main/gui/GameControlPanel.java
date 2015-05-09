@@ -297,6 +297,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
         if (sendCommandTo(command, currentSocket)) {
             Logger.log(command.getResult());
             currentSocket.sendEndTurn();
+            mainFrame.onAgentChange();
             return true;
         }
 
