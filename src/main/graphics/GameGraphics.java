@@ -32,10 +32,10 @@ public class GameGraphics extends JPanel implements ImageObserver, ComponentList
     private game.Map mainMap;
 
 
-    private BufferedImage bufferedImage;
-    private BufferedImage lastGeneratedImage;
+    private BufferedImage bufferedImage = null;
+    private BufferedImage lastGeneratedImage = null;
     private Map<Field, FieldElementSprite> drawableFields;
-    private Field lastCenter;
+    private Field lastCenter = null;
     private int lastRadius;
 
     private final Object imageLock = new Object();
@@ -50,6 +50,8 @@ public class GameGraphics extends JPanel implements ImageObserver, ComponentList
         for (Field field : mainMap) {
             drawableFields.put(field, new FieldElementSprite(field));
         }
+        lastGeneratedImage = null;
+        lastCenter = null;
         addComponentListener(this);
     }
 
@@ -84,6 +86,8 @@ public class GameGraphics extends JPanel implements ImageObserver, ComponentList
     }
 
     public void centerFieldTo(Field center, int radius) {
+        if (center == null)
+            return;
         int dim = 2*radius + 1;
         BufferedImage workingImage = new BufferedImage(50 * dim, 50 * dim, ColorModel.TRANSLUCENT);
         //TODO here is where we iterate on given fields
@@ -117,10 +121,14 @@ public class GameGraphics extends JPanel implements ImageObserver, ComponentList
     }
 
     public void regenerateImage() {
-        centerFieldTo(lastCenter, lastRadius);
+        if (lastCenter != null) {
+            centerFieldTo(lastCenter, lastRadius);
+        }
     }
 
     public void redrawLastImage() {
+        if (lastGeneratedImage == null)
+            return;
         synchronized (imageLock) {
             bufferedImage = new BufferedImage(Math.round(getWidth()), Math.round(getHeight()), ColorModel.TRANSLUCENT);
             bufferedImage.getGraphics().drawImage(lastGeneratedImage.getScaledInstance(Math.round(getWidth()),

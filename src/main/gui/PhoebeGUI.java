@@ -8,15 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import agents.Robot;
-import game.Game;
-import game.GameListener;
-import game.GameSerializer;
+import game.*;
 import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
 import graphics.GameGraphics;
 
 
-public class PhoebeGUI extends JFrame implements GameListener
+public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
 {
     private GameOperationPanel gameOperationPanel;
     private GameControlPanel gameControlPanel;
@@ -71,6 +69,7 @@ public class PhoebeGUI extends JFrame implements GameListener
             pack();
             isPaused = false;
             gameGraphics.centerFieldTo(gameControlPanel.getCurrentAgent().getField(), zoom);
+            Heartbeat.subscribe(this);
             return true;
         } else {
             return false;
@@ -83,6 +82,7 @@ public class PhoebeGUI extends JFrame implements GameListener
         gameControlPanel = new GameControlPanel();
         add(gameControlPanel);
         isPaused = false;
+        Heartbeat.unsubscribe(this);
         return true;
     }
 
@@ -129,5 +129,12 @@ public class PhoebeGUI extends JFrame implements GameListener
     @Override
     public void onAgentChange() {
         gameGraphics.centerFieldTo(gameControlPanel.getCurrentAgent().getField(), zoom);
+    }
+
+    @Override
+    public void onTick(long deltaTime) {
+        if (!isPaused) {
+            gameGraphics.regenerateImage();
+        }
     }
 }
