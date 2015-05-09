@@ -12,8 +12,8 @@ import graphics.handles.RobotSprite;
 import graphics.handles.VacuumSprite;
 
 public class AgentElementSprite implements SpriteHandle, AgentVisitor {
-    SpriteHandle agentSprite;
-    Agent agent;
+    private SpriteHandle agentSprite;
+    private Agent agent;
 
     public AgentElementSprite(Agent agent) {
         if (agent != null) {

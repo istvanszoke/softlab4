@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.util.HashMap;
+import java.util.Map;
 
 import agents.Robot;
 import graphics.SpriteHandle;
@@ -16,6 +18,11 @@ public class RobotSprite implements SpriteHandle {
     private BufferedImage image;
     private static int startColorIndex = 0;
     private int colorIndex;
+    private static Map<Robot, Integer> agentColorMapping;
+
+    static {
+        agentColorMapping = new HashMap<Robot, Integer>();
+    }
 
     static private Color getColorFromIndex (int index) {
         switch (index) {
@@ -47,7 +54,13 @@ public class RobotSprite implements SpriteHandle {
     public RobotSprite(Robot robot) {
         if (robot != null) {
             this.robot = robot;
-            colorIndex = startColorIndex;
+            Integer storedColorIndex = agentColorMapping.get(robot);
+            if (storedColorIndex == null) {
+                colorIndex = startColorIndex;
+                agentColorMapping.put(robot, colorIndex);
+            } else {
+                colorIndex = storedColorIndex;
+            }
             generateImage();
             startColorIndex = (startColorIndex + 1) % 4;
         } else {
