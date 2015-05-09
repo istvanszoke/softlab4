@@ -107,6 +107,10 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     public GameControlPanel getGameControlPanelController() { return gameControlPanelController; }
 
+    public AgentHandle getAgentHandle(Agent agent) {
+        return gameStorage.get(agent);
+    }
+
     public void addListener(GameListener listener) {
         listeners.add(listener);
     }

@@ -280,7 +280,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
         gSpeedLbl.setText("" + currentRobot.getSpeed().getMagnitude());
         gPlaceStickyBtn.setText("" + currentRobot.getStickyCount());
         gPlaceOilBtn.setText("" + currentRobot.getOilCount());
-        gPlayerTimeLeftLbl.setText("" + mainFrame.getGame().getGameStorage().get(currentRobot).getTimeRemaining() / 1000);
+        gPlayerTimeLeftLbl.setText("" + mainFrame.getGame().getAgentHandle(currentRobot).getTimeRemaining() / 1000);
     }
 
     @Override
