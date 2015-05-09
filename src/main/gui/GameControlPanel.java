@@ -81,6 +81,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new ChangeDirectionQuery(Direction.UP));
+                mainFrame.refreshGraphics();
             }
         });
 
@@ -88,6 +89,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new ChangeDirectionQuery(Direction.DOWN));
+                mainFrame.refreshGraphics();
             }
         });
 
@@ -95,6 +97,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new ChangeDirectionQuery(Direction.LEFT));
+                mainFrame.refreshGraphics();
             }
         });
 
@@ -102,6 +105,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new ChangeDirectionQuery(Direction.RIGHT));
+                mainFrame.refreshGraphics();
             }
         });
 
@@ -116,6 +120,9 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new ChangeSpeedQuery(1));
+                gIncreaseSpeedBtn.setEnabled(false);
+                gDecreaseSpeedBtn.setEnabled(false);
+                displayAgentInfo();
             }
         });
 
@@ -123,6 +130,9 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new ChangeSpeedQuery(-1));
+                gIncreaseSpeedBtn.setEnabled(false);
+                gDecreaseSpeedBtn.setEnabled(false);
+                displayAgentInfo();
             }
         });
 
@@ -130,6 +140,8 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new UseOilQuery());
+                mainFrame.refreshGraphics();
+                displayAgentInfo();
             }
         });
 
@@ -137,6 +149,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new UseStickyQuery());
+                displayAgentInfo();
             }
         });
     }
@@ -231,6 +244,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             currentRobot = identificationQuery.getIdentifiedRobot();
             if (currentRobot == null) throw new NoSuchElementException();
             mainFrame.onAgentChange();
+            displayAgentInfo();
         } else {
             currentSocket = null;
             currentRobot = null;
@@ -248,6 +262,12 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
                 return null;
         }
         return currentRobot;
+    }
+
+    private void displayAgentInfo() {
+        gSpeedLbl.setText("" + currentRobot.getSpeed().getMagnitude());
+        gPlaceStickyBtn.setText("" + currentRobot.getStickyCount());
+        gPlaceOilBtn.setText("" + currentRobot.getOilCount());
     }
 
     @Override

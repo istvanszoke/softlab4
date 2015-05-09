@@ -63,6 +63,10 @@ public class Robot extends Agent {
         return oilInventory.useItem();
     }
 
+    public int getOilCount() { return oilInventory.getItemCount(); }
+
+    public int getStickyCount() { return stickyInventory.getItemCount(); }
+
     @Override
     public void accept(AgentVisitor visitor) {
         visitor.visit(this);
