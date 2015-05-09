@@ -68,9 +68,7 @@ public class GameOperationPanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 mainFrame.stopGame();
-                gPauseGameBtn.setEnabled(false);
-                gStopGameBtn.setEnabled(false);
-                gStartGameBtn.setEnabled(true);
+                gameStopped();
             }
         });
 
@@ -146,4 +144,11 @@ public class GameOperationPanel extends JPanel
 
         add(lContPanel);
     }
+
+    void gameStopped() {
+        gPauseGameBtn.setEnabled(false);
+        gStopGameBtn.setEnabled(false);
+        gStartGameBtn.setEnabled(true);
+    }
+
 }

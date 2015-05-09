@@ -35,6 +35,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
 
     private JLabel gSpeedLbl;
     private JLabel gPlayerTimeLeftLbl;
+    private JLabel gPlayerLapsLbl;
 
     private java.util.List<GameControllerSocket> sockets;
 
@@ -166,7 +167,8 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
         gPlaceStickyBtn = new JButton("0");
 
         gSpeedLbl = new JLabel("0");
-        gPlayerTimeLeftLbl = new JLabel();
+        gPlayerTimeLeftLbl = new JLabel("", JLabel.RIGHT);
+        gPlayerLapsLbl = new JLabel("", JLabel.RIGHT);
 
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -232,18 +234,24 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             lBuffControls.add(lStickyControl);
         }
         add(lBuffControls);
-        JPanel lTimeFeedback = new JPanel();
-        lTimeFeedback.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(Color.BLACK),"Idő"));
-        lTimeFeedback.setLayout(new GridLayout(0,1));
+
+        JPanel lFeedback = new JPanel();
+        lFeedback.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Idő"));
+        lFeedback.setLayout(new GridLayout(0, 1));
         {
             JPanel lPlayerTime = new JPanel();
             lPlayerTime.setLayout(new GridLayout(1,0));
             lPlayerTime.add(new JLabel("Hátralévő (mp):"));
             lPlayerTime.add(gPlayerTimeLeftLbl);
-            lTimeFeedback.add(lPlayerTime);
+            lFeedback.add(lPlayerTime);
+
+            JPanel lPlayerLaps = new JPanel();
+            lPlayerLaps.setLayout(new GridLayout(1,0));
+            lPlayerLaps.add(new JLabel("Megtett körök: "));
+            lPlayerLaps.add(gPlayerLapsLbl);
+            lFeedback.add(lPlayerLaps);
         }
-        add(lTimeFeedback);
+        add(lFeedback);
 
     }
 
@@ -282,6 +290,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             gPlaceStickyBtn.setText("" + currentRobot.getStickyCount());
             gPlaceOilBtn.setText("" + currentRobot.getOilCount());
             gPlayerTimeLeftLbl.setText("" + mainFrame.getGame().getAgentHandle(currentRobot).getTimeRemaining() / 1000);
+            gPlayerLapsLbl.setText("" + currentRobot.getLap());
         } catch (NullPointerException ex) {
 
         }

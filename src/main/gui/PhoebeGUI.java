@@ -151,6 +151,8 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
         Heartbeat.unsubscribe(gameControlPanel);
         gameControlPanel = new GameControlPanel();
         controlsPanel.add(gameControlPanel);
+        gameOperationPanel.gameStopped();
+
         pack();
         isPaused = false;
 
