@@ -9,6 +9,7 @@ import java.awt.image.ColorModel;
 import java.util.HashMap;
 import java.util.Map;
 
+import agents.Agent;
 import agents.Robot;
 import field.Direction;
 import graphics.SpriteHandle;
@@ -34,6 +35,16 @@ public class RobotSprite implements SpriteHandle {
             case 2:     return Color.RED;
             case 3:     return Color.ORANGE;
             default:    return Color.BLACK;
+        }
+    }
+
+    static private String getColorNameFromIndex (int index) {
+        switch (index) {
+            case 0:     return "Kék";
+            case 1:     return "Zöld";
+            case 2:     return "Piros";
+            case 3:     return "Narancssárga";
+            default:    return "Egyik fekete";
         }
     }
 
@@ -90,4 +101,11 @@ public class RobotSprite implements SpriteHandle {
         return image;
     }
 
+    public static Map<Agent, String>getAgentMapping() {
+        Map<Agent, String> result = new HashMap<Agent, String>();
+        for (Robot robot : agentColorMapping.keySet()) {
+            result.put(robot, getColorNameFromIndex(agentColorMapping.get(robot)));
+        }
+        return result;
+    }
 }

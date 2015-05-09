@@ -13,6 +13,7 @@ import game.Map;
 import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
 import graphics.GameGraphics;
+import graphics.handles.RobotSprite;
 
 
 public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
@@ -185,10 +186,15 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
             }
         });
 
+        java.util.Map<Agent,String> names = RobotSprite.getAgentMapping();
+        int place = 0;
         for (AgentHandle handle : playerList) {
-            output.append(handle + " " +
-                         (handle.getAgent().isDead() ? "halott " : "él ") +
-                         "távolság: " + handle.getAgent().getField().getDistanceFromGoal() + "\n");
+            if (!handle.getAgent().isDead())
+                output.append("" + ++place +". ");
+            output.append("" + ++place +". " + names.get(handle.getAgent()) + " " +
+                         (handle.getAgent().isDead() ? "halott " : ("él " +
+                          "távolság: " + handle.getAgent().getField().getDistanceFromGoal())) +
+                          "\n");
         }
 
         JOptionPane.showMessageDialog(this, output.toString(),"Játék vége", JOptionPane.INFORMATION_MESSAGE);
