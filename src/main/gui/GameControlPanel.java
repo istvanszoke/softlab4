@@ -283,7 +283,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             gPlaceOilBtn.setText("" + currentRobot.getOilCount());
             gPlayerTimeLeftLbl.setText("" + mainFrame.getGame().getAgentHandle(currentRobot).getTimeRemaining() / 1000);
         } catch (NullPointerException ex) {
-            
+
         }
     }
 
@@ -302,7 +302,14 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
 
     @Override
     public void socketClosed(GameControllerSocket sender) {
-        changeCurrentSocket(sender);
+        try {
+            changeCurrentSocket(sender);
+        } catch (NoSuchElementException ex) {
+            Heartbeat.unsubscribe(this);
+            setEnabled(false);
+            currentRobot = null;
+            currentSocket = null;
+        }
     }
 
     public void addControllerSocket(GameControllerSocket socket) {

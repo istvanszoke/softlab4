@@ -4,13 +4,12 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import agents.Agent;
 import agents.Robot;
 import game.*;
+import game.Map;
 import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
 import graphics.GameGraphics;
@@ -62,6 +61,7 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
         }
         mainGame = new Game(players, loadedMap);
         if (mainGame != null) {
+            mainGame.addListener(this);
             controlsPanel.remove(gameControlPanel);
             gameControlPanel = mainGame.getGameControlPanelController();
             gameControlPanel.setMainFrame(this);
@@ -79,6 +79,7 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
     }
 
     boolean stopGame() {
+        mainGame.removeListener(this);
         mainGame.pause();
         mainGame = null;
         controlsPanel.remove(gameControlPanel);
@@ -133,7 +134,8 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
         } catch (NoSuchElementException ex) {
             return;
         }
-        gameGraphics.centerFieldTo(agent.getField(), zoom);
+        if (agent != null)
+            gameGraphics.centerFieldTo(agent.getField(), zoom);
     }
 
     public void createAndShowGUI() {
@@ -143,11 +145,58 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
     @Override
     public void onGameFinished(List<AgentHandle> playerList) {
 
+        mainGame = null;
+        controlsPanel.remove(gameControlPanel);
+        Heartbeat.unsubscribe(gameControlPanel);
+        gameControlPanel = new GameControlPanel();
+        controlsPanel.add(gameControlPanel);
+        pack();
+        isPaused = false;
+
+        Heartbeat.unsubscribe(this);
+        StringBuilder output = new StringBuilder();
+        output.append("Game Over\nHelyezések:\n");
+
+        Collections.sort(playerList, new Comparator<AgentHandle>() {
+            @Override
+            public int compare(AgentHandle o1, AgentHandle o2) {
+                if (o1.getAgent().isDead() && o2.getAgent().isDead()) {
+                    return 0;
+                }
+
+                if (o1.getAgent().isDead()) {
+                    return 1;
+                }
+
+                if (o2.getAgent().isDead()) {
+                    return -1;
+                }
+
+                if (o1.getAgent().getLap() < o2.getAgent().getLap()) {
+                    return 1;
+                } else if (o1.getAgent().getLap() > o2.getAgent().getLap()) {
+                    return -1;
+                }
+
+                int firstDistance = o1.getAgent().getField().getDistanceFromGoal();
+                int secondDistance = o1.getAgent().getField().getDistanceFromGoal();
+
+                return secondDistance - firstDistance;
+            }
+        });
+
+        for (AgentHandle handle : playerList) {
+            output.append(handle + " " +
+                         (handle.getAgent().isDead() ? "halott " : "él ") +
+                         "távolság: " + handle.getAgent().getField().getDistanceFromGoal() + "\n");
+        }
+
+        JOptionPane.showMessageDialog(this, output.toString(),"Játék vége", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override
     public void onAgentChange() {
-        gameGraphics.centerFieldTo(gameControlPanel.getCurrentAgent().getField(), zoom);
+        refreshGraphics();
     }
 
     @Override
