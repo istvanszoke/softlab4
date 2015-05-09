@@ -117,7 +117,7 @@ public class Map implements Iterable<Field>, Serializable {
 
         for (int x = coord.getRow()-hw; x < coord.getRow()+hw+wcomp; ++x) {
             for (int y = coord.getCol()-hh; y < coord.getCol()+hh+hcomp; ++y) {
-                fields[ix][iy] = get(x,y);
+                fields[ix][iy] = get(y,x);
                 ++iy;
             }
             iy = 0;
