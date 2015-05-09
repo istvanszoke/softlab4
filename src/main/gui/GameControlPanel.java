@@ -239,6 +239,15 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
         gDecreaseSpeedBtn.setEnabled(true);
     }
 
+    Agent getCurrentAgent() {
+        if (currentRobot == null) {
+            searchForActiveSocket();
+            if (currentRobot == null)
+                return null;
+        }
+        return currentRobot;
+    }
+
     @Override
     public void onTick(long deltaTime) {
 

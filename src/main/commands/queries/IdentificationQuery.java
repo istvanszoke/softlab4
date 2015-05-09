@@ -19,7 +19,7 @@ public class IdentificationQuery extends AgentCommand {
 
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
-        return null;
+        throw new NoFieldCommandException();
     }
 
     @Override

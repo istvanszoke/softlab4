@@ -68,9 +68,10 @@ public class PhoebeGUI extends JFrame implements GameListener
             gameControlPanel.setMainFrame(this);
             controlsPanel.add(gameControlPanel);
             gameGraphics.attachToMap(mainGame.getMap());
-            gameGraphics.centerFieldTo(mainGame.getMap().get(5,5), zoom);
+            mainGame.start();
             pack();
             isPaused = false;
+            gameGraphics.centerFieldTo(gameControlPanel.getCurrentAgent().getField(), zoom);
             return true;
         } else {
             return false;
