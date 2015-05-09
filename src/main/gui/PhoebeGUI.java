@@ -35,7 +35,7 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setTitle("Phoebe game");
-        setMinimumSize(new Dimension(700,500));
+        setMinimumSize(new Dimension(800,500));
 
         gameGraphics = new GameGraphics();
         add(gameGraphics, BorderLayout.CENTER);
@@ -103,6 +103,10 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
         } else {
             return false;
         }
+    }
+
+    Game getGame() {
+        return mainGame;
     }
 
     void zoomInMap() {

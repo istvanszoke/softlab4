@@ -4,12 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.Socket;
 import java.util.*;
 
 import agents.*;
 import commands.AgentCommand;
-import commands.executes.JumpExecute;
 import commands.queries.*;
 import feedback.Logger;
 import field.Direction;
@@ -37,7 +35,6 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
 
     private JLabel gSpeedLbl;
     private JLabel gPlayerTimeLeftLbl;
-    private JLabel gTotalTimeLeftLbl;
 
     private java.util.List<GameControllerSocket> sockets;
 
@@ -123,7 +120,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
                 useCommand(new ChangeSpeedQuery(1));
                 gIncreaseSpeedBtn.setEnabled(currentRobot.getSpeed().getMagnitude() - robotEnterSpeedMagnitude < 1);
                 gDecreaseSpeedBtn.setEnabled(currentRobot.getSpeed().getMagnitude() - robotEnterSpeedMagnitude > -1);
-                displayAgentInfo();
+                refreshAgentInfo();
             }
         });
 
@@ -133,7 +130,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
                 useCommand(new ChangeSpeedQuery(-1));
                 gIncreaseSpeedBtn.setEnabled(currentRobot.getSpeed().getMagnitude() - robotEnterSpeedMagnitude < 1);
                 gDecreaseSpeedBtn.setEnabled(currentRobot.getSpeed().getMagnitude() - robotEnterSpeedMagnitude > -1);
-                displayAgentInfo();
+                refreshAgentInfo();
             }
         });
 
@@ -142,7 +139,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new UseOilQuery());
                 mainFrame.refreshGraphics();
-                displayAgentInfo();
+                refreshAgentInfo();
             }
         });
 
@@ -150,7 +147,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new UseStickyQuery());
-                displayAgentInfo();
+                refreshAgentInfo();
             }
         });
     }
@@ -169,6 +166,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
         gPlaceStickyBtn = new JButton("0");
 
         gSpeedLbl = new JLabel("0");
+        gPlayerTimeLeftLbl = new JLabel();
 
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -234,6 +232,18 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             lBuffControls.add(lStickyControl);
         }
         add(lBuffControls);
+        JPanel lTimeFeedback = new JPanel();
+        lTimeFeedback.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.BLACK),"Idő"));
+        lTimeFeedback.setLayout(new GridLayout(0,1));
+        {
+            JPanel lPlayerTime = new JPanel();
+            lPlayerTime.setLayout(new GridLayout(1,0));
+            lPlayerTime.add(new JLabel("Hátralévő (mp):"));
+            lPlayerTime.add(gPlayerTimeLeftLbl);
+            lTimeFeedback.add(lPlayerTime);
+        }
+        add(lTimeFeedback);
 
     }
 
@@ -245,7 +255,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             currentRobot = identificationQuery.getIdentifiedRobot();
             if (currentRobot == null) throw new NoSuchElementException();
             mainFrame.onAgentChange();
-            displayAgentInfo();
+            refreshAgentInfo();
             robotEnterSpeedMagnitude = currentRobot.getSpeed().getMagnitude();
         } else {
             currentSocket = null;
@@ -266,15 +276,19 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
         return currentRobot;
     }
 
-    private void displayAgentInfo() {
+    private void refreshAgentInfo() {
         gSpeedLbl.setText("" + currentRobot.getSpeed().getMagnitude());
         gPlaceStickyBtn.setText("" + currentRobot.getStickyCount());
         gPlaceOilBtn.setText("" + currentRobot.getOilCount());
+        gPlayerTimeLeftLbl.setText("" + mainFrame.getGame().getGameStorage().get(currentRobot).getTimeRemaining() / 1000);
     }
 
     @Override
     public void onTick(long deltaTime) {
+        if (currentRobot == null || mainFrame == null)
+            return;
 
+        refreshAgentInfo();
     }
 
     @Override
