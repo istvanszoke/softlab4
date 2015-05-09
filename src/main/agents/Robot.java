@@ -125,4 +125,18 @@ public class Robot extends Agent {
         return "" + getRobotId();
     }
 
+    @Override
+    public void setSpeed(Speed speed) {
+        if (Math.abs(this.speed.getMagnitude()) <= 8) {
+            this.speed = speed;
+        } else {
+            if (speed.getMagnitude() < 0) {
+                speed.setMagnitude(-8);
+            } else {
+                speed.setMagnitude(8);
+            }
+            this.speed = speed;
+        }
+    }
+
 }

@@ -43,6 +43,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
 
     private agents.Robot currentRobot;
     private GameControllerSocket currentSocket;
+    private int robotEnterSpeedMagnitude;
 
     public GameControlPanel() {
             sockets = new ArrayList<GameControllerSocket>();
@@ -120,8 +121,8 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new ChangeSpeedQuery(1));
-                gIncreaseSpeedBtn.setEnabled(false);
-                gDecreaseSpeedBtn.setEnabled(false);
+                gIncreaseSpeedBtn.setEnabled(currentRobot.getSpeed().getMagnitude() - robotEnterSpeedMagnitude < 1);
+                gDecreaseSpeedBtn.setEnabled(currentRobot.getSpeed().getMagnitude() - robotEnterSpeedMagnitude > -1);
                 displayAgentInfo();
             }
         });
@@ -130,8 +131,8 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 useCommand(new ChangeSpeedQuery(-1));
-                gIncreaseSpeedBtn.setEnabled(false);
-                gDecreaseSpeedBtn.setEnabled(false);
+                gIncreaseSpeedBtn.setEnabled(currentRobot.getSpeed().getMagnitude() - robotEnterSpeedMagnitude < 1);
+                gDecreaseSpeedBtn.setEnabled(currentRobot.getSpeed().getMagnitude() - robotEnterSpeedMagnitude > -1);
                 displayAgentInfo();
             }
         });
@@ -245,6 +246,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             if (currentRobot == null) throw new NoSuchElementException();
             mainFrame.onAgentChange();
             displayAgentInfo();
+            robotEnterSpeedMagnitude = currentRobot.getSpeed().getMagnitude();
         } else {
             currentSocket = null;
             currentRobot = null;
