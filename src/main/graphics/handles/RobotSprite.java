@@ -10,7 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import agents.Robot;
+import field.Direction;
 import graphics.SpriteHandle;
+
+import static field.Direction.*;
 
 public class RobotSprite implements SpriteHandle {
 
@@ -40,6 +43,20 @@ public class RobotSprite implements SpriteHandle {
         g.setColor(getColorFromIndex(colorIndex));
         g.setStroke(new BasicStroke(5));
         g.drawOval(8,8,34,34);
+        switch (robot.getSpeed().getDirection()) {
+            case UP:
+                g.fillPolygon(new int[] {25, 37, 13}, new int[] {13, 37, 37}, 3);
+                break;
+            case DOWN:
+                g.fillPolygon(new int[] {25, 37, 13}, new int[] {37, 13, 13}, 3);
+                break;
+            case LEFT:
+                g.fillPolygon(new int[] {13, 37, 37}, new int[] {25, 13, 37}, 3);
+                break;
+            case RIGHT:
+                g.fillPolygon(new int[] {37, 13, 13}, new int[] {25, 13, 37}, 3);
+                break;
+        }
     }
 
     public static boolean setStartColorIndex(int input) {

@@ -230,10 +230,12 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
             socket.sendAgentCommand(identificationQuery);
             currentRobot = identificationQuery.getIdentifiedRobot();
             if (currentRobot == null) throw new NoSuchElementException();
+            mainFrame.onAgentChange();
         } else {
             currentSocket = null;
             currentRobot = null;
         }
+
 
         gIncreaseSpeedBtn.setEnabled(true);
         gDecreaseSpeedBtn.setEnabled(true);
