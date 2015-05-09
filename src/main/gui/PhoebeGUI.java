@@ -4,20 +4,20 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import agents.Agent;
 import agents.Robot;
 import game.Game;
+import game.GameListener;
 import game.GameSerializer;
 import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
 import graphics.GameGraphics;
 
 
-public class PhoebeGUI extends JFrame
+public class PhoebeGUI extends JFrame implements GameListener
 {
     private GameOperationPanel gameOperationPanel;
     private GameControlPanel gameControlPanel;
@@ -25,6 +25,7 @@ public class PhoebeGUI extends JFrame
     private GameGraphics gameGraphics;
     private Game mainGame;
     private boolean isPaused = false;
+    private int zoom = 5;
 
     public PhoebeGUI () {
         super();
@@ -66,6 +67,8 @@ public class PhoebeGUI extends JFrame
             gameControlPanel = mainGame.getGameControlPanelController();
             gameControlPanel.setMainFrame(this);
             controlsPanel.add(gameControlPanel);
+            gameGraphics.attachToMap(mainGame.getMap());
+            gameGraphics.centerFieldTo(mainGame.getMap().get(5,5), zoom);
             pack();
             isPaused = false;
             return true;
@@ -110,5 +113,15 @@ public class PhoebeGUI extends JFrame
 
     public void createAndShowGUI() {
         setVisible(true);
+    }
+
+    @Override
+    public void onGameFinished(List<AgentHandle> playerList) {
+
+    }
+
+    @Override
+    public void onAgentChange(Agent nextAgent) {
+
     }
 }

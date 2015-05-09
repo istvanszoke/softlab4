@@ -2,6 +2,8 @@ package graphics;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.ImageObserver;
@@ -12,13 +14,14 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.List;
 
+import agents.Agent;
 import field.EmptyFieldCell;
 import field.Field;
 import game.GameListener;
 import game.handle.AgentHandle;
 import graphics.handles.EmptyFieldCellSprite;
 
-public class GameGraphics extends JPanel implements ImageObserver, GameListener {
+public class GameGraphics extends JPanel implements ImageObserver, ComponentListener {
     public static BufferedImage deepCopyBufferedImage(BufferedImage image) {
         ColorModel cm = image.getColorModel();
         boolean isAlphaPremultiplied = image.isAlphaPremultiplied();
@@ -30,7 +33,10 @@ public class GameGraphics extends JPanel implements ImageObserver, GameListener 
 
 
     private BufferedImage bufferedImage;
+    private BufferedImage lastGeneratedImage;
     private Map<Field, FieldElementSprite> drawableFields;
+    private Field lastCenter;
+    private int lastRadius;
 
     private final Object imageLock = new Object();
 
@@ -40,9 +46,11 @@ public class GameGraphics extends JPanel implements ImageObserver, GameListener 
     }
 
     private void setUp() {
+        drawableFields = new HashMap<Field, FieldElementSprite>();
         for (Field field : mainMap) {
             drawableFields.put(field, new FieldElementSprite(field));
         }
+        addComponentListener(this);
     }
 
     public GameGraphics(game.Map map) {
@@ -76,12 +84,13 @@ public class GameGraphics extends JPanel implements ImageObserver, GameListener 
     }
 
     public void centerFieldTo(Field center, int radius) {
-        BufferedImage workingImage = new BufferedImage(50 * radius, 50 * radius, ColorModel.TRANSLUCENT);
+        int dim = 2*radius + 1;
+        BufferedImage workingImage = new BufferedImage(50 * dim, 50 * dim, ColorModel.TRANSLUCENT);
         //TODO here is where we iterate on given fields
+        lastCenter = center;
+        lastRadius = radius;
 
         EmptyFieldCellSprite defaultFieldSprite = new EmptyFieldCellSprite(new EmptyFieldCell(0));
-
-        int dim = 2*radius + 1;
 
         Field[][] fields = mainMap.getRegion(center, dim, dim);
         for (int x = 0; x < dim; ++x) {
@@ -95,6 +104,8 @@ public class GameGraphics extends JPanel implements ImageObserver, GameListener 
             }
         }
 
+
+        lastGeneratedImage = workingImage;
         synchronized (imageLock) {
             bufferedImage = new BufferedImage(Math.round(getWidth()), Math.round(getHeight()), ColorModel.TRANSLUCENT);
             bufferedImage.getGraphics().drawImage(workingImage.getScaledInstance(Math.round(getWidth()),
@@ -104,11 +115,23 @@ public class GameGraphics extends JPanel implements ImageObserver, GameListener 
         }
     }
 
+    public void regenerateImage() {
+        centerFieldTo(lastCenter, lastRadius);
+    }
+
+    public void redrawLastImage() {
+        synchronized (imageLock) {
+            bufferedImage = new BufferedImage(Math.round(getWidth()), Math.round(getHeight()), ColorModel.TRANSLUCENT);
+            bufferedImage.getGraphics().drawImage(lastGeneratedImage.getScaledInstance(Math.round(getWidth()),
+                                                                                       Math.round(getHeight()),
+                                                                                       Image.SCALE_DEFAULT),
+                                                  0,0,this);
+        }
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         if (mainMap == null || bufferedImage == null) {
-            g.setColor(Color.BLACK);
-            g.fillOval(0,0,100,100);
             return;
         }
         synchronized (imageLock) {
@@ -121,7 +144,23 @@ public class GameGraphics extends JPanel implements ImageObserver, GameListener 
     }
 
     @Override
-    public void onGameFinished(List<AgentHandle> playerList) {
+    public void componentResized(ComponentEvent componentEvent) {
+        if (lastGeneratedImage != null)
+            redrawLastImage();
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent componentEvent) {
+
+    }
+
+    @Override
+    public void componentShown(ComponentEvent componentEvent) {
+
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent componentEvent) {
 
     }
 }

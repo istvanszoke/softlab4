@@ -5,6 +5,7 @@ import java.awt.KeyboardFocusManager;
 import java.io.*;
 import java.util.*;
 
+import agents.Agent;
 import game.*;
 import game.handle.AgentHandle;
 import gui.PhoebeGUI;
@@ -172,5 +173,10 @@ public class Main implements GameListener {
                                (handle.getAgent().isDead() ? "dead " : "alive ") +
                                "distance: " + handle.getAgent().getField().getDistanceFromGoal());
         }
+    }
+
+    @Override
+    public void onAgentChange(Agent nextAgent) {
+
     }
 }

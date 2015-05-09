@@ -17,7 +17,8 @@ public class EmptyFieldCellSprite implements SpriteHandle {
         image = new BufferedImage(50, 50, ColorModel.TRANSLUCENT);
         Graphics2D g = image.createGraphics();
         g.setColor(Color.BLACK);
-        g.fillRect(0,0,50,50);
+        g.setStroke(new BasicStroke(5));
+        g.drawRect(0,0,50,50);
     }
 
     public EmptyFieldCellSprite(EmptyFieldCell cell) {
