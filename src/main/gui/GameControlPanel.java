@@ -277,10 +277,14 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
     }
 
     private void refreshAgentInfo() {
-        gSpeedLbl.setText("" + currentRobot.getSpeed().getMagnitude());
-        gPlaceStickyBtn.setText("" + currentRobot.getStickyCount());
-        gPlaceOilBtn.setText("" + currentRobot.getOilCount());
-        gPlayerTimeLeftLbl.setText("" + mainFrame.getGame().getAgentHandle(currentRobot).getTimeRemaining() / 1000);
+        try {
+            gSpeedLbl.setText("" + currentRobot.getSpeed().getMagnitude());
+            gPlaceStickyBtn.setText("" + currentRobot.getStickyCount());
+            gPlaceOilBtn.setText("" + currentRobot.getOilCount());
+            gPlayerTimeLeftLbl.setText("" + mainFrame.getGame().getAgentHandle(currentRobot).getTimeRemaining() / 1000);
+        } catch (NullPointerException ex) {
+            
+        }
     }
 
     @Override
