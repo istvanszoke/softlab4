@@ -7,7 +7,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import agents.Agent;
 import agents.Robot;
 import game.Game;
 import game.GameListener;
@@ -105,11 +104,17 @@ public class PhoebeGUI extends JFrame implements GameListener
     }
 
     void zoomInMap() {
-
+        if (zoom > 1) {
+            --zoom;
+            gameGraphics.centerFieldTo(gameControlPanel.getCurrentAgent().getField(), zoom);
+        }
     }
 
     void zoomOutMap() {
-
+        if (zoom < 100) {
+            ++zoom;
+            gameGraphics.centerFieldTo(gameControlPanel.getCurrentAgent().getField(), zoom);
+        }
     }
 
     public void createAndShowGUI() {
@@ -122,7 +127,7 @@ public class PhoebeGUI extends JFrame implements GameListener
     }
 
     @Override
-    public void onAgentChange(Agent nextAgent) {
-
+    public void onAgentChange() {
+        gameGraphics.centerFieldTo(gameControlPanel.getCurrentAgent().getField(), zoom);
     }
 }

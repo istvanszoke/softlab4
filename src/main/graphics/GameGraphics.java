@@ -132,12 +132,14 @@ public class GameGraphics extends JPanel implements ImageObserver, ComponentList
 
     @Override
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         if (mainMap == null || bufferedImage == null) {
             return;
         }
         synchronized (imageLock) {
             g.drawImage(bufferedImage, 0, 0, this);
         }
+
     }
 
     public Map<Field, FieldElementSprite> getDrawableFields() {

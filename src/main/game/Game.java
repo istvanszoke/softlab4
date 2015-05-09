@@ -131,6 +131,9 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         }
 
         handle.onTurnEnd();
+        for (GameListener listener : listeners) {
+            listener.onAgentChange();
+        }
     }
 
     @Override

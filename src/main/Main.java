@@ -1,11 +1,6 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.WindowConstants;
-import java.awt.KeyboardFocusManager;
 import java.io.*;
 import java.util.*;
 
-import agents.Agent;
 import game.*;
 import game.handle.AgentHandle;
 import gui.PhoebeGUI;
@@ -176,7 +171,7 @@ public class Main implements GameListener {
     }
 
     @Override
-    public void onAgentChange(Agent nextAgent) {
+    public void onAgentChange() {
 
     }
 }
