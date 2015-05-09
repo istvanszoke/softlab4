@@ -38,9 +38,9 @@ public class Map implements Iterable<Field>, Serializable {
     }
 
     public Field get(int row, int col) {
-        if (row < 0 || row >= width)
+        if (row < 0 || row >= height)
             return null;
-        if (col < 0 || row >= height)
+        if (col < 0 || col >= width)
             return null;
         return fields.get(row * width + col);
     }
@@ -120,6 +120,7 @@ public class Map implements Iterable<Field>, Serializable {
                 fields[ix][iy] = get(x,y);
                 ++iy;
             }
+            iy = 0;
             ++ix;
         }
 

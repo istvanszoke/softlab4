@@ -32,7 +32,7 @@ public class StickySprite implements SpriteHandle {
         for (int count = 0; count < 16 * sticky.getWear(); count++) {
             int x = rnd.nextInt(50);
             int y = rnd.nextInt(50);
-            int r = 1 + rnd.nextInt(4);
+            int r = 1 + rnd.nextInt(8);
             g.fillOval(x,y,r,r);
         }
         return image;

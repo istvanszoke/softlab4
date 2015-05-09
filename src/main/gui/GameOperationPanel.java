@@ -40,7 +40,7 @@ public class GameOperationPanel extends JPanel
                 fileChooser.setFileFilter(new FileNameExtensionFilter("Térkép fájl", "map"));
                 fileChooser.showDialog(null, "Betöltés");
                 loadedFile = fileChooser.getSelectedFile();
-                if (loadedFile.exists()) {
+                if (loadedFile != null && loadedFile.exists()) {
                     gStartGameBtn.setEnabled(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Nincs ilyen fájl", "Hiba", JOptionPane.ERROR_MESSAGE);

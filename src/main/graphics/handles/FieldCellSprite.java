@@ -19,8 +19,8 @@ public class FieldCellSprite implements SpriteHandle {
         image = new BufferedImage(50, 50, ColorModel.TRANSLUCENT);
         Graphics2D g = image.createGraphics();
         g.setColor(Color.cyan);
-        g.setStroke(new BasicStroke(5));
-        g.drawRect(0,0,50,50);
+        g.setStroke(new BasicStroke(4));
+        g.drawRect(2,2,47,47);
     }
 
     public FieldCellSprite(FieldCell cell) {

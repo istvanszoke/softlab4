@@ -98,6 +98,7 @@ public class GameGraphics extends JPanel implements ImageObserver, ComponentList
                 if (fields[x][y] != null) {
                     FieldElementSprite toDraw = drawableFields.get(fields[x][y]);
                     workingImage.getGraphics().drawImage(toDraw.getItemImage(), x * 50, y * 50, this);
+                    //workingImage.getGraphics().drawImage(defaultFieldSprite.getItemImage(), x*50, y*50, this);
                 } else {
                     workingImage.getGraphics().drawImage(defaultFieldSprite.getItemImage(), x*50, y*50, this);
                 }
