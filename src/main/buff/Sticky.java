@@ -47,4 +47,8 @@ public class Sticky extends Buff {
     public void accept(BuffVisitor visitor) {
         visitor.visit(this);
     }
+
+    public double getWear() {
+        return usesRemaining / 4.0;
+    }
 }

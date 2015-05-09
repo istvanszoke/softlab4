@@ -2,7 +2,13 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.Socket;
+import java.util.*;
 
+import agents.*;
+import commands.AgentCommand;
+import commands.queries.IdentificationQuery;
+import feedback.Logger;
 import game.Heartbeat;
 import game.HeartbeatListener;
 import game.control.GameControllerSocket;
@@ -29,6 +35,10 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
     private JLabel gPlayerTimeLeftLbl;
     private JLabel gTotalTimeLeftLbl;
 
+    private java.util.List<GameControllerSocket> sockets;
+
+    private agents.Robot currentRobot;
+    private GameControllerSocket currentSocket;
 
     public GameControlPanel() {
             buildPanel();
@@ -131,6 +141,19 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
 
     }
 
+    private void changeCurrentSocket (GameControllerSocket socket) {
+        if (socket != null) {
+            currentSocket = socket;
+            IdentificationQuery identificationQuery = new IdentificationQuery();
+            socket.sendAgentCommand(identificationQuery);
+            currentRobot = identificationQuery.getIdentifiedRobot();
+            if (currentRobot == null) throw new NoSuchElementException();
+        } else {
+            currentSocket = null;
+            currentRobot = null;
+        }
+    }
+
     @Override
     public void onTick(long deltaTime) {
 
@@ -138,15 +161,64 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
 
     @Override
     public void socketOpened(GameControllerSocket sender) {
-
+        changeCurrentSocket(sender);
     }
 
     @Override
     public void socketClosed(GameControllerSocket sender) {
-
+        changeCurrentSocket(sender);
     }
 
     public void addControllerSocket(GameControllerSocket socket) {
+        if (socket != null) {
+            sockets.add(socket);
+            socket.enableStateNotification(this);
+        } else {
+            throw new NullPointerException();
+        }
+    }
 
+    private boolean useCommand(AgentCommand command) {
+        if (currentSocket == null) {
+            searchForActiveSocket();
+            if (currentSocket == null)
+                return false;
+        }
+
+        if (sendCommandTo(command, currentSocket)) {
+            Logger.log(command.getResult());
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean useCommandAndChangeAgent(AgentCommand command) {
+        if (currentSocket == null) {
+            searchForActiveSocket();
+            if (currentSocket == null)
+                return false;
+        }
+
+        if (sendCommandTo(command, currentSocket)) {
+            Logger.log(command.getResult());
+            currentSocket.sendEndTurn();
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean sendCommandTo(AgentCommand command, GameControllerSocket socket) {
+        return socket.sendAgentCommand(command);
+    }
+
+    private void searchForActiveSocket() {
+        for (GameControllerSocket socket : sockets) {
+            if (socket.isOpen()) {
+                changeCurrentSocket(socket);
+                return;
+            }
+        }
     }
 }
