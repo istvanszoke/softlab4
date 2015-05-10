@@ -7,16 +7,19 @@ import commands.NoFieldCommandException;
 import commands.executes.KillExecute;
 import commands.queries.JumpQuery;
 import feedback.Logger;
+import field.DirectionHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 public class Vacuum extends Agent {
     public Map<Buff, Integer> cleaning;
     private static int instanceCount = 0;
     private int vacuumId;
+    private int directionTried = 0;
 
     public static void resetInstanceCount() {
         instanceCount = 0;
@@ -49,10 +52,14 @@ public class Vacuum extends Agent {
 
     @Override
     public boolean onCauseCollision(Agent agent) {
-        setSpeed(Speed.getOpposite(getSpeed()));
+        directionTried = (directionTried + 1) % 4;
+        Speed newSpeed = getSpeed();
+        newSpeed.setDirection(DirectionHelper.fromInt(directionTried));
+        setSpeed(newSpeed);
         JumpQuery bounce = new JumpQuery();
         accept(bounce);
         Logger.log(bounce.getResult());
+        directionTried = new Random(System.currentTimeMillis()).nextInt(3);
         return false;
     }
 

@@ -28,6 +28,16 @@ public class DirectionHelper {
         }
     }
 
+    public static Direction fromInt(int dir) {
+        switch (dir) {
+            case 0: return Direction.UP;
+            case 1: return Direction.DOWN;
+            case 2: return Direction.LEFT;
+            case 3: return Direction.RIGHT;
+            default: return null;
+        }
+    }
+
     public static Direction getOpposite(Direction dir) {
         return oppositeMapping.get(dir);
     }
