@@ -31,7 +31,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     private int vacuumSpawnElapsed = 0;
 
-    public Game(List<AgentHandle> agents, Map map) {
+    public Game(List<AgentHandle> agents, Map map) throws BadMapSizeException {
         this(new GameStorage(agents), map);
         placeAgents();
     }
@@ -199,7 +199,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         start();
     }
 
-    private void placeAgents() {
+    private void placeAgents() throws BadMapSizeException {
         List<AgentHandle> inPlay = gameStorage.getInPlay();
         List<Field> startingFields = map.findStartingPositions(inPlay.size());
 

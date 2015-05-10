@@ -1,0 +1,19 @@
+[Map(startingDirection=UP)]
+##########
+##########
+###      #
+##  #    #
+#   ##   #
+#    #$$$#
+##       #
+###     ##
+##########
+##########
+
+[Buffs(oilTimeout=60000)]
+Oil: 43 51 27 47
+
+[Agents(roundTime=10)]
+Robot: 66
+Vacuum: 37 27
+

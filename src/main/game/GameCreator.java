@@ -35,7 +35,14 @@ public final class GameCreator {
             return null;
         }
 
-        return new Game(agents, map);
+        Game game;
+        try {
+            game = new Game(agents, map);
+        } catch (BadMapSizeException e) {
+            return null;
+        }
+
+        return game;
     }
 
     public Map getMap() {

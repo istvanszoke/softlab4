@@ -81,9 +81,9 @@ public class Map implements Iterable<Field> {
         finishLineFields.clear();
     }
 
-    public List<Field> findStartingPositions(int numberOfPlayers) {
+    public List<Field> findStartingPositions(int numberOfPlayers) throws BadMapSizeException {
         if (finishLineFields.size() < numberOfPlayers) {
-            throw new IllegalArgumentException();
+            throw new BadMapSizeException(finishLineFields.size(), numberOfPlayers);
         }
 
         List<Field> suitableFields = new ArrayList<Field>();
