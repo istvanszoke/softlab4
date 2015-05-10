@@ -15,6 +15,12 @@ public class Oil extends Buff implements HeartbeatListener {
         isCleanable = true;
     }
 
+    public static Oil createInactive() {
+        Oil oil = new Oil();
+        Heartbeat.unsubscribe(oil);
+        return oil;
+    }
+
     @Override
     public void visit(ChangeDirectionTransmit command) {
         //command.getResult().pushDebug("Change Direction blocked by Oil");
