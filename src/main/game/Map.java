@@ -6,10 +6,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import field.Direction;
-import field.EmptyFieldCell;
-import field.Field;
-import field.FinishLineFieldCell;
+import feedback.NoFeedbackException;
+import feedback.Result;
+import field.*;
 
 public class Map implements Iterable<Field>, Serializable {
 
@@ -99,6 +98,18 @@ public class Map implements Iterable<Field>, Serializable {
         }
 
         return suitableFields;
+    }
+
+    public List<Field> findUnoccupied() {
+        List<Field> ret = new ArrayList<Field>();
+        FieldCellProbe probe = new FieldCellProbe();
+        for (Field field : fields) {
+            field.accept(probe);
+            if (field.isEmpty() && probe.isFieldCell) {
+                ret.add(field);
+            }
+        }
+        return ret;
     }
 
     public Field[][] getRegion(Field center, int width, int height) {
@@ -192,6 +203,30 @@ public class Map implements Iterable<Field>, Serializable {
                     field.addNeighbour(Direction.RIGHT, new EmptyFieldCell(-1));
                 }
             }
+        }
+    }
+
+    private class FieldCellProbe implements FieldVisitor {
+        public boolean isFieldCell = false;
+
+        @Override
+        public void visit(FieldCell element) {
+            isFieldCell = true;
+        }
+
+        @Override
+        public void visit(EmptyFieldCell element) {
+            isFieldCell = false;
+        }
+
+        @Override
+        public void visit(FinishLineFieldCell element) {
+            isFieldCell = false;
+        }
+
+        @Override
+        public Result getResult() throws NoFeedbackException {
+            return null;
         }
     }
 }

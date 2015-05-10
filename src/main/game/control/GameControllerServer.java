@@ -78,6 +78,7 @@ public class GameControllerServer {
                 agentMapping.remove(agent);
                 socketMapping.remove(toRemove);
                 globalToLocalMapping.remove(toRemove);
+                toRemove.disableStateNotification();
             }
         }
     }

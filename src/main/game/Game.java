@@ -1,10 +1,7 @@
 package game;
 
 import java.awt.Component;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 import agents.Agent;
 import agents.AgentVisitor;
@@ -18,6 +15,7 @@ import field.Field;
 import game.control.*;
 import game.handle.AgentHandle;
 import game.handle.HandleListener;
+import game.handle.VacuumHandle;
 import gui.GameControlPanel;
 import proto.ProtoCommand;
 
@@ -31,6 +29,9 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     public static ControllerType controllerType = ControllerType.HUMAN;
 
+    private static final int MAX_VACUUMS = 2;
+    private static final int VACUUM_SPAWN_INTERVAL = 30000; // 30 sec
+
     private final List<GameListener> listeners;
     private final GameStorage gameStorage;
     private final Map map;
@@ -42,6 +43,8 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     private final GameControlPanel gameControlPanelController;
 
     private final List<VacuumController> vacuumControllers;
+
+    private int vacuumSpawnElapsed = 0;
 
     public Game(List<AgentHandle> agents, Map map) {
         this(new GameStorage(agents), map);
@@ -189,7 +192,39 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     @Override
     public void onTick(long deltaTime) {
-        //TODO:Spawn vacuum robots or do anything time related
+        pause();
+
+        vacuumSpawnElapsed += deltaTime;
+        if (vacuumSpawnElapsed < VACUUM_SPAWN_INTERVAL) {
+            start();
+            return;
+        }
+
+        cleanupDeadVacuums();
+        int vacuumsToSpawn = vacuumControllers.size() - MAX_VACUUMS;
+        if (vacuumsToSpawn >= 0) {
+            start();
+            return;
+        }
+
+        List<Field> unoccupiedFields = map.findUnoccupied();
+        Random random = new Random(System.currentTimeMillis());
+        ControllerAssigner assigner = new ControllerAssigner(controllerServer);
+
+        while (vacuumsToSpawn != 0) {
+            Vacuum vacuum = new Vacuum();
+            VacuumHandle handle = new VacuumHandle(vacuum);
+            int fieldIndex = random.nextInt(unoccupiedFields.size());
+
+            gameStorage.add(handle);
+            unoccupiedFields.get(fieldIndex).onEnter(vacuum);
+            assigner.visit(vacuum);
+            unoccupiedFields.remove(fieldIndex);
+
+            ++vacuumsToSpawn;
+        }
+        vacuumSpawnElapsed = 0;
+        start();
     }
 
     private void placeAgents() {
@@ -250,6 +285,19 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
         return true;
     }
+
+    private void cleanupDeadVacuums() {
+        Iterator<VacuumController> i = vacuumControllers.iterator();
+        while (i.hasNext()) {
+            VacuumController c = i.next();
+            Vacuum v = c.getVacuum();
+            if (v.isDead()) {
+                controllerServer.removeAgent(v);
+                i.remove();
+            }
+        }
+    }
+
 
     private class ControllerAssigner implements AgentVisitor {
         GameControllerServer server;

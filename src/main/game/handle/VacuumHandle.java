@@ -8,7 +8,7 @@ public class VacuumHandle extends AgentHandle {
 
     private static final long serialVersionUID = -9092309162816953432L;
 
-    private VacuumHandle(Agent agent) {
+    public VacuumHandle(Vacuum agent) {
         super(agent);
     }
 
