@@ -9,8 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class GameOperationPanel extends JPanel
-{
+public class GameOperationPanel extends JPanel  {
     private PhoebeGUI mainFrame;
 
     private JComboBox gNumOfPlayersCmb;
@@ -36,7 +35,7 @@ public class GameOperationPanel extends JPanel
         gLoadMatBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                JFileChooser fileChooser = new JFileChooser();
+                JFileChooser fileChooser = new JFileChooser("src/resources/maps");
                 fileChooser.setFileFilter(new FileNameExtensionFilter("Térkép fájl", "map"));
                 fileChooser.showDialog(null, "Betöltés");
                 loadedFile = fileChooser.getSelectedFile();
@@ -75,7 +74,7 @@ public class GameOperationPanel extends JPanel
         gPauseGameBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (mainFrame.tooglePause()) {
+                if (mainFrame.togglePause()) {
                     if (gPauseGameBtn.getText().equals("Játék felfüggesztése")) {
                         gPauseGameBtn.setText("Játék folytatása");
                     } else if (gPauseGameBtn.getText().equals("Játék folytatása")) {
@@ -95,7 +94,6 @@ public class GameOperationPanel extends JPanel
         JLabel lPlayerTimeLbl = new JLabel("Játékosok körideje (perc)", JLabel.LEFT);
 
         JPanel lContPanel = new JPanel();
-        Dimension lItemDimension = new Dimension(500,25);
 
         //Panel initialization
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -145,7 +143,7 @@ public class GameOperationPanel extends JPanel
         add(lContPanel);
     }
 
-    void gameStopped() {
+    public void gameStopped() {
         gPauseGameBtn.setEnabled(false);
         gStopGameBtn.setEnabled(false);
         gStartGameBtn.setEnabled(true);

@@ -1,16 +1,12 @@
 package game;
 
-import java.io.Serializable;
 import java.util.*;
 import java.util.Map;
 
 import agents.Agent;
 import game.handle.AgentHandle;
 
-public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener, Serializable {
-
-    private static final long serialVersionUID = 7225789350225557116L;
-
+public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
     private final List<AgentHandle> all;
     private final List<AgentHandle> inPlay;
     private final List<AgentHandle> players;
@@ -69,12 +65,23 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener, Se
         return current;
     }
 
+    public synchronized List<AgentHandle> getAll() {
+        return all;
+    }
+
     public synchronized List<AgentHandle> getInPlay() {
         return inPlay;
     }
 
     public synchronized List<AgentHandle> getPlayers() {
         return players;
+    }
+
+    public synchronized void clear() {
+        all.clear();
+        inPlay.clear();
+        players.clear();
+        agentMapping.clear();
     }
 
     @Override

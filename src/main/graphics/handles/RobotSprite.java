@@ -11,10 +11,8 @@ import java.util.Map;
 
 import agents.Agent;
 import agents.Robot;
-import field.Direction;
 import graphics.SpriteHandle;
 
-import static field.Direction.*;
 
 public class RobotSprite implements SpriteHandle {
 

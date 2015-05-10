@@ -1,13 +1,9 @@
 package buff;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inventory<T extends Buff> implements Serializable {
-
-    private static final long serialVersionUID = -1042277609272860020L;
-
+public class Inventory<T extends Buff> {
     private final List<T> inventory;
 
     public Inventory() {

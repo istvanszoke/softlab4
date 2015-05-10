@@ -1,16 +1,9 @@
 package agents;
 
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import field.Direction;
 import field.DirectionHelper;
 
-public class Speed implements Cloneable, Serializable {
-    private static final long serialVersionUID = 624748655659797670L;
-
+public class Speed implements Cloneable {
     private Direction direction;
     private int magnitude;
 

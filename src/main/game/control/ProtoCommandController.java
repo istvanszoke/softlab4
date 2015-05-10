@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import commands.AgentCommand;
-import commands.executes.KillExecute;
 import commands.queries.*;
 import feedback.Logger;
 import field.Direction;
 import proto.ProtoCommand;
 
-public class ProtoCommandController implements GameControllerSocketListener {
+public class ProtoCommandController implements HumanController {
     private final List<GameControllerSocket> sockets;
 
     public ProtoCommandController() {
         sockets = new ArrayList<GameControllerSocket>();
     }
 
+    @Override
     public void addControllerSocket(GameControllerSocket socket) {
         synchronized (sockets) {
             sockets.add(socket);

@@ -10,15 +10,9 @@ import java.awt.image.ImageObserver;
 import java.awt.image.WritableRaster;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.List;
 
-import agents.Agent;
-import field.EmptyFieldCell;
 import field.Field;
-import game.GameListener;
-import game.handle.AgentHandle;
 import graphics.handles.EmptyFieldCellSprite;
 
 public class GameGraphics extends JPanel implements ImageObserver, ComponentListener {
@@ -94,7 +88,7 @@ public class GameGraphics extends JPanel implements ImageObserver, ComponentList
         lastCenter = center;
         lastRadius = radius;
 
-        EmptyFieldCellSprite defaultFieldSprite = new EmptyFieldCellSprite(new EmptyFieldCell(0));
+        EmptyFieldCellSprite defaultFieldSprite = new EmptyFieldCellSprite();
 
         Field[][] fields = mainMap.getRegion(center, dim, dim);
         for (int x = 0; x < dim; ++x) {

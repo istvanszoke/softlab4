@@ -5,16 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DirectionHelper {
-    private static final Map<Direction, Direction> oppositeMapping = Collections.unmodifiableMap(new HashMap<Direction, Direction>() {
-        private static final long serialVersionUID = 8404668215822539457L;
-
-        {
-            put(Direction.UP, Direction.DOWN);
-            put(Direction.DOWN, Direction.UP);
-            put(Direction.LEFT, Direction.RIGHT);
-            put(Direction.RIGHT, Direction.LEFT);
-        }
-    });
+    private static final Map<Direction, Direction> oppositeMapping =
+            Collections.unmodifiableMap(new HashMap<Direction, Direction>() {{
+                put(Direction.UP, Direction.DOWN);
+                put(Direction.DOWN, Direction.UP);
+                put(Direction.LEFT, Direction.RIGHT);
+                put(Direction.RIGHT, Direction.LEFT);
+            }});
 
     public static Direction fromString(String dir) {
         dir = dir.toLowerCase();

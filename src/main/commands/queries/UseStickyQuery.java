@@ -9,9 +9,6 @@ import commands.NoFieldCommandException;
 import commands.executes.UseStickyExecute;
 
 public class UseStickyQuery extends AgentCommand {
-
-    private static final long serialVersionUID = -9101210728040310924L;
-
     @Override
     public FieldCommand getFieldCommand() throws NoFieldCommandException {
         return new UseStickyExecute(this);

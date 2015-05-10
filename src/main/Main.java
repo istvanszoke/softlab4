@@ -2,14 +2,12 @@ import java.io.*;
 import java.util.*;
 
 import game.*;
+import game.control.ProtoCommandController;
 import game.handle.AgentHandle;
 import gui.PhoebeGUI;
 import proto.*;
 
 public class Main implements GameListener {
-
-    private static final long serialVersionUID = -6767044297674099347L;
-
     private enum OperationMode {
         STDIO,
         GUI
@@ -18,6 +16,7 @@ public class Main implements GameListener {
     OperationMode opMode;
     Game mainGame;
     PhoebeGUI phoebeGUI;
+    ProtoCommandController protoController = new ProtoCommandController();
 
     public static void main(String[] args) throws IOException {
         //TestcaseGenerator.generateTestCases(30);
@@ -53,7 +52,6 @@ public class Main implements GameListener {
 
     private void operateGui() {
         phoebeGUI = new PhoebeGUI();
-        Game.controllerType = Game.ControllerType.GUI;
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 phoebeGUI.createAndShowGUI();
@@ -65,7 +63,6 @@ public class Main implements GameListener {
     private void operateStdIO() {
         ProtoCommand command = new ProtoCommand();
         Heartbeat.manualize();
-        Game.controllerType = Game.ControllerType.PROTOCOMMAND;
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (!command.getCommand().equals(ProtoCommand.EXIT)) {
@@ -84,13 +81,9 @@ public class Main implements GameListener {
                 System.out.println("Nem helyes parancs");
             } catch (InvalidCommandArgumentException e) {
                 System.out.println("Rossz argumentum");
-            } catch (IOException ex) {
-
-            } catch (InterruptedException e) {
+            } catch (Exception ignored) {
 
             }
-
-
         }
     }
 
@@ -107,6 +100,7 @@ public class Main implements GameListener {
                     System.out.println("Game creation was unsuccessful");
                 } else {
                     mainGame.addListener(this);
+                    mainGame.initialize(protoController);
                     mainGame.start();
                 }
             } else {
@@ -120,7 +114,7 @@ public class Main implements GameListener {
                 } else {
                     Heartbeat.beat(Integer.parseInt(timeArg));
                 }
-            } else if (!mainGame.getProtoCommandController().processProtoCommand(command)) {
+            } else if (!protoController.processProtoCommand(command)) {
 				System.out.println("Something wrong with command");
             }
         }

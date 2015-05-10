@@ -27,17 +27,17 @@ public class FieldElementSprite implements SpriteHandle, FieldVisitor {
 
     @Override
     public void visit(FieldCell element) {
-        fieldSprite = new FieldCellSprite(element);
+        fieldSprite = new FieldCellSprite();
     }
 
     @Override
     public void visit(EmptyFieldCell element) {
-        fieldSprite = new EmptyFieldCellSprite(element);
+        fieldSprite = new EmptyFieldCellSprite();
     }
 
     @Override
     public void visit(FinishLineFieldCell element) {
-        fieldSprite = new FinishLineFieldCellSprite(element);
+        fieldSprite = new FinishLineFieldCellSprite();
     }
 
     @Override

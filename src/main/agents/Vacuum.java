@@ -8,33 +8,18 @@ import commands.executes.KillExecute;
 import commands.queries.JumpQuery;
 import feedback.Logger;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
-
 public class Vacuum extends Agent {
-    private static final long serialVersionUID = -6656316872391342564L;
-
     public Map<Buff, Integer> cleaning;
     private static int instanceCount = 0;
     private int vacuumId;
 
     public static void resetInstanceCount() {
         instanceCount = 0;
-    }
-
-    public static void writeStaticParams(ObjectOutputStream oos) throws IOException {
-        Integer wrapOutput = instanceCount;
-        oos.writeObject(wrapOutput);
-    }
-
-    public static void readStaticParams(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        instanceCount = (Integer)ois.readObject();
     }
 
     public Vacuum() {

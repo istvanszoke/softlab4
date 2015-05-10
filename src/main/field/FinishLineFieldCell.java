@@ -5,9 +5,6 @@ import commands.FieldCommand;
 import commands.NoAgentCommandException;
 
 public class FinishLineFieldCell extends Field {
-
-    private static final long serialVersionUID = -5256639349778399249L;
-
     private Direction startingDirection;
 
     public FinishLineFieldCell(Direction startingDir) {

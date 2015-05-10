@@ -3,13 +3,8 @@ package buff;
 import agents.Robot;
 import agents.Speed;
 import agents.Vacuum;
-import feedback.NoFeedbackException;
-import feedback.Result;
 
 public class Sticky extends Buff {
-
-    private static final long serialVersionUID = -8685543611701141066L;
-
     int usesRemaining;
 
     public Sticky() {

@@ -12,9 +12,6 @@ import field.FieldCell;
 import field.FinishLineFieldCell;
 
 public class UseStickyExecute extends FieldCommand {
-
-    private static final long serialVersionUID = 2477937466310708179L;
-
     public UseStickyExecute(UseStickyQuery parent) {
         super(parent);
     }

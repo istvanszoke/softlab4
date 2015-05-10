@@ -7,7 +7,6 @@ import agents.Agent;
 import commands.AgentCommand;
 
 public class GameControllerServer {
-
     private final Object mappingOperationLock;
     private GameControllerServerListener listener;
     private Map<ControlSocket, Agent> socketMapping;
@@ -78,6 +77,7 @@ public class GameControllerServer {
                 agentMapping.remove(agent);
                 socketMapping.remove(toRemove);
                 globalToLocalMapping.remove(toRemove);
+                toRemove.disableStateNotification();
             }
         }
     }
