@@ -19,7 +19,6 @@ public class Oil extends Buff implements HeartbeatListener {
     }
 
     public Oil() {
-        System.out.println("Oil timeout: " + globalTimeout);
         timeRemaining = globalTimeout;
         Heartbeat.subscribe(this);
         isCleanable = true;

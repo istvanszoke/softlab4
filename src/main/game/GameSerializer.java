@@ -78,8 +78,8 @@ public class GameSerializer {
 
     public static Game load(File file) {
         game.Map map = null;
-        Map<Integer, AgentHandle> agents = null;
-        Map<Integer, Collection<Buff>> buffs = null;
+        Map<Integer, AgentHandle> agents = new HashMap<Integer, AgentHandle>();
+        Map<Integer, Collection<Buff>> buffs = new HashMap<Integer, Collection<Buff>>();
 
         BufferedReader reader = null;
 
@@ -126,7 +126,7 @@ public class GameSerializer {
 
     public static game.Map loadMap(File file) {
         game.Map map = null;
-        Map<Integer, Collection<Buff>> buffs = null;
+        Map<Integer, Collection<Buff>> buffs = new HashMap<Integer, Collection<Buff>>();
 
         BufferedReader reader = null;
 
@@ -145,7 +145,9 @@ public class GameSerializer {
                     }
 
                     map = processMap(reader, startingDir);
-                } else if (processedLine.equals("[buffs]")) {
+                } else if (processedLine.matches("\\[buffs\\(\\w+=\\d+\\)\\]")) {
+                    int oilTime = Integer.parseInt(processedLine.replaceAll("[)]]", "").split("=")[1]);
+                    Oil.setGlobalTimeout(oilTime);
                     buffs = processBuffs(reader);
                 }
                 line = reader.readLine();
