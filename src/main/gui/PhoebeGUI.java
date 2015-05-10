@@ -34,7 +34,7 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setTitle("Phoebe game");
-        setMinimumSize(new Dimension(800,500));
+        setMinimumSize(new Dimension(800, 500));
 
         gameGraphics = new GameGraphics();
         add(gameGraphics, BorderLayout.CENTER);
@@ -61,11 +61,28 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
         }
 
 
-        controlsPanel.remove(gameControlPanel);
+        GameControlPanel oldControlPanel = gameControlPanel;
+        controlsPanel.remove(oldControlPanel);
         gameControlPanel = new GameControlPanel();
         controlsPanel.add(gameControlPanel);
 
-        mainGame = new Game(players, loadedMap);
+        Game newGame;
+        try {
+            newGame = new Game(players, loadedMap);
+        } catch (BadMapSizeException e) {
+            controlsPanel.remove(gameControlPanel);
+            gameControlPanel = oldControlPanel;
+            controlsPanel.add(oldControlPanel);
+            JOptionPane.showMessageDialog(this,
+                                          "Az adott pálya nem kompatibilis a kiválasztott játékosok számával.\n" +
+                                          "Maximális játékosszám: " + e.getMaxSize() + "\n" +
+                                          "Aktuális játékosszám: " + e.getNumPlayers(),
+                                          "Rossz pályaméret",
+                                          JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        mainGame = newGame;
         mainGame.addListener(this);
         mainGame.initialize(gameControlPanel);
 

@@ -7,10 +7,19 @@ import game.Heartbeat;
 import game.HeartbeatListener;
 
 public class Oil extends Buff implements HeartbeatListener {
+    private static int globalTimeout = 60000;
     long timeRemaining;
 
+    public static void setGlobalTimeout(int timeOut) {
+        globalTimeout = timeOut;
+    }
+
+    public static int getGlobalTimeout() {
+        return globalTimeout;
+    }
+
     public Oil() {
-        timeRemaining = 60000;
+        timeRemaining = globalTimeout;
         Heartbeat.subscribe(this);
         isCleanable = true;
     }
@@ -65,6 +74,6 @@ public class Oil extends Buff implements HeartbeatListener {
     }
 
     public double getWear() {
-        return timeRemaining / 60000.0;
+        return timeRemaining / (double)globalTimeout;
     }
 }
