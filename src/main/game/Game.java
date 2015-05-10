@@ -1,6 +1,5 @@
 package game;
 
-import java.awt.Component;
 import java.util.*;
 
 import agents.Agent;
@@ -8,7 +7,6 @@ import agents.AgentVisitor;
 import agents.Robot;
 import agents.Vacuum;
 import buff.Buff;
-import buff.Oil;
 import feedback.NoFeedbackException;
 import feedback.Result;
 import field.Field;
@@ -16,19 +14,9 @@ import game.control.*;
 import game.handle.AgentHandle;
 import game.handle.HandleListener;
 import game.handle.VacuumHandle;
-import gui.GameControlPanel;
-import proto.ProtoCommand;
 
 
 public class Game implements GameControllerServerListener, HeartbeatListener, HandleListener {
-    public enum ControllerType {
-        HUMAN,
-        PROTOCOMMAND,
-        GUI
-    }
-
-    public static ControllerType controllerType = ControllerType.HUMAN;
-
     private static final int MAX_VACUUMS = 2;
     private static final int VACUUM_SPAWN_INTERVAL = 30000; // 30 sec
 
@@ -37,10 +25,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     private final Map map;
 
     private final GameControllerServer controllerServer;
-    private final HumanController humanController;
-
-    private final ProtoCommandController protoCommandController;
-    private final GameControlPanel gameControlPanelController;
+    private HumanController humanController;
 
     private final List<VacuumController> vacuumControllers;
 
@@ -54,17 +39,11 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
     public Game(GameStorage inGameStorage, Map inMap) {
         listeners = new ArrayList<GameListener>();
         controllerServer = new GameControllerServer(this);
-        humanController = controllerType == ControllerType.HUMAN ? new HumanController() : null;
-        protoCommandController = controllerType == ControllerType.PROTOCOMMAND ? new ProtoCommandController() : null;
-        gameControlPanelController = controllerType == ControllerType.GUI ? new GameControlPanel() : null;
+        humanController = null;
         vacuumControllers = new ArrayList<VacuumController>();
 
         gameStorage = inGameStorage;
         this.map = inMap;
-
-        setAgentControllers();
-        Heartbeat.subscribe(gameStorage);
-        Heartbeat.subscribe(this);
     }
 
     public Game(java.util.Map<AgentHandle, Integer> agents, Map map,
@@ -72,8 +51,6 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         listeners = null;
         controllerServer = null;
         humanController = null;
-        protoCommandController = null;
-        gameControlPanelController = null;
         vacuumControllers = null;
 
         gameStorage = new GameStorage(agents.keySet());
@@ -88,6 +65,13 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         }
     }
 
+    public void initialize(HumanController controller) {
+        humanController = controller;
+        setAgentControllers();
+        Heartbeat.subscribe(gameStorage);
+        Heartbeat.subscribe(this);
+    }
+
     public void start() {
         register(gameStorage.getCurrent());
         Heartbeat.resume();
@@ -97,18 +81,6 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         Heartbeat.pause();
         deregister(gameStorage.getCurrent());
     }
-
-    public void registerController(Component component) {
-        component.addKeyListener(humanController);
-    }
-
-    public ProtoCommandController getProtoCommandController() {
-        return protoCommandController;
-    }
-
-    public HumanController getHumanController() { return humanController; }
-
-    public GameControlPanel getGameControlPanelController() { return gameControlPanelController; }
 
     public AgentHandle getAgentHandle(Agent agent) {
         return gameStorage.get(agent);
@@ -251,15 +223,24 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         }
     }
 
-    //TODO: Real game finishing logic
     private void endGame() {
         pause();
         Heartbeat.unsubscribe(gameStorage);
         Heartbeat.unsubscribe(this);
 
-        for (GameListener listener: listeners) {
+        List<GameListener> listenersCopy = new ArrayList<GameListener>(listeners.size());
+        for (GameListener listener : listeners) {
+            listenersCopy.add(listener);
+        }
+
+        for (GameListener listener: listenersCopy) {
             listener.onGameFinished(gameStorage.getPlayers());
         }
+
+        for (AgentHandle a : gameStorage.getAll()) {
+            controllerServer.removeAgent(a.getAgent());
+        }
+        gameStorage.clear();
     }
 
     private void register(AgentHandle handle) {
@@ -309,17 +290,10 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         @Override
         public void visit(Robot element) {
             GameControllerSocket socket = controllerServer.createSocketForAgent(element);
-            switch (controllerType) {
-                case HUMAN:
-                    humanController.addControllerSocket(socket);
-                    break;
-                case PROTOCOMMAND:
-                    protoCommandController.addControllerSocket(socket);
-                    break;
-                case GUI:
-                    gameControlPanelController.addControllerSocket(socket);
-                    break;
+            if (humanController == null) {
+                throw new IllegalStateException();
             }
+            humanController.addControllerSocket(socket);
         }
 
         @Override

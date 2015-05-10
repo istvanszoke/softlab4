@@ -15,8 +15,9 @@ import game.Heartbeat;
 import game.HeartbeatListener;
 import game.control.GameControllerSocket;
 import game.control.GameControllerSocketListener;
+import game.control.HumanController;
 
-public class GameControlPanel extends JPanel implements HeartbeatListener, GameControllerSocketListener
+public class GameControlPanel extends JPanel implements HeartbeatListener, HumanController
 {
     private PhoebeGUI mainFrame;
 
@@ -321,6 +322,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, GameC
         }
     }
 
+    @Override
     public void addControllerSocket(GameControllerSocket socket) {
         if (socket != null) {
             sockets.add(socket);

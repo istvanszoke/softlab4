@@ -69,12 +69,23 @@ public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener, Se
         return current;
     }
 
+    public synchronized List<AgentHandle> getAll() {
+        return all;
+    }
+
     public synchronized List<AgentHandle> getInPlay() {
         return inPlay;
     }
 
     public synchronized List<AgentHandle> getPlayers() {
         return players;
+    }
+
+    public synchronized void clear() {
+        all.clear();
+        inPlay.clear();
+        players.clear();
+        agentMapping.clear();
     }
 
     @Override

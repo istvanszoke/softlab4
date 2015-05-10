@@ -9,7 +9,6 @@ import java.util.*;
 import agents.Agent;
 import agents.Robot;
 import game.*;
-import game.Map;
 import game.handle.AgentHandle;
 import game.handle.PlayerHandle;
 import graphics.GameGraphics;
@@ -60,23 +59,26 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
             AgentHandle agentHandle = new PlayerHandle(new Robot(), playerTime * 60);
             players.add(agentHandle);
         }
+
+
+        controlsPanel.remove(gameControlPanel);
+        gameControlPanel = new GameControlPanel();
+        controlsPanel.add(gameControlPanel);
+
         mainGame = new Game(players, loadedMap);
-        if (mainGame != null) {
-            mainGame.addListener(this);
-            controlsPanel.remove(gameControlPanel);
-            gameControlPanel = mainGame.getGameControlPanelController();
-            gameControlPanel.setMainFrame(this);
-            controlsPanel.add(gameControlPanel);
-            gameGraphics.attachToMap(mainGame.getMap());
-            mainGame.start();
-            pack();
-            isPaused = false;
-            refreshGraphics();
-            Heartbeat.subscribe(this);
-            return true;
-        } else {
-            return false;
-        }
+        mainGame.addListener(this);
+        mainGame.initialize(gameControlPanel);
+
+        gameControlPanel.setMainFrame(this);
+        gameGraphics.attachToMap(mainGame.getMap());
+
+        mainGame.start();
+        isPaused = false;
+
+        pack();
+        refreshGraphics();
+        Heartbeat.subscribe(this);
+        return true;
     }
 
     boolean stopGame() {
@@ -93,7 +95,7 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
         return true;
     }
 
-    boolean tooglePause() {
+    boolean togglePause() {
         if (mainGame != null) {
             if (!isPaused) {
                 mainGame.pause();
@@ -129,7 +131,7 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
     }
 
     void refreshGraphics() {
-        Agent agent = null;
+        Agent agent;
         try {
             agent = gameControlPanel.getCurrentAgent();
         } catch (NoSuchElementException ex) {
@@ -145,18 +147,9 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
 
     @Override
     public void onGameFinished(List<AgentHandle> playerList) {
-
-        mainGame = null;
-        controlsPanel.remove(gameControlPanel);
-        Heartbeat.unsubscribe(gameControlPanel);
-        gameControlPanel = new GameControlPanel();
-        controlsPanel.add(gameControlPanel);
+        stopGame();
         gameOperationPanel.gameStopped();
 
-        pack();
-        isPaused = false;
-
-        Heartbeat.unsubscribe(this);
         StringBuilder output = new StringBuilder();
         output.append("Game Over\nHelyezések:\n");
 
@@ -184,22 +177,30 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
                 int firstDistance = o1.getAgent().getField().getDistanceFromGoal();
                 int secondDistance = o1.getAgent().getField().getDistanceFromGoal();
 
-                return secondDistance - firstDistance;
+                // In the fields we are storing the reverse of the distance we actually need
+                return firstDistance - secondDistance;
             }
         });
 
         java.util.Map<Agent,String> names = RobotSprite.getAgentMapping();
         int place = 0;
         for (AgentHandle handle : playerList) {
-            if (!handle.getAgent().isDead())
-                output.append("" + ++place +". ");
-            output.append(names.get(handle.getAgent()) + " " +
-                         (handle.getAgent().isDead() ? "halott " : ("él " +
-                          "távolság: " + handle.getAgent().getField().getDistanceFromGoal())) +
-                          "\n");
+            String stateString;
+            if (handle.getAgent().isDead()) {
+                stateString = "halott";
+            } else {
+                output.append(++place).append(". ");
+                stateString = "él, körök: " + handle.getAgent().getLap() +
+                              ", távolság a céltól: " + handle.getAgent().getField().getDistanceFromGoal();
+            }
+
+            output.append(names.get(handle.getAgent()))
+                    .append(": ")
+                    .append(stateString)
+                    .append(String.format("%n"));
         }
 
-        JOptionPane.showMessageDialog(this, output.toString(),"Játék vége", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, output.toString(), "Játék vége", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override

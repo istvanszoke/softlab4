@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 
 
 public class CommandParser {
-    //TODO: Change the argument of betolt() and ment() from nev to allas in the docs.
     private static final Map<String, String[]> acceptedCommands = Collections.unmodifiableMap(new HashMap<String, String[]>() {
         private static final long serialVersionUID = -1453841261255806457L;
 
