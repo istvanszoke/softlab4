@@ -1,5 +1,6 @@
 package util;
 
+import javax.swing.JFileChooser;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -72,9 +73,16 @@ public class BitmapToMapGenerator
     public static boolean generateMapToFile(BufferedImage image, File output, Direction dir, int agentRoundTime) {
         PrintWriter pw = null;
         try {
+            output.createNewFile();
             pw = new PrintWriter(output);
         } catch (IOException ex) {
-            return false;
+            JFileChooser jfc = new JFileChooser(output.getName());
+            jfc.showDialog(null, "Ment");
+            try {
+                pw = new PrintWriter(jfc.getSelectedFile());
+            } catch (IOException ex2) {
+                return false;
+            }
         }
 
         int width = image.getWidth();
@@ -92,7 +100,7 @@ public class BitmapToMapGenerator
         for (int v = 0; v < height; ++v) {
             StringBuilder sb = new StringBuilder();
             for (int h = 0; h < width; h++) {
-                Color color = new Color(image.getRGB(v,h));
+                Color color = new Color(image.getRGB(h,v));
                 sb.append(typeMap.get(colorMap.get(color)));
                 switch (colorMap.get(color)) {
                     case ROBOT:
@@ -120,7 +128,7 @@ public class BitmapToMapGenerator
         pw.println(createItemLine("Oil", oilsOnField));
         pw.println(createItemLine("Sticky", stickiesOnField));
         pw.println();
-        pw.println(String.format("[Agents(roundTime=%i)]", agentRoundTime));
+        pw.println(String.format("[Agents(roundTime=%s)]", Integer.toString(agentRoundTime)));
         pw.println(createItemLine("Robot", robotsOnFiled));
         pw.println(createItemLine("Vacuum", vacuumsOnFiled));
         pw.println();

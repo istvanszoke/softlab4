@@ -32,7 +32,7 @@ public class Main implements GameListener {
                 break;
             } else if (item.contains("--mapgen")) {
                 int index = item.indexOf("--mapgen");
-                generateMapFromBitmap(args[index+1], args[index+2], args[index]+3);
+                generateMapFromBitmap(args[index+1], args[index+2], args[index+3]);
                 return;
             }
         }
