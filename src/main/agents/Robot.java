@@ -131,7 +131,7 @@ public class Robot extends Agent {
             this.speed = speed;
         } else {
             if (speed.getMagnitude() < 0) {
-                speed.setMagnitude(-8);
+                speed.setMagnitude(0);
             } else {
                 speed.setMagnitude(8);
             }
