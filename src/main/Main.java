@@ -32,7 +32,7 @@ public class Main implements GameListener {
                 break;
             } else if (item.contains("--mapgen")) {
                 int index = item.indexOf("--mapgen");
-                generateMapFromBitmap(args[index+1], args[index+2], args[index+3]);
+                generateMapFromBitmap(args[index+1], args[index+2], args[index+3], args[index+4]);
                 return;
             }
         }
@@ -41,7 +41,7 @@ public class Main implements GameListener {
         main.start();
     }
 
-    private static void generateMapFromBitmap(String path, String startDir, String agentRoundTime) {
+    private static void generateMapFromBitmap(String path, String startDir, String agentRoundTime, String oilTimeout) {
         File inputFile = new File(path);
         File destFile = new File("src/resources/"+inputFile.getName()+".map");
         Direction dir;
@@ -54,10 +54,11 @@ public class Main implements GameListener {
         else if (startDir.equals("RIGHT")) dir = Direction.RIGHT;
         else return;
         roundTime = Integer.parseInt(agentRoundTime);
+        int oilTime = Integer.parseInt(oilTimeout);
         if (roundTime < 0)
             return;
         try {
-            BitmapToMapGenerator.generateMapToFile(ImageIO.read(inputFile),destFile,dir,roundTime);
+            BitmapToMapGenerator.generateMapToFile(ImageIO.read(inputFile),destFile,dir,roundTime, oilTime);
         } catch (IOException e) {
             return;
         }

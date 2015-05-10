@@ -70,7 +70,8 @@ public class BitmapToMapGenerator
         return sb.toString();
     }
 
-    public static boolean generateMapToFile(BufferedImage image, File output, Direction dir, int agentRoundTime) {
+    public static boolean generateMapToFile(BufferedImage image, File output, Direction dir,
+                                            int agentRoundTime, int oilTime) {
         PrintWriter pw = null;
         try {
             output.createNewFile();
@@ -124,7 +125,7 @@ public class BitmapToMapGenerator
         }
 
         pw.println("");
-        pw.println("[Buffs]");
+        pw.println("[Buffs(oilTimeout=]" + oilTime + ")]");
         pw.println(createItemLine("Oil", oilsOnField));
         pw.println(createItemLine("Sticky", stickiesOnField));
         pw.println();

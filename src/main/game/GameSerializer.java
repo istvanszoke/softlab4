@@ -101,7 +101,9 @@ public class GameSerializer {
                 } else if (processedLine.matches("\\[agents\\(\\w+=\\d+\\)\\]")) {
                     int roundTime = Integer.parseInt(processedLine.replaceAll("[)]]", "").split("=")[1]);
                     agents = processAgents(reader, roundTime);
-                } else if (processedLine.equals("[buffs]")) {
+                } else if (processedLine.matches("\\[buffs\\(\\w+=\\d+\\)\\]")) {
+                    int oilTime = Integer.parseInt(processedLine.replaceAll("[)]]", "").split("=")[1]);
+                    Oil.setGlobalTimeout(oilTime);
                     buffs = processBuffs(reader);
                 }
 

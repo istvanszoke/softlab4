@@ -10,7 +10,7 @@
 ##########
 ##########
 
-[Buffs]
+[Buffs(oilTimeout=60000)]
 Oil: 43 51 27 47
 
 [Agents(roundTime=10)]
