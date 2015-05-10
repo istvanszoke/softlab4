@@ -43,6 +43,10 @@ public class Robot extends Agent {
         buffs = new ArrayList<Buff>();
         stickyInventory = new Inventory<Sticky>();
         oilInventory = new Inventory<Oil>();
+        oilInventory.addItem(new Oil());
+        oilInventory.addItem(new Oil());
+        stickyInventory.addItem(new Sticky());
+        stickyInventory.addItem(new Sticky());
         ++instanceCount;
         robotId = instanceCount;
     }
@@ -62,6 +66,10 @@ public class Robot extends Agent {
     public boolean useOil() {
         return oilInventory.useItem();
     }
+
+    public int getOilCount() { return oilInventory.getItemCount(); }
+
+    public int getStickyCount() { return stickyInventory.getItemCount(); }
 
     @Override
     public void accept(AgentVisitor visitor) {
@@ -115,6 +123,20 @@ public class Robot extends Agent {
     @Override
     public String toString() {
         return "" + getRobotId();
+    }
+
+    @Override
+    public void setSpeed(Speed speed) {
+        if (Math.abs(this.speed.getMagnitude()) <= 8) {
+            this.speed = speed;
+        } else {
+            if (speed.getMagnitude() < 0) {
+                speed.setMagnitude(-8);
+            } else {
+                speed.setMagnitude(8);
+            }
+            this.speed = speed;
+        }
     }
 
 }

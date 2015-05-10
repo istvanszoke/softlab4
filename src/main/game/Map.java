@@ -38,6 +38,10 @@ public class Map implements Iterable<Field>, Serializable {
     }
 
     public Field get(int row, int col) {
+        if (row < 0 || row >= height)
+            return null;
+        if (col < 0 || col >= width)
+            return null;
         return fields.get(row * width + col);
     }
 
@@ -100,7 +104,28 @@ public class Map implements Iterable<Field>, Serializable {
     public Field[][] getRegion(Field center, int width, int height) {
         Field[][] fields = new Field[width][height];
 
-        //TODO, the Map has to now how wide the mep is to deduce this information
+        Coord coord = coordOf(center);
+
+        int hw = width/2;
+        int hh = height/2;
+
+        int wcomp = (width + 1) % 2;
+        int hcomp = (height + 1) % 2;
+
+        int wc = width % 2;
+        int hc = height % 2;
+
+        int ix = 0;
+        int iy = 0;
+
+        for (int x = coord.getCol()-hw+wcomp; x < coord.getCol()+hw+wc; ++x) {
+            for (int y = coord.getRow()-hh+hcomp; y < coord.getRow()+hh+hc; ++y) {
+                fields[ix][iy] = get(y,x);
+                ++iy;
+            }
+            iy = 0;
+            ++ix;
+        }
 
         return fields;
     }

@@ -26,4 +26,8 @@ public class Inventory<T extends Buff> implements Serializable {
         inventory.remove(inventory.size() - 1);
         return true;
     }
+
+    public int getItemCount() {
+        return inventory.size();
+    }
 }

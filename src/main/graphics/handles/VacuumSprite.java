@@ -1,6 +1,9 @@
 package graphics.handles;
 
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 
@@ -14,8 +17,10 @@ public class VacuumSprite implements SpriteHandle {
 
     static {
         image = new BufferedImage(50, 50, ColorModel.TRANSLUCENT);
-        //TODO draw one of these
-
+        Graphics2D g = image.createGraphics();
+        g.setColor(Color.MAGENTA);
+        g.setStroke(new BasicStroke(5));
+        g.drawPolygon(new int[] {25,10,40}, new int[] {10,40,40}, 3);
     }
 
     public VacuumSprite(Vacuum vacuum) {

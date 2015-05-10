@@ -1,15 +1,12 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.WindowConstants;
-import java.awt.KeyboardFocusManager;
 import java.io.*;
 import java.util.*;
 
 import game.*;
 import game.handle.AgentHandle;
+import gui.PhoebeGUI;
 import proto.*;
 
-public class Main extends JFrame implements GameListener {
+public class Main implements GameListener {
 
     private static final long serialVersionUID = -6767044297674099347L;
 
@@ -20,14 +17,15 @@ public class Main extends JFrame implements GameListener {
 
     OperationMode opMode;
     Game mainGame;
+    PhoebeGUI phoebeGUI;
 
     public static void main(String[] args) throws IOException {
-        TestcaseGenerator.generateTestCases(30);
-        boolean stdio = true;
+        //TestcaseGenerator.generateTestCases(30);
+        boolean stdio = false;
 
         for(String item : args) {
-            if (item.contains("--gui")) {
-                stdio = false;
+            if (item.contains("--stdio")) {
+                stdio = true;
                 break;
             }
         }
@@ -54,9 +52,11 @@ public class Main extends JFrame implements GameListener {
 
 
     private void operateGui() {
+        phoebeGUI = new PhoebeGUI();
+        Game.controllerType = Game.ControllerType.GUI;
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI();
+                phoebeGUI.createAndShowGUI();
             }
         });
         gameLoop();
@@ -126,29 +126,8 @@ public class Main extends JFrame implements GameListener {
         }
     }
 
-    private void createAndShowGUI() {
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        JLabel label = new JLabel("Hello Softlab 4");
-        getContentPane().add(label);
-
-        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.addKeyEventDispatcher(new KeyDispatcher());
-
-        pack();
-        setVisible(true);
-    }
-
     private void gameLoop() {
-        mainGame = GameSerializer.load(new File("src/resources/maps/test01.map"));
 
-        if (mainGame == null) {
-            System.out.println("Game creation was unsuccessful");
-        } else {
-            mainGame.registerController(this);
-            mainGame.addListener(this);
-            mainGame.start();
-        }
     }
 
     @Override
@@ -189,5 +168,10 @@ public class Main extends JFrame implements GameListener {
                                (handle.getAgent().isDead() ? "dead " : "alive ") +
                                "distance: " + handle.getAgent().getField().getDistanceFromGoal());
         }
+    }
+
+    @Override
+    public void onAgentChange() {
+
     }
 }

@@ -18,13 +18,15 @@ import field.Field;
 import game.control.*;
 import game.handle.AgentHandle;
 import game.handle.HandleListener;
+import gui.GameControlPanel;
 import proto.ProtoCommand;
 
 
 public class Game implements GameControllerServerListener, HeartbeatListener, HandleListener {
     public enum ControllerType {
         HUMAN,
-        PROTOCOMMAND
+        PROTOCOMMAND,
+        GUI
     }
 
     public static ControllerType controllerType = ControllerType.HUMAN;
@@ -35,7 +37,9 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
     private final GameControllerServer controllerServer;
     private final HumanController humanController;
+
     private final ProtoCommandController protoCommandController;
+    private final GameControlPanel gameControlPanelController;
 
     private final List<VacuumController> vacuumControllers;
 
@@ -49,6 +53,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         controllerServer = new GameControllerServer(this);
         humanController = controllerType == ControllerType.HUMAN ? new HumanController() : null;
         protoCommandController = controllerType == ControllerType.PROTOCOMMAND ? new ProtoCommandController() : null;
+        gameControlPanelController = controllerType == ControllerType.GUI ? new GameControlPanel() : null;
         vacuumControllers = new ArrayList<VacuumController>();
 
         gameStorage = inGameStorage;
@@ -65,6 +70,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         controllerServer = null;
         humanController = null;
         protoCommandController = null;
+        gameControlPanelController = null;
         vacuumControllers = null;
 
         gameStorage = new GameStorage(agents.keySet());
@@ -97,6 +103,14 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         return protoCommandController;
     }
 
+    public HumanController getHumanController() { return humanController; }
+
+    public GameControlPanel getGameControlPanelController() { return gameControlPanelController; }
+
+    public AgentHandle getAgentHandle(Agent agent) {
+        return gameStorage.get(agent);
+    }
+
     public void addListener(GameListener listener) {
         listeners.add(listener);
     }
@@ -121,6 +135,9 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
         }
 
         handle.onTurnEnd();
+        for (GameListener listener : listeners) {
+            listener.onAgentChange();
+        }
     }
 
     @Override
@@ -250,6 +267,9 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
                     break;
                 case PROTOCOMMAND:
                     protoCommandController.addControllerSocket(socket);
+                    break;
+                case GUI:
+                    gameControlPanelController.addControllerSocket(socket);
                     break;
             }
         }

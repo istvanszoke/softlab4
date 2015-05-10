@@ -146,6 +146,7 @@ public class GameSerializer {
                 } else if (processedLine.equals("[buffs]")) {
                     buffs = processBuffs(reader);
                 }
+                line = reader.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
