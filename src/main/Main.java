@@ -1,11 +1,15 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
+import field.Direction;
 import game.*;
 import game.control.ProtoCommandController;
 import game.handle.AgentHandle;
 import gui.PhoebeGUI;
 import proto.*;
+import util.BitmapToMapGenerator;
 
 public class Main implements GameListener {
     private enum OperationMode {
@@ -26,11 +30,38 @@ public class Main implements GameListener {
             if (item.contains("--stdio")) {
                 stdio = true;
                 break;
+            } else if (item.contains("--mapgen")) {
+                int index = item.indexOf("--mapgen");
+                generateMapFromBitmap(args[index+1], args[index+2], args[index+3]);
+                return;
             }
         }
 
         Main main = new Main (stdio ? OperationMode.STDIO : OperationMode.GUI);
         main.start();
+    }
+
+    private static void generateMapFromBitmap(String path, String startDir, String agentRoundTime) {
+        File inputFile = new File(path);
+        File destFile = new File("src/resources/"+inputFile.getName()+".map");
+        Direction dir;
+        int roundTime;
+        if (!inputFile.exists())
+            return;
+        if (startDir.equals("UP")) dir = Direction.UP;
+        else if (startDir.equals("DOWN")) dir = Direction.DOWN;
+        else if (startDir.equals("LEFT")) dir = Direction.LEFT;
+        else if (startDir.equals("RIGHT")) dir = Direction.RIGHT;
+        else return;
+        roundTime = Integer.parseInt(agentRoundTime);
+        if (roundTime < 0)
+            return;
+        try {
+            BitmapToMapGenerator.generateMapToFile(ImageIO.read(inputFile),destFile,dir,roundTime);
+        } catch (IOException e) {
+            return;
+        }
+
     }
 
     private Main(OperationMode opMode) {
