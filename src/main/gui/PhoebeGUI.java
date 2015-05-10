@@ -191,7 +191,8 @@ public class PhoebeGUI extends JFrame implements GameListener, HeartbeatListener
         java.util.Map<Agent,String> names = RobotSprite.getAgentMapping();
         int place = 0;
         for (AgentHandle handle : playerList) {
-            output.append("" + ++place +". ");
+            if (!handle.getAgent().isDead())
+                output.append("" + ++place +". ");
             output.append(names.get(handle.getAgent()) + " " +
                          (handle.getAgent().isDead() ? "halott " : ("él " +
                           "távolság: " + handle.getAgent().getField().getDistanceFromGoal())) +
