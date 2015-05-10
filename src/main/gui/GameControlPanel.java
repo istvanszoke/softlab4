@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.*;
 
 import agents.*;
+import agents.Robot;
 import commands.AgentCommand;
 import commands.queries.*;
 import feedback.Logger;
@@ -28,7 +29,9 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, Human
     private JButton gDirectionLeftBtn;
     private JButton gJumpBtn;
     private JButton gIncreaseSpeedBtn;
+        private boolean gIncreaseSpeedBtnSaveState;
     private JButton gDecreaseSpeedBtn;
+        private boolean gDecreaseSpeedBtnSaveState;
     private JButton gPlaceOilBtn;
     private JButton gPlaceStickyBtn;
 
@@ -255,24 +258,31 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, Human
 
     }
 
+    private void changeCurrentAgent(Robot robot) {
+        if (robot != null) {
+            if (currentRobot != robot) {
+                currentRobot = robot;
+                mainFrame.onAgentChange();
+                refreshAgentInfo();
+                robotEnterSpeedMagnitude = currentRobot.getSpeed().getMagnitude();
+                gIncreaseSpeedBtn.setEnabled(true);
+                gDecreaseSpeedBtn.setEnabled(true);
+            }
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
+
     private void changeCurrentSocket (GameControllerSocket socket) {
         if (socket != null) {
             currentSocket = socket;
             IdentificationQuery identificationQuery = new IdentificationQuery();
             socket.sendAgentCommand(identificationQuery);
-            currentRobot = identificationQuery.getIdentifiedRobot();
-            if (currentRobot == null) throw new NoSuchElementException();
-            mainFrame.onAgentChange();
-            refreshAgentInfo();
-            robotEnterSpeedMagnitude = currentRobot.getSpeed().getMagnitude();
+            changeCurrentAgent(identificationQuery.getIdentifiedRobot());
         } else {
             currentSocket = null;
             currentRobot = null;
         }
-
-
-        gIncreaseSpeedBtn.setEnabled(true);
-        gDecreaseSpeedBtn.setEnabled(true);
     }
 
     Agent getCurrentAgent() {
@@ -385,8 +395,13 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, Human
         gDirectionRightBtn.setEnabled(enabled);
         gDirectionLeftBtn.setEnabled(enabled);
         gJumpBtn.setEnabled(enabled);
-        gIncreaseSpeedBtn.setEnabled(enabled);
-        gDecreaseSpeedBtn.setEnabled(enabled);
+        if (enabled) {
+            gIncreaseSpeedBtn.setEnabled(gIncreaseSpeedBtnSaveState);
+            gDecreaseSpeedBtn.setEnabled(gDecreaseSpeedBtnSaveState);
+        } else {
+            gIncreaseSpeedBtnSaveState = gIncreaseSpeedBtn.isEnabled();
+            gDecreaseSpeedBtnSaveState = gDecreaseSpeedBtn.isEnabled();
+        }
         gPlaceOilBtn.setEnabled(enabled);
         gPlaceStickyBtn.setEnabled(enabled);
     }
