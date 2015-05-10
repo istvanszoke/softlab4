@@ -1,8 +1,6 @@
 package field;
 
-import java.io.Serializable;
-
-public class Displacement implements Serializable {
+public class Displacement {
     private final Field start;
     private final Field goal;
     private boolean passedFinishLine;

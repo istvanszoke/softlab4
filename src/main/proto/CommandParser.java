@@ -9,10 +9,7 @@ import java.util.regex.Pattern;
 
 
 public class CommandParser {
-    private static final Map<String, String[]> acceptedCommands = Collections.unmodifiableMap(new HashMap<String, String[]>() {
-        private static final long serialVersionUID = -1453841261255806457L;
-
-        {
+    private static final Map<String, String[]> acceptedCommands = Collections.unmodifiableMap(new HashMap<String, String[]>() {{
         put(ProtoCommand.PLAY, new String[]{"palya"});
         put(ProtoCommand.JUMP, new String[]{});
         put(ProtoCommand.CHANGE_DIR, new String[]{"irany"});
@@ -27,10 +24,7 @@ public class CommandParser {
 
     }});
 
-    private static final Map<String, String> argumentValidators = Collections.unmodifiableMap(new HashMap<String, String>() {
-        private static final long serialVersionUID = -8484727032495666446L;
-
-        {
+    private static final Map<String, String> argumentValidators = Collections.unmodifiableMap(new HashMap<String, String>() {{
         put("szam", "[2-4]");
         put("ido", "[0-9]+");
         put("palya", "[A-Za-z0-9_-]+\\.map");

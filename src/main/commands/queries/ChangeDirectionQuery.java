@@ -10,9 +10,6 @@ import commands.transmits.ChangeDirectionTransmit;
 import field.Direction;
 
 public class ChangeDirectionQuery extends AgentCommand {
-
-    private static final long serialVersionUID = -7372524616017913173L;
-
     private Direction direction;
 
     public ChangeDirectionQuery(Direction direction) {

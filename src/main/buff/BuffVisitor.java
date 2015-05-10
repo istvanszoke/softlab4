@@ -1,7 +1,6 @@
 package buff;
 
-public interface BuffVisitor
-{
-    public void visit(Oil element);
-    public void visit(Sticky element);
+public interface BuffVisitor {
+    void visit(Oil element);
+    void visit(Sticky element);
 }

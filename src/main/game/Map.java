@@ -1,6 +1,5 @@
 package game;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -10,10 +9,7 @@ import feedback.NoFeedbackException;
 import feedback.Result;
 import field.*;
 
-public class Map implements Iterable<Field>, Serializable {
-
-    private static final long serialVersionUID = -6752689712870327480L;
-
+public class Map implements Iterable<Field> {
     private final int width;
     private final int height;
     private final List<Field> fields;

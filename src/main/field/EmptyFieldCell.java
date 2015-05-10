@@ -7,9 +7,6 @@ import commands.NoAgentCommandException;
 import commands.executes.KillExecute;
 
 public class EmptyFieldCell extends Field {
-
-    private static final long serialVersionUID = 7436438583584464531L;
-
     public EmptyFieldCell(int distanceFromGoal) {
         super(distanceFromGoal);
     }

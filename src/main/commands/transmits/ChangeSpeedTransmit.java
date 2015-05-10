@@ -11,9 +11,6 @@ import field.FieldCell;
 import field.FinishLineFieldCell;
 
 public class ChangeSpeedTransmit extends FieldCommand {
-
-    private static final long serialVersionUID = -4910664810676061125L;
-
     private int magnitudeDelta;
 
     public ChangeSpeedTransmit(ChangeSpeedQuery parent) {

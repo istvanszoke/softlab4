@@ -1,9 +1,5 @@
 package field;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.*;
 
 import agents.Agent;
@@ -12,9 +8,8 @@ import buff.Buff;
 import buff.BuffListener;
 import commands.FieldCommand;
 
-public abstract class Field implements FieldElement, BuffListener, Serializable {
+public abstract class Field implements FieldElement, BuffListener {
     public static final Field GRAVEYARD = new EmptyFieldCell(-1);
-    private static final long serialVersionUID = 6678011536302536430L;
 
     protected final int distanceFromGoal;
     protected final List<Buff> buffs;
@@ -25,15 +20,6 @@ public abstract class Field implements FieldElement, BuffListener, Serializable 
 
     public static void resetInstanceCount() {
         instanceCount = 0;
-    }
-
-    public static void writeStaticParams(ObjectOutputStream oos) throws IOException {
-        Integer wrapOutput = instanceCount;
-        oos.writeObject(wrapOutput);
-    }
-
-    public static void readStaticParams(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        instanceCount = (Integer)ois.readObject();
     }
 
     public Field(int distanceFromGoal) {

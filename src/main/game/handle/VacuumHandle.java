@@ -1,13 +1,8 @@
 package game.handle;
 
-import agents.Agent;
-import agents.Robot;
 import agents.Vacuum;
 
 public class VacuumHandle extends AgentHandle {
-
-    private static final long serialVersionUID = -9092309162816953432L;
-
     public VacuumHandle(Vacuum agent) {
         super(agent);
     }

@@ -17,9 +17,6 @@ import feedback.Logger;
 import feedback.Result;
 
 public class Robot extends Agent {
-
-    private static final long serialVersionUID = 560375494406502740L;
-
     private List<Buff> buffs;
     private Inventory<Sticky> stickyInventory;
     private Inventory<Oil> oilInventory;
@@ -28,15 +25,6 @@ public class Robot extends Agent {
 
     public static void resetInstanceCount() {
         instanceCount = 0;
-    }
-
-    public static void writeStaticParams(ObjectOutputStream oos) throws IOException {
-        Integer wrapOutput = instanceCount;
-        oos.writeObject(wrapOutput);
-    }
-
-    public static void readStaticParams(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        instanceCount = (Integer)ois.readObject();;
     }
 
     public Robot() {

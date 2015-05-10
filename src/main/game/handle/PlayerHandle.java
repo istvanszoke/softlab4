@@ -4,9 +4,6 @@ import agents.Agent;
 import agents.Robot;
 
 public class PlayerHandle extends AgentHandle {
-
-    private static final long serialVersionUID = -3175474854605985748L;
-
     private long timeRemaining;
 
     public PlayerHandle(Agent agent, long timeRemaining) {

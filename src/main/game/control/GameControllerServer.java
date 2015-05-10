@@ -7,7 +7,6 @@ import agents.Agent;
 import commands.AgentCommand;
 
 public class GameControllerServer {
-
     private final Object mappingOperationLock;
     private GameControllerServerListener listener;
     private Map<ControlSocket, Agent> socketMapping;

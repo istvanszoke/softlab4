@@ -12,9 +12,6 @@ import commands.transmits.ChangeDirectionTransmit;
 import field.Direction;
 
 public class ChangeDirectionExecute extends AgentCommand {
-
-    private static final long serialVersionUID = 658924501608429109L;
-
     private Direction direction;
 
     public ChangeDirectionExecute(ChangeDirectionTransmit parent) {

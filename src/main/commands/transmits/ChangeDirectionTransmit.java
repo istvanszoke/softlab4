@@ -12,9 +12,6 @@ import field.FieldCell;
 import field.FinishLineFieldCell;
 
 public class ChangeDirectionTransmit extends FieldCommand {
-
-    private static final long serialVersionUID = 5098608668247734477L;
-
     private Direction direction;
 
     public ChangeDirectionTransmit(ChangeDirectionQuery parent) {

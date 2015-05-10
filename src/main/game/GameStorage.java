@@ -1,16 +1,12 @@
 package game;
 
-import java.io.Serializable;
 import java.util.*;
 import java.util.Map;
 
 import agents.Agent;
 import game.handle.AgentHandle;
 
-public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener, Serializable {
-
-    private static final long serialVersionUID = 7225789350225557116L;
-
+public class GameStorage implements Iterable<AgentHandle>, HeartbeatListener {
     private final List<AgentHandle> all;
     private final List<AgentHandle> inPlay;
     private final List<AgentHandle> players;

@@ -1,6 +1,5 @@
 package buff;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +15,7 @@ import commands.transmits.JumpTransmit;
 import feedback.NoFeedbackException;
 import feedback.Result;
 
-public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor, Serializable, BuffElement {
-    private static final long serialVersionUID = 8797081898675710692L;
-
+public abstract class Buff implements AgentVisitor, AgentCommandVisitor, FieldCommandVisitor, BuffElement {
     protected List<BuffListener> listeners;
     private boolean isRemoved;
     protected boolean isCleanable;
