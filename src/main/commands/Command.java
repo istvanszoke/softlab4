@@ -1,7 +1,5 @@
 package commands;
 
-import java.io.Serializable;
-
 import feedback.Feedback;
 import feedback.Result;
 

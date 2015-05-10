@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import commands.AgentCommand;
-import commands.executes.KillExecute;
 import commands.queries.*;
 import feedback.Logger;
 import field.Direction;

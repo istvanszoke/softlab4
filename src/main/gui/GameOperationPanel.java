@@ -9,8 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-public class GameOperationPanel extends JPanel
-{
+public class GameOperationPanel extends JPanel  {
     private PhoebeGUI mainFrame;
 
     private JComboBox gNumOfPlayersCmb;

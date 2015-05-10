@@ -36,7 +36,7 @@ public class AgentElementSprite implements SpriteHandle, AgentVisitor {
 
     @Override
     public void visit(Vacuum element) {
-        agentSprite = new VacuumSprite(element);
+        agentSprite = new VacuumSprite();
     }
 
     public Agent getAgent() {

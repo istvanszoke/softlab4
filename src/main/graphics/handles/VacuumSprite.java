@@ -11,8 +11,6 @@ import agents.Vacuum;
 import graphics.SpriteHandle;
 
 public class VacuumSprite implements SpriteHandle {
-
-    private Vacuum vacuum;
     private static BufferedImage image;
 
     static {
@@ -21,14 +19,6 @@ public class VacuumSprite implements SpriteHandle {
         g.setColor(Color.MAGENTA);
         g.setStroke(new BasicStroke(5));
         g.drawPolygon(new int[] {25,10,40}, new int[] {10,40,40}, 3);
-    }
-
-    public VacuumSprite(Vacuum vacuum) {
-        if (vacuum != null) {
-            this.vacuum = vacuum;
-        } else {
-            throw new NullPointerException();
-        }
     }
 
     @Override

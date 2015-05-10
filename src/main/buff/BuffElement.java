@@ -1,5 +1,5 @@
 package buff;
 
 public interface BuffElement {
-    public void accept(BuffVisitor visitor);
+    void accept(BuffVisitor visitor);
 }

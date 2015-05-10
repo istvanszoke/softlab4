@@ -121,7 +121,7 @@ public class Game implements GameControllerServerListener, HeartbeatListener, Ha
 
         deregister(handle);
         gameStorage.update();
-        MapPrinter.print(map, 3);
+        // MapPrinter.print(map, 3);
         register(gameStorage.getCurrent());
 
         Heartbeat.resume();

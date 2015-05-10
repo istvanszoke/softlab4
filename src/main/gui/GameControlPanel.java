@@ -14,7 +14,6 @@ import field.Direction;
 import game.Heartbeat;
 import game.HeartbeatListener;
 import game.control.GameControllerSocket;
-import game.control.GameControllerSocketListener;
 import game.control.HumanController;
 
 public class GameControlPanel extends JPanel implements HeartbeatListener, HumanController
@@ -292,7 +291,7 @@ public class GameControlPanel extends JPanel implements HeartbeatListener, Human
             gPlaceOilBtn.setText("" + currentRobot.getOilCount());
             gPlayerTimeLeftLbl.setText("" + mainFrame.getGame().getAgentHandle(currentRobot).getTimeRemaining() / 1000);
             gPlayerLapsLbl.setText("" + currentRobot.getLap());
-        } catch (NullPointerException ex) {
+        } catch (NullPointerException ignored) {
 
         }
     }

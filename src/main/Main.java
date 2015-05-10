@@ -8,9 +8,6 @@ import gui.PhoebeGUI;
 import proto.*;
 
 public class Main implements GameListener {
-
-    private static final long serialVersionUID = -6767044297674099347L;
-
     private enum OperationMode {
         STDIO,
         GUI
@@ -84,13 +81,9 @@ public class Main implements GameListener {
                 System.out.println("Nem helyes parancs");
             } catch (InvalidCommandArgumentException e) {
                 System.out.println("Rossz argumentum");
-            } catch (IOException ex) {
-
-            } catch (InterruptedException e) {
+            } catch (Exception ignored) {
 
             }
-
-
         }
     }
 

@@ -11,7 +11,6 @@ import buff.Sticky;
 import graphics.SpriteHandle;
 
 public class StickySprite implements SpriteHandle {
-
     private Sticky sticky;
 
     public StickySprite(Sticky sticky) {

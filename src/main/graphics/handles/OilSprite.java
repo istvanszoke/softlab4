@@ -3,7 +3,6 @@ package graphics.handles;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.util.Random;
@@ -12,7 +11,6 @@ import buff.Oil;
 import graphics.SpriteHandle;
 
 public class OilSprite implements SpriteHandle {
-
     private Oil oil;
 
     public OilSprite(Oil oil) {
