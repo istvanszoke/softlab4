@@ -10,31 +10,54 @@
 \subsection{Fájllista}
 \input{includes/file_list.tex}
 
-\subsection{Fordítás}
-A program fordítása a HSZK gépeken felállított Eclipse konzolból kiadott parancsokkal lehetséges.
-A projekt főkönyvtárában elhelyezkedve kell kiadni őket.
-
+\subsection{Fordítás és telepítés}
+A program fordítása és telepítése olyan parancssorból lehetséges, amelyben a Java compiler a PATH környezeti változóban található. Ez a HSZK gépein az Eclipse által definiált parancssorra igaz. Az összes parancsot a projekt gyökérkönyvtárában elhelyezkedve kell kiadni:
+\\\\
+\noindent \textbf{Fordítás}
 \lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
 \begin{lstlisting}
 .\build.bat
 \end{lstlisting}
 
-\subsection{Futtatás}
-A HSZK gépein történő futtatáshoz az alábbi parancsok szükségesek, a projekt gyökérkönyvtárában tartózkodva:
+\noindent \textbf{Telepítés}
 
-Program futtatása 
+\noindent A program telepítéséhez az alábbi lépések szükségesek:
+\noindent \begin{enumerate}
+    \item A célszámítógépen a JRE (Java Runtime Environment) 6-os vagy későbbi változatának telepítése.
+    \item Írási jog abban a könyvtárban, ahova a programot telepíteni akarjuk
+    \item A jar fájl létrehozása és másolása a telepítendő helyre
+    \item (Opcionális) A térképfájlok átmásolása
+\end{enumerate}
+
+\noindent A továbbiakban az utolsó két pont részletes leírása olvasható.
+
+\noindent A jar fájl előállításának azonosak az előfeltételei a \textbf{Fordítás és telepítés} pontban leírtakkal (Java compiler PATH-ben, a projekt gyökérkönyvtárában kiadott parancsok). A kiadandó parancs:
+\lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
+\begin{lstlisting}
+.\build.bat jar
+\end{lstlisting}
+\noindent A parancs a gyökérkönyvtárban hozza létre a futtatható jar fájl softlab4.jar néven. Ennek az egy fájlnak a telepítés helyére való másolása elegendő az alkalmazás telepítéséhez. 
+\\\\
+\noindent A forráskód disztribúciójában található néhány előregenerált pálya. Ezek a {project gyökérkönyvtár}/src/resources/maps/ mappában találhatók. Ezek opcionálisan átmásolhatók a telepítés helyére.
+
+\subsection{Futtatás}
+\noindent \textbf{Közvetlen futtatás a build.bat script segítségével}
+
+\noindent A program futtatása eben az esetben olyan parancssorból lehetséges, amelyben a Java compiler a PATH környezeti változóban található. Ez a HSZK gépein az Eclipse által definiált parancssorra igaz. Az összes parancsot a projekt gyökérkönyvtárában elhelyezkedve kell kiadni:
 \lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
 \begin{lstlisting}
 .\build.bat run
 \end{lstlisting}
 
-A gyökérkönyvtárba generál futtatható fájlt, ami aztán vagy duplakattal, vagy java -jar softlab4.jar paranccsal futtatható
-Program futtatása teszfájl alkalmazásával és standard kimenetre írva
+\noindent \textbf{Az előre elkészített jar fájl futtatása}
+
+\noindent Ha a \textbf{Fordítás és telepítés} pontban leírtakat követve előállítottunk egy futtatható jar fájlt, akkor az az alábbi parancs kiadásával futtatható:
 \lstset{escapeinside=`', xleftmargin=10pt, frame=single, basicstyle=\ttfamily\footnotesize, language=sh}
 \begin{lstlisting}
-.\build.bat jar
 java -jar softlab4.jar
 \end{lstlisting}
+
+\noindent Windows grafikus felületről (feltéve, hogy a Java telepítés így lett konfigurálva) a jar fájl dupla kattintással is indítható.
 
 \section{Értékelés}
 \begin{ertekeles}
