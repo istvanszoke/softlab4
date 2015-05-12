@@ -227,7 +227,7 @@ NF004 & Egy felhasználó által kiadott parancs után a program vagy az operác
 
 
 \section{Lényeges use-case-ek}
-\includegraphics[width=\textwidth]{./chapters/chapter02/importantUseCases.pdf}
+\includegraphics[width=\textwidth]{./chapters/chapter02/importantUseCases_c.pdf}
 
 \subsection{Use-case leírások}
 
@@ -235,11 +235,6 @@ NF004 & Egy felhasználó által kiadott parancs után a program vagy az operác
 {Játékos ezen a módon tudja irányítani a Robotot a pályán}%
 {Játékos; Robot}%
 {Játékos a helyzet alapján dönt arról, hogy a Robotnak mit kéne lépnie és utasítani fogja arra, hogy ezt tegye is meg}
-
-\usecase{Játékot elment}%
-{Így elmenthetjük a játék állapotát későbbi továbbjátszás céljából}%
-{Játékos}%
-{A Játékosnak játék közben más dolga akad azonban később szeretné folytatni a már elkezdettt játékát ezért elmentheti annak az állását}
 
 \usecase{Mozog}%
 {A Robot mozoghat a pályán. A mozgásnak magának több módja is van}
@@ -290,7 +285,6 @@ NF004 & Egy felhasználó által kiadott parancs után a program vagy az operác
     buff &  olyan hatás, mely pozitív vagy negatív módon járulhat hozzá a robot játékához \tabularnewline \hline
     birtokol & a robot tárolójában készlet van belőle \tabularnewline \hline
     célfüggvény & a győzelemhez ennek maximalizálása szükséges, a pontszám növelése  \tabularnewline \hline
-    curse (átok) & olyan buff melynek a robotra negatív hatása van, csökkenti a nyerési esélyeit \tabularnewline \hline
     doboz & olyan objektum a pályán, melyre lépre a robot véletlenszerűen kap valamilyen készletet\tabularnewline \hline
     entitás &  egy szereplő a játékban \tabularnewline \hline 
     esemény & valamely történés, melyet egy játékos cselekvése váltott ki \tabularnewline \hline
