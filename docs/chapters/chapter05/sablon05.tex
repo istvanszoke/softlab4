@@ -28,54 +28,6 @@
 {A játékosok számának megadása után a Játékos kezdeményezheti a játéknak az elindítását}
 
 \usecase%
-{Játék megnyerése}%
-{Játék végső helyzete alapján győztes eldöntése}%
-{Játékos, Játék}%
-{Ha minden Játékosnak lejár akkor a megtett út alapján eldől, hogy ki a győztes}
-
-\usecase%
-{Játék elvesztése}%
-{Játék végső helyzete alapján vesztesek eldöntése}%
-{Játékos, Játék}%
-{Ha minden Játékosnak lejár akkor a megtett út alapján eldől, hogy kik a vesztesek}
-
-\usecase%
-{Játékparaméterek megadása}%
-{Új játék paramétereinek megadása}%
-{Játék}%
-{Játékosok megadhatják, hogy hányan vannak, milyen időkorláttal kívánnak játszani}
-
-\usecase%
-{Pálya generálása}%
-{Új játékpályát generálunk}%
-{Játék, Játékos}%
-{A Játékosok egy új pályát kívánnak generálni}
-
-\usecase%
-{Pálya beltöltése}%
-{Előre elkészített pályát töltünk be}%
-{Játék, Játékos}%
-{Ha a játékosok nem véletlenszerű pályán akarnak játszani}
-
-\usecase%
-{Pálya beltöltése}%
-{Előre elkészített pályát töltünk be}%
-{Játék, Játékos}%
-{Ha a játékosok nem véletlenszerű pályán akarnak játszani}
-
-\usecase%
-{Jelenlegi játék mentése}%
-{Játék aktuállis állásának mentése}%
-{Játék, Játékos}%
-{A Játékosok valamilyen oknál kifolyólag később akarják folytatni a játékot}
-
-\usecase%
-{Mentett játék betöltáse}%
-{Már elmentett jűték betöltése}%
-{Játék, Játékos}%
-{A Játékosok a régebben félbehagyott játékot folytathatják ahol abbahagyták}
-
-\usecase%
 {Időt mér játékosonkét}%
 {Játékmenet és Játékosonkénti időnyilvántartás}%
 {Játék}%
@@ -178,37 +130,6 @@ A korábbi fejezetben lévő szekvencia diagramok továbbra is érvényesek.
 	\end{center}
 \end{figure}
 
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width=\textwidth]{chapters/chapter05/5mapgenerate.pdf}
-		\caption{Pálya generálása}
-		\label{fig:5mapgenerate}
-	\end{center}
-\end{figure}
-
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width=\textwidth]{chapters/chapter05/5loadexistingmap.pdf}
-		\caption{Pálya betöltése}
-		\label{fig:5loadexistingmap}
-	\end{center}
-\end{figure}
-
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width=\textwidth]{chapters/chapter05/5savegame.pdf}
-		\caption{Játék elmentése}
-		\label{fig:5savegame}
-	\end{center}
-\end{figure}
-
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width=\textwidth]{chapters/chapter05/5loadgame.pdf}
-		\caption{Mentett játék betöltése}
-		\label{fig:5loadgame}
-	\end{center}
-\end{figure}
 
 \begin{figure}[h]
 	\begin{center}
@@ -216,6 +137,51 @@ A korábbi fejezetben lévő szekvencia diagramok továbbra is érvényesek.
 		\caption{Idő nyilvántartása és a játékosok léptetése}
 		\label{fig:5time}
 	\end{center}
+\end{figure}
+\clearpage
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=\textwidth]{chapters/chapter05/5usecommand.pdf}
+        \caption{Command küldése Agentnek}
+        \label{fig:5usecommand}
+    \end{center}
+\end{figure}
+\clearpage
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=\textwidth]{chapters/chapter05/5changedir.pdf}
+        \caption{Robot utasítása irány változtatásra}
+        \label{fig:5changedir}
+    \end{center}
+\end{figure}
+\clearpage
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=\textwidth]{chapters/chapter05/5changespeed.pdf}
+        \caption{Robot utasítása sebesség változtatásra}
+        \label{fig:5changespeed}
+    \end{center}
+\end{figure}
+\clearpage
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=\textwidth]{chapters/chapter05/5jump.pdf}
+        \caption{Robot utasítása ugrásra}
+        \label{fig:5jump}
+    \end{center}
+\end{figure}
+\clearpage
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=\textwidth]{chapters/chapter05/5placebuff.pdf}
+        \caption{Robot utasítása buff lehelyezésére}
+        \label{fig:5placebuff}
+    \end{center}
 \end{figure}
 \clearpage
 
@@ -227,40 +193,6 @@ A korábbi fejezetben lévő szekvencia diagramok továbbra is érvényesek.
 		\includegraphics[width=\textwidth]{chapters/chapter05/5newgameCommunications.pdf}
 		\caption{Új játék indítása, paraméterek megadása}
 		\label{fig:5newgameCommunication}
-	\end{center}
-\end{figure}
-
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width=\textwidth]{chapters/chapter05/5mapgenerateCommunications.pdf}
-		\caption{Pálya generálása}
-		\label{fig:5mapgenerateCommunication}
-	\end{center}
-\end{figure}
-
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width=\textwidth]{chapters/chapter05/5loadexistingmapCommunications.pdf}
-		\caption{Pálya betöltése}
-		\label{fig:5loadexistingmapCommunication}
-	\end{center}
-\end{figure}
-
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width=\textwidth]{chapters/chapter05/5savegameCommunications.pdf}
-		\caption{Játék elmentése}
-		\label{fig:5savegameCommunication}
-	\end{center}
-\end{figure}
-
-
-
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[width=\textwidth]{chapters/chapter05/5loadgameCommunications.pdf}
-		\caption{Mentett játék betöltése}
-		\label{fig:5loadgameCommunication}
 	\end{center}
 \end{figure}
 
