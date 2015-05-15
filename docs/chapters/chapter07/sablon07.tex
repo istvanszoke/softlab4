@@ -16,13 +16,13 @@ A Sticky osztályban létrehozunk egy változót, ami nyilvántartja, hogy hány
 \textbf{Egy meghatározott idő letelte után az olajfolt eltűnik a pályáról (felszárad).}\newline
 Az Oil osztályban létrehozunk egy változót, ami nyilvántartja a hátralévő idejét. A hátralévő időt úgy menedzseli, hogy az osztály implementálja a HeartBeatListener interfészt és az onTick(long deltaTime) metódusában levonja az eltelt időt.
 
-\subsection{Robotok ütközése}
-\textbf{A robotok képesek ütközni, ha azonos helyre érkeznek ugrásuk végén. Ilyenkor a gyorsabb robot összetöri (megsemmisíti) a lassabbat, és kettejük átlagsebességével halad tovább (vektorátlag!).}\newline
-A Field onEnter(Agent agent) metódusában, ha a Field-en éppen van egy másik Agent is, akkor meghívjuk a Fielden az éppen rajtalévő Agent collide(Agent agent) metódusát. A collide-ban a vesztesre meghívjuk az agent.accept(new KillExecute) metódust.
-
 \subsection{Kisrobotok}
 \textbf{A pályára időnként keményen dolgozó kisrobotok jutnak be, akik szépen sorban feltakarítják a foltokat. A kisrobot egységnyi sebességgel halad, adott ideig (pl. két kör) takarítja a foltot. A folt feltakarítása után a legközelebbi folthoz indul. Ha egy robot ráugrik, akkor a kisrobot megsemmisül és olajfolt kerül a helyére; a ráugró robot nem szenved sérülést. Ha a kisrobot másik kisrobotnak vagy robotnak ütközik, irányt vált.}  \\
-Létrehozunk egy új osztályt (Vacuum), amit leszármaztatunk az Agent osztályból.
+
+\subsection{Robotok ütközése}
+\textbf{A robotok képesek ütközni, ha azonos helyre érkeznek ugrásuk végén. Ilyenkor a gyorsabb robot összetöri (megsemmisíti) a lassabbat, és kettejük átlagsebességével halad tovább (vektorátlag!).}\newline
+A Field onEnter(Agent a) metódusában meghívjuk először az onCauseCollision(Agent a) metódust, ami kisrobot esetében elvégzi az irányváltást és false értékkel tér vissza. Ha egy Robot okoz ütközést, akkor az onCauseCollision true értékkel tér vissza és ezáltal az onCollision(Agent a) meghívódik, ami elvégzi a tényleges Robotok közötti harcot.
+
 
 \clearpage
 
